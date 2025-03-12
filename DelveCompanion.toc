@@ -15,7 +15,14 @@
 ## Category-ruRU: Вылазки
 ## Category-zhCN: 地下堡
 ## Category-zhTW: 探究
+## AddonCompartmentFunc: DelveCompanionShowSettings
 ## SavedVariablesPerCharacter: DelveCompanionCharacterData
+
+## X-Curse-Project-ID: 1218457
+## X-WoWI-ID: 26915
+## X-Wago-ID: ZKxq4kGk
+## X-Website: https://github.com/FunDeliveryGames/wow-delve-companion
+## X-Category: Delve
 
 # Logging
 log.lua

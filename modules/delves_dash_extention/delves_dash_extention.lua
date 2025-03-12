@@ -100,14 +100,16 @@ function DelveCompanion_DevlesDashExtension_Init()
         addon.lootInfoFrame = lootInfoFrame
     end
 
-    local gvPanel = DelvesDashboardFrame.ButtonPanelLayoutFrame.GreatVaultButtonPanel
+    if DelveCompanionCharacterData.gvDetailsEnabled and addon.gvDetailsFrame == nil then
+        local gvPanel = DelvesDashboardFrame.ButtonPanelLayoutFrame.GreatVaultButtonPanel
 
-    if addon.gvDetailsFrame == nil then
         local gvDetailsFrame = CreateFrame("Frame", "GVDetailsFrame", gvPanel,
             "DelveCompanionGreatVaultDetailsTemplate")
         gvDetailsFrame.gvButton:SetTextToFit(_G["RAF_VIEW_ALL_REWARDS"])
 
         addon.CacheGreatVaultRewards()
         addon.gvDetailsFrame = gvDetailsFrame
+
+        addon.eventsCatcherFrame:RegisterEvent("WEEKLY_REWARDS_UPDATE")
     end
 end
