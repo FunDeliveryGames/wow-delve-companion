@@ -1,0 +1,6 @@
+package-as: DelveCompanion
+ignore:
+- .gitignore
+- .vscode
+- README.md
+- LICENSE
