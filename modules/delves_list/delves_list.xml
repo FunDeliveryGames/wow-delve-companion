@@ -1,0 +1,198 @@
+<Ui
+	xmlns="http://www.blizzard.com/wow/ui/"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<!-- TEMPLATES -->
+	<Frame name="DelveCompanionMapHeaderTemplate" virtual="true">
+		<Size x="748" y="30" />
+		<Layers>
+			<Layer level="BACKGROUND">
+				<Texture name="$parentBackground" parentKey="background"
+					file="Interface\EncounterJournal\UI-EncounterJournalTextures">
+					<Anchors>
+						<Anchor point="TOPLEFT" x="0" y="0" />
+						<Anchor point="BOTTOMRIGHT" x="0" y="0" />
+					</Anchors>
+					<TexCoords left="0.02" right="0.635" top="0.58886719"
+						bottom="0.61621094" />
+				</Texture>
+			</Layer>
+			<Layer level="OVERLAY">
+				<FontString name="$parentAreName" inherits="GameFontNormal"
+					parentKey="mapName" text="MAP_NAME">
+					<Anchors>
+						<Anchor point="CENTER" relativeKey="$parentBackground"
+							relativePoint="CENTER" y="4" />
+					</Anchors>
+				</FontString>
+			</Layer>
+		</Layers>
+	</Frame>
+
+	<Button name="DelveCompanionDelveInstanceButtonTemplate"
+		mixin="DelveCompanionDelveInstanceButtonMixin" registerForClicks="LeftButtonUp"
+		virtual="true">
+		<Size x="174" y="96" />
+		<Layers>
+			<Layer level="BACKGROUND" textureSubLevel="-5">
+				<Texture name="$parentBackground" parentKey="background"
+					file="Interface\DialogFrame\UI-DialogBox-Background">
+					<Anchors>
+						<Anchor point="TOPLEFT" x="7" y="-7" />
+						<Anchor point="BOTTOMRIGHT" x="-7" y="7" />
+					</Anchors>
+				</Texture>
+			</Layer>
+			<Layer level="ARTWORK" textureSubLevel="-1">
+				<Texture name="$parentArtBg" parentKey="artBg">
+					<Anchors>
+						<Anchor point="TOPLEFT" x="5" y="-5" />
+						<Anchor point="BOTTOMRIGHT" x="-5" y="5" />
+					</Anchors>
+					<TexCoords left="0" right="0.6" top="0.1" bottom="0.8" />
+				</Texture>
+			</Layer>
+			<Layer level="OVERLAY">
+				<FontString name="$parentDelveName" inherits="QuestTitleFontBlackShadow"
+					parentKey="delveName" text="DELVE_NAME">
+					<Size x="150" />
+					<Anchors>
+						<Anchor point="TOP" relativeKey="$parentBackground" relativePoint="CENTER"
+							y="35" />
+					</Anchors>
+				</FontString>
+				<Texture name="$parentBountifulIcon" parentKey="bountifulIcon"
+					atlas="delves-bountiful" hidden="true">
+					<Size x="36" y="36" />
+					<Anchors>
+						<Anchor point="BOTTOMLEFT" relativeKey="$parentBackground"
+							relativePoint="BOTTOMLEFT" x="3" y="2" />
+					</Anchors>
+				</Texture>
+				<Texture name="$parentWaypointIcon" parentKey="waypointIcon"
+					atlas="Waypoint-MapPin-Minimap-Tracked" hidden="true">
+					<Size x="32" y="32" />
+					<Anchors>
+						<Anchor point="BOTTOMRIGHT" relativeKey="$parentBackground"
+							relativePoint="BOTTOMRIGHT" x="-5" y="5" />
+					</Anchors>
+				</Texture>
+			</Layer>
+		</Layers>
+		<NormalTexture file="Interface\EncounterJournal\UI-EncounterJournalTextures">
+			<Size x="174" y="96" />
+			<TexCoords left="0.00195313" right="0.34179688" top="0.42871094" bottom="0.52246094" />
+		</NormalTexture>
+		<PushedTexture file="Interface\EncounterJournal\UI-EncounterJournalTextures">
+			<Size x="174" y="96" />
+			<TexCoords left="0.00195313" right="0.34179688" top="0.33300781" bottom="0.42675781" />
+		</PushedTexture>
+		<HighlightTexture file="Interface\EncounterJournal\UI-EncounterJournalTextures">
+			<Size x="174" y="96" />
+			<TexCoords left="0.34570313" right="0.68554688" top="0.33300781" bottom="0.42675781" />
+		</HighlightTexture>
+		<Scripts>
+			<OnEnter method="OnEnter" />
+			<OnLeave method="OnLeave" />
+			<OnClick method="OnClick" />
+		</Scripts>
+	</Button>
+
+	<Frame name="DelveCompanionDelvesListFrameTemplate" mixin="DelveCompanionDelvesListMixin"
+		virtual="true" enableMouse="true" hidden="true">
+		<Size x="748" y="367" />
+		<Anchors>
+			<Anchor point="TOPLEFT" relativeTo="$parentInset" x="0" y="-2" />
+			<Anchor point="BOTTOMRIGHT" relativeTo="$parentInset" x="-3" y="0" />
+		</Anchors>
+		<Layers>
+			<Layer level="BACKGROUND">
+				<Texture atlas="UI-EJ-TheWarWithin">
+					<Anchors>
+						<Anchor point="TOPLEFT" x="3" y="-1" />
+						<Anchor point="BOTTOMRIGHT" x="-3" y="1" />
+					</Anchors>
+				</Texture>
+			</Layer>
+			<!-- TODO: Try to add an extra texture above the content to make the scrolling smoother
+			<Layer level="BACKGROUND" textureSubLevel="0">
+				<Texture name="$parentBG" atlas="UI-EJ-TheWarWithin"
+					parentKey="scrollPatch">
+					<Anchors>
+						<Anchor point="TOPLEFT" relativeKey="$parent.bg"
+							relativePoint="BOTTOMLEFT" x="0" y="50" />
+						<Anchor point="BOTTOMRIGHT" relativeKey="$parent.bg"
+							relativePoint="BOTTOMRIGHT" x="0" y="0" />
+					</Anchors>
+					<TexCoords left="0" right="1" top="0.9"
+						bottom="1" />
+				</Texture>
+			</Layer>
+			-->
+			<Layer level="OVERLAY">
+				<FontString name="$parentFrameTitle" parentKey="frameTitle"
+					inherits="GameFontNormalLarge2"
+					justifyH="LEFT" text="DELVES">
+					<Anchors>
+						<Anchor point="TOPLEFT" x="20" y="-15" />
+					</Anchors>
+				</FontString>
+				<Texture name="$parentKeysIcon" parentKey="keysIcon">
+					<Size x="24" y="24" />
+					<Anchors>
+						<Anchor point="BOTTOMLEFT" relativeTo="$parentFrameTitle"
+							relativePoint="BOTTOMRIGHT" x="20" y="0" />
+					</Anchors>
+				</Texture>
+				<FontString name="$parentKeysCount" parentKey="keysCountLabel"
+					inherits="GameFontHighlightLarge"
+					justifyH="LEFT" text="KEYS_COUNT">
+					<Anchors>
+						<Anchor point="BOTTOMLEFT" relativeTo="$parentKeysIcon"
+							relativePoint="BOTTOMRIGHT" x="5" y="0" />
+					</Anchors>
+				</FontString>
+			</Layer>
+		</Layers>
+		<Frames>
+			<Frame name="$parentKeysTooltipCatcher" parentKey="keysTooltipCatcher">
+				<Anchors>
+					<Anchor point="CENTER" relativeTo="$parentKeysIcon" />
+				</Anchors>
+			</Frame>
+			<ScrollFrame name="$parentScrollFrame" parentKey="delvesListScroll"
+				inherits="ScrollFrameTemplate">
+				<KeyValues>
+					<KeyValue key="scrollBarX" value="10" type="number" />
+					<KeyValue key="scrollBarTopY" value="4" type="number" />
+					<KeyValue key="scrollBarBottomY" value="-7" type="number" />
+				</KeyValues>
+				<Anchors>
+					<Anchor point="TOPLEFT" x="8" y="-60" />
+					<Anchor point="BOTTOMRIGHT" x="-30" y="15" />
+				</Anchors>
+				<ScrollChild>
+					<Frame name="$parentContent" parentKey="content">
+						<Size x="748" y="367" />
+						<Layers>
+							<Layer level="BACKGROUND">
+								<!-- Extra visual for debugging
+										<Texture name="$parentDebugBackground"
+											file="Interface\Buttons\GoldGradiant">
+											<Anchors>
+												<Anchor point="TOPLEFT" x="0" y="0" />
+												<Anchor point="BOTTOMRIGHT" x="0" y="0" />
+											</Anchors>
+										</Texture>
+										 -->
+							</Layer>
+						</Layers>
+					</Frame>
+				</ScrollChild>
+			</ScrollFrame>
+		</Frames>
+		<Scripts>
+			<OnLoad method="OnLoad" />
+			<OnShow method="OnShow" />
+		</Scripts>
+	</Frame>
+</Ui>
