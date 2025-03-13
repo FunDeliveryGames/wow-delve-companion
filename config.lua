@@ -33,7 +33,14 @@ config.DELVES_REGULAR_DATA = {
             x = 38.6,
             y = 74.0
         },
-        atlasBgID = "delve-entrance-background-earthcrawl-mines"
+        atlasBgID = "delve-entrance-background-earthcrawl-mines",
+        modSpellIDs = {
+            [1] = 432451,  -- Nerubian Eggs
+            [2] = 459303,  -- Nerubian Eggs
+            [3] = 1223742, -- Mole Machine
+            [4] = 1224766, -- Web Spreaders
+            [5] = 1223744, -- Explosive Barrels
+        }
     },
     -- "Fungal Folly"
     [2] = {
@@ -46,7 +53,10 @@ config.DELVES_REGULAR_DATA = {
             x = 52.03,
             y = 65.77
         },
-        atlasBgID = "delve-entrance-background-fungal-folly"
+        atlasBgID = "delve-entrance-background-fungal-folly",
+        modSpellIDs = {
+            [1] = 1223745 -- Goblin Problems
+        }
     },
     -- "Kriegval's Rest"
     [3] = {
@@ -59,7 +69,9 @@ config.DELVES_REGULAR_DATA = {
             x = 62.19,
             y = 42.70
         },
-        atlasBgID = "delve-entrance-background-kriegvals-rest"
+        atlasBgID = "delve-entrance-background-kriegvals-rest",
+        modSpellIDs = {
+        }
     },
     -- "The Waterworks"
     [4] = {
@@ -72,7 +84,9 @@ config.DELVES_REGULAR_DATA = {
             x = 46.42,
             y = 48.71
         },
-        atlasBgID = "delve-entrance-background-the-waterworks"
+        atlasBgID = "delve-entrance-background-the-waterworks",
+        modSpellIDs = {
+        }
     },
     -- "The Dread Pit"
     [5] = {
@@ -85,7 +99,9 @@ config.DELVES_REGULAR_DATA = {
             x = 74.2,
             y = 37.3
         },
-        atlasBgID = "delve-entrance-background-the-dread-pit"
+        atlasBgID = "delve-entrance-background-the-dread-pit",
+        modSpellIDs = {
+        }
     },
     -- "Excavation Site 9"
     [6] = {
@@ -98,7 +114,9 @@ config.DELVES_REGULAR_DATA = {
             x = 75.96,
             y = 96.41
         },
-        atlasBgID = "delve-entrance-background-the-undermine"
+        atlasBgID = "delve-entrance-background-the-undermine",
+        modSpellIDs = {
+        }
     },
     -- "The Sinkhole" (it has a second ID in Wago Tools: 2301)
     [7] = {
@@ -111,7 +129,9 @@ config.DELVES_REGULAR_DATA = {
             x = 50.6,
             y = 53.3
         },
-        atlasBgID = "delve-entrance-background-the-sinkhole"
+        atlasBgID = "delve-entrance-background-the-sinkhole",
+        modSpellIDs = {
+        }
     },
     -- "Nightfall Sanctum"
     [8] = {
@@ -124,7 +144,9 @@ config.DELVES_REGULAR_DATA = {
             x = 34.32,
             y = 47.43
         },
-        atlasBgID = "delve-entrance-background-nightfall-sanctum"
+        atlasBgID = "delve-entrance-background-nightfall-sanctum",
+        modSpellIDs = {
+        }
     },
     -- "Mycomancer Cavern"
     [9] = {
@@ -137,7 +159,9 @@ config.DELVES_REGULAR_DATA = {
             x = 71.3,
             y = 31.2
         },
-        atlasBgID = "delve-entrance-background-mycomancer-cavern"
+        atlasBgID = "delve-entrance-background-mycomancer-cavern",
+        modSpellIDs = {
+        }
     },
     -- "Skittering Breach"
     [10] = {
@@ -150,7 +174,9 @@ config.DELVES_REGULAR_DATA = {
             x = 65.48,
             y = 61.74
         },
-        atlasBgID = "delve-entrance-background-skittering-breach"
+        atlasBgID = "delve-entrance-background-skittering-breach",
+        modSpellIDs = {
+        }
     },
     -- "The Spiral Weave" (it has a second ID in Wago Tools: 2347)
     [11] = {
@@ -163,7 +189,9 @@ config.DELVES_REGULAR_DATA = {
             x = 45.0,
             y = 19.0
         },
-        atlasBgID = "delve-entrance-background-the-spiral-weave"
+        atlasBgID = "delve-entrance-background-the-spiral-weave",
+        modSpellIDs = {
+        }
     },
     -- "The Underkeep"
     [12] = {
@@ -176,7 +204,9 @@ config.DELVES_REGULAR_DATA = {
             x = 51.85,
             y = 88.30
         },
-        atlasBgID = "delve-entrance-background-the-underkeep"
+        atlasBgID = "delve-entrance-background-the-underkeep",
+        modSpellIDs = {
+        }
     },
     -- "Tak-Rethan Abyss" (it has a second ID in Wago Tools: 2314)
     [13] = {
@@ -189,7 +219,9 @@ config.DELVES_REGULAR_DATA = {
             x = 55.0,
             y = 73.92
         },
-        atlasBgID = "delve-entrance-background-tak-rethan-abyss"
+        atlasBgID = "delve-entrance-background-tak-rethan-abyss",
+        modSpellIDs = {
+        }
     },
     -- "Sidestreet Sluice" (it has more IDs in Wago Tools: 2421, 2422, 2423)
     [14] = {
@@ -202,7 +234,9 @@ config.DELVES_REGULAR_DATA = {
             x = 35.12,
             y = 53.04
         },
-        atlasBgID = "delves-entrance-background-sewers"
+        atlasBgID = "delves-entrance-background-sewers",
+        modSpellIDs = {
+        }
     },
     -- "Demolition Dome" (it has a second ID in Wago Tools: 2426)
     [15] = {
@@ -214,7 +248,9 @@ config.DELVES_REGULAR_DATA = {
             x = 50.43,
             y = 11.82
         },
-        atlasBgID = "delve-entrance-background-goblin-boss"
+        atlasBgID = "delve-entrance-background-goblin-boss",
+        modSpellIDs = {
+        }
     },
     -- "Zekvir's Lair"
     -- TODO: SuperTrack works but it's not shown on map anymore. Place a map pin for it?
@@ -227,7 +263,9 @@ config.DELVES_REGULAR_DATA = {
             x = 32.74,
             y = 76.87
         },
-        atlasBgID = "delve-entrance-background-zekvirs-lair"
+        atlasBgID = "delve-entrance-background-zekvirs-lair",
+        modSpellIDs = {
+        }
     }
 }
 

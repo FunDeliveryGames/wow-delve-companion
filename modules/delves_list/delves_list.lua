@@ -8,6 +8,42 @@ local EJ_TABS_NUMBER = 6
 local DELVES_LIST_VIEW_COLS = 4
 local DELVES_LIST_VIEW_BUTTONS_OFFSET = 12
 local DELVES_LIST_VIEW_BUTTONS_PADDING = 5
+--============ DelveInstanceButton ======================
+
+DelveCompanionDelveInfoFrameMixin = {} --CreateFromMixins(PortraitFrameMixin)
+
+function DelveCompanionDelveInfoFrameMixin:OnShow()
+    local spellIDs = addon.delvesListFrame.infoFrameConfig.modSpellIDs
+
+    local existingModFrames = { self.modifiersContainer:GetChildren() }
+
+    for index, spellID in ipairs(spellIDs) do
+        local modFrame
+        if #existingModFrames >= index then
+            modFrame = existingModFrames[index]
+        else
+            modFrame = CreateFrame("Frame", nil, self.modifiersContainer, "DelveCompanionModifierFrame")
+        end
+        modFrame.layoutIndex = index
+        modFrame.icon:SetTexture(C_Spell.GetSpellTexture(spellID))
+        modFrame:SetScript("OnEnter", function(owner)
+            GameTooltip:SetOwner(owner, "ANCHOR_TOP")
+            GameTooltip:SetSpellByID(spellID)
+            GameTooltip:Show()
+        end)
+        modFrame:SetScript("OnLeave", function()
+            GameTooltip:Hide()
+        end)
+        modFrame:Show()
+    end
+    self.modifiersContainer:Layout()
+end
+
+function DelveCompanionDelveInfoFrameMixin:OnHide()
+    for _, modFrame in pairs(self.modifiersContainer:GetLayoutChildren()) do
+        modFrame:Hide()
+    end
+end
 
 --============ DelveInstanceButton ======================
 
@@ -61,6 +97,9 @@ function DelveCompanionDelveInstanceButtonMixin:OnClick()
             addon.SetTrackedDelve(self)
         end
         self:UpdateTooltip()
+    else
+        addon.delvesListFrame.infoFrameConfig = self.config
+        addon.delveInfoFrame:Show()
     end
 end
 
@@ -76,17 +115,17 @@ function DelveCompanionDelvesListMixin:CreateMapHeader(parent, mapName)
 end
 
 function DelveCompanionDelvesListMixin:CreateDelveInstanceButton(parent, config)
-    local item = CreateFrame("Button", nil, parent, "DelveCompanionDelveInstanceButtonTemplate")
-    item.config = config
-    item.isTracking = false
+    local button = CreateFrame("Button", nil, parent, "DelveCompanionDelveInstanceButtonTemplate")
+    button.config = config
+    button.isTracking = false
 
     local delveMap = C_Map.GetMapInfo(config.uiMapID)
-    item.delveName:SetText(delveMap.name)
+    button.delveName:SetText(delveMap.name)
     if C_Texture.GetAtlasInfo(config.atlasBgID) ~= nil then
-        item.artBg:SetAtlas(config.atlasBgID)
+        button.artBg:SetAtlas(config.atlasBgID)
     end
 
-    return item
+    return button
 end
 
 function DelveCompanionDelvesListMixin:OnLoad()
@@ -154,6 +193,9 @@ function DelveCompanionDelvesListMixin:OnLoad()
     end
 
     self.instanceButtons = instanceButtons
+
+    addon.delveInfoFrame = CreateFrame("Frame", nil, UIParent, "DelveCompanionDelveInfoFrame")
+    addon.delveInfoFrame:SetPoint("CENTER", self)
 end
 
 function DelveCompanionDelvesListMixin:OnShow()

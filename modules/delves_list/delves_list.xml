@@ -1,7 +1,6 @@
 <Ui
 	xmlns="http://www.blizzard.com/wow/ui/"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-	<!-- TEMPLATES -->
 	<Frame name="DelveCompanionMapHeaderTemplate" virtual="true">
 		<Size x="748" y="30" />
 		<Layers>
@@ -96,6 +95,48 @@
 			<OnClick method="OnClick" />
 		</Scripts>
 	</Button>
+
+	<Frame name="DelveCompanionModifierFrame" virtual="true"
+		inherits="RingedFrameWithTooltipTemplate">
+		<Size x="50" y="50" />
+		<KeyValues>
+			<KeyValue key="layoutIndex" value="0" type="number" />
+		</KeyValues>
+		<Anchors>
+			<Anchor point="CENTER" />
+		</Anchors>
+		<Layers>
+			<Layer level="OVERLAY">
+				<Texture name="$parentmodifierIcon" parentKey="icon">
+					<Size x="36" y="36" />
+					<Anchors>
+						<Anchor point="CENTER" />
+					</Anchors>
+				</Texture>
+			</Layer>
+		</Layers>
+	</Frame>
+
+	<Frame name="DelveCompanionDelveInfoFrame" inherits="PortraitFrameTemplate" virtual="true"
+		toplevel="true" hidden="true" enableMouse="true" mixin="DelveCompanionDelveInfoFrameMixin">
+		<Size x="500" y="300" />
+		<Frames>
+			<Frame name="$parentModifiersContainer" inherits="HorizontalLayoutFrame"
+				parentKey="modifiersContainer">
+				<KeyValues>
+					<KeyValue key="expand" value="false" type="boolean" />
+					<KeyValue key="align" value="center" type="string" />
+				</KeyValues>
+				<Anchors>
+					<Anchor point="CENTER" />
+				</Anchors>
+			</Frame>
+		</Frames>
+		<Scripts>
+			<OnShow method="OnShow" />
+			<OnHide method="OnHide" />
+		</Scripts>
+	</Frame>
 
 	<Frame name="DelveCompanionDelvesListFrameTemplate" mixin="DelveCompanionDelvesListMixin"
 		virtual="true" enableMouse="true" hidden="true">
