@@ -19,7 +19,9 @@ addon.lockit = setmetatable(
 
         -- LootInfo
         ["ui-loot-info-description"] = "Complete a delve to get:",
-        ["ui-loot-info-bountilful-gear-title"] = "Bountiful"
+        ["ui-loot-info-bountilful-gear-title"] = "Bountiful", -- Replace with https://www.wowhead.com/item=228942/bountiful-coffer
+        -- DashboardOverview
+        ["ui-gilded-stash-bountiful-note"] = "Appears only in Bountiful Delves|A:delves-bountiful:16:16|a"
     },
     {
         __index = function(_, ...)

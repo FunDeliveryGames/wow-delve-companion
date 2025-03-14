@@ -175,4 +175,110 @@
             </Layer>
         </Layers>
     </Frame>
+
+    <!-- Delves Dashboard Overview frame -->
+    <Frame name="DelveCompanionDashboardOverviewTemplate"
+        mixin="DelveCompanionDashboardOverviewMixin" inherits="DelvesDashboardButtonPanelFrame"
+        virtual="true" hidden="false">
+        <Size x="160" y="283" />
+        <KeyValues>
+            <KeyValue key="layoutIndex" value="3" type="number" />
+            <KeyValue type="boolean" key="isCompanionButtonPanelFrame" value="true" />
+        </KeyValues>
+        <Frames>
+            <!-- ToggleQuestLog()
+                        QuestMapFrame:SetDisplayMode(QuestLogDisplayMode.Events) -->
+            <Frame name="$parentGildedStashFrame" parentKey="gildedStash"
+                mixin="DelveCompanionGildedStashFrameMixin">
+                <Size x="140" y="70" />
+                <Anchors>
+                    <Anchor point="TOP" y="-15" />
+                </Anchors>
+                <Layers>
+                    <Layer level="OVERLAY">
+                        <FontString name="$parentName" parentKey="name" inherits="GameFontNormal"
+                            justifyH="CENTER" text="GILDED_STASH" mixin="AutoScalingFontStringMixin"
+                            wordwrap="false" justifyV="CENTER">
+                            <Size x="140" y="30" />
+                            <Anchors>
+                                <Anchor point="TOP" x="0" y="0" />
+                            </Anchors>
+                        </FontString>
+                    </Layer>
+                </Layers>
+                <Frames>
+                    <Frame name="$parentContainer" parentKey="container"
+                        inherits="HorizontalLayoutFrame">
+                        <Size x="140" y="40" />
+                        <KeyValues>
+                            <KeyValue key="expand" value="false" type="boolean" />
+                            <KeyValue key="align" value="center" type="string" />
+                            <KeyValue key="spacing" value="5" type="number" />
+                        </KeyValues>
+                        <Anchors>
+                            <Anchor point="TOP" relativeTo="$parentName" relativePoint="BOTTOM" />
+                        </Anchors>
+                    </Frame>
+                </Frames>
+                <Scripts>
+                    <OnLoad method="OnLoad" />
+                    <OnShow method="OnShow" />
+                    <OnEnter method="OnEnter" />
+                    <OnLeave method="OnLeave" />
+                </Scripts>
+            </Frame>
+        </Frames>
+        <Scripts>
+            <OnLoad method="OnLoad" />
+            <OnShow method="OnShow" />
+        </Scripts>
+    </Frame>
+
+    <Frame name="DelveCompanionDashboardOverviewGildedStashTemplate" virtual="true">
+        <Size x="36" y="36" />
+        <KeyValues>
+            <KeyValue key="layoutIndex" value="0" type="number" />
+        </KeyValues>
+        <Anchors>
+            <Anchor point="CENTER" />
+        </Anchors>
+        <Layers>
+            <Layer level="BACKGROUND">
+                <Texture name="$parentIcon" parentKey="icon">
+                    <Size x="36" y="36" />
+                    <Anchors>
+                        <Anchor point="CENTER" />
+                    </Anchors>
+                </Texture>
+            </Layer>
+            <Layer level="ARTWORK" textureSubLevel="-1">
+                <Texture name="$parentFadeBg" parentKey="fadeBg"
+                    file="Interface\Common\Common-Input-Border" hidden="true">
+                    <Anchors>
+                        <Anchor point="TOPLEFT" relativeKey="$parent"
+                            relativePoint="TOPLEFT" />
+                        <Anchor point="BOTTOMRIGHT" relativeKey="$parent"
+                            relativePoint="BOTTOMRIGHT" />
+                    </Anchors>
+                    <TexCoords left="0.0625" right="0.9375" top="0.25" bottom="0.375" />
+                </Texture>
+            </Layer>
+            <Layer level="ARTWORK" textureSubLevel="0">
+                <Texture name="$parentCheckMark" parentKey="checkMark"
+                    atlas="common-icon-checkmark" hidden="true">
+                    <Size x="16" y="16" />
+                    <Anchors>
+                        <Anchor point="BOTTOMRIGHT" />
+                    </Anchors>
+                </Texture>
+                <Texture name="$parentRedX" parentKey="redX"
+                    atlas="common-icon-redx" hidden="true">
+                    <Size x="16" y="16" />
+                    <Anchors>
+                        <Anchor point="BOTTOMRIGHT" />
+                    </Anchors>
+                </Texture>
+            </Layer>
+        </Layers>
+    </Frame>
 </Ui>

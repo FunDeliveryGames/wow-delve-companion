@@ -11,6 +11,12 @@ config.BOUNTIFUL_KEY_QUESTS_DATA = {
     [4] = 84739,
 }
 
+config.BOUNTY_MAP_ITEM_CODE = 233071
+config.BOUNTIFUL_COFFER_ITEM_CODE = 233071
+config.ECHO_ITEM_CODE = 235897
+config.GILDED_STASH_WEEKLY_CAP = 3
+config.GILDED_STASH_SPELL_CODE = 1216211
+
 -- Table of maps which contain Delves
 config.DELVES_MAPS_DATA = {
     [1] = 2248,

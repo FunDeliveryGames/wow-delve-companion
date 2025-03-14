@@ -1,6 +1,6 @@
 ## Interface: 110100
 ## Author: FunDeliveryGames
-## Version: v0.1.1
+## Version: v0.1.2
 ## IconTexture: interface/icons/ui_delves
 ## Title: Delve Companion
 ## Notes: One-stop addon to make Delves experience even better!

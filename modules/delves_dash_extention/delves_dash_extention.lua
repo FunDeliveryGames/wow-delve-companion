@@ -90,6 +90,65 @@ function DelveCompanionGreatVaultDetailsMixin:OnShow()
     --log("GreatVaultDetails OnShow start")
 end
 
+--============ GildedStash Frame ======================
+
+DelveCompanionGildedStashFrameMixin = {}
+
+function DelveCompanionGildedStashFrameMixin:OnLoad()
+    -- log("GildedStash OnLoad start")
+    self.name:SetText(C_Spell.GetSpellName(addon.config.GILDED_STASH_SPELL_CODE))
+    for i = 1, addon.config.GILDED_STASH_WEEKLY_CAP, 1 do
+        local stash = CreateFrame("Frame", nil, self.container,
+            "DelveCompanionDashboardOverviewGildedStashTemplate")
+        stash.layoutIndex = i
+        stash.icon:SetTexture(C_Spell.GetSpellTexture(addon.config.GILDED_STASH_SPELL_CODE))
+    end
+    self.container:Layout()
+end
+
+function DelveCompanionGildedStashFrameMixin:OnShow()
+    -- log("GildedStash OnShow start")
+    local desc = C_Spell.GetSpellDescription(addon.config.GILDED_STASH_SPELL_CODE)
+    local collectedCount = tonumber(strsub(strmatch(desc, "%d/%d"), 1, 1))
+
+    for _, stash in pairs(self.container:GetLayoutChildren()) do
+        if collectedCount >= stash.layoutIndex then
+            stash.checkMark:Show()
+            stash.fadeBg:Hide()
+            stash.redX:Hide()
+        else
+            stash.checkMark:Hide()
+            stash.fadeBg:Show()
+            stash.redX:Show()
+        end
+    end
+end
+
+function DelveCompanionGildedStashFrameMixin:OnEnter()
+    GameTooltip:SetOwner(self, "ANCHOR_TOP")
+    GameTooltip:SetSpellByID(addon.config.GILDED_STASH_SPELL_CODE)
+    GameTooltip:AddLine(addon.lockit["ui-gilded-stash-bountiful-note"], 1, 1, 1)
+    GameTooltip:Show()
+end
+
+function DelveCompanionGildedStashFrameMixin:OnLeave()
+    GameTooltip:Hide()
+end
+
+--============ Delves DashboardOverview ======================
+
+DelveCompanionDashboardOverviewMixin = {}
+
+function DelveCompanionDashboardOverviewMixin:OnLoad()
+    --log("DashboardOverview OnLoad start")
+    self.PanelTitle:Hide()
+    self.PanelDescription:Hide()
+end
+
+function DelveCompanionDashboardOverviewMixin:OnShow()
+    --log("DashboardOverview OnShow start")
+end
+
 --============ Init ======================
 
 function DelveCompanion_DevlesDashExtension_Init()
@@ -111,5 +170,14 @@ function DelveCompanion_DevlesDashExtension_Init()
         addon.gvDetailsFrame = gvDetailsFrame
 
         addon.eventsCatcherFrame:RegisterEvent("WEEKLY_REWARDS_UPDATE")
+    end
+
+    if addon.delvesDashOverview == nil then
+        local dashOverview = CreateFrame("Frame", "$parentDashboardOverview",
+            DelvesDashboardFrame.ButtonPanelLayoutFrame, "DelveCompanionDashboardOverviewTemplate")
+        DelvesDashboardFrame.ButtonPanelLayoutFrame.spacing = -20
+        DelvesDashboardFrame.ButtonPanelLayoutFrame:Layout()
+
+        addon.delvesDashOverview = dashOverview
     end
 end
