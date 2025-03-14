@@ -39,7 +39,11 @@ config.DELVES_REGULAR_DATA = {
             x = 38.6,
             y = 74.0
         },
-        atlasBgID = "delve-entrance-background-earthcrawl-mines"
+        atlasBgID = "delve-entrance-background-earthcrawl-mines",
+        achievements = {
+            chest = 40806,
+            story = 40527
+        }
     },
     -- "Fungal Folly"
     [2] = {
@@ -52,7 +56,11 @@ config.DELVES_REGULAR_DATA = {
             x = 52.03,
             y = 65.77
         },
-        atlasBgID = "delve-entrance-background-fungal-folly"
+        atlasBgID = "delve-entrance-background-fungal-folly",
+        achievements = {
+            chest = 40803,
+            story = 40525
+        }
     },
     -- "Kriegval's Rest"
     [3] = {
@@ -65,7 +73,11 @@ config.DELVES_REGULAR_DATA = {
             x = 62.19,
             y = 42.70
         },
-        atlasBgID = "delve-entrance-background-kriegvals-rest"
+        atlasBgID = "delve-entrance-background-kriegvals-rest",
+        achievements = {
+            chest = 40807,
+            story = 40526
+        }
     },
     -- "The Waterworks"
     [4] = {
@@ -78,7 +90,11 @@ config.DELVES_REGULAR_DATA = {
             x = 46.42,
             y = 48.71
         },
-        atlasBgID = "delve-entrance-background-the-waterworks"
+        atlasBgID = "delve-entrance-background-the-waterworks",
+        achievements = {
+            chest = 40816,
+            story = 40528
+        }
     },
     -- "The Dread Pit"
     [5] = {
@@ -91,7 +107,11 @@ config.DELVES_REGULAR_DATA = {
             x = 74.2,
             y = 37.3
         },
-        atlasBgID = "delve-entrance-background-the-dread-pit"
+        atlasBgID = "delve-entrance-background-the-dread-pit",
+        achievements = {
+            chest = 40812,
+            story = 40529
+        }
     },
     -- "Excavation Site 9"
     [6] = {
@@ -104,7 +124,11 @@ config.DELVES_REGULAR_DATA = {
             x = 75.96,
             y = 96.41
         },
-        atlasBgID = "delve-entrance-background-the-undermine"
+        atlasBgID = "delve-entrance-background-the-undermine",
+        achievements = {
+            chest = 41100,
+            story = 41098
+        }
     },
     -- "The Sinkhole" (it has a second ID in Wago Tools: 2301)
     [7] = {
@@ -117,7 +141,11 @@ config.DELVES_REGULAR_DATA = {
             x = 50.6,
             y = 53.3
         },
-        atlasBgID = "delve-entrance-background-the-sinkhole"
+        atlasBgID = "delve-entrance-background-the-sinkhole",
+        achievements = {
+            chest = 40813,
+            story = 40532
+        }
     },
     -- "Nightfall Sanctum"
     [8] = {
@@ -130,7 +158,11 @@ config.DELVES_REGULAR_DATA = {
             x = 34.32,
             y = 47.43
         },
-        atlasBgID = "delve-entrance-background-nightfall-sanctum"
+        atlasBgID = "delve-entrance-background-nightfall-sanctum",
+        achievements = {
+            chest = 40809,
+            story = 40530
+        }
     },
     -- "Mycomancer Cavern"
     [9] = {
@@ -143,7 +175,11 @@ config.DELVES_REGULAR_DATA = {
             x = 71.3,
             y = 31.2
         },
-        atlasBgID = "delve-entrance-background-mycomancer-cavern"
+        atlasBgID = "delve-entrance-background-mycomancer-cavern",
+        achievements = {
+            chest = 40808,
+            story = 40531
+        }
     },
     -- "Skittering Breach"
     [10] = {
@@ -156,7 +192,11 @@ config.DELVES_REGULAR_DATA = {
             x = 65.48,
             y = 61.74
         },
-        atlasBgID = "delve-entrance-background-skittering-breach"
+        atlasBgID = "delve-entrance-background-skittering-breach",
+        achievements = {
+            chest = 40810,
+            story = 40533
+        }
     },
     -- "The Spiral Weave" (it has a second ID in Wago Tools: 2347)
     [11] = {
@@ -169,7 +209,11 @@ config.DELVES_REGULAR_DATA = {
             x = 45.0,
             y = 19.0
         },
-        atlasBgID = "delve-entrance-background-the-spiral-weave"
+        atlasBgID = "delve-entrance-background-the-spiral-weave",
+        achievements = {
+            chest = 40814,
+            story = 40536
+        }
     },
     -- "The Underkeep"
     [12] = {
@@ -182,7 +226,11 @@ config.DELVES_REGULAR_DATA = {
             x = 51.85,
             y = 88.30
         },
-        atlasBgID = "delve-entrance-background-the-underkeep"
+        atlasBgID = "delve-entrance-background-the-underkeep",
+        achievements = {
+            chest = 40815,
+            story = 40534
+        }
     },
     -- "Tak-Rethan Abyss" (it has a second ID in Wago Tools: 2314)
     [13] = {
@@ -195,7 +243,11 @@ config.DELVES_REGULAR_DATA = {
             x = 55.0,
             y = 73.92
         },
-        atlasBgID = "delve-entrance-background-tak-rethan-abyss"
+        atlasBgID = "delve-entrance-background-tak-rethan-abyss",
+        achievements = {
+            chest = 40811,
+            story = 40535
+        }
     },
     -- "Sidestreet Sluice" (it has more IDs in Wago Tools: 2421, 2422, 2423)
     [14] = {
@@ -208,7 +260,11 @@ config.DELVES_REGULAR_DATA = {
             x = 35.12,
             y = 53.04
         },
-        atlasBgID = "delves-entrance-background-sewers"
+        atlasBgID = "delves-entrance-background-sewers",
+        achievements = {
+            chest = 41101,
+            story = 41099
+        }
     },
     -- "Demolition Dome" (it has a second ID in Wago Tools: 2426)
     [15] = {

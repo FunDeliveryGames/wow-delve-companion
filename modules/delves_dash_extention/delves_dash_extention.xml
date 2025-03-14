@@ -28,7 +28,7 @@
         </Layers>
     </Frame>
 
-    <Frame name="DelveCompanionLootInfoFrameTemplate" mixin="DelveCompanionLootInfoFrameMixin"
+    <Frame name="DelveCompanionLootInfoFrame" mixin="DelveCompanionLootInfoFrameMixin"
         enableMouse="true" virtual="true"
         hidden="true" inherits="DefaultPanelTemplate">
         <Size x="380" y="428" />
@@ -111,7 +111,7 @@
     </Frame>
 
     <!-- Great Vault Details frame -->
-    <Frame name="DelveCompanionGreatVaultDetailsTemplate"
+    <Frame name="DelveCompanionGreatVaultDetailsFrame"
         mixin="DelveCompanionGreatVaultDetailsMixin" virtual="true" hidden="true">
         <Size x="180" y="300" />
         <Anchors>
@@ -166,7 +166,7 @@
             <Layer name="OVERLAY">
                 <FontString parentKey="itemInfo" inherits="GameFontNormal"
                     justifyH="CENTER" text="ILVL" mixin="AutoScalingFontStringMixin" wordwrap="true"
-                    justifyV="CENTER">
+                    justifyV="MIDDLE">
                     <Size x="150" y="30" />
                     <Anchors>
                         <Anchor point="CENTER" x="0" y="0" />
@@ -177,7 +177,7 @@
     </Frame>
 
     <!-- Delves Dashboard Overview frame -->
-    <Frame name="DelveCompanionDashboardOverviewTemplate"
+    <Frame name="DelveCompanionDashboardOverviewFrame"
         mixin="DelveCompanionDashboardOverviewMixin" inherits="DelvesDashboardButtonPanelFrame"
         virtual="true" hidden="false">
         <Size x="160" y="283" />
@@ -186,10 +186,8 @@
             <KeyValue type="boolean" key="isCompanionButtonPanelFrame" value="true" />
         </KeyValues>
         <Frames>
-            <!-- ToggleQuestLog()
-                        QuestMapFrame:SetDisplayMode(QuestLogDisplayMode.Events) -->
             <Frame name="$parentGildedStashFrame" parentKey="gildedStash"
-                mixin="DelveCompanionGildedStashFrameMixin">
+                mixin="DelveCompanionOverviewGildedStashFrameMixin">
                 <Size x="140" y="70" />
                 <Anchors>
                     <Anchor point="TOP" y="-15" />
@@ -198,7 +196,7 @@
                     <Layer level="OVERLAY">
                         <FontString name="$parentName" parentKey="name" inherits="GameFontNormal"
                             justifyH="CENTER" text="GILDED_STASH" mixin="AutoScalingFontStringMixin"
-                            wordwrap="false" justifyV="CENTER">
+                            wordwrap="false" justifyV="MIDDLE">
                             <Size x="140" y="30" />
                             <Anchors>
                                 <Anchor point="TOP" x="0" y="0" />
@@ -227,6 +225,76 @@
                     <OnLeave method="OnLeave" />
                 </Scripts>
             </Frame>
+
+            <Frame name="$parentBountifulFrame" parentKey="bountiful"
+                mixin="DelveCompanionOverviewBountifulFrameMixin">
+                <Size x="140" y="60" />
+                <Anchors>
+                    <Anchor point="TOP" relativeTo="$parentGildedStashFrame"
+                        relativePoint="BOTTOM" y="-10" />
+                </Anchors>
+                <Layers>
+                    <Layer level="OVERLAY">
+                        <FontString name="$parentName" parentKey="name" inherits="GameFontNormal"
+                            text="BOUNTIFUL" mixin="AutoScalingFontStringMixin"
+                            justifyH="LEFT" wordwrap="true" justifyV="MIDDLE" maxLines="2">
+                            <Size x="90" />
+                            <Anchors>
+                                <Anchor point="TOPLEFT" x="10" y="0" />
+                            </Anchors>
+                        </FontString>
+                        <Texture name="$parentKeysIcon" parentKey="keysIcon">
+                            <Size x="24" y="24" />
+                            <Anchors>
+                                <Anchor point="TOPRIGHT" relativeTo="$parent"
+                                    relativePoint="TOPRIGHT" x="-10" y="0" />
+                            </Anchors>
+                        </Texture>
+                        <FontString name="$parentKeysCount" parentKey="keysCountLabel"
+                            inherits="GameFontHighlightMed2"
+                            justifyH="RIGHT" text="KEYS_COUNT">
+                            <Anchors>
+                                <Anchor point="RIGHT" relativeTo="$parentKeysIcon"
+                                    relativePoint="LEFT" x="-5" y="0" />
+                            </Anchors>
+                        </FontString>
+                        <FontString name="$parentNoBountiful" parentKey="noBountifulLabel"
+                            inherits="GameFontHighlightMed2"
+                            justifyH="RIGHT" text="KEYS_COUNT" hidden="true">
+                            <Anchors>
+                                <Anchor point="TOP" relativeTo="$parent" relativePoint="TOP" y="-35" />
+                            </Anchors>
+                        </FontString>
+                    </Layer>
+                </Layers>
+                <Frames>
+                    <Frame name="$parentKeysTooltipCatcher" parentKey="keysTooltipCatcher">
+                        <Anchors>
+                            <Anchor point="CENTER" relativeTo="$parentKeysIcon" />
+                        </Anchors>
+                    </Frame>
+                    <Frame name="$parentContainer" parentKey="container"
+                        inherits="HorizontalLayoutFrame">
+                        <Size x="140" y="40" />
+                        <KeyValues>
+                            <KeyValue key="expand" value="false" type="boolean" />
+                            <KeyValue key="align" value="center" type="string" />
+                            <KeyValue key="spacing" value="5" type="number" />
+                        </KeyValues>
+                        <Anchors>
+                            <Anchor point="TOP" relativeTo="$parent" relativePoint="TOP" y="-35" />
+                        </Anchors>
+                    </Frame>
+                </Frames>
+                <Scripts>
+                    <OnLoad method="OnLoad" />
+                    <OnShow method="OnShow" />
+                </Scripts>
+            </Frame>
+
+
+            <!-- ToggleQuestLog()
+                        QuestMapFrame:SetDisplayMode(QuestLogDisplayMode.Events) -->
         </Frames>
         <Scripts>
             <OnLoad method="OnLoad" />
@@ -281,4 +349,66 @@
             </Layer>
         </Layers>
     </Frame>
+
+
+    <Button name="DelveCompanionOverviewBountifulButtonTemplate" virtual="true"
+        mixin="DelveCompanionOverviewBountifulButtonMixin" registerForClicks="LeftButtonUp">
+        <Size x="27" y="27" />
+        <KeyValues>
+            <KeyValue key="layoutIndex" value="0" type="number" />
+        </KeyValues>
+        <Anchors>
+            <Anchor point="CENTER" />
+        </Anchors>
+        <Layers>
+            <Layer level="BACKGROUND" textureSubLevel="-5">
+                <Texture name="$parentBackground" parentKey="background"
+                    file="Interface\DialogFrame\UI-DialogBox-Background">
+                    <Anchors>
+                        <Anchor point="TOPLEFT" x="7" y="-7" />
+                        <Anchor point="BOTTOMRIGHT" x="-7" y="7" />
+                    </Anchors>
+                </Texture>
+            </Layer>
+            <Layer level="ARTWORK" textureSubLevel="-1">
+                <Texture name="$parentArtBg" parentKey="artBg">
+                    <Anchors>
+                        <Anchor point="TOPLEFT" x="0" y="0" />
+                        <Anchor point="BOTTOMRIGHT" x="0" y="0" />
+                    </Anchors>
+                    <TexCoords left="0" right="1" top="0" bottom="1" />
+                </Texture>
+            </Layer>
+            <Layer level="OVERLAY">
+                <Texture name="$parentWaypointIcon" parentKey="waypointIcon"
+                    atlas="Waypoint-MapPin-Minimap-Tracked" hidden="true">
+                    <Size x="25" y="25" />
+                    <Anchors>
+                        <Anchor point="BOTTOMRIGHT" relativeKey="$parentArtBg"
+                            relativePoint="BOTTOMRIGHT" x="3" y="-3" />
+                    </Anchors>
+                </Texture>
+            </Layer>
+        </Layers>
+        <NormalTexture file="Interface\EncounterJournal\UI-EncounterJournalTextures">
+            <Size x="40" y="40" />
+            <TexCoords left="0.00195313" right="0.34179688" top="0.42871094" bottom="0.52246094" />
+        </NormalTexture>
+        <PushedTexture file="Interface\EncounterJournal\UI-EncounterJournalTextures">
+            <Size x="40" y="40" />
+            <TexCoords left="0.00195313" right="0.34179688" top="0.33300781" bottom="0.42675781" />
+        </PushedTexture>
+        <HighlightTexture file="Interface\EncounterJournal\UI-EncounterJournalTextures">
+            <Size x="40" y="40" />
+            <TexCoords left="0.34570313" right="0.68554688" top="0.33300781" bottom="0.42675781" />
+        </HighlightTexture>
+        <Scripts>
+            <OnLoad method="OnLoad" />
+            <OnShow method="OnShow" />
+            <OnHide method="OnHide" />
+            <OnEnter method="OnEnter" />
+            <OnLeave method="OnLeave" />
+            <OnClick method="OnClick" />
+        </Scripts>
+    </Button>
 </Ui>

@@ -92,9 +92,9 @@ end
 
 --============ GildedStash Frame ======================
 
-DelveCompanionGildedStashFrameMixin = {}
+DelveCompanionOverviewGildedStashFrameMixin = {}
 
-function DelveCompanionGildedStashFrameMixin:OnLoad()
+function DelveCompanionOverviewGildedStashFrameMixin:OnLoad()
     -- log("GildedStash OnLoad start")
     self.name:SetText(C_Spell.GetSpellName(addon.config.GILDED_STASH_SPELL_CODE))
     for i = 1, addon.config.GILDED_STASH_WEEKLY_CAP, 1 do
@@ -106,7 +106,7 @@ function DelveCompanionGildedStashFrameMixin:OnLoad()
     self.container:Layout()
 end
 
-function DelveCompanionGildedStashFrameMixin:OnShow()
+function DelveCompanionOverviewGildedStashFrameMixin:OnShow()
     -- log("GildedStash OnShow start")
     local desc = C_Spell.GetSpellDescription(addon.config.GILDED_STASH_SPELL_CODE)
     local collectedCount = tonumber(strsub(strmatch(desc, "%d/%d"), 1, 1))
@@ -124,15 +124,149 @@ function DelveCompanionGildedStashFrameMixin:OnShow()
     end
 end
 
-function DelveCompanionGildedStashFrameMixin:OnEnter()
+function DelveCompanionOverviewGildedStashFrameMixin:OnEnter()
     GameTooltip:SetOwner(self, "ANCHOR_TOP")
     GameTooltip:SetSpellByID(addon.config.GILDED_STASH_SPELL_CODE)
-    GameTooltip:AddLine(addon.lockit["ui-gilded-stash-bountiful-note"], 1, 1, 1)
+    GameTooltip:AddLine(lockit["ui-gilded-stash-bountiful-note"], 1, 1, 1)
     GameTooltip:Show()
 end
 
-function DelveCompanionGildedStashFrameMixin:OnLeave()
+function DelveCompanionOverviewGildedStashFrameMixin:OnLeave()
     GameTooltip:Hide()
+end
+
+--============ Bountiful Frame ======================
+
+DelveCompanionOverviewBountifulButtonMixin = {}
+
+function DelveCompanionOverviewBountifulButtonMixin:UpdateTracking()
+    local function Set()
+        self.isTracking = true
+        self.waypointIcon:Show()
+    end
+
+    local function Clear()
+        self.isTracking = false
+        self.waypointIcon:Hide()
+    end
+
+    if not C_SuperTrack.IsSuperTrackingAnything() then
+        Clear()
+    end
+
+    local type, typeID = C_SuperTrack.GetSuperTrackedMapPin()
+    if type ~= Enum.SuperTrackingMapPinType.AreaPOI then
+        Clear()
+    elseif typeID ~= self.poiID then
+        Clear()
+    else
+        Set()
+    end
+end
+
+function DelveCompanionOverviewBountifulButtonMixin:OnLoad()
+    self:SetScript("OnEvent", DelveCompanionOverviewBountifulButtonMixin.UpdateTracking)
+end
+
+function DelveCompanionOverviewBountifulButtonMixin:OnShow()
+    self:RegisterEvent("SUPER_TRACKING_CHANGED")
+    self:UpdateTracking()
+end
+
+function DelveCompanionOverviewBountifulButtonMixin:OnHide()
+    self:UnregisterEvent("SUPER_TRACKING_CHANGED")
+end
+
+function DelveCompanionOverviewBountifulButtonMixin:UpdateTooltip()
+    local text = lockit["ui-delve-instance-button-tooltip-click-text"]
+    if self.isTracking then
+        text = lockit["ui-delve-instance-button-tooltip-current-text"]
+    end
+
+    GameTooltip:ClearLines()
+    GameTooltip:AddLine(self.delveName);
+    GameTooltip:AddLine(self.parentMapName, 1, 1, 1);
+    GameTooltip:AddLine(" ")
+    GameTooltip:AddLine(text, 1, 1, 1)
+    GameTooltip:Show()
+end
+
+function DelveCompanionOverviewBountifulButtonMixin:OnEnter()
+    GameTooltip:SetOwner(self, "ANCHOR_TOP");
+    self:UpdateTooltip()
+end
+
+function DelveCompanionOverviewBountifulButtonMixin:OnLeave()
+    GameTooltip:Hide()
+end
+
+function DelveCompanionOverviewBountifulButtonMixin:OnClick()
+    if IsShiftKeyDown() then
+        if self.isTracking then
+            C_SuperTrack.ClearSuperTrackedMapPin()
+        else
+            C_SuperTrack.SetSuperTrackedMapPin(Enum.SuperTrackingMapPinType.AreaPOI, self.poiID)
+        end
+        self:UpdateTooltip()
+    end
+end
+
+DelveCompanionOverviewBountifulFrameMixin = {}
+
+function DelveCompanionOverviewBountifulFrameMixin:OnLoad()
+    -- log("Bountiful OnLoad start")
+    self.name:SetText(lockit["ui-common-bountiful-delve"])
+
+    local keyCurrInfo = C_CurrencyInfo.GetCurrencyInfo(addon.config.BOUNTIFUL_KEY_CURRENCY_CODE)
+    self.keysIcon:SetTexture(keyCurrInfo.iconFileID)
+    self.keysTooltipCatcher:SetSize(self.keysIcon:GetSize())
+    self.keysTooltipCatcher:SetScript("OnEnter", function()
+        GameTooltip:SetOwner(self.keysIcon, "ANCHOR_RIGHT");
+        GameTooltip:SetCurrencyByID(keyCurrInfo.currencyID);
+        GameTooltip:Show()
+    end)
+    self.keysTooltipCatcher:SetScript("OnLeave", function()
+        GameTooltip:Hide()
+    end)
+
+    self.noBountifulLabel:SetText(lockit["ui-no-active-bountiful"])
+    self.bountifulButtonsPool = CreateFramePool("BUTTON", self.container, "DelveCompanionOverviewBountifulButtonTemplate")
+end
+
+function DelveCompanionOverviewBountifulFrameMixin:OnShow()
+    -- log("Bountiful OnShow start")
+    addon.CacheKeysData()
+    local keyCurrInfo = C_CurrencyInfo.GetCurrencyInfo(addon.config.BOUNTIFUL_KEY_CURRENCY_CODE)
+    self.keysCountLabel:SetText(keyCurrInfo.quantity)
+
+    addon.CacheActiveBountiful()
+    self.bountifulButtonsPool:ReleaseAll()
+
+    if #addon.activeBountifulDelves ~= 0 then
+        self.noBountifulLabel:Hide()
+
+        for index, poiID in ipairs(addon.activeBountifulDelves) do
+            local config = FindValueInTableIf(addon.config.DELVES_REGULAR_DATA, function(delveConfig)
+                return poiID == delveConfig.poiIDs.bountiful
+            end)
+            local _, _, _, _, _, _, _, _, _, achIcon = GetAchievementInfo(config.achievements.story)
+
+            local button = self.bountifulButtonsPool:Acquire()
+            button.layoutIndex = index
+            button.artBg:SetTexture(achIcon)
+            button.poiID = poiID
+            button.isTracking = false
+
+            local delveMap = C_Map.GetMapInfo(config.uiMapID)
+            button.delveName = delveMap.name
+            button.parentMapName = C_Map.GetMapInfo(delveMap.parentMapID).name
+            button:Show()
+        end
+
+        self.container:Layout()
+    else
+        self.noBountifulLabel:Show()
+    end
 end
 
 --============ Delves DashboardOverview ======================
@@ -151,10 +285,10 @@ end
 
 --============ Init ======================
 
-function DelveCompanion_DevlesDashExtension_Init()
+function DelveCompanion_DelvesDashExtension_Init()
     if addon.lootInfoFrame == nil then
         local lootInfoFrame = CreateFrame("Frame", "$parentLootInfoFrame", DelvesDashboardFrame,
-            "DelveCompanionLootInfoFrameTemplate")
+            "DelveCompanionLootInfoFrame")
 
         addon.lootInfoFrame = lootInfoFrame
     end
@@ -163,7 +297,7 @@ function DelveCompanion_DevlesDashExtension_Init()
         local gvPanel = DelvesDashboardFrame.ButtonPanelLayoutFrame.GreatVaultButtonPanel
 
         local gvDetailsFrame = CreateFrame("Frame", "GVDetailsFrame", gvPanel,
-            "DelveCompanionGreatVaultDetailsTemplate")
+            "DelveCompanionGreatVaultDetailsFrame")
         gvDetailsFrame.gvButton:SetTextToFit(_G["RAF_VIEW_ALL_REWARDS"])
 
         addon.CacheGreatVaultRewards()
@@ -173,8 +307,10 @@ function DelveCompanion_DevlesDashExtension_Init()
     end
 
     if addon.delvesDashOverview == nil then
+        addon.CacheKeysData()
+
         local dashOverview = CreateFrame("Frame", "$parentDashboardOverview",
-            DelvesDashboardFrame.ButtonPanelLayoutFrame, "DelveCompanionDashboardOverviewTemplate")
+            DelvesDashboardFrame.ButtonPanelLayoutFrame, "DelveCompanionDashboardOverviewFrame")
         DelvesDashboardFrame.ButtonPanelLayoutFrame.spacing = -20
         DelvesDashboardFrame.ButtonPanelLayoutFrame:Layout()
 

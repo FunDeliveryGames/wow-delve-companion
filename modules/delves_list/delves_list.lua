@@ -38,13 +38,14 @@ function DelveCompanionDelveInstanceButtonMixin:UpdateTooltip()
     if self.isTracking then
         text = lockit["ui-delve-instance-button-tooltip-current-text"]
     end
+
     GameTooltip:SetText(text, 1, 1, 1)
+    GameTooltip:Show()
 end
 
 function DelveCompanionDelveInstanceButtonMixin:OnEnter()
     GameTooltip:SetOwner(self, "ANCHOR_TOP")
     self:UpdateTooltip()
-    GameTooltip:Show()
 end
 
 function DelveCompanionDelveInstanceButtonMixin:OnLeave()

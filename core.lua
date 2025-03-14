@@ -198,7 +198,7 @@ addon.eventsCatcherFrame:SetScript(
                     return
                 end
 
-                DelveCompanion_DevlesDashExtension_Init()
+                DelveCompanion_DelvesDashExtension_Init()
             elseif loadedName == trackedAddonNames.encounterJournal then
                 if EncounterJournal == nil then
                     log("EncounterJournal is nil. Delves tab is not inited.")
