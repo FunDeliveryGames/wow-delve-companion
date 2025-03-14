@@ -25,15 +25,19 @@
 ## X-Category: Delve
 
 # Logging
-log.lua
+src\log.lua
 
 # Localization
 localization\lockit.xml
 
-# Config
-config.lua
+# Data
+data\config.lua
+data\enums.lua
 
 # Core
+src\utility.xml
+src\utility.lua
+
 core.lua
 modules\delves_list\delves_list.xml
 modules\delves_list\delves_list.lua

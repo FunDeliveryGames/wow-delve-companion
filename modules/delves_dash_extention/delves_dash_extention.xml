@@ -137,9 +137,9 @@
                     <OnLeave>
                         GameTooltip:Hide()
                     </OnLeave>
-                    <OnMouseUp>
+                    <OnClick>
                         WeeklyRewards_ShowUI()
-                    </OnMouseUp>
+                    </OnClick>
                 </Scripts>
             </Button>
             <Frame name="$parentContent" parentKey="content">
@@ -207,10 +207,9 @@
                 <Frames>
                     <Frame name="$parentContainer" parentKey="container"
                         inherits="HorizontalLayoutFrame">
-                        <Size x="140" y="40" />
+                        <Size y="70" />
                         <KeyValues>
                             <KeyValue key="expand" value="false" type="boolean" />
-                            <KeyValue key="align" value="center" type="string" />
                             <KeyValue key="spacing" value="5" type="number" />
                         </KeyValues>
                         <Anchors>
@@ -226,75 +225,140 @@
                 </Scripts>
             </Frame>
 
-            <Frame name="$parentBountifulFrame" parentKey="bountiful"
-                mixin="DelveCompanionOverviewBountifulFrameMixin">
-                <Size x="140" y="60" />
+            <Frame parentKey="BountifulFrame" mixin="DelveCompanionOverviewBountifulFrameMixin">
+                <Size x="140" y="30" />
                 <Anchors>
                     <Anchor point="TOP" relativeTo="$parentGildedStashFrame"
                         relativePoint="BOTTOM" y="-10" />
                 </Anchors>
                 <Layers>
                     <Layer level="OVERLAY">
-                        <FontString name="$parentName" parentKey="name" inherits="GameFontNormal"
+                        <FontString parentKey="Title" inherits="GameFontNormal"
                             text="BOUNTIFUL" mixin="AutoScalingFontStringMixin"
-                            justifyH="LEFT" wordwrap="true" justifyV="MIDDLE" maxLines="2">
-                            <Size x="90" />
+                            justifyH="CENTER" wordwrap="true" justifyV="MIDDLE" maxLines="2">
+                            <Size x="140" />
                             <Anchors>
-                                <Anchor point="TOPLEFT" x="10" y="0" />
-                            </Anchors>
-                        </FontString>
-                        <Texture name="$parentKeysIcon" parentKey="keysIcon">
-                            <Size x="24" y="24" />
-                            <Anchors>
-                                <Anchor point="TOPRIGHT" relativeTo="$parent"
-                                    relativePoint="TOPRIGHT" x="-10" y="0" />
-                            </Anchors>
-                        </Texture>
-                        <FontString name="$parentKeysCount" parentKey="keysCountLabel"
-                            inherits="GameFontHighlightMed2"
-                            justifyH="RIGHT" text="KEYS_COUNT">
-                            <Anchors>
-                                <Anchor point="RIGHT" relativeTo="$parentKeysIcon"
-                                    relativePoint="LEFT" x="-5" y="0" />
-                            </Anchors>
-                        </FontString>
-                        <FontString name="$parentNoBountiful" parentKey="noBountifulLabel"
-                            inherits="GameFontHighlightMed2"
-                            justifyH="RIGHT" text="KEYS_COUNT" hidden="true">
-                            <Anchors>
-                                <Anchor point="TOP" relativeTo="$parent" relativePoint="TOP" y="-35" />
+                                <Anchor point="TOP" />
                             </Anchors>
                         </FontString>
                     </Layer>
                 </Layers>
                 <Frames>
-                    <Frame name="$parentKeysTooltipCatcher" parentKey="keysTooltipCatcher">
+                    <Frame parentKey="ActiveDelves">
+                        <Size x="140" y="35" />
                         <Anchors>
-                            <Anchor point="CENTER" relativeTo="$parentKeysIcon" />
+                            <Anchor point="TOP" relativeKey="$parent.Title" relativePoint="BOTTOM" />
                         </Anchors>
+                        <Layers>
+                            <Layer level="OVERLAY">
+                                <FontString parentKey="NoBountifulLabel"
+                                    inherits="GameFontHighlightMed2" text="KEYS_COUNT"
+                                    mixin="AutoScalingFontStringMixin" justifyH="CENTER"
+                                    justifyV="MIDDLE" wordwrap="true" maxLines="2" hidden="true">
+                                    <Size x="140" />
+                                    <Anchors>
+                                        <Anchor point="CENTER" />
+                                    </Anchors>
+                                </FontString>
+                            </Layer>
+                        </Layers>
+                        <Frames>
+                            <Frame parentKey="Container" inherits="HorizontalLayoutFrame">
+                                <Size y="40" />
+                                <KeyValues>
+                                    <KeyValue key="expand" value="false" type="boolean" />
+                                    <KeyValue key="spacing" value="5" type="number" />
+                                    <KeyValue key="maximumWidth" value="140" type="number" />
+                                </KeyValues>
+                                <Anchors>
+                                    <Anchor point="TOP" y="-5" />
+                                </Anchors>
+                            </Frame>
+                        </Frames>
                     </Frame>
-                    <Frame name="$parentContainer" parentKey="container"
-                        inherits="HorizontalLayoutFrame">
-                        <Size x="140" y="40" />
+
+                    <Frame parentKey="KeysInfo">
+                        <Size x="110" y="40" />
+                        <Anchors>
+                            <Anchor point="TOP" relativeKey="$parent.ActiveDelves"
+                                relativePoint="BOTTOM" y="-5" />
+                        </Anchors>
+                        <Frames>
+                            <Frame parentKey="Keys"
+                                inherits="DelveCompanionIconWithLabelAndTooltipTemplate">
+                                <Size x="40" y="26" />
+                                <KeyValues>
+                                    <KeyValue key="iconSizeX" value="26" type="number" />
+                                    <KeyValue key="iconSizeY" value="26" type="number" />
+                                    <KeyValue key="frameType" value="currency" type="string" />
+                                </KeyValues>
+                                <Anchors>
+                                    <Anchor point="LEFT" x="18" />
+                                </Anchors>
+                            </Frame>
+                            <Frame parentKey="Shards"
+                                inherits="DelveCompanionIconWithLabelAndTooltipTemplate">
+                                <Size x="40" y="26" />
+                                <KeyValues>
+                                    <KeyValue key="iconSizeX" value="26" type="number" />
+                                    <KeyValue key="iconSizeY" value="26" type="number" />
+                                    <KeyValue key="frameType" value="item" type="string" />
+                                </KeyValues>
+                                <Anchors>
+                                    <Anchor point="TOP" relativeKey="$parent.Keys"
+                                        relativePoint="BOTTOM" y="-5" />
+                                </Anchors>
+                            </Frame>
+                            <Frame parentKey="BountyMap"
+                                inherits="DelveCompanionIconWithLabelAndTooltipTemplate">
+                                <Size x="40" y="26" />
+                                <KeyValues>
+                                    <KeyValue key="iconSizeX" value="26" type="number" />
+                                    <KeyValue key="iconSizeY" value="26" type="number" />
+                                    <KeyValue key="frameType" value="item" type="string" />
+                                </KeyValues>
+                                <Anchors>
+                                    <Anchor point="RIGHT" />
+                                </Anchors>
+                            </Frame>
+                            <Frame parentKey="Echoes"
+                                inherits="DelveCompanionIconWithLabelAndTooltipTemplate">
+                                <Size x="40" y="26" />
+                                <KeyValues>
+                                    <KeyValue key="iconSizeX" value="26" type="number" />
+                                    <KeyValue key="iconSizeY" value="26" type="number" />
+                                    <KeyValue key="frameType" value="item" type="string" />
+                                </KeyValues>
+                                <Anchors>
+                                    <Anchor point="TOP" relativeKey="$parent.BountyMap"
+                                        relativePoint="BOTTOM" y="-5" />
+                                </Anchors>
+                            </Frame>
+                        </Frames>
+                    </Frame>
+
+                    <Button parentKey="WorldMapButton"
+                        inherits="MagicButtonTemplate" text="MAP">
+                        <Size x="130" y="30" />
                         <KeyValues>
-                            <KeyValue key="expand" value="false" type="boolean" />
-                            <KeyValue key="align" value="center" type="string" />
-                            <KeyValue key="spacing" value="5" type="number" />
+                            <KeyValue key="fitTextWidthPadding" value="10" type="number" />
                         </KeyValues>
                         <Anchors>
-                            <Anchor point="TOP" relativeTo="$parent" relativePoint="TOP" y="-35" />
+                            <Anchor point="BOTTOM" relativeTo="$parent" x="0" y="27" />
                         </Anchors>
-                    </Frame>
+                        <Scripts>
+                            <OnClick>
+                                ToggleQuestLog()
+                                QuestMapFrame:SetDisplayMode(QuestLogDisplayMode.Events)
+                            </OnClick>
+                        </Scripts>
+                    </Button>
                 </Frames>
                 <Scripts>
                     <OnLoad method="OnLoad" />
                     <OnShow method="OnShow" />
                 </Scripts>
             </Frame>
-
-
-            <!-- ToggleQuestLog()
-                        QuestMapFrame:SetDisplayMode(QuestLogDisplayMode.Events) -->
         </Frames>
         <Scripts>
             <OnLoad method="OnLoad" />
@@ -362,8 +426,7 @@
         </Anchors>
         <Layers>
             <Layer level="BACKGROUND" textureSubLevel="-5">
-                <Texture name="$parentBackground" parentKey="background"
-                    file="Interface\DialogFrame\UI-DialogBox-Background">
+                <Texture parentKey="Background" file="Interface\DialogFrame\UI-DialogBox-Background">
                     <Anchors>
                         <Anchor point="TOPLEFT" x="7" y="-7" />
                         <Anchor point="BOTTOMRIGHT" x="-7" y="7" />
@@ -371,7 +434,7 @@
                 </Texture>
             </Layer>
             <Layer level="ARTWORK" textureSubLevel="-1">
-                <Texture name="$parentArtBg" parentKey="artBg">
+                <Texture parentKey="ArtBg">
                     <Anchors>
                         <Anchor point="TOPLEFT" x="0" y="0" />
                         <Anchor point="BOTTOMRIGHT" x="0" y="0" />
@@ -380,8 +443,8 @@
                 </Texture>
             </Layer>
             <Layer level="OVERLAY">
-                <Texture name="$parentWaypointIcon" parentKey="waypointIcon"
-                    atlas="Waypoint-MapPin-Minimap-Tracked" hidden="true">
+                <Texture parentKey="WaypointIcon" atlas="Waypoint-MapPin-Minimap-Tracked"
+                    hidden="true">
                     <Size x="25" y="25" />
                     <Anchors>
                         <Anchor point="BOTTOMRIGHT" relativeKey="$parentArtBg"

@@ -3,6 +3,7 @@ local log = addon.log
 local lockit = addon.lockit
 
 local GREAT_VAULT_DETAILS_FRAME_PADDING = 3
+
 --============ LootInfoFrame ======================
 
 DelveCompanionLootInfoFrameMixin = {}
@@ -142,12 +143,12 @@ DelveCompanionOverviewBountifulButtonMixin = {}
 function DelveCompanionOverviewBountifulButtonMixin:UpdateTracking()
     local function Set()
         self.isTracking = true
-        self.waypointIcon:Show()
+        self.WaypointIcon:Show()
     end
 
     local function Clear()
         self.isTracking = false
-        self.waypointIcon:Hide()
+        self.WaypointIcon:Hide()
     end
 
     if not C_SuperTrack.IsSuperTrackingAnything() then
@@ -215,35 +216,27 @@ DelveCompanionOverviewBountifulFrameMixin = {}
 
 function DelveCompanionOverviewBountifulFrameMixin:OnLoad()
     -- log("Bountiful OnLoad start")
-    self.name:SetText(lockit["ui-common-bountiful-delve"])
+    self.Title:SetText(lockit["ui-common-bountiful-delve"])
 
-    local keyCurrInfo = C_CurrencyInfo.GetCurrencyInfo(addon.config.BOUNTIFUL_KEY_CURRENCY_CODE)
-    self.keysIcon:SetTexture(keyCurrInfo.iconFileID)
-    self.keysTooltipCatcher:SetSize(self.keysIcon:GetSize())
-    self.keysTooltipCatcher:SetScript("OnEnter", function()
-        GameTooltip:SetOwner(self.keysIcon, "ANCHOR_RIGHT");
-        GameTooltip:SetCurrencyByID(keyCurrInfo.currencyID);
-        GameTooltip:Show()
-    end)
-    self.keysTooltipCatcher:SetScript("OnLeave", function()
-        GameTooltip:Hide()
-    end)
+    -- local keyCurrInfo = C_CurrencyInfo.GetCurrencyInfo(addon.config.BOUNTIFUL_KEY_CURRENCY_CODE)
+    -- self.KeysInfo.Keys.Icon:SetTexture(keyCurrInfo.iconFileID)
+    self.KeysInfo.Keys.frameCode = addon.config.BOUNTIFUL_KEY_CURRENCY_CODE
+    self.KeysInfo.Shards.frameCode = addon.config.KEY_SHARD_ITEM_CODE
+    self.KeysInfo.BountyMap.frameCode = addon.config.BOUNTY_MAP_ITEM_CODE
+    self.KeysInfo.Echoes.frameCode = addon.config.ECHO_ITEM_CODE
 
-    self.noBountifulLabel:SetText(lockit["ui-no-active-bountiful"])
-    self.bountifulButtonsPool = CreateFramePool("BUTTON", self.container, "DelveCompanionOverviewBountifulButtonTemplate")
+    self.ActiveDelves.NoBountifulLabel:SetText(lockit["ui-no-active-bountiful"])
+    self.bountifulButtonsPool = CreateFramePool("BUTTON", self.ActiveDelves.Container,
+        "DelveCompanionOverviewBountifulButtonTemplate")
 end
 
 function DelveCompanionOverviewBountifulFrameMixin:OnShow()
     -- log("Bountiful OnShow start")
-    addon.CacheKeysData()
-    local keyCurrInfo = C_CurrencyInfo.GetCurrencyInfo(addon.config.BOUNTIFUL_KEY_CURRENCY_CODE)
-    self.keysCountLabel:SetText(keyCurrInfo.quantity)
-
     addon.CacheActiveBountiful()
     self.bountifulButtonsPool:ReleaseAll()
 
     if #addon.activeBountifulDelves ~= 0 then
-        self.noBountifulLabel:Hide()
+        self.ActiveDelves.NoBountifulLabel:Hide()
 
         for index, poiID in ipairs(addon.activeBountifulDelves) do
             local config = FindValueInTableIf(addon.config.DELVES_REGULAR_DATA, function(delveConfig)
@@ -253,7 +246,7 @@ function DelveCompanionOverviewBountifulFrameMixin:OnShow()
 
             local button = self.bountifulButtonsPool:Acquire()
             button.layoutIndex = index
-            button.artBg:SetTexture(achIcon)
+            button.ArtBg:SetTexture(achIcon)
             button.poiID = poiID
             button.isTracking = false
 
@@ -263,10 +256,18 @@ function DelveCompanionOverviewBountifulFrameMixin:OnShow()
             button:Show()
         end
 
-        self.container:Layout()
+        self.ActiveDelves.Container:Layout()
     else
-        self.noBountifulLabel:Show()
+        self.ActiveDelves.NoBountifulLabel:Show()
     end
+
+    addon.CacheKeysData()
+    self.KeysInfo.Keys.Label:SetText(C_CurrencyInfo.GetCurrencyInfo(addon.config.BOUNTIFUL_KEY_CURRENCY_CODE).quantity)
+    self.KeysInfo.Shards.Label:SetText(C_Item.GetItemCount(addon.config.KEY_SHARD_ITEM_CODE))
+    self.KeysInfo.BountyMap.Label:SetText(C_Item.GetItemCount(addon.config.BOUNTY_MAP_ITEM_CODE))
+    self.KeysInfo.Echoes.Label:SetText(C_Item.GetItemCount(addon.config.ECHO_ITEM_CODE))
+
+    self.WorldMapButton:SetText(_G["WORLDMAP_BUTTON"])
 end
 
 --============ Delves DashboardOverview ======================
@@ -311,6 +312,7 @@ function DelveCompanion_DelvesDashExtension_Init()
 
         local dashOverview = CreateFrame("Frame", "$parentDashboardOverview",
             DelvesDashboardFrame.ButtonPanelLayoutFrame, "DelveCompanionDashboardOverviewFrame")
+
         DelvesDashboardFrame.ButtonPanelLayoutFrame.spacing = -20
         DelvesDashboardFrame.ButtonPanelLayoutFrame:Layout()
 
