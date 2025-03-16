@@ -2,6 +2,8 @@ local addonName, addon = ...
 
 local config = {}
 
+config.ACTIVITY_TYPE = Enum.WeeklyRewardChestThresholdType.World
+
 config.BOUNTIFUL_KEY_CURRENCY_CODE = 3028
 config.BOUNTIFUL_KEY_MAX_PER_WEEK = 4
 config.BOUNTIFUL_KEY_QUESTS_DATA = {

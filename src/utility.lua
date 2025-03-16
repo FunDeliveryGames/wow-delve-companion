@@ -1,6 +1,7 @@
 local addonName, addon = ...
 local log = addon.log
 local enums = addon.enums
+local lockit = addon.lockit
 
 --============ DelveCompanionIconWithTextAndTooltip ======================
 
@@ -29,7 +30,7 @@ function DelveCompanionIconWithLabelAndTooltipMixin:OnShow()
     elseif type == enums.CodeType.Achievement then
         _, _, _, _, _, _, _, _, _, texture = GetAchievementInfo(code)
     else
-        log("[DelveCompanionIconWithTextAndTooltip] Unknown frameType: %s", type)
+        log(lockit["ui-debug-unexpected-enum-element"], tostring(enums.CodeType), type)
     end
 
     if texture then
@@ -49,11 +50,52 @@ function DelveCompanionIconWithLabelAndTooltipMixin:OnEnter()
     elseif type == enums.CodeType.Achievement then
         GameTooltip:SetAchievementByID(code)
     else
-        log("[DelveCompanionIconWithTextAndTooltip] Unknown frameType: %s", type)
+        log(lockit["ui-debug-unexpected-enum-element"], tostring(enums.CodeType), type)
     end
     GameTooltip:Show()
 end
 
 function DelveCompanionIconWithLabelAndTooltipMixin:OnLeave()
     GameTooltip:Hide()
+end
+
+--============ Settings ======================
+DelveCompanionSettingsFrameMixin = {}
+
+function DelveCompanionSettingsFrameMixin:OnLoad()
+    -- log("SettingsFrame OnLoad start...")
+    if not DelveCompanionCharacterData then
+        DelveCompanionCharacterData = {
+            gvDetailsEnabled = true,
+            keysCapTooltipEnabled = true,
+            dashOverviewEnabled = true,
+        }
+    end
+
+    self:SetAllPoints()
+    self.TitlePanel.Title:SetText(lockit["ui-addon-name"])
+
+    -- Prepare toggles
+    self.TogglesContainer.gvDetailsCheckButton:SetChecked(DelveCompanionCharacterData.gvDetailsEnabled)
+    self.TogglesContainer.gvDetailsCheckButton.Text:SetText(lockit["ui-settings-gv-details"])
+    self.TogglesContainer.gvDetailsCheckButton:HookScript("OnClick", function(cb)
+        DelveCompanionCharacterData.gvDetailsEnabled = cb:GetChecked()
+    end)
+
+    self.TogglesContainer.keysCapTooltipCheckButton:SetChecked(DelveCompanionCharacterData.keysCapTooltipEnabled)
+    self.TogglesContainer.keysCapTooltipCheckButton.Text:SetText(lockit["ui-settings-keys-cap"])
+    self.TogglesContainer.keysCapTooltipCheckButton:HookScript("OnClick", function(cb)
+        DelveCompanionCharacterData.keysCapTooltipEnabled = cb:GetChecked()
+    end)
+
+    self.TogglesContainer.dashOverviewCheckButton:SetChecked(DelveCompanionCharacterData.dashOverviewEnabled)
+    self.TogglesContainer.dashOverviewCheckButton.Text:SetText(lockit["ui-settings-dashboard-overview"])
+    self.TogglesContainer.dashOverviewCheckButton:HookScript("OnClick", function(cb)
+        DelveCompanionCharacterData.dashOverviewEnabled = cb:GetChecked()
+    end)
+    self.TogglesContainer:Layout()
+
+    self.ReloadButton:SetText(format(lockit["ui-settings-apply-button"], _G["SETTINGS_APPLY"], _G["RELOADUI"]))
+
+    self:Hide()
 end

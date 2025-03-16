@@ -58,7 +58,7 @@ end
 
 addon.CacheGreatVaultRewards = function()
     local gvRewards = {}
-    local activityInfo = C_WeeklyRewards.GetActivities(addon.activityType)
+    local activityInfo = C_WeeklyRewards.GetActivities(addon.config.ACTIVITY_TYPE)
     if not activityInfo then return end
 
     for index, rewInfo in ipairs(activityInfo) do
@@ -74,65 +74,29 @@ addon.CacheGreatVaultRewards = function()
     addon.gvRewards = gvRewards
 end
 
--- TODO: polish
-addon.CreateSettingsFrame = function()
-    if addon.settingsFrame == nil then
-        local settingsFrame = CreateFrame("Frame", "DelveCompanionSettingsFrame", UIParent,
-            "DefaultPanelTemplate")
-        settingsFrame:Hide()
-        settingsFrame:SetSize(300, 200)
-        settingsFrame:SetPoint("CENTER")
-        settingsFrame.TitleContainer.TitleText:SetText(_G["SETTINGS"])
-
-        CreateFrame("Button", nil, settingsFrame, "UIPanelCloseButtonDefaultAnchors")
-
-        local gvDetailsCheckButton = CreateFrame("CheckButton", nil, settingsFrame, "ChatConfigCheckButtonTemplate")
-        gvDetailsCheckButton:SetPoint("TOPLEFT", 15, -40)
-        gvDetailsCheckButton:SetChecked(DelveCompanionCharacterData.gvDetailsEnabled)
-        gvDetailsCheckButton.Text:SetText("Enable Great Vault details")
-        -- gvDetailsCheckButton.tooltip = "This is where you place MouseOver Text."
-        gvDetailsCheckButton:HookScript("OnClick", function(self)
-            DelveCompanionCharacterData.gvDetailsEnabled = self:GetChecked()
-        end)
-
-        local keysCapTooltipCheckButton = CreateFrame("CheckButton", nil, settingsFrame, "ChatConfigCheckButtonTemplate")
-        keysCapTooltipCheckButton:SetPoint("TOPLEFT", 15, -80)
-        keysCapTooltipCheckButton:SetChecked(DelveCompanionCharacterData.keysCapTooltipEnabled)
-        keysCapTooltipCheckButton.Text:SetText("Display Keys weekly cap")
-        -- gvDetailsCheckButton.tooltip = "This is where you place MouseOver Text."
-        keysCapTooltipCheckButton:HookScript("OnClick", function(self)
-            DelveCompanionCharacterData.keysCapTooltipEnabled = self:GetChecked()
-        end)
-
-        local reloadButton = CreateFrame("Button", nil, settingsFrame, "MagicButtonTemplate")
-        reloadButton:SetSize(200, 30)
-        reloadButton:SetPoint("BOTTOM", 0, 15)
-        reloadButton:SetText(_G["RELOADUI"])
-        reloadButton:SetScript("OnMouseUp", function()
-            C_UI.Reload()
-        end)
-
-        addon.settingsFrame = settingsFrame
+-- TODO: Explore new Settings API. Maybe Settings.RegisterAddOnSetting is more convenient way to setup settings.
+addon.InitSettings = function()
+    local addonNameStr = tostring(addonName) -- TODO: explore why addonName can be a table instead of a string
+    local settingsFrame = CreateFrame("Frame", addonNameStr, nil, "DelveCompanionSettingsFrame")
+    settingsFrame.name = addonNameStr
+    if Settings and Settings.RegisterCanvasLayoutCategory and Settings.RegisterAddOnCategory then
+        local category = Settings.RegisterCanvasLayoutCategory(settingsFrame, settingsFrame.name)
+        category.ID = settingsFrame.name
+        Settings.RegisterAddOnCategory(category)
     end
 end
 
 addon.Init = function()
-    if not DelveCompanionCharacterData then
-        DelveCompanionCharacterData = {
-            gvDetailsEnabled = true,
-            keysCapTooltipEnabled = true
-        }
-    end
+    addon.InitSettings()
 
-    addon.CreateSettingsFrame()
-
-    addon.delvesListFrame = nil
-    addon.lootInfoFrame = nil
-    addon.activityType = Enum.WeeklyRewardChestThresholdType.World
+    -- addon.delvesListFrame = nil
+    -- addon.lootInfoFrame = nil
 end
 
 function DelveCompanionShowSettings()
-    addon.settingsFrame:Show()
+    if Settings and Settings.OpenToCategory then
+        Settings.OpenToCategory(tostring(addonName))
+    end
 end
 
 local trackedAddonNames = {

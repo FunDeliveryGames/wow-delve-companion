@@ -47,11 +47,12 @@ end
 --============ GreatVaultDetails ======================
 
 DelveCompanionGreatVaultDetailsMixin = {}
+-- GameTooltip:SetWeeklyReward(itemDBID)
 
 function DelveCompanionGreatVaultDetailsMixin:OnLoad()
     self.rewardInfoStrings = {}
     local offsetY = GREAT_VAULT_DETAILS_FRAME_PADDING
-    for i = WeeklyRewardsUtil.GetMaxNumRewards(addon.activityType), 1, -1 do
+    for i = WeeklyRewardsUtil.GetMaxNumRewards(addon.config.ACTIVITY_TYPE), 1, -1 do
         local rewFrame = CreateFrame("Frame", nil, self.content, "DelveCompanionGreatVaultItemTemplate")
         rewFrame:SetPoint("BOTTOM", 0, offsetY)
         offsetY = offsetY + rewFrame:GetHeight() + GREAT_VAULT_DETAILS_FRAME_PADDING
@@ -60,7 +61,7 @@ function DelveCompanionGreatVaultDetailsMixin:OnLoad()
     end
 
     self:GetParent():HookScript("OnShow", function()
-        if WeeklyRewardsUtil.HasUnlockedRewards(addon.activityType) and not C_WeeklyRewards.CanClaimRewards() then
+        if WeeklyRewardsUtil.HasUnlockedRewards(addon.config.ACTIVITY_TYPE) and not C_WeeklyRewards.CanClaimRewards() then
             addon.CacheGreatVaultRewards()
 
             for index, gvReward in ipairs(addon.gvRewards) do
@@ -296,14 +297,12 @@ end
 --============ Init ======================
 
 function DelveCompanion_DelvesDashExtension_Init()
-    if addon.lootInfoFrame == nil then
-        local lootInfoFrame = CreateFrame("Frame", "$parentLootInfoFrame", DelvesDashboardFrame,
-            "DelveCompanionLootInfoFrame")
+    local lootInfoFrame = CreateFrame("Frame", "$parentLootInfoFrame", DelvesDashboardFrame,
+        "DelveCompanionLootInfoFrame")
 
-        addon.lootInfoFrame = lootInfoFrame
-    end
+    addon.lootInfoFrame = lootInfoFrame
 
-    if DelveCompanionCharacterData.gvDetailsEnabled and addon.gvDetailsFrame == nil then
+    if DelveCompanionCharacterData.gvDetailsEnabled then
         local gvPanel = DelvesDashboardFrame.ButtonPanelLayoutFrame.GreatVaultButtonPanel
 
         local gvDetailsFrame = CreateFrame("Frame", "GVDetailsFrame", gvPanel,
@@ -316,9 +315,8 @@ function DelveCompanion_DelvesDashExtension_Init()
         addon.eventsCatcherFrame:RegisterEvent("WEEKLY_REWARDS_UPDATE")
     end
 
-    if addon.delvesDashOverview == nil then
-        addon.CacheKeysData()
-
+    if DelveCompanionCharacterData.dashOverviewEnabled then
+        -- addon.CacheKeysData()
         local dashOverview = CreateFrame("Frame", "$parentDashboardOverview",
             DelvesDashboardFrame.ButtonPanelLayoutFrame, "DelveCompanionDashboardOverviewFrame")
 
