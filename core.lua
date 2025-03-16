@@ -1,8 +1,6 @@
 local addonName, addon = ...
 local log = addon.log
 
-addon.eventsCatcherFrame = CreateFrame("Frame")
-
 addon.CacheActiveBountiful = function()
     --log("Start fetching boutiful delves...")
     local activeBountifulDelves = {}
@@ -131,44 +129,6 @@ addon.Init = function()
     addon.delvesListFrame = nil
     addon.lootInfoFrame = nil
     addon.activityType = Enum.WeeklyRewardChestThresholdType.World
-
-    -- TODO: refactor to init it properly
-    if DelveCompanionCharacterData.keysCapTooltipEnabled then
-        addon.eventsCatcherFrame:RegisterEvent("QUEST_LOG_UPDATE")
-
-        TooltipDataProcessor.AddTooltipPostCall(Enum.TooltipDataType.Currency, function(tooltip, ...)
-            if tooltip:GetPrimaryTooltipData().id ~= addon.config.BOUNTIFUL_KEY_CURRENCY_CODE then
-                return
-            end
-
-            local lines = {}
-            for i = 1, GameTooltip:NumLines() do
-                local line = _G["GameTooltipTextLeft" .. i]
-                if line then
-                    table.insert(lines, line:GetText())
-                end
-            end
-            GameTooltip:ClearLines()
-            local keysAmountWrapColor = addon.keysCollected ~= addon.config.BOUNTIFUL_KEY_MAX_PER_WEEK
-                and _G["GREEN_FONT_COLOR"]
-                or _G["WHITE_FONT_COLOR"]
-            local weeklyCapLine = strtrim(format(_G["CURRENCY_THIS_WEEK"], "")) .. ": " ..
-                keysAmountWrapColor:WrapTextInColorCode(format("%d/%d", addon.keysCollected,
-                    addon.config.BOUNTIFUL_KEY_MAX_PER_WEEK))
-            local linePos = 4
-            table.insert(lines, linePos, weeklyCapLine)
-
-            for _, line in ipairs(lines) do
-                GameTooltip:AddLine(line)
-            end
-        end)
-    end
-    --- Chests with keys:
-    --- https://wowhead.com/item=239128
-    --- https://wowhead.com/item=239120
-    --- https://wowhead.com/item=239128
-    ---
-    --- https://wowhead.com/item=233071 (Bounty Map)
 end
 
 function DelveCompanionShowSettings()
@@ -180,11 +140,14 @@ local trackedAddonNames = {
     encounterJournal = "Blizzard_EncounterJournal"
 }
 
+-- Addon Boot
+
+addon.eventsCatcherFrame = CreateFrame("Frame")
 addon.eventsCatcherFrame:RegisterEvent("ADDON_LOADED")
 -- eventsCatcherFrame:RegisterEvent("PLAYER_LOGIN")
 -- eventsCatcherFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
 -- eventsCatcherFrame:RegisterEvent("LOOT_OPENED")
---- TODO: split creation and parenting to reduce load dependencies
+--- TODO: split creation and parenting to reduce load dependencies. Check LoadAddon.
 addon.eventsCatcherFrame:SetScript(
     "OnEvent",
     function(_, event, arg1, arg2)
@@ -192,6 +155,7 @@ addon.eventsCatcherFrame:SetScript(
             local loadedName = arg1
             if loadedName == addonName then
                 addon.Init()
+                DelveCompanion_TooltipExtension_Init()
             elseif loadedName == trackedAddonNames.delvesDashboardUI then
                 if DelvesDashboardFrame == nil then
                     log("DelvesDashboardFrame is nil. Delves UI extention is not inited.")

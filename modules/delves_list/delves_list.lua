@@ -96,7 +96,7 @@ function DelveCompanionDelvesListMixin:OnLoad()
 
     local keyCurrInfo = C_CurrencyInfo.GetCurrencyInfo(addon.config.BOUNTIFUL_KEY_CURRENCY_CODE)
     self.keysCountLabel:SetText(format(lockit["ui-bountiful-keys-count-owned-format"],
-        EPIC_PURPLE_COLOR:WrapTextInColorCode(keyCurrInfo.name),
+        ITEM_EPIC_COLOR:WrapTextInColorCode(keyCurrInfo.name),
         AVAILABLE,
         keyCurrInfo.quantity))
     self.keysIcon:SetTexture(keyCurrInfo.iconFileID)
