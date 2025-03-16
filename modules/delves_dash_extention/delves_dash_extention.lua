@@ -97,38 +97,25 @@ DelveCompanionOverviewGildedStashFrameMixin = {}
 
 function DelveCompanionOverviewGildedStashFrameMixin:OnLoad()
     -- log("GildedStash OnLoad start")
-    self.name:SetText(C_Spell.GetSpellName(addon.config.GILDED_STASH_SPELL_CODE))
+
+    self.Name:SetText(C_Spell.GetSpellName(addon.config.GILDED_STASH_SPELL_CODE))
     for i = 1, addon.config.GILDED_STASH_WEEKLY_CAP, 1 do
-        local stash = CreateFrame("Frame", nil, self.container,
+        local stash = CreateFrame("Frame", nil, self.Container,
             "DelveCompanionDashboardOverviewGildedStashTemplate")
         stash.layoutIndex = i
-        stash.icon:SetTexture(C_Spell.GetSpellTexture(addon.config.GILDED_STASH_SPELL_CODE))
+        stash.Icon:SetTexture(C_Spell.GetSpellTexture(addon.config.GILDED_STASH_SPELL_CODE))
     end
-    self.container:Layout()
+    self.Container:Layout()
 end
 
 function DelveCompanionOverviewGildedStashFrameMixin:OnShow()
     -- log("GildedStash OnShow start")
-    local desc = C_Spell.GetSpellDescription(addon.config.GILDED_STASH_SPELL_CODE)
-    local collectedCount = tonumber(strsub(strmatch(desc, "%d/%d"), 1, 1))
-
-    for _, stash in pairs(self.container:GetLayoutChildren()) do
-        if collectedCount >= stash.layoutIndex then
-            stash.checkMark:Show()
-            stash.fadeBg:Hide()
-            stash.redX:Hide()
-        else
-            stash.checkMark:Hide()
-            stash.fadeBg:Show()
-            stash.redX:Show()
-        end
-    end
 end
 
 function DelveCompanionOverviewGildedStashFrameMixin:OnEnter()
     GameTooltip:SetOwner(self, "ANCHOR_TOP")
     GameTooltip:SetSpellByID(addon.config.GILDED_STASH_SPELL_CODE)
-    GameTooltip:AddLine(lockit["ui-gilded-stash-bountiful-note"], 1, 1, 1)
+    GameTooltip:AddLine(lockit["ui-gilded-stash-bountiful-note"], 1, 1, 1, true)
     GameTooltip:Show()
 end
 
@@ -188,7 +175,7 @@ function DelveCompanionOverviewBountifulButtonMixin:UpdateTooltip()
     GameTooltip:AddLine(self.delveName);
     GameTooltip:AddLine(self.parentMapName, 1, 1, 1);
     GameTooltip:AddLine(" ")
-    GameTooltip:AddLine(text, 1, 1, 1)
+    GameTooltip:AddLine(text, 1, 1, 1, true)
     GameTooltip:Show()
 end
 
@@ -282,6 +269,28 @@ end
 
 function DelveCompanionDashboardOverviewMixin:OnShow()
     --log("DashboardOverview OnShow start")
+
+    local stashSpell = Spell:CreateFromSpellID(addon.config.GILDED_STASH_SPELL_CODE)
+
+    stashSpell:ContinueOnSpellLoad(function()
+        local desc = stashSpell:GetSpellDescription()
+
+        local collectedCount = tonumber(strsub(strmatch(desc, "%d/%d"), 1, 1))
+
+        for _, stash in pairs(self.GildedStashFrame.Container:GetLayoutChildren()) do
+            if collectedCount >= stash.layoutIndex then
+                stash.CheckMark:Show()
+                stash.FadeBg:Hide()
+                stash.RedX:Hide()
+            else
+                stash.CheckMark:Hide()
+                stash.FadeBg:Show()
+                stash.RedX:Show()
+            end
+        end
+
+        self.GildedStashFrame:Show()
+    end)
 end
 
 --============ Init ======================

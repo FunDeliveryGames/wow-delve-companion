@@ -186,15 +186,15 @@
             <KeyValue type="boolean" key="isCompanionButtonPanelFrame" value="true" />
         </KeyValues>
         <Frames>
-            <Frame name="$parentGildedStashFrame" parentKey="gildedStash"
-                mixin="DelveCompanionOverviewGildedStashFrameMixin">
+            <Frame parentKey="GildedStashFrame" mixin="DelveCompanionOverviewGildedStashFrameMixin"
+                hidden="true">
                 <Size x="140" y="70" />
                 <Anchors>
                     <Anchor point="TOP" y="-15" />
                 </Anchors>
                 <Layers>
                     <Layer level="OVERLAY">
-                        <FontString name="$parentName" parentKey="name" inherits="GameFontNormal"
+                        <FontString parentKey="Name" inherits="GameFontNormal"
                             justifyH="CENTER" text="GILDED_STASH" mixin="AutoScalingFontStringMixin"
                             wordwrap="false" justifyV="MIDDLE">
                             <Size x="140" y="30" />
@@ -205,7 +205,7 @@
                     </Layer>
                 </Layers>
                 <Frames>
-                    <Frame name="$parentContainer" parentKey="container"
+                    <Frame parentKey="Container"
                         inherits="HorizontalLayoutFrame">
                         <Size y="70" />
                         <KeyValues>
@@ -213,7 +213,7 @@
                             <KeyValue key="spacing" value="5" type="number" />
                         </KeyValues>
                         <Anchors>
-                            <Anchor point="TOP" relativeTo="$parentName" relativePoint="BOTTOM" />
+                            <Anchor point="TOP" relativeKey="$parent.Name" relativePoint="BOTTOM" />
                         </Anchors>
                     </Frame>
                 </Frames>
@@ -228,7 +228,7 @@
             <Frame parentKey="BountifulFrame" mixin="DelveCompanionOverviewBountifulFrameMixin">
                 <Size x="140" y="30" />
                 <Anchors>
-                    <Anchor point="TOP" relativeTo="$parentGildedStashFrame"
+                    <Anchor point="TOP" relativeKey="$parent.GildedStashFrame"
                         relativePoint="BOTTOM" y="-10" />
                 </Anchors>
                 <Layers>
@@ -376,7 +376,7 @@
         </Anchors>
         <Layers>
             <Layer level="BACKGROUND">
-                <Texture name="$parentIcon" parentKey="icon">
+                <Texture parentKey="Icon">
                     <Size x="36" y="36" />
                     <Anchors>
                         <Anchor point="CENTER" />
@@ -384,7 +384,7 @@
                 </Texture>
             </Layer>
             <Layer level="ARTWORK" textureSubLevel="-1">
-                <Texture name="$parentFadeBg" parentKey="fadeBg"
+                <Texture parentKey="FadeBg"
                     file="Interface\Common\Common-Input-Border" hidden="true">
                     <Anchors>
                         <Anchor point="TOPLEFT" relativeKey="$parent"
@@ -396,14 +396,14 @@
                 </Texture>
             </Layer>
             <Layer level="ARTWORK" textureSubLevel="0">
-                <Texture name="$parentCheckMark" parentKey="checkMark"
+                <Texture parentKey="CheckMark"
                     atlas="common-icon-checkmark" hidden="true">
                     <Size x="16" y="16" />
                     <Anchors>
                         <Anchor point="BOTTOMRIGHT" />
                     </Anchors>
                 </Texture>
-                <Texture name="$parentRedX" parentKey="redX"
+                <Texture parentKey="RedX"
                     atlas="common-icon-redx" hidden="true">
                     <Size x="16" y="16" />
                     <Anchors>
