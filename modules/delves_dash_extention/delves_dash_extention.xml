@@ -112,13 +112,13 @@
 
     <!-- Great Vault Details frame -->
     <Frame name="DelveCompanionGreatVaultDetailsFrame"
-        mixin="DelveCompanionGreatVaultDetailsMixin" virtual="true" hidden="true">
+        mixin="DelveCompanionGreatVaultDetailsMixin" virtual="true" hidden="false">
         <Size x="180" y="300" />
         <Anchors>
             <Anchor point="BOTTOM" relativeKey="$parent" relativePoint="BOTTOM" x="0" y="0" />
         </Anchors>
         <Frames>
-            <Button name="$parentGreatVaultButton" parentKey="gvButton"
+            <Button parentKey="GVButton"
                 inherits="MagicButtonTemplate" text="VAULT">
                 <Size x="130" y="30" />
                 <KeyValues>
@@ -142,31 +142,36 @@
                     </OnClick>
                 </Scripts>
             </Button>
-            <Frame name="$parentContent" parentKey="content">
-                <Size x="180" y="100" />
+            <Frame parentKey="Content" inherits="VerticalLayoutFrame">
+                <KeyValues>
+                    <KeyValue key="maximumWidth" value="180" type="number" />
+                    <KeyValue key="maximumHeight" value="200" type="number" />
+                    <KeyValue key="expand" value="true" type="boolean" />
+                    <KeyValue key="spacing" value="5" type="number" />
+                </KeyValues>
                 <Anchors>
-                    <Anchor point="BOTTOM" relativeKey="$parent.gvButton" relativePoint="TOP"
-                        x="0" y="5" />
+                    <Anchor point="CENTER" x="0" y="-5" />
                 </Anchors>
             </Frame>
         </Frames>
         <Scripts>
             <OnLoad method="OnLoad" />
             <OnShow method="OnShow" />
+            <OnHide method="OnHide" />
         </Scripts>
     </Frame>
 
     <Frame name="DelveCompanionGreatVaultItemTemplate" inherits="InsetFrameTemplate3"
         virtual="true">
-        <Size x="160" y="32" />
-        <Anchors>
-            <Anchor point="BOTTOM" x="0" y="0" />
-        </Anchors>
+        <KeyValues>
+            <KeyValue key="layoutIndex" value="0" type="number" />
+        </KeyValues>
+        <Size x="160" y="40" />
         <Layers>
             <Layer name="OVERLAY">
-                <FontString parentKey="itemInfo" inherits="GameFontNormal"
-                    justifyH="CENTER" text="ILVL" mixin="AutoScalingFontStringMixin" wordwrap="true"
-                    justifyV="MIDDLE">
+                <FontString parentKey="ItemInfoLabel" inherits="GameFontNormal"
+                    text="ILVL" mixin="AutoScalingFontStringMixin" wordwrap="true"
+                    justifyV="MIDDLE" justifyH="CENTER">
                     <Size x="150" y="30" />
                     <Anchors>
                         <Anchor point="CENTER" x="0" y="0" />
@@ -187,7 +192,7 @@
         </KeyValues>
         <Frames>
             <Frame parentKey="GildedStashFrame" mixin="DelveCompanionOverviewGildedStashFrameMixin"
-                hidden="true">
+                hidden="false">
                 <Size x="140" y="70" />
                 <Anchors>
                     <Anchor point="TOP" y="-15" />

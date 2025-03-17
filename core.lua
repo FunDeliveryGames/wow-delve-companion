@@ -1,5 +1,6 @@
 local addonName, addon = ...
 local log = addon.log
+local enums = addon.enums
 
 addon.CacheActiveBountiful = function()
     --log("Start fetching boutiful delves...")
@@ -56,25 +57,7 @@ addon.CacheKeysData = function()
     addon.keysCollected = keysCollected
 end
 
-addon.CacheGreatVaultRewards = function()
-    local gvRewards = {}
-    local activityInfo = C_WeeklyRewards.GetActivities(addon.config.ACTIVITY_TYPE)
-    if not activityInfo then return end
-
-    for index, rewInfo in ipairs(activityInfo) do
-        local itemLevel = 0
-        local itemLink = C_WeeklyRewards.GetExampleRewardItemHyperlinks(rewInfo.id)
-        if itemLink then
-            itemLevel = C_Item.GetDetailedItemLevelInfo(itemLink) or 0
-        end
-
-        table.insert(gvRewards, index, { itemLevel = itemLevel, delveTier = rewInfo.level })
-    end
-
-    addon.gvRewards = gvRewards
-end
-
--- TODO: Explore new Settings API. Maybe Settings.RegisterAddOnSetting is more convenient way to setup settings.
+-- TODO: Explore a new Settings API. Maybe Settings.RegisterAddOnSetting is more convenient way to setup settings.
 addon.InitSettings = function()
     local addonNameStr = tostring(addonName) -- TODO: explore why addonName can be a table instead of a string
     local settingsFrame = CreateFrame("Frame", addonNameStr, nil, "DelveCompanionSettingsFrame")
@@ -88,9 +71,6 @@ end
 
 addon.Init = function()
     addon.InitSettings()
-
-    -- addon.delvesListFrame = nil
-    -- addon.lootInfoFrame = nil
 end
 
 function DelveCompanionShowSettings()
@@ -99,18 +79,13 @@ function DelveCompanionShowSettings()
     end
 end
 
-local trackedAddonNames = {
-    delvesDashboardUI = "Blizzard_DelvesDashboardUI",
-    encounterJournal = "Blizzard_EncounterJournal"
-}
-
 -- Addon Boot
 
 addon.eventsCatcherFrame = CreateFrame("Frame")
 addon.eventsCatcherFrame:RegisterEvent("ADDON_LOADED")
--- eventsCatcherFrame:RegisterEvent("PLAYER_LOGIN")
--- eventsCatcherFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
--- eventsCatcherFrame:RegisterEvent("LOOT_OPENED")
+-- addon.eventsCatcherFrame:RegisterEvent("PLAYER_LOGIN")
+-- addon.eventsCatcherFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
+-- addon.eventsCatcherFrame:RegisterEvent("LOOT_OPENED")
 --- TODO: split creation and parenting to reduce load dependencies. Check LoadAddon.
 addon.eventsCatcherFrame:SetScript(
     "OnEvent",
@@ -120,32 +95,27 @@ addon.eventsCatcherFrame:SetScript(
             if loadedName == addonName then
                 addon.Init()
                 DelveCompanion_TooltipExtension_Init()
-            elseif loadedName == trackedAddonNames.delvesDashboardUI then
+            elseif loadedName == enums.DependencyAddonNames.delvesDashboardUI then
                 if DelvesDashboardFrame == nil then
                     log("DelvesDashboardFrame is nil. Delves UI extention is not inited.")
                     return
                 end
 
                 DelveCompanion_DelvesDashExtension_Init()
-            elseif loadedName == trackedAddonNames.encounterJournal then
+            elseif loadedName == enums.DependencyAddonNames.encounterJournal then
                 if EncounterJournal == nil then
                     log("EncounterJournal is nil. Delves tab is not inited.")
                     return
                 end
 
                 DelveCompanion_DelvesListFrame_Init()
-                -- elseif event == "PLAYER_LOGIN" then
-                --     return
-                -- elseif event == "PLAYER_ENTERING_WORLD" then
-                --     return
             else
                 return
             end
+            -- elseif event == "PLAYER_LOGIN" then
+            -- elseif event == "PLAYER_ENTERING_WORLD" then
         elseif event == "QUEST_LOG_UPDATE" then
             addon.CacheKeysData()
-            return
-        elseif event == "WEEKLY_REWARDS_UPDATE" then
-            addon.CacheGreatVaultRewards()
             return
             -- elseif event == "LOOT_OPENED" then
             --     for i = 1, GetNumLootItems() do

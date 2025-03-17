@@ -2,8 +2,6 @@ local addonName, addon = ...
 local log = addon.log
 local lockit = addon.lockit
 
-local GREAT_VAULT_DETAILS_FRAME_PADDING = 3
-
 --============ LootInfoFrame ======================
 
 DelveCompanionLootInfoFrameMixin = {}
@@ -49,47 +47,81 @@ end
 DelveCompanionGreatVaultDetailsMixin = {}
 -- GameTooltip:SetWeeklyReward(itemDBID)
 
-function DelveCompanionGreatVaultDetailsMixin:OnLoad()
-    self.rewardInfoStrings = {}
-    local offsetY = GREAT_VAULT_DETAILS_FRAME_PADDING
-    for i = WeeklyRewardsUtil.GetMaxNumRewards(addon.config.ACTIVITY_TYPE), 1, -1 do
-        local rewFrame = CreateFrame("Frame", nil, self.content, "DelveCompanionGreatVaultItemTemplate")
-        rewFrame:SetPoint("BOTTOM", 0, offsetY)
-        offsetY = offsetY + rewFrame:GetHeight() + GREAT_VAULT_DETAILS_FRAME_PADDING
-
-        table.insert(self.rewardInfoStrings, i, rewFrame.itemInfo)
+function DelveCompanionGreatVaultDetailsMixin:CacheGreatVaultRewards()
+    -- log("Start caching GV rewards...")
+    local gvRewards = {}
+    local activityInfo = C_WeeklyRewards.GetActivities(addon.config.ACTIVITY_TYPE)
+    if not activityInfo then
+        -- log("Cannot get Activity info")
+        return
     end
 
-    self:GetParent():HookScript("OnShow", function()
-        if WeeklyRewardsUtil.HasUnlockedRewards(addon.config.ACTIVITY_TYPE) and not C_WeeklyRewards.CanClaimRewards() then
-            addon.CacheGreatVaultRewards()
+    for index, rewInfo in ipairs(activityInfo) do
+        -- log("Rew Info ID: %d", rewInfo.id)
+        local itemLevel = 0
+        local itemLink = C_WeeklyRewards.GetExampleRewardItemHyperlinks(rewInfo.id)
 
-            for index, gvReward in ipairs(addon.gvRewards) do
-                local rewInfoText = _G["EMPTY"]
-                if gvReward.itemLevel ~= 0 then
-                    local levelString = _G["ITEM_LEVEL"]:format(gvReward.itemLevel)
-                    local tierString = _G["GREAT_VAULT_WORLD_TIER"]:format(gvReward.delveTier)
-                    rewInfoText = format("%s - (%s)", levelString, tierString)
-                end
-
-                self.rewardInfoStrings[index]:SetText(rewInfoText)
-            end
-            -- Hide the default Great Vault widget
-            self:GetParent().GreatVaultButton:Hide()
-            self:Show()
-        else
-            self:GetParent().GreatVaultButton:Show()
-            self:Hide()
+        if not itemLink or itemLink == "[]" then
+            -- log("Failed to get itemLink")
+            return
         end
-    end)
+        -- log("Item Link: %s", itemLink)
 
-    self:GetParent():HookScript("OnHide", function()
+        itemLevel = C_Item.GetDetailedItemLevelInfo(itemLink) or 0
+        -- log("Item level: %d", itemLevel)
+        table.insert(gvRewards, index, { itemLevel = itemLevel, delveTier = rewInfo.level })
+    end
+
+    self.gvRewards = gvRewards
+end
+
+function DelveCompanionGreatVaultDetailsMixin:Refresh()
+    if WeeklyRewardsUtil.HasUnlockedRewards(addon.config.ACTIVITY_TYPE) and not C_WeeklyRewards.CanClaimRewards() then
+        -- Hide the default Great Vault widget
+        self:GetParent().GreatVaultButton:Hide()
+        self:Show()
+
+        self:CacheGreatVaultRewards()
+
+        local rewardLabels = self.Content:GetLayoutChildren()
+        for index, gvReward in ipairs(self.gvRewards) do
+            local rewInfoText = _G["EMPTY"]
+            if gvReward.itemLevel ~= 0 then
+                local levelString = _G["ITEM_LEVEL"]:format(gvReward.itemLevel)
+                local tierString = _G["GREAT_VAULT_WORLD_TIER"]:format(gvReward.delveTier)
+                rewInfoText = format("%s - (%s)", levelString, tierString)
+            end
+
+            rewardLabels[index].ItemInfoLabel:SetText(rewInfoText)
+        end
+    else
+        self:GetParent().GreatVaultButton:Show()
         self:Hide()
-    end)
+    end
+end
+
+function DelveCompanionGreatVaultDetailsMixin:OnLoad()
+    -- log("GreatVaultDetails OnLoad start")
+    self:GetParent().PanelDescription:Hide()
+
+    for i = 1, WeeklyRewardsUtil.GetMaxNumRewards(addon.config.ACTIVITY_TYPE), 1 do
+        local rewFrame = CreateFrame("Frame", nil, self.Content, "DelveCompanionGreatVaultItemTemplate")
+        rewFrame.layoutIndex = i
+    end
+    self.Content:Layout()
+
+    self:SetScript("OnEvent", self.Refresh)
 end
 
 function DelveCompanionGreatVaultDetailsMixin:OnShow()
     --log("GreatVaultDetails OnShow start")
+    self:RegisterEvent("WEEKLY_REWARDS_UPDATE")
+    self:Refresh()
+end
+
+function DelveCompanionGreatVaultDetailsMixin:OnHide()
+    --log("GreatVaultDetails OnHide start")
+    self:UnregisterEvent("WEEKLY_REWARDS_UPDATE")
 end
 
 --============ GildedStash Frame ======================
@@ -99,18 +131,40 @@ DelveCompanionOverviewGildedStashFrameMixin = {}
 function DelveCompanionOverviewGildedStashFrameMixin:OnLoad()
     -- log("GildedStash OnLoad start")
 
-    self.Name:SetText(C_Spell.GetSpellName(addon.config.GILDED_STASH_SPELL_CODE))
-    for i = 1, addon.config.GILDED_STASH_WEEKLY_CAP, 1 do
-        local stash = CreateFrame("Frame", nil, self.Container,
-            "DelveCompanionDashboardOverviewGildedStashTemplate")
-        stash.layoutIndex = i
-        stash.Icon:SetTexture(C_Spell.GetSpellTexture(addon.config.GILDED_STASH_SPELL_CODE))
-    end
-    self.Container:Layout()
+    local stashSpell = Spell:CreateFromSpellID(addon.config.GILDED_STASH_SPELL_CODE)
+    stashSpell:ContinueOnSpellLoad(function()
+        self.Name:SetText(stashSpell:GetSpellName())
+        for i = 1, addon.config.GILDED_STASH_WEEKLY_CAP, 1 do
+            local stash = CreateFrame("Frame", nil, self.Container,
+                "DelveCompanionDashboardOverviewGildedStashTemplate")
+            stash.layoutIndex = i
+            ---@diagnostic disable-next-line: undefined-field
+            stash.Icon:SetTexture(stashSpell:GetSpellTexture())
+        end
+        self.Container:Layout()
+    end)
 end
 
 function DelveCompanionOverviewGildedStashFrameMixin:OnShow()
     -- log("GildedStash OnShow start")
+
+    local stashSpell = Spell:CreateFromSpellID(addon.config.GILDED_STASH_SPELL_CODE)
+    stashSpell:ContinueOnSpellLoad(function()
+        local desc = stashSpell:GetSpellDescription()
+        local collectedCount = tonumber(strsub(strmatch(desc, "%d/%d"), 1, 1))
+
+        for _, stash in pairs(self.Container:GetLayoutChildren()) do
+            if collectedCount >= stash.layoutIndex then
+                stash.CheckMark:Show()
+                stash.FadeBg:Hide()
+                stash.RedX:Hide()
+            else
+                stash.CheckMark:Hide()
+                stash.FadeBg:Show()
+                stash.RedX:Show()
+            end
+        end
+    end)
 end
 
 function DelveCompanionOverviewGildedStashFrameMixin:OnEnter()
@@ -154,7 +208,7 @@ function DelveCompanionOverviewBountifulButtonMixin:UpdateTracking()
 end
 
 function DelveCompanionOverviewBountifulButtonMixin:OnLoad()
-    self:SetScript("OnEvent", DelveCompanionOverviewBountifulButtonMixin.UpdateTracking)
+    self:SetScript("OnEvent", self.UpdateTracking)
 end
 
 function DelveCompanionOverviewBountifulButtonMixin:OnShow()
@@ -206,8 +260,6 @@ function DelveCompanionOverviewBountifulFrameMixin:OnLoad()
     -- log("Bountiful OnLoad start")
     self.Title:SetText(lockit["ui-common-bountiful-delve"])
 
-    -- local keyCurrInfo = C_CurrencyInfo.GetCurrencyInfo(addon.config.BOUNTIFUL_KEY_CURRENCY_CODE)
-    -- self.KeysInfo.Keys.Icon:SetTexture(keyCurrInfo.iconFileID)
     self.KeysInfo.Keys.frameCode = addon.config.BOUNTIFUL_KEY_CURRENCY_CODE
     self.KeysInfo.Shards.frameCode = addon.config.KEY_SHARD_ITEM_CODE
     self.KeysInfo.BountyMap.frameCode = addon.config.BOUNTY_MAP_ITEM_CODE
@@ -270,28 +322,6 @@ end
 
 function DelveCompanionDashboardOverviewMixin:OnShow()
     --log("DashboardOverview OnShow start")
-
-    local stashSpell = Spell:CreateFromSpellID(addon.config.GILDED_STASH_SPELL_CODE)
-
-    stashSpell:ContinueOnSpellLoad(function()
-        local desc = stashSpell:GetSpellDescription()
-
-        local collectedCount = tonumber(strsub(strmatch(desc, "%d/%d"), 1, 1))
-
-        for _, stash in pairs(self.GildedStashFrame.Container:GetLayoutChildren()) do
-            if collectedCount >= stash.layoutIndex then
-                stash.CheckMark:Show()
-                stash.FadeBg:Hide()
-                stash.RedX:Hide()
-            else
-                stash.CheckMark:Hide()
-                stash.FadeBg:Show()
-                stash.RedX:Show()
-            end
-        end
-
-        self.GildedStashFrame:Show()
-    end)
 end
 
 --============ Init ======================
@@ -299,7 +329,6 @@ end
 function DelveCompanion_DelvesDashExtension_Init()
     local lootInfoFrame = CreateFrame("Frame", "$parentLootInfoFrame", DelvesDashboardFrame,
         "DelveCompanionLootInfoFrame")
-
     addon.lootInfoFrame = lootInfoFrame
 
     if DelveCompanionCharacterData.gvDetailsEnabled then
@@ -307,16 +336,11 @@ function DelveCompanion_DelvesDashExtension_Init()
 
         local gvDetailsFrame = CreateFrame("Frame", "GVDetailsFrame", gvPanel,
             "DelveCompanionGreatVaultDetailsFrame")
-        gvDetailsFrame.gvButton:SetTextToFit(_G["RAF_VIEW_ALL_REWARDS"])
-
-        addon.CacheGreatVaultRewards()
+        gvDetailsFrame.GVButton:SetTextToFit(_G["RAF_VIEW_ALL_REWARDS"])
         addon.gvDetailsFrame = gvDetailsFrame
-
-        addon.eventsCatcherFrame:RegisterEvent("WEEKLY_REWARDS_UPDATE")
     end
 
     if DelveCompanionCharacterData.dashOverviewEnabled then
-        -- addon.CacheKeysData()
         local dashOverview = CreateFrame("Frame", "$parentDashboardOverview",
             DelvesDashboardFrame.ButtonPanelLayoutFrame, "DelveCompanionDashboardOverviewFrame")
 
