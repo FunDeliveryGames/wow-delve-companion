@@ -300,6 +300,8 @@ config.DELVES_REGULAR_DATA = {
     }
 }
 
+config.GREAT_VAULT_UPGRADE_MAX_TIER = 8
+
 -- Table of loot by Delves Tier
 config.DELVES_LOOT_INFO_DATA = {
     [1] = {

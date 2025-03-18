@@ -43,80 +43,139 @@ function DelveCompanionLootInfoFrameMixin:OnShow()
 end
 
 --============ GreatVaultDetails ======================
+local GREAT_VAULT_REFRESH_ATTEMPT_FREQUENCY = 0.25
 
 DelveCompanionGreatVaultItemMixin = {}
 
 function DelveCompanionGreatVaultItemMixin:Update()
-    if not self.rewardConfig then
-        log("No rewardConfig")
+    if self.info.progress < self.info.threshold then
+        self.ItemInfoLabel:SetText(format("%d/%d", self.info.progress, self.info.threshold))
         return
     end
 
-    local itemLevel = C_Item.GetDetailedItemLevelInfo(self.rewardConfig.itemLink) or 0
-
-    local rewInfoText = _G["EMPTY"]
-    if itemLevel ~= 0 then
-        rewInfoText = format(_G["WEEKLY_REWARDS_ITEM_LEVEL_WORLD"], itemLevel, self.rewardConfig.delveTier)
-    elseif self.rewardConfig.progress < self.rewardConfig.threshold then
-        rewInfoText = format("%d/%d", self.rewardConfig.progress, self.rewardConfig.threshold)
+    self.ItemInfoLabel:Hide()
+    -- Curent level info
+    -- log("Updating %s with id: %d", self:GetDebugName(), self.info.id)
+    local itemLink, upgradeItemLink = C_WeeklyRewards.GetExampleRewardItemHyperlinks(self.info.id)
+    local itemLevel
+    if itemLink then
+        itemLevel = C_Item.GetDetailedItemLevelInfo(itemLink)
     end
 
-    self.ItemInfoLabel:SetText(rewInfoText)
+    if not itemLevel then
+        -- log("Item level is not ready. Enable OnUpdate...")
+        self.updateTimer = 0
+        self:SetScript("OnUpdate", self.OnUpdate)
+        return
+    end
+
+    self.ItemInfoLabel:SetText(format(_G["WEEKLY_REWARDS_ITEM_LEVEL_WORLD"], itemLevel, self.info.level))
+    self.ItemInfoLabel:Show()
+
+    -- Upgrade level info
+
+    if self.info.level >= addon.config.GREAT_VAULT_UPGRADE_MAX_TIER then
+        self.maxUpgraded = true
+        -- log("Tooltip data: max level")
+        return
+    end
+
+    local upgradeItemLevel
+    if upgradeItemLink then
+        upgradeItemLevel = C_Item.GetDetailedItemLevelInfo(upgradeItemLink)
+    end
+
+    if not upgradeItemLevel then
+        -- log("Item upgrade level is not ready. Enable OnUpdate...")
+        self.updateTimer = 0
+        self:SetScript("OnUpdate", self.OnUpdate)
+        return
+    end
+
+    local hasData, _, nextLevel, nextItemLevel = C_WeeklyRewards.GetNextActivitiesIncrease(
+        self.info.activityTierID,
+        self.info.level)
+
+    self.maxUpgraded = false
+    if hasData then
+        self.nextLevel = nextLevel
+        self.nextItemLevel = nextItemLevel
+        -- log("Tooltip data: upgrade")
+    else
+        self.nextLevel = self.info.level + 1
+        self.nextItemLevel = upgradeItemLevel
+    end
 end
 
-function DelveCompanionGreatVaultItemMixin:OnEnter()
+function DelveCompanionGreatVaultItemMixin:OnUpdate(delta)
+    self.updateTimer = self.updateTimer + delta
+    if self.updateTimer >= GREAT_VAULT_REFRESH_ATTEMPT_FREQUENCY then
+        self.updateTimer = 0
+        self:SetScript("OnUpdate", nil)
+        self:Update()
+    end
+end
+
+function DelveCompanionGreatVaultItemMixin:ShowMaxUpgradeTooltip()
     local tooltip = GameTooltip
     tooltip:SetOwner(self, "ANCHOR_RIGHT")
 
-    if self.unlocked then
-        local canUpgradeItem, _, nextLevel, itemLevel = C_WeeklyRewards.GetNextActivitiesIncrease(
-            self.rewardConfig.activityTier, self.rewardConfig.delveTier)
+    GameTooltip_AddInstructionLine(tooltip, _G["WEEKLY_REWARDS_MAXED_REWARD"], true)
 
-        if canUpgradeItem == true then
-            local improveLine = format(_G["WEEKLY_REWARDS_IMPROVE_ITEM_LEVEL"], itemLevel)
-            GameTooltip_AddInstructionLine(tooltip, improveLine, true)
+    -- log("Show tooltip: max upgrade")
+    tooltip:Show()
+end
 
-            local reqLine = format(_G["WEEKLY_REWARDS_COMPLETE_WORLD"], nextLevel)
-            GameTooltip_AddHighlightLine(tooltip, reqLine, true)
-        else
-            GameTooltip_AddInstructionLine(tooltip, _G["WEEKLY_REWARDS_MAXED_REWARD"], true)
-        end
-    else
-        local reqLine = format(_G["WEEKLY_REWARDS_COMPLETE_WORLD"], 1)
-        GameTooltip_AddHighlightLine(tooltip, reqLine, true)
+function DelveCompanionGreatVaultItemMixin:ShowUpgradeTooltip()
+    local tooltip = GameTooltip
+    tooltip:SetOwner(self, "ANCHOR_RIGHT")
+
+    local improveLine = format(_G["WEEKLY_REWARDS_IMPROVE_ITEM_LEVEL"], self.nextItemLevel)
+    GameTooltip_AddInstructionLine(tooltip, improveLine, true)
+
+    local reqLine = format(_G["WEEKLY_REWARDS_COMPLETE_WORLD"], self.nextLevel)
+    GameTooltip_AddHighlightLine(tooltip, reqLine, true)
+
+    -- log("Show tooltip: upgrade")
+    tooltip:Show()
+end
+
+function DelveCompanionGreatVaultItemMixin:ShowLockedTooltip()
+    local tooltip = GameTooltip
+    tooltip:SetOwner(self, "ANCHOR_RIGHT")
+    GameTooltip_SetTitle(tooltip, _G["WEEKLY_REWARDS_UNLOCK_REWARD"], nil, true)
+
+    local reqLine = _G["GREAT_VAULT_REWARDS_WORLD_INCOMPLETE"]
+    if self.layoutIndex == 2 then
+        reqLine = _G["GREAT_VAULT_REWARDS_WORLD_COMPLETED_FIRST"]
+    elseif self.layoutIndex == 3 then
+        reqLine = _G["GREAT_VAULT_REWARDS_WORLD_COMPLETED_SECOND"]
     end
 
+    local diff = self.info.threshold - self.info.progress
+    GameTooltip_AddNormalLine(tooltip, format(reqLine, diff), true)
+
+    -- log("Show tooltip: locked")
     tooltip:Show()
+end
+
+function DelveCompanionGreatVaultItemMixin:OnEnter()
+    -- log("%s OnEnter start", self:GetDebugName())
+    if not self.unlocked then
+        self:ShowLockedTooltip()
+    elseif self.maxUpgraded then
+        self:ShowMaxUpgradeTooltip()
+    else
+        self:ShowUpgradeTooltip()
+    end
 end
 
 function DelveCompanionGreatVaultItemMixin:OnLeave()
     GameTooltip:Hide()
 end
 
+--=======
 DelveCompanionGreatVaultDetailsMixin = CreateFromMixins(WeeklyRewardMixin)
-
-function DelveCompanionGreatVaultDetailsMixin:CacheGreatVaultRewards()
-    -- log("Cache GV rewards...")
-
-    local activityInfo = C_WeeklyRewards.GetActivities(addon.config.ACTIVITY_TYPE)
-    if not activityInfo then
-        log("Cannot get Activity info")
-        return
-    end
-
-    local rewardLabels = self.Rewards:GetLayoutChildren()
-    for index, rewInfo in ipairs(activityInfo) do
-        local rewardConfig = {}
-
-        rewardConfig.activityTier = rewInfo.activityTierID
-        rewardConfig.progress = rewInfo.progress
-        rewardConfig.threshold = rewInfo.threshold
-        rewardConfig.delveTier = rewInfo.level
-        rewardConfig.itemLink = C_WeeklyRewards.GetExampleRewardItemHyperlinks(rewInfo.id)
-
-        rewardLabels[index].rewardConfig = rewardConfig
-    end
-end
 
 function DelveCompanionGreatVaultDetailsMixin:SetStateLoading()
     self:GetParent().PanelDescription:Hide()
@@ -148,16 +207,22 @@ end
 function DelveCompanionGreatVaultDetailsMixin:Refresh()
     if self:HasUnlockedRewards(addon.config.ACTIVITY_TYPE) and not C_WeeklyRewards.CanClaimRewards() then
         -- log("Rewards availalbe.")
-        self:SetStateLoading()
-        self:CacheGreatVaultRewards()
 
-        local setDelay = 2
-        C_Timer.After(setDelay, function() -- TODO: replace with OnUpdate if an issue with itemLink occurs again
-            for _, rewLabel in pairs(self.Rewards:GetLayoutChildren()) do
-                rewLabel:Update()
-            end
-            self:SetStateCustom()
-        end)
+        local activitiesInfo = C_WeeklyRewards.GetActivities(addon.config.ACTIVITY_TYPE)
+        if not activitiesInfo then
+            log("Cannot get Activity info")
+            return
+        end
+
+        self.updateTimer = GREAT_VAULT_REFRESH_ATTEMPT_FREQUENCY
+        self:SetScript("OnUpdate", self.OnUpdate)
+
+        for index, rewLabel in ipairs(self.Rewards:GetLayoutChildren()) do
+            rewLabel.info = activitiesInfo[index]
+            rewLabel:Update()
+        end
+
+        self:SetStateCustom()
     else
         -- log("No rewards.")
         self:SetStateDefault()
@@ -167,7 +232,6 @@ end
 
 function DelveCompanionGreatVaultDetailsMixin:OnLoad()
     -- log("GreatVaultDetails OnLoad start")
-
     for i = 1, self:GetMaxNumRewards(addon.config.ACTIVITY_TYPE), 1 do
         local rewFrame = CreateFrame("Frame", nil, self.Rewards, "DelveCompanionGreatVaultItemTemplate")
         rewFrame.layoutIndex = i
