@@ -44,6 +44,10 @@ function DelveCompanionDelveInstanceButtonMixin:UpdateTooltip()
 end
 
 function DelveCompanionDelveInstanceButtonMixin:OnEnter()
+    if addon.maxLevelReached == false then
+        return
+    end
+
     GameTooltip:SetOwner(self, "ANCHOR_TOP")
     self:UpdateTooltip()
 end
@@ -53,6 +57,10 @@ function DelveCompanionDelveInstanceButtonMixin:OnLeave()
 end
 
 function DelveCompanionDelveInstanceButtonMixin:OnClick()
+    if addon.maxLevelReached == false then
+        return
+    end
+
     if IsShiftKeyDown() then
         if self.isTracking then
             C_SuperTrack.ClearSuperTrackedMapPin()
@@ -94,21 +102,27 @@ function DelveCompanionDelvesListMixin:OnLoad()
     --log("DelvesList OnLoad start")
     self.frameTitle:SetText(_G["DELVES_LABEL"])
 
-    local keyCurrInfo = C_CurrencyInfo.GetCurrencyInfo(addon.config.BOUNTIFUL_KEY_CURRENCY_CODE)
-    self.keysCountLabel:SetText(format(lockit["ui-bountiful-keys-count-owned-format"],
-        ITEM_EPIC_COLOR:WrapTextInColorCode(keyCurrInfo.name),
-        AVAILABLE,
-        keyCurrInfo.quantity))
-    self.keysIcon:SetTexture(keyCurrInfo.iconFileID)
-    self.keysTooltipCatcher:SetSize(self.keysIcon:GetSize())
-    self.keysTooltipCatcher:SetScript("OnEnter", function()
-        GameTooltip:SetOwner(self.keysIcon, "ANCHOR_RIGHT");
-        GameTooltip:SetCurrencyByID(keyCurrInfo.currencyID);
-        GameTooltip:Show()
-    end)
-    self.keysTooltipCatcher:SetScript("OnLeave", function()
-        GameTooltip:Hide()
-    end)
+    if addon.maxLevelReached then
+        local keyCurrInfo = C_CurrencyInfo.GetCurrencyInfo(addon.config.BOUNTIFUL_KEY_CURRENCY_CODE)
+        self.keysCountLabel:SetText(format(lockit["ui-bountiful-keys-count-owned-format"],
+            ITEM_EPIC_COLOR:WrapTextInColorCode(keyCurrInfo.name),
+            AVAILABLE,
+            keyCurrInfo.quantity))
+        self.keysIcon:SetTexture(keyCurrInfo.iconFileID)
+        self.keysTooltipCatcher:SetSize(self.keysIcon:GetSize())
+        self.keysTooltipCatcher:SetScript("OnEnter", function()
+            GameTooltip:SetOwner(self.keysIcon, "ANCHOR_RIGHT");
+            GameTooltip:SetCurrencyByID(keyCurrInfo.currencyID);
+            GameTooltip:Show()
+        end)
+        self.keysTooltipCatcher:SetScript("OnLeave", function()
+            GameTooltip:Hide()
+        end)
+    else
+        self.keysCountLabel:Hide()
+        self.keysIcon:Hide()
+        self.keysTooltipCatcher:Hide()
+    end
 
     local offsetX, offsetY = DELVES_LIST_VIEW_BUTTONS_OFFSET, 0
     local instanceButtons = {}

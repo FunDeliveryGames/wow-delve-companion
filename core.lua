@@ -71,6 +71,10 @@ end
 
 addon.Init = function()
     addon.InitSettings()
+
+    local playerLevel = UnitLevel("player")
+    local maxLevel = GetMaxLevelForExpansionLevel(GetServerExpansionLevel())
+    addon.maxLevelReached = playerLevel == maxLevel
 end
 
 function DelveCompanionShowSettings()
@@ -94,10 +98,18 @@ addon.eventsCatcherFrame:SetScript(
             local loadedName = arg1
             if loadedName == addonName then
                 addon.Init()
+
+                if addon.maxLevelReached == false then
+                    return
+                end
                 DelveCompanion_TooltipExtension_Init()
             elseif loadedName == enums.DependencyAddonNames.delvesDashboardUI then
                 if DelvesDashboardFrame == nil then
                     log("DelvesDashboardFrame is nil. Delves UI extention is not inited.")
+                    return
+                end
+
+                if addon.maxLevelReached == false then
                     return
                 end
 
