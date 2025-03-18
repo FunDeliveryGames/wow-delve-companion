@@ -2,6 +2,7 @@ local addonName, addon = ...
 
 local config = {}
 
+config.MAX_LEVEL = 80
 config.ACTIVITY_TYPE = Enum.WeeklyRewardChestThresholdType.World
 
 config.BOUNTIFUL_KEY_CURRENCY_CODE = 3028

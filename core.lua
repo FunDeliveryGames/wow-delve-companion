@@ -72,9 +72,7 @@ end
 addon.Init = function()
     addon.InitSettings()
 
-    local playerLevel = UnitLevel("player")
-    local maxLevel = GetMaxLevelForExpansionLevel(GetServerExpansionLevel())
-    addon.maxLevelReached = playerLevel == maxLevel
+    addon.maxLevelReached = UnitLevel("player") == addon.config.MAX_LEVEL
 end
 
 function DelveCompanionShowSettings()
@@ -89,7 +87,9 @@ addon.eventsCatcherFrame = CreateFrame("Frame")
 addon.eventsCatcherFrame:RegisterEvent("ADDON_LOADED")
 -- addon.eventsCatcherFrame:RegisterEvent("PLAYER_LOGIN")
 -- addon.eventsCatcherFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
+-- addon.eventsCatcherFrame:RegisterEvent("UPDATE_UI_WIDGET")
 -- addon.eventsCatcherFrame:RegisterEvent("LOOT_OPENED")
+
 --- TODO: split creation and parenting to reduce load dependencies. Check LoadAddon.
 addon.eventsCatcherFrame:SetScript(
     "OnEvent",
@@ -132,9 +132,16 @@ addon.eventsCatcherFrame:SetScript(
             else
                 addon.gvDetailsFrame.shouldRefresh = true
             end
+            return
         elseif event == "QUEST_LOG_UPDATE" then
             addon.CacheKeysData()
             return
+            -- elseif event == "UPDATE_UI_WIDGET" then
+            --     local wi = arg1
+            --     for key, value in pairs(wi) do
+            --         log("%s: %s", key, tostring(value))
+            --     end
+            --     return
             -- elseif event == "LOOT_OPENED" then
             --     for i = 1, GetNumLootItems() do
             --         local sources = { GetLootSourceInfo(i) }
