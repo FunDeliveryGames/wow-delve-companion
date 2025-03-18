@@ -14,6 +14,10 @@ function DelveCompanionIconWithLabelAndTooltipMixin:OnLoad()
     if not self.displayLabel then
         self.Label:Hide()
     end
+
+    if self.useAutoScaling then
+        Mixin(self.Label, AutoScalingFontStringMixin)
+    end
 end
 
 function DelveCompanionIconWithLabelAndTooltipMixin:OnShow()

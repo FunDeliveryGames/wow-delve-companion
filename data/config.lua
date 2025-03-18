@@ -20,6 +20,7 @@ config.BOUNTIFUL_COFFER_ITEM_CODE = 233071
 config.BOUNTY_MAP_ITEM_CODE = 233071
 config.ECHO_ITEM_CODE = 235897
 config.KEY_SHARD_ITEM_CODE = 236096
+config.SHARDS_FOR_KEY = 100
 --===
 
 -- Table of maps which contain Delves

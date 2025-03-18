@@ -364,9 +364,14 @@ function DelveCompanionOverviewBountifulFrameMixin:OnShow()
 
     addon.CacheKeysData()
     self.KeysInfo.Keys.Label:SetText(C_CurrencyInfo.GetCurrencyInfo(addon.config.BOUNTIFUL_KEY_CURRENCY_CODE).quantity)
-    self.KeysInfo.Shards.Label:SetText(C_Item.GetItemCount(addon.config.KEY_SHARD_ITEM_CODE))
     self.KeysInfo.BountyMap.Label:SetText(C_Item.GetItemCount(addon.config.BOUNTY_MAP_ITEM_CODE))
     self.KeysInfo.Echoes.Label:SetText(C_Item.GetItemCount(addon.config.ECHO_ITEM_CODE))
+    local shardsCount = C_Item.GetItemCount(addon.config.KEY_SHARD_ITEM_CODE)
+    local shardsLine = tostring(shardsCount)
+    if shardsCount > addon.config.SHARDS_FOR_KEY then
+        shardsLine = _G["GREEN_FONT_COLOR"]:WrapTextInColorCode(tostring(shardsLine))
+    end
+    self.KeysInfo.Shards.Label:SetText(shardsLine)
 
     self.WorldMapButton:SetText(_G["WORLDMAP_BUTTON"])
 end

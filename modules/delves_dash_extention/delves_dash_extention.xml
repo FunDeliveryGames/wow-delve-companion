@@ -322,6 +322,7 @@
                                     <KeyValue key="iconSizeX" value="26" type="number" />
                                     <KeyValue key="iconSizeY" value="26" type="number" />
                                     <KeyValue key="frameType" value="item" type="string" />
+                                    <KeyValue key="useAutoScaling" value="true" type="boolean" />
                                 </KeyValues>
                                 <Anchors>
                                     <Anchor point="TOP" relativeKey="$parent.Keys"
