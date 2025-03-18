@@ -112,14 +112,24 @@
 
     <!-- Great Vault Details frame -->
     <Frame name="DelveCompanionGreatVaultDetailsFrame"
-        mixin="DelveCompanionGreatVaultDetailsMixin" virtual="true" hidden="false">
+        mixin="DelveCompanionGreatVaultDetailsMixin" virtual="true">
         <Size x="180" y="300" />
         <Anchors>
             <Anchor point="BOTTOM" relativeKey="$parent" relativePoint="BOTTOM" x="0" y="0" />
         </Anchors>
+        <Layers>
+            <Layer level="OVERLAY">
+                <FontString parentKey="LoadingLabel" inherits="GameFontNormalLarge2"
+                    justifyH="CENTER" text="LOADING...">
+                    <Anchors>
+                        <Anchor point="CENTER" x="0" y="0" />
+                    </Anchors>
+                </FontString>
+            </Layer>
+        </Layers>
         <Frames>
             <Button parentKey="GVButton"
-                inherits="MagicButtonTemplate" text="VAULT">
+                inherits="MagicButtonTemplate" text="VAULT" hidden="true">
                 <Size x="130" y="30" />
                 <KeyValues>
                     <KeyValue key="fitTextWidthPadding" value="20" type="number" />
@@ -142,7 +152,7 @@
                     </OnClick>
                 </Scripts>
             </Button>
-            <Frame parentKey="Content" inherits="VerticalLayoutFrame">
+            <Frame parentKey="Rewards" inherits="VerticalLayoutFrame" hidden="true">
                 <KeyValues>
                     <KeyValue key="maximumWidth" value="180" type="number" />
                     <KeyValue key="maximumHeight" value="200" type="number" />
@@ -161,8 +171,8 @@
         </Scripts>
     </Frame>
 
-    <Frame name="DelveCompanionGreatVaultItemTemplate" inherits="InsetFrameTemplate3"
-        virtual="true">
+    <Frame name="DelveCompanionGreatVaultItemTemplate" mixin="DelveCompanionGreatVaultItemMixin"
+        inherits="InsetFrameTemplate3" virtual="true">
         <KeyValues>
             <KeyValue key="layoutIndex" value="0" type="number" />
         </KeyValues>
@@ -179,6 +189,10 @@
                 </FontString>
             </Layer>
         </Layers>
+        <Scripts>
+            <OnEnter method="OnEnter" />
+            <OnLeave method="OnLeave" />
+        </Scripts>
     </Frame>
 
     <!-- Delves Dashboard Overview frame -->

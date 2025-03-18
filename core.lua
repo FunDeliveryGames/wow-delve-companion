@@ -114,6 +114,12 @@ addon.eventsCatcherFrame:SetScript(
             end
             -- elseif event == "PLAYER_LOGIN" then
             -- elseif event == "PLAYER_ENTERING_WORLD" then
+        elseif event == "WEEKLY_REWARDS_UPDATE" then
+            if addon.gvDetailsFrame:IsShown() then
+                addon.gvDetailsFrame:Refresh()
+            else
+                addon.gvDetailsFrame.shouldRefresh = true
+            end
         elseif event == "QUEST_LOG_UPDATE" then
             addon.CacheKeysData()
             return

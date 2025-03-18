@@ -44,84 +44,145 @@ end
 
 --============ GreatVaultDetails ======================
 
-DelveCompanionGreatVaultDetailsMixin = {}
--- GameTooltip:SetWeeklyReward(itemDBID)
+DelveCompanionGreatVaultItemMixin = {}
 
-function DelveCompanionGreatVaultDetailsMixin:CacheGreatVaultRewards()
-    -- log("Start caching GV rewards...")
-    local gvRewards = {}
-    local activityInfo = C_WeeklyRewards.GetActivities(addon.config.ACTIVITY_TYPE)
-    if not activityInfo then
-        -- log("Cannot get Activity info")
+function DelveCompanionGreatVaultItemMixin:Update()
+    if not self.rewardConfig then
+        log("No rewardConfig")
         return
     end
 
-    for index, rewInfo in ipairs(activityInfo) do
-        -- log("Rew Info ID: %d", rewInfo.id)
-        local itemLevel = 0
-        local itemLink = C_WeeklyRewards.GetExampleRewardItemHyperlinks(rewInfo.id)
+    local itemLevel = C_Item.GetDetailedItemLevelInfo(self.rewardConfig.itemLink) or 0
 
-        if not itemLink or itemLink == "[]" then
-            -- log("Failed to get itemLink")
-            return
-        end
-        -- log("Item Link: %s", itemLink)
-
-        itemLevel = C_Item.GetDetailedItemLevelInfo(itemLink) or 0
-        -- log("Item level: %d", itemLevel)
-        table.insert(gvRewards, index, { itemLevel = itemLevel, delveTier = rewInfo.level })
+    local rewInfoText = _G["EMPTY"]
+    if itemLevel ~= 0 then
+        rewInfoText = format(_G["WEEKLY_REWARDS_ITEM_LEVEL_WORLD"], itemLevel, self.rewardConfig.delveTier)
+    else
+        log("Item level is 0 :(")
     end
 
-    self.gvRewards = gvRewards
+    self.ItemInfoLabel:SetText(rewInfoText)
+end
+
+function DelveCompanionGreatVaultItemMixin:OnEnter()
+    local canUpgradeItem, _, nextLevel, itemLevel = C_WeeklyRewards.GetNextActivitiesIncrease(
+        self.rewardConfig.activityTier, self.rewardConfig.delveTier)
+
+    local tooltip = GameTooltip
+    tooltip:SetOwner(self, "ANCHOR_RIGHT")
+
+    if canUpgradeItem == true then
+        local improveLine = format(_G["WEEKLY_REWARDS_IMPROVE_ITEM_LEVEL"], itemLevel)
+        GameTooltip_AddInstructionLine(tooltip, improveLine, true)
+
+        local reqLine = format(_G["WEEKLY_REWARDS_COMPLETE_WORLD"], nextLevel)
+        GameTooltip_AddHighlightLine(tooltip, reqLine, true)
+    else
+        GameTooltip_AddInstructionLine(tooltip, _G["WEEKLY_REWARDS_MAXED_REWARD"], true)
+    end
+
+    tooltip:Show()
+end
+
+function DelveCompanionGreatVaultItemMixin:OnLeave()
+    GameTooltip:Hide()
+end
+
+DelveCompanionGreatVaultDetailsMixin = {}
+
+function DelveCompanionGreatVaultDetailsMixin:CacheGreatVaultRewards()
+    -- log("Cache GV rewards...")
+
+    local activityInfo = C_WeeklyRewards.GetActivities(addon.config.ACTIVITY_TYPE)
+    if not activityInfo then
+        log("Cannot get Activity info")
+        return
+    end
+
+    local rewardLabels = self.Rewards:GetLayoutChildren()
+    for index, rewInfo in ipairs(activityInfo) do
+        local rewardConfig = {}
+
+        rewardConfig.activityTier = rewInfo.activityTierID
+        rewardConfig.delveTier = rewInfo.level
+        rewardConfig.itemLink = C_WeeklyRewards.GetExampleRewardItemHyperlinks(rewInfo.id)
+
+        rewardLabels[index].rewardConfig = rewardConfig
+    end
+end
+
+function DelveCompanionGreatVaultDetailsMixin:SetStateLoading()
+    self:GetParent().PanelDescription:Hide()
+    self:GetParent().GreatVaultButton:Hide()
+
+    self.GVButton:Hide()
+    self.Rewards:Hide()
+    self.LoadingLabel:Show()
+end
+
+function DelveCompanionGreatVaultDetailsMixin:SetStateDefault()
+    self:GetParent().PanelDescription:Show()
+    self:GetParent().GreatVaultButton:Show()
+
+    self.GVButton:Hide()
+    self.Rewards:Hide()
+end
+
+function DelveCompanionGreatVaultDetailsMixin:SetStateCustom()
+    -- Hide the default Great Vault elements
+    self:GetParent().PanelDescription:Hide()
+    self:GetParent().GreatVaultButton:Hide()
+
+    self.GVButton:Show()
+    self.Rewards:Show()
+    self.LoadingLabel:Hide()
 end
 
 function DelveCompanionGreatVaultDetailsMixin:Refresh()
     if WeeklyRewardsUtil.HasUnlockedRewards(addon.config.ACTIVITY_TYPE) and not C_WeeklyRewards.CanClaimRewards() then
-        -- Hide the default Great Vault widget
-        self:GetParent().GreatVaultButton:Hide()
-        self:Show()
-
+        -- log("Rewards availalbe.")
+        self:SetStateLoading()
         self:CacheGreatVaultRewards()
 
-        local rewardLabels = self.Content:GetLayoutChildren()
-        for index, gvReward in ipairs(self.gvRewards) do
-            local rewInfoText = _G["EMPTY"]
-            if gvReward.itemLevel ~= 0 then
-                local levelString = _G["ITEM_LEVEL"]:format(gvReward.itemLevel)
-                local tierString = _G["GREAT_VAULT_WORLD_TIER"]:format(gvReward.delveTier)
-                rewInfoText = format("%s - (%s)", levelString, tierString)
+        local setDelay = 2
+        C_Timer.After(setDelay, function() -- TODO: replace with OnUpdate if an issue with itemLink occurs again
+            for _, rewLabel in pairs(self.Rewards:GetLayoutChildren()) do
+                rewLabel:Update()
             end
-
-            rewardLabels[index].ItemInfoLabel:SetText(rewInfoText)
-        end
+            self:SetStateCustom()
+        end)
     else
-        self:GetParent().GreatVaultButton:Show()
-        self:Hide()
+        -- log("No rewards.")
+        self:SetStateDefault()
     end
+    self.shouldRefresh = false
 end
 
 function DelveCompanionGreatVaultDetailsMixin:OnLoad()
     -- log("GreatVaultDetails OnLoad start")
-    self:GetParent().PanelDescription:Hide()
 
     for i = 1, WeeklyRewardsUtil.GetMaxNumRewards(addon.config.ACTIVITY_TYPE), 1 do
-        local rewFrame = CreateFrame("Frame", nil, self.Content, "DelveCompanionGreatVaultItemTemplate")
+        local rewFrame = CreateFrame("Frame", nil, self.Rewards, "DelveCompanionGreatVaultItemTemplate")
         rewFrame.layoutIndex = i
     end
-    self.Content:Layout()
+    self.Rewards:Layout()
+
+    self.LoadingLabel:SetText(_G["SEARCH_LOADING_TEXT"])
+    self.GVButton:SetTextToFit(_G["RAF_VIEW_ALL_REWARDS"])
 
     self:SetScript("OnEvent", self.Refresh)
+    self.shouldRefresh = true
 end
 
 function DelveCompanionGreatVaultDetailsMixin:OnShow()
-    --log("GreatVaultDetails OnShow start")
-    self:RegisterEvent("WEEKLY_REWARDS_UPDATE")
-    self:Refresh()
+    -- log("GreatVaultDetails OnShow start")
+    if self.shouldRefresh then
+        self:Refresh()
+    end
 end
 
 function DelveCompanionGreatVaultDetailsMixin:OnHide()
     --log("GreatVaultDetails OnHide start")
-    self:UnregisterEvent("WEEKLY_REWARDS_UPDATE")
 end
 
 --============ GildedStash Frame ======================
@@ -228,7 +289,7 @@ function DelveCompanionOverviewBountifulButtonMixin:UpdateTooltip()
 
     GameTooltip:ClearLines()
     GameTooltip:AddLine(self.delveName);
-    GameTooltip:AddLine(self.parentMapName, 1, 1, 1);
+    GameTooltip:AddLine(self.parentMapName, 1, 1, 1, true);
     GameTooltip:AddLine(" ")
     GameTooltip:AddLine(text, 1, 1, 1, true)
     GameTooltip:Show()
@@ -336,8 +397,8 @@ function DelveCompanion_DelvesDashExtension_Init()
 
         local gvDetailsFrame = CreateFrame("Frame", "GVDetailsFrame", gvPanel,
             "DelveCompanionGreatVaultDetailsFrame")
-        gvDetailsFrame.GVButton:SetTextToFit(_G["RAF_VIEW_ALL_REWARDS"])
         addon.gvDetailsFrame = gvDetailsFrame
+        addon.eventsCatcherFrame:RegisterEvent("WEEKLY_REWARDS_UPDATE")
     end
 
     if DelveCompanionCharacterData.dashOverviewEnabled then
