@@ -57,28 +57,33 @@ function DelveCompanionGreatVaultItemMixin:Update()
     local rewInfoText = _G["EMPTY"]
     if itemLevel ~= 0 then
         rewInfoText = format(_G["WEEKLY_REWARDS_ITEM_LEVEL_WORLD"], itemLevel, self.rewardConfig.delveTier)
-    else
-        log("Item level is 0 :(")
+    elseif self.rewardConfig.progress < self.rewardConfig.threshold then
+        rewInfoText = format("%d/%d", self.rewardConfig.progress, self.rewardConfig.threshold)
     end
 
     self.ItemInfoLabel:SetText(rewInfoText)
 end
 
 function DelveCompanionGreatVaultItemMixin:OnEnter()
-    local canUpgradeItem, _, nextLevel, itemLevel = C_WeeklyRewards.GetNextActivitiesIncrease(
-        self.rewardConfig.activityTier, self.rewardConfig.delveTier)
-
     local tooltip = GameTooltip
     tooltip:SetOwner(self, "ANCHOR_RIGHT")
 
-    if canUpgradeItem == true then
-        local improveLine = format(_G["WEEKLY_REWARDS_IMPROVE_ITEM_LEVEL"], itemLevel)
-        GameTooltip_AddInstructionLine(tooltip, improveLine, true)
+    if self.unlocked then
+        local canUpgradeItem, _, nextLevel, itemLevel = C_WeeklyRewards.GetNextActivitiesIncrease(
+            self.rewardConfig.activityTier, self.rewardConfig.delveTier)
 
-        local reqLine = format(_G["WEEKLY_REWARDS_COMPLETE_WORLD"], nextLevel)
-        GameTooltip_AddHighlightLine(tooltip, reqLine, true)
+        if canUpgradeItem == true then
+            local improveLine = format(_G["WEEKLY_REWARDS_IMPROVE_ITEM_LEVEL"], itemLevel)
+            GameTooltip_AddInstructionLine(tooltip, improveLine, true)
+
+            local reqLine = format(_G["WEEKLY_REWARDS_COMPLETE_WORLD"], nextLevel)
+            GameTooltip_AddHighlightLine(tooltip, reqLine, true)
+        else
+            GameTooltip_AddInstructionLine(tooltip, _G["WEEKLY_REWARDS_MAXED_REWARD"], true)
+        end
     else
-        GameTooltip_AddInstructionLine(tooltip, _G["WEEKLY_REWARDS_MAXED_REWARD"], true)
+        local reqLine = format(_G["WEEKLY_REWARDS_COMPLETE_WORLD"], 1)
+        GameTooltip_AddHighlightLine(tooltip, reqLine, true)
     end
 
     tooltip:Show()
@@ -88,7 +93,7 @@ function DelveCompanionGreatVaultItemMixin:OnLeave()
     GameTooltip:Hide()
 end
 
-DelveCompanionGreatVaultDetailsMixin = {}
+DelveCompanionGreatVaultDetailsMixin = CreateFromMixins(WeeklyRewardMixin)
 
 function DelveCompanionGreatVaultDetailsMixin:CacheGreatVaultRewards()
     -- log("Cache GV rewards...")
@@ -104,6 +109,8 @@ function DelveCompanionGreatVaultDetailsMixin:CacheGreatVaultRewards()
         local rewardConfig = {}
 
         rewardConfig.activityTier = rewInfo.activityTierID
+        rewardConfig.progress = rewInfo.progress
+        rewardConfig.threshold = rewInfo.threshold
         rewardConfig.delveTier = rewInfo.level
         rewardConfig.itemLink = C_WeeklyRewards.GetExampleRewardItemHyperlinks(rewInfo.id)
 
@@ -139,7 +146,7 @@ function DelveCompanionGreatVaultDetailsMixin:SetStateCustom()
 end
 
 function DelveCompanionGreatVaultDetailsMixin:Refresh()
-    if WeeklyRewardsUtil.HasUnlockedRewards(addon.config.ACTIVITY_TYPE) and not C_WeeklyRewards.CanClaimRewards() then
+    if self:HasUnlockedRewards(addon.config.ACTIVITY_TYPE) and not C_WeeklyRewards.CanClaimRewards() then
         -- log("Rewards availalbe.")
         self:SetStateLoading()
         self:CacheGreatVaultRewards()
@@ -161,9 +168,10 @@ end
 function DelveCompanionGreatVaultDetailsMixin:OnLoad()
     -- log("GreatVaultDetails OnLoad start")
 
-    for i = 1, WeeklyRewardsUtil.GetMaxNumRewards(addon.config.ACTIVITY_TYPE), 1 do
+    for i = 1, self:GetMaxNumRewards(addon.config.ACTIVITY_TYPE), 1 do
         local rewFrame = CreateFrame("Frame", nil, self.Rewards, "DelveCompanionGreatVaultItemTemplate")
         rewFrame.layoutIndex = i
+        rewFrame.unlocked = self:GetNumUnlockedRewards() >= i
     end
     self.Rewards:Layout()
 
@@ -183,6 +191,20 @@ end
 
 function DelveCompanionGreatVaultDetailsMixin:OnHide()
     --log("GreatVaultDetails OnHide start")
+end
+
+--============ Delves DashboardOverview ======================
+
+DelveCompanionDashboardOverviewMixin = {}
+
+function DelveCompanionDashboardOverviewMixin:OnLoad()
+    --log("DashboardOverview OnLoad start")
+    self.PanelTitle:Hide()
+    self.PanelDescription:Hide()
+end
+
+function DelveCompanionDashboardOverviewMixin:OnShow()
+    --log("DashboardOverview OnShow start")
 end
 
 --============ GildedStash Frame ======================
@@ -374,20 +396,6 @@ function DelveCompanionOverviewBountifulFrameMixin:OnShow()
     self.KeysInfo.Shards.Label:SetText(shardsLine)
 
     self.WorldMapButton:SetText(_G["WORLDMAP_BUTTON"])
-end
-
---============ Delves DashboardOverview ======================
-
-DelveCompanionDashboardOverviewMixin = {}
-
-function DelveCompanionDashboardOverviewMixin:OnLoad()
-    --log("DashboardOverview OnLoad start")
-    self.PanelTitle:Hide()
-    self.PanelDescription:Hide()
-end
-
-function DelveCompanionDashboardOverviewMixin:OnShow()
-    --log("DashboardOverview OnShow start")
 end
 
 --============ Init ======================
