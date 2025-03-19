@@ -2,6 +2,9 @@ local addonName, addon = ...
 
 local config = {}
 
+config.MAX_LEVEL = 80
+config.ACTIVITY_TYPE = Enum.WeeklyRewardChestThresholdType.World
+
 config.BOUNTIFUL_KEY_CURRENCY_CODE = 3028
 config.BOUNTIFUL_KEY_MAX_PER_WEEK = 4
 config.BOUNTIFUL_KEY_QUESTS_DATA = {
@@ -10,6 +13,16 @@ config.BOUNTIFUL_KEY_QUESTS_DATA = {
     [3] = 84738,
     [4] = 84739,
 }
+
+config.GILDED_STASH_WEEKLY_CAP = 3
+config.GILDED_STASH_SPELL_CODE = 1216211
+config.BOUNTIFUL_COFFER_ITEM_CODE = 233071
+-- Seasonal items
+config.BOUNTY_MAP_ITEM_CODE = 233071
+config.ECHO_ITEM_CODE = 235897
+config.KEY_SHARD_ITEM_CODE = 236096
+config.SHARDS_FOR_KEY = 100
+--===
 
 -- Table of maps which contain Delves
 config.DELVES_MAPS_DATA = {
@@ -34,6 +47,10 @@ config.DELVES_REGULAR_DATA = {
             y = 74.0
         },
         atlasBgID = "delve-entrance-background-earthcrawl-mines",
+        achievements = {
+            chest = 40806,
+            story = 40527
+        },
         modSpellIDs = {
             [1] = 432451,  -- Nerubian Eggs
             [2] = 459303,  -- Nerubian Eggs
@@ -54,6 +71,10 @@ config.DELVES_REGULAR_DATA = {
             y = 65.77
         },
         atlasBgID = "delve-entrance-background-fungal-folly",
+        achievements = {
+            chest = 40803,
+            story = 40525
+        },
         modSpellIDs = {
             [1] = 1223745 -- Goblin Problems
         }
@@ -70,6 +91,10 @@ config.DELVES_REGULAR_DATA = {
             y = 42.70
         },
         atlasBgID = "delve-entrance-background-kriegvals-rest",
+        achievements = {
+            chest = 40807,
+            story = 40526
+        },
         modSpellIDs = {
         }
     },
@@ -85,6 +110,10 @@ config.DELVES_REGULAR_DATA = {
             y = 48.71
         },
         atlasBgID = "delve-entrance-background-the-waterworks",
+        achievements = {
+            chest = 40816,
+            story = 40528
+        },
         modSpellIDs = {
         }
     },
@@ -100,6 +129,10 @@ config.DELVES_REGULAR_DATA = {
             y = 37.3
         },
         atlasBgID = "delve-entrance-background-the-dread-pit",
+        achievements = {
+            chest = 40812,
+            story = 40529
+        },
         modSpellIDs = {
         }
     },
@@ -115,6 +148,10 @@ config.DELVES_REGULAR_DATA = {
             y = 96.41
         },
         atlasBgID = "delve-entrance-background-the-undermine",
+        achievements = {
+            chest = 41100,
+            story = 41098
+        },
         modSpellIDs = {
         }
     },
@@ -130,6 +167,10 @@ config.DELVES_REGULAR_DATA = {
             y = 53.3
         },
         atlasBgID = "delve-entrance-background-the-sinkhole",
+        achievements = {
+            chest = 40813,
+            story = 40532
+        },
         modSpellIDs = {
         }
     },
@@ -145,6 +186,10 @@ config.DELVES_REGULAR_DATA = {
             y = 47.43
         },
         atlasBgID = "delve-entrance-background-nightfall-sanctum",
+        achievements = {
+            chest = 40809,
+            story = 40530
+        },
         modSpellIDs = {
         }
     },
@@ -160,6 +205,10 @@ config.DELVES_REGULAR_DATA = {
             y = 31.2
         },
         atlasBgID = "delve-entrance-background-mycomancer-cavern",
+        achievements = {
+            chest = 40808,
+            story = 40531
+        },
         modSpellIDs = {
         }
     },
@@ -175,6 +224,10 @@ config.DELVES_REGULAR_DATA = {
             y = 61.74
         },
         atlasBgID = "delve-entrance-background-skittering-breach",
+        achievements = {
+            chest = 40810,
+            story = 40533
+        },
         modSpellIDs = {
         }
     },
@@ -190,6 +243,10 @@ config.DELVES_REGULAR_DATA = {
             y = 19.0
         },
         atlasBgID = "delve-entrance-background-the-spiral-weave",
+        achievements = {
+            chest = 40814,
+            story = 40536
+        },
         modSpellIDs = {
         }
     },
@@ -205,6 +262,10 @@ config.DELVES_REGULAR_DATA = {
             y = 88.30
         },
         atlasBgID = "delve-entrance-background-the-underkeep",
+        achievements = {
+            chest = 40815,
+            story = 40534
+        },
         modSpellIDs = {
         }
     },
@@ -220,6 +281,10 @@ config.DELVES_REGULAR_DATA = {
             y = 73.92
         },
         atlasBgID = "delve-entrance-background-tak-rethan-abyss",
+        achievements = {
+            chest = 40811,
+            story = 40535
+        },
         modSpellIDs = {
         }
     },
@@ -235,6 +300,10 @@ config.DELVES_REGULAR_DATA = {
             y = 53.04
         },
         atlasBgID = "delves-entrance-background-sewers",
+        achievements = {
+            chest = 41101,
+            story = 41099
+        },
         modSpellIDs = {
         }
     },
@@ -268,6 +337,8 @@ config.DELVES_REGULAR_DATA = {
         }
     }
 }
+
+config.GREAT_VAULT_UPGRADE_MAX_TIER = 8
 
 -- Table of loot by Delves Tier
 config.DELVES_LOOT_INFO_DATA = {

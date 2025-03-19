@@ -1,7 +1,6 @@
 local addonName, addon = ...
 local log = addon.log
-
-addon.eventsCatcherFrame = CreateFrame("Frame")
+local enums = addon.enums
 
 addon.CacheActiveBountiful = function()
     --log("Start fetching boutiful delves...")
@@ -58,133 +57,40 @@ addon.CacheKeysData = function()
     addon.keysCollected = keysCollected
 end
 
-addon.CacheGreatVaultRewards = function()
-    local gvRewards = {}
-    local activityInfo = C_WeeklyRewards.GetActivities(addon.activityType)
-    if not activityInfo then return end
-
-    for index, rewInfo in ipairs(activityInfo) do
-        local itemLevel = 0
-        local itemLink = C_WeeklyRewards.GetExampleRewardItemHyperlinks(rewInfo.id)
-        if itemLink then
-            itemLevel = C_Item.GetDetailedItemLevelInfo(itemLink) or 0
-        end
-
-        table.insert(gvRewards, index, { itemLevel = itemLevel, delveTier = rewInfo.level })
-    end
-
-    addon.gvRewards = gvRewards
-end
-
--- TODO: polish
-addon.CreateSettingsFrame = function()
-    if addon.settingsFrame == nil then
-        local settingsFrame = CreateFrame("Frame", "DelveCompanionSettingsFrame", UIParent,
-            "DefaultPanelTemplate")
-        settingsFrame:Hide()
-        settingsFrame:SetSize(300, 200)
-        settingsFrame:SetPoint("CENTER")
-        settingsFrame.TitleContainer.TitleText:SetText(_G["SETTINGS"])
-
-        CreateFrame("Button", nil, settingsFrame, "UIPanelCloseButtonDefaultAnchors")
-
-        local gvDetailsCheckButton = CreateFrame("CheckButton", nil, settingsFrame, "ChatConfigCheckButtonTemplate")
-        gvDetailsCheckButton:SetPoint("TOPLEFT", 15, -40)
-        gvDetailsCheckButton:SetChecked(DelveCompanionCharacterData.gvDetailsEnabled)
-        gvDetailsCheckButton.Text:SetText("Enable Great Vault details")
-        -- gvDetailsCheckButton.tooltip = "This is where you place MouseOver Text."
-        gvDetailsCheckButton:HookScript("OnClick", function(self)
-            DelveCompanionCharacterData.gvDetailsEnabled = self:GetChecked()
-        end)
-
-        local keysCapTooltipCheckButton = CreateFrame("CheckButton", nil, settingsFrame, "ChatConfigCheckButtonTemplate")
-        keysCapTooltipCheckButton:SetPoint("TOPLEFT", 15, -80)
-        keysCapTooltipCheckButton:SetChecked(DelveCompanionCharacterData.keysCapTooltipEnabled)
-        keysCapTooltipCheckButton.Text:SetText("Display Keys weekly cap")
-        -- gvDetailsCheckButton.tooltip = "This is where you place MouseOver Text."
-        keysCapTooltipCheckButton:HookScript("OnClick", function(self)
-            DelveCompanionCharacterData.keysCapTooltipEnabled = self:GetChecked()
-        end)
-
-        local reloadButton = CreateFrame("Button", nil, settingsFrame, "MagicButtonTemplate")
-        reloadButton:SetSize(200, 30)
-        reloadButton:SetPoint("BOTTOM", 0, 15)
-        reloadButton:SetText(_G["RELOADUI"])
-        reloadButton:SetScript("OnMouseUp", function()
-            C_UI.Reload()
-        end)
-
-        addon.settingsFrame = settingsFrame
+-- TODO: Explore a new Settings API. Maybe Settings.RegisterAddOnSetting is more convenient way to setup settings.
+addon.InitSettings = function()
+    local addonNameStr = tostring(addonName) -- TODO: explore why addonName can be a table instead of a string
+    local settingsFrame = CreateFrame("Frame", addonNameStr, nil, "DelveCompanionSettingsFrame")
+    settingsFrame.name = addonNameStr
+    if Settings and Settings.RegisterCanvasLayoutCategory and Settings.RegisterAddOnCategory then
+        local category = Settings.RegisterCanvasLayoutCategory(settingsFrame, settingsFrame.name)
+        category.ID = settingsFrame.name
+        Settings.RegisterAddOnCategory(category)
     end
 end
 
 addon.Init = function()
-    if not DelveCompanionCharacterData then
-        DelveCompanionCharacterData = {
-            gvDetailsEnabled = true,
-            keysCapTooltipEnabled = true
-        }
-    end
+    addon.InitSettings()
 
-    addon.CreateSettingsFrame()
-
-    addon.delvesListFrame = nil
-    addon.lootInfoFrame = nil
-    addon.activityType = Enum.WeeklyRewardChestThresholdType.World
-
-    -- TODO: refactor to init it properly
-    if DelveCompanionCharacterData.keysCapTooltipEnabled then
-        addon.eventsCatcherFrame:RegisterEvent("QUEST_LOG_UPDATE")
-
-        TooltipDataProcessor.AddTooltipPostCall(Enum.TooltipDataType.Currency, function(tooltip, ...)
-            if tooltip:GetPrimaryTooltipData().id ~= addon.config.BOUNTIFUL_KEY_CURRENCY_CODE then
-                return
-            end
-
-            local lines = {}
-            for i = 1, GameTooltip:NumLines() do
-                local line = _G["GameTooltipTextLeft" .. i]
-                if line then
-                    table.insert(lines, line:GetText())
-                end
-            end
-            GameTooltip:ClearLines()
-            local keysAmountWrapColor = addon.keysCollected ~= addon.config.BOUNTIFUL_KEY_MAX_PER_WEEK
-                and _G["GREEN_FONT_COLOR"]
-                or _G["WHITE_FONT_COLOR"]
-            local weeklyCapLine = strtrim(format(_G["CURRENCY_THIS_WEEK"], "")) .. ": " ..
-                keysAmountWrapColor:WrapTextInColorCode(format("%d/%d", addon.keysCollected,
-                    addon.config.BOUNTIFUL_KEY_MAX_PER_WEEK))
-            local linePos = 4
-            table.insert(lines, linePos, weeklyCapLine)
-
-            for _, line in ipairs(lines) do
-                GameTooltip:AddLine(line)
-            end
-        end)
-    end
-    --- Chests with keys:
-    --- https://wowhead.com/item=239128
-    --- https://wowhead.com/item=239120
-    --- https://wowhead.com/item=239128
-    ---
-    --- https://wowhead.com/item=233071 (Bounty Map)
+    addon.maxLevelReached = UnitLevel("player") == addon.config.MAX_LEVEL
 end
 
 function DelveCompanionShowSettings()
-    addon.settingsFrame:Show()
+    if Settings and Settings.OpenToCategory then
+        Settings.OpenToCategory(tostring(addonName))
+    end
 end
 
-local trackedAddonNames = {
-    delvesDashboardUI = "Blizzard_DelvesDashboardUI",
-    encounterJournal = "Blizzard_EncounterJournal"
-}
+-- Addon Boot
 
+addon.eventsCatcherFrame = CreateFrame("Frame")
 addon.eventsCatcherFrame:RegisterEvent("ADDON_LOADED")
--- eventsCatcherFrame:RegisterEvent("PLAYER_LOGIN")
--- eventsCatcherFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
--- eventsCatcherFrame:RegisterEvent("LOOT_OPENED")
---- TODO: split creation and parenting to reduce load dependencies
+-- addon.eventsCatcherFrame:RegisterEvent("PLAYER_LOGIN")
+-- addon.eventsCatcherFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
+-- addon.eventsCatcherFrame:RegisterEvent("UPDATE_UI_WIDGET")
+-- addon.eventsCatcherFrame:RegisterEvent("LOOT_OPENED")
+
+--- TODO: split creation and parenting to reduce load dependencies. Check LoadAddon.
 addon.eventsCatcherFrame:SetScript(
     "OnEvent",
     function(_, event, arg1, arg2)
@@ -192,33 +98,50 @@ addon.eventsCatcherFrame:SetScript(
             local loadedName = arg1
             if loadedName == addonName then
                 addon.Init()
-            elseif loadedName == trackedAddonNames.delvesDashboardUI then
+
+                if addon.maxLevelReached == false then
+                    return
+                end
+                DelveCompanion_TooltipExtension_Init()
+            elseif loadedName == enums.DependencyAddonNames.delvesDashboardUI then
                 if DelvesDashboardFrame == nil then
                     log("DelvesDashboardFrame is nil. Delves UI extention is not inited.")
                     return
                 end
 
-                DelveCompanion_DevlesDashExtension_Init()
-            elseif loadedName == trackedAddonNames.encounterJournal then
+                if addon.maxLevelReached == false then
+                    return
+                end
+
+                DelveCompanion_DelvesDashExtension_Init()
+            elseif loadedName == enums.DependencyAddonNames.encounterJournal then
                 if EncounterJournal == nil then
                     log("EncounterJournal is nil. Delves tab is not inited.")
                     return
                 end
 
                 DelveCompanion_DelvesListFrame_Init()
-                -- elseif event == "PLAYER_LOGIN" then
-                --     return
-                -- elseif event == "PLAYER_ENTERING_WORLD" then
-                --     return
             else
                 return
             end
+            -- elseif event == "PLAYER_LOGIN" then
+            -- elseif event == "PLAYER_ENTERING_WORLD" then
+        elseif event == "WEEKLY_REWARDS_UPDATE" then
+            if addon.gvDetailsFrame:IsShown() then
+                addon.gvDetailsFrame:Refresh()
+            else
+                addon.gvDetailsFrame.shouldRefresh = true
+            end
+            return
         elseif event == "QUEST_LOG_UPDATE" then
             addon.CacheKeysData()
             return
-        elseif event == "WEEKLY_REWARDS_UPDATE" then
-            addon.CacheGreatVaultRewards()
-            return
+            -- elseif event == "UPDATE_UI_WIDGET" then
+            --     local wi = arg1
+            --     for key, value in pairs(wi) do
+            --         log("%s: %s", key, tostring(value))
+            --     end
+            --     return
             -- elseif event == "LOOT_OPENED" then
             --     for i = 1, GetNumLootItems() do
             --         local sources = { GetLootSourceInfo(i) }
