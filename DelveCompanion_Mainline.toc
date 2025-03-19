@@ -1,6 +1,6 @@
 ## Interface: 110100
 ## Author: FunDeliveryGames
-## Version: v0.1.1
+## Version: v0.1.2
 ## IconTexture: interface/icons/ui_delves
 ## Title: Delve Companion
 ## Notes: One-stop addon to make Delves experience even better!
@@ -25,15 +25,20 @@
 ## X-Category: Delve
 
 # Logging
-log.lua
+src\log.lua
 
 # Localization
 localization\lockit.xml
 
-# Config
-config.lua
+# Data
+data\config.lua
+data\enums.lua
 
 # Core
+src\utility.xml
+src\utility.lua
+
+modules\tooltip_extension\tooltip_extension.lua
 core.lua
 modules\delves_list\delves_list.xml
 modules\delves_list\delves_list.lua

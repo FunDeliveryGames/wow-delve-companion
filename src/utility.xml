@@ -1,0 +1,127 @@
+<Ui
+    xmlns="http://www.blizzard.com/wow/ui/"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+    <!--
+    Generic template to display an icon with a tooltip and text
+    frameType is a value of enums.CodeType
+    -->
+    <Frame name="DelveCompanionIconWithLabelAndTooltipTemplate"
+        mixin="DelveCompanionIconWithLabelAndTooltipMixin" virtual="true">
+        <KeyValues>
+            <KeyValue key="iconSizeX" value="24" type="number" />
+            <KeyValue key="iconSizeY" value="24" type="number" />
+            <KeyValue key="displayLabel" value="true" type="boolean" />
+            <KeyValue key="frameType" value="item" type="string" />
+            <KeyValue key="frameCode" value="300" type="number" />
+            <KeyValue key="useAutoScaling" value="false" type="boolean" />
+            <!--
+            <KeyValue key="labelPoint" value="LEFT" type="string"/>
+            <KeyValue key="labelPadding" value="5" type="number"/>
+            -->
+        </KeyValues>
+        <Layers>
+            <Layer level="OVERLAY">
+                <Texture parentKey="Icon">
+                    <Anchors>
+                        <Anchor point="CENTER" />
+                    </Anchors>
+                </Texture>
+                <FontString parentKey="Label"
+                    inherits="GameFontHighlightMed2"
+                    justifyH="RIGHT" text="COUNT">
+                    <Anchors>
+                        <Anchor point="RIGHT" relativeKey="$parent.Icon"
+                            relativePoint="LEFT" x="-5" y="0" />
+                    </Anchors>
+                </FontString>
+            </Layer>
+        </Layers>
+        <Scripts>
+            <OnLoad method="OnLoad" />
+            <OnShow method="OnShow" />
+            <!-- <OnHide method="OnHide" /> -->
+            <OnEnter method="OnEnter" />
+            <OnLeave method="OnLeave" />
+            <!-- <OnClick method="OnClick" /> -->
+        </Scripts>
+    </Frame>
+
+    <!-- Settings frame -->
+    <Frame name="DelveCompanionSettingsFrame" mixin="DelveCompanionSettingsFrameMixin"
+        virtual="true">
+        <Frames>
+            <Frame parentKey="TitlePanel">
+                <Anchors>
+                    <Anchor point="TOPLEFT" />
+                    <Anchor point="BOTTOMRIGHT" relativeTo="$parent" relativePoint="TOPRIGHT"
+                        y="-40" />
+                </Anchors>
+                <Layers>
+                    <Layer level="OVERLAY">
+                        <FontString parentKey="Title" inherits="GameFontNormalHuge2"
+                            justifyH="CENTER" text="TITLE">
+                            <Anchors>
+                                <Anchor point="TOP" />
+                            </Anchors>
+                        </FontString>
+                    </Layer>
+                </Layers>
+            </Frame>
+
+            <Frame parentKey="TogglesContainer" inherits="VerticalLayoutFrame">
+                <KeyValues>
+                    <KeyValue key="maximumWidth" value="400" type="number" />
+                    <KeyValue key="expand" value="true" type="boolean" />
+                    <KeyValue key="spacing" value="5" type="number" />
+                </KeyValues>
+                <Anchors>
+                    <Anchor point="TOPLEFT" relativeKey="$parent.TitlePanel"
+                        relativePoint="BOTTOMLEFT" />
+                </Anchors>
+                <Frames>
+                    <CheckButton parentKey="keysCapTooltipCheckButton"
+                        inherits="DelveCompanionSettingsCheckButtonTemplate">
+                        <KeyValues>
+                            <KeyValue key="layoutIndex" value="1" type="number" />
+                        </KeyValues>
+                    </CheckButton>
+                    <CheckButton parentKey="gvDetailsCheckButton"
+                        inherits="DelveCompanionSettingsCheckButtonTemplate">
+                        <KeyValues>
+                            <KeyValue key="layoutIndex" value="2" type="number" />
+                        </KeyValues>
+                    </CheckButton>
+                    <CheckButton parentKey="dashOverviewCheckButton"
+                        inherits="DelveCompanionSettingsCheckButtonTemplate">
+                        <KeyValues>
+                            <KeyValue key="layoutIndex" value="3" type="number" />
+                        </KeyValues>
+                    </CheckButton>
+                </Frames>
+            </Frame>
+
+            <Button parentKey="ReloadButton" text="RELOAD" inherits="MagicButtonTemplate">
+                <Size x="250" y="30" />
+                <Anchors>
+                    <Anchor point="BOTTOM" y="15" />
+                </Anchors>
+                <Scripts>
+                    <OnClick>
+                        C_UI.Reload()
+                    </OnClick>
+                </Scripts>
+            </Button>
+        </Frames>
+        <Scripts>
+            <OnLoad method="OnLoad" />
+        </Scripts>
+    </Frame>
+
+    <CheckButton name="DelveCompanionSettingsCheckButtonTemplate"
+        inherits="ChatConfigCheckButtonTemplate" text="CHECK_BUTTON_DESC" virtual="true">
+        <Anchors>
+            <Anchor point="TOPLEFT" />
+        </Anchors>
+    </CheckButton>
+</Ui>
