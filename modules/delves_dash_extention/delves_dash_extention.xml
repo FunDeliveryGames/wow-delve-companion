@@ -120,7 +120,7 @@
         <Layers>
             <Layer level="OVERLAY">
                 <FontString parentKey="LoadingLabel" inherits="GameFontNormalLarge2"
-                    justifyH="CENTER" text="LOADING...">
+                    justifyH="CENTER" text="LOADING..." hidden="true">
                     <Anchors>
                         <Anchor point="CENTER" x="0" y="0" />
                     </Anchors>

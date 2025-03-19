@@ -192,6 +192,7 @@ function DelveCompanionGreatVaultDetailsMixin:SetStateDefault()
 
     self.GVButton:Hide()
     self.Rewards:Hide()
+    self.LoadingLabel:Hide()
 end
 
 function DelveCompanionGreatVaultDetailsMixin:SetStateCustom()
