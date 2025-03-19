@@ -1,9 +1,11 @@
 package-as: DelveCompanion
 ignore:
-- .vscode\
-- .git\
-- .gitignore
-- README.md
-- LICENSE
-- CHANGELOG.md
-- update_addon.ps1
+  - .vscode\
+  - .git\
+  - releases\
+  - .gitignore
+  - README.md
+  - LICENSE
+  - CHANGELOG.md
+  - update_addon.ps1
+  - pack_addon_mainline.ps1
