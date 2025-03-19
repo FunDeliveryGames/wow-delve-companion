@@ -7,6 +7,34 @@ local lockit = addon.lockit
 
 DelveCompanionIconWithLabelAndTooltipMixin = {}
 
+function DelveCompanionIconWithLabelAndTooltipMixin:SetLabelText(text)
+    if text then
+        self.Label:SetText(text)
+    else
+        self.Label:SetText("?")
+    end
+end
+
+function DelveCompanionIconWithLabelAndTooltipMixin:SetIconFromTexture(texture)
+    if texture then
+        self.Icon:SetTexture(texture)
+    end
+end
+
+function DelveCompanionIconWithLabelAndTooltipMixin:SetIconFromAtlas(atlas)
+    log("NOT IMPLEMENTED")
+end
+
+function DelveCompanionIconWithLabelAndTooltipMixin:SetFrameInfo(frameType, frameCode)
+    if frameType and FindInTable(enums.CodeType, frameType) then
+        self.frameType = frameType
+    end
+
+    if frameCode and tonumber(frameCode) then
+        self.frameCode = tonumber(frameCode)
+    end
+end
+
 function DelveCompanionIconWithLabelAndTooltipMixin:OnLoad()
     -- log("DelveCompanionIconWithTextAndTooltip OnLoad start")
     self.Icon:SetSize(self.iconSizeX, self.iconSizeY)
@@ -18,13 +46,43 @@ function DelveCompanionIconWithLabelAndTooltipMixin:OnLoad()
     if self.useAutoScaling then
         Mixin(self.Label, AutoScalingFontStringMixin)
     end
+
+    if self.labelRelPoint and self.labelPadding then
+        self.Label:ClearAllPoints()
+        local point = self.labelRelPoint
+
+
+        -- local frame = CreateFrame("Frame")
+        -- local str = frame:CreateFontString("test", "OVERLAY")
+        -- str:SetFontObject("GameFontHighlightLarge")
+        if point == "TOPLEFT" then
+        elseif point == "TOPRIGHT" then
+        elseif point == "BOTTOMLEFT" then
+            self.Label:SetPoint("BOTTOMRIGHT", self.Icon, point, self.labelPadding, 0)
+        elseif point == "BOTTOMRIGHT" then
+        elseif point == "TOP" then
+        elseif point == "BOTTOM" then
+        elseif point == "LEFT" then
+        elseif point == "RIGHT" then
+        elseif point == "CENTER" then
+        end
+    end
+
+    if self.fontOverride then
+        self.Label:SetFontObject(self.fontOverride)
+    end
 end
 
 function DelveCompanionIconWithLabelAndTooltipMixin:OnShow()
     -- log("DelveCompanionIconWithTextAndTooltip OnShow start")
 
     local texture = nil
-    local type, code = self.frameType, self.frameCode
+    local type, code = self.frameType, tonumber(self.frameCode)
+
+    if not code then
+        return
+    end
+
     if type == enums.CodeType.Item then
         texture = C_Item.GetItemIconByID(code)
     elseif type == enums.CodeType.Spell then

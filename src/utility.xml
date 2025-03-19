@@ -16,20 +16,20 @@
             <KeyValue key="frameCode" value="300" type="number" />
             <KeyValue key="useAutoScaling" value="false" type="boolean" />
             <!--
-            <KeyValue key="labelPoint" value="LEFT" type="string"/>
+            <KeyValue key="labelRelPoint" value="LEFT" type="string"/>
             <KeyValue key="labelPadding" value="5" type="number"/>
+            <KeyValue key="fontOverride" value="FontName" type="string"/>
             -->
         </KeyValues>
         <Layers>
             <Layer level="OVERLAY">
-                <Texture parentKey="Icon">
+                <Texture parentKey="Icon" file="interface/icons/inv_misc_questionmark">
                     <Anchors>
                         <Anchor point="CENTER" />
                     </Anchors>
                 </Texture>
-                <FontString parentKey="Label"
-                    inherits="GameFontHighlightMed2"
-                    justifyH="RIGHT" text="COUNT">
+                <FontString parentKey="Label" inherits="GameFontHighlightMed2"
+                    justifyH="RIGHT" text="?">
                     <Anchors>
                         <Anchor point="RIGHT" relativeKey="$parent.Icon"
                             relativePoint="LEFT" x="-5" y="0" />

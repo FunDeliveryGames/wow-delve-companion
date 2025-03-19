@@ -129,37 +129,36 @@
 			</Layer>
 			-->
 			<Layer level="OVERLAY">
-				<FontString name="$parentFrameTitle" parentKey="frameTitle"
+				<FontString parentKey="Title"
 					inherits="GameFontNormalLarge2"
 					justifyH="LEFT" text="DELVES">
 					<Anchors>
 						<Anchor point="TOPLEFT" x="20" y="-15" />
 					</Anchors>
 				</FontString>
-				<Texture name="$parentKeysIcon" parentKey="keysIcon">
-					<Size x="24" y="24" />
-					<Anchors>
-						<Anchor point="BOTTOMLEFT" relativeTo="$parentFrameTitle"
-							relativePoint="BOTTOMRIGHT" x="20" y="0" />
-					</Anchors>
-				</Texture>
-				<FontString name="$parentKeysCount" parentKey="keysCountLabel"
-					inherits="GameFontHighlightLarge"
-					justifyH="LEFT" text="KEYS_COUNT">
-					<Anchors>
-						<Anchor point="BOTTOMLEFT" relativeTo="$parentKeysIcon"
-							relativePoint="BOTTOMRIGHT" x="5" y="0" />
-					</Anchors>
-				</FontString>
 			</Layer>
 		</Layers>
 		<Frames>
-			<Frame name="$parentKeysTooltipCatcher" parentKey="keysTooltipCatcher">
+			<Frame parentKey="KeysWidget"
+				inherits="DelveCompanionIconWithLabelAndTooltipTemplate">
+				<Size x="40" y="26" />
+				<KeyValues>
+					<KeyValue key="iconSizeX" value="24" type="number" />
+					<KeyValue key="iconSizeY" value="24" type="number" />
+					<KeyValue key="displayLabel" value="true" type="boolean" />
+					<KeyValue key="frameType" value="currency" type="string" />
+					<KeyValue key="frameCode" value="300" type="number" />
+					<KeyValue key="labelRelPoint" value="BOTTOMLEFT" type="string" />
+					<KeyValue key="labelPadding" value="-5" type="number" />
+					<KeyValue key="fontOverride" value="GameFontHighlightLarge"
+						type="string" />
+				</KeyValues>
 				<Anchors>
-					<Anchor point="CENTER" relativeTo="$parentKeysIcon" />
+					<Anchor point="BOTTOMLEFT" relativeKey="$parent.Title"
+						relativePoint="BOTTOMRIGHT" x="25" y="-1" />
 				</Anchors>
 			</Frame>
-			<ScrollFrame name="$parentScrollFrame" parentKey="delvesListScroll"
+			<ScrollFrame parentKey="DelvesListScroll"
 				inherits="ScrollFrameTemplate">
 				<KeyValues>
 					<KeyValue key="scrollBarX" value="10" type="number" />
@@ -171,7 +170,7 @@
 					<Anchor point="BOTTOMRIGHT" x="-30" y="15" />
 				</Anchors>
 				<ScrollChild>
-					<Frame name="$parentContent" parentKey="content">
+					<Frame parentKey="Content">
 						<Size x="748" y="367" />
 						<Layers>
 							<Layer level="BACKGROUND">
@@ -193,6 +192,7 @@
 		<Scripts>
 			<OnLoad method="OnLoad" />
 			<OnShow method="OnShow" />
+			<OnHide method="OnHide" />
 		</Scripts>
 	</Frame>
 </Ui>
