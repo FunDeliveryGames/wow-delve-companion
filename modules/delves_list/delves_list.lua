@@ -106,7 +106,6 @@ function DelveCompanionDelvesListMixin:UpdateKeysWidget()
         return
     end
 
-    self.KeysWidget:SetIconFromTexture(keyCurrInfo.iconFileID)
     self.KeysWidget:SetLabelText(keyCurrInfo.quantity)
 
     self.KeysWidget:Show()
@@ -116,6 +115,9 @@ function DelveCompanionDelvesListMixin:OnLoad()
     --log("DelvesList OnLoad start")
     self.Title:SetText(_G["DELVES_LABEL"])
     self.KeysWidget:SetFrameInfo(enums.CodeType.Currency, addon.config.BOUNTIFUL_KEY_CURRENCY_CODE)
+
+    self.AffixWidget:SetFrameInfo(enums.CodeType.Spell, addon.config.NEMESIS_AFFIX_SPELL_CODE)
+    self.AffixWidget:SetLabelText(format(_G["MYTHIC_PLUS_SEASON_DESC3"], ""))
 
     local offsetX, offsetY = DELVES_LIST_VIEW_BUTTONS_OFFSET, 0
     local instanceButtons = {}
@@ -165,6 +167,10 @@ function DelveCompanionDelvesListMixin:OnLoad()
     self.instanceButtons = instanceButtons
 end
 
+function DelveCompanionDelvesListMixin:OnEvent()
+    self:UpdateKeysWidget()
+end
+
 function DelveCompanionDelvesListMixin:OnShow()
     --log("DelvesList OnShow start")
     addon.CacheActiveBountiful()
@@ -178,7 +184,7 @@ function DelveCompanionDelvesListMixin:OnShow()
 
     if addon.maxLevelReached then
         self:UpdateKeysWidget()
-        addon.eventsCatcherFrame:RegisterEvent("CURRENCY_DISPLAY_UPDATE")
+        self:RegisterEvent("CURRENCY_DISPLAY_UPDATE")
     else
         self.KeysWidget:Hide()
     end
@@ -186,7 +192,7 @@ end
 
 function DelveCompanionDelvesListMixin:OnHide()
     --log("DelvesList OnHide start")
-    addon.eventsCatcherFrame:UnregisterEvent("CURRENCY_DISPLAY_UPDATE")
+    self:UnregisterEvent("CURRENCY_DISPLAY_UPDATE")
 end
 
 --============ Init ======================

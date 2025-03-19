@@ -16,18 +16,30 @@
             <KeyValue key="frameCode" value="300" type="number" />
             <KeyValue key="useAutoScaling" value="false" type="boolean" />
             <!--
+            <KeyValue key="useMask" value="true" type="boolean" />
+            <KeyValue key="maskSizeOffset" value="5" type="number" />
             <KeyValue key="labelRelPoint" value="LEFT" type="string"/>
             <KeyValue key="labelPadding" value="5" type="number"/>
             <KeyValue key="fontOverride" value="FontName" type="string"/>
             -->
         </KeyValues>
         <Layers>
-            <Layer level="OVERLAY">
+            <Layer level="BACKGROUND">
                 <Texture parentKey="Icon" file="interface/icons/inv_misc_questionmark">
                     <Anchors>
                         <Anchor point="CENTER" />
                     </Anchors>
                 </Texture>
+            </Layer>
+            <Layer level="OVERLAY">
+                <MaskTexture parentKey="CircleMask"
+                    file="Interface\CharacterFrame\TempPortraitAlphaMask"
+                    hWrapMode="CLAMPTOBLACKADDITIVE" vWrapMode="CLAMPTOBLACKADDITIVE" hidden="true">
+                    <Anchors>
+                        <Anchor point="TOPLEFT" relativePoint="CENTER" x="-15" y="15" />
+                        <Anchor point="BOTTOMRIGHT" relativePoint="CENTER" x="15" y="-15" />
+                    </Anchors>
+                </MaskTexture>
                 <FontString parentKey="Label" inherits="GameFontHighlightMed2"
                     justifyH="RIGHT" text="?">
                     <Anchors>

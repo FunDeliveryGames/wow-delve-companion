@@ -10,19 +10,7 @@ DelveCompanionIconWithLabelAndTooltipMixin = {}
 function DelveCompanionIconWithLabelAndTooltipMixin:SetLabelText(text)
     if text then
         self.Label:SetText(text)
-    else
-        self.Label:SetText("?")
     end
-end
-
-function DelveCompanionIconWithLabelAndTooltipMixin:SetIconFromTexture(texture)
-    if texture then
-        self.Icon:SetTexture(texture)
-    end
-end
-
-function DelveCompanionIconWithLabelAndTooltipMixin:SetIconFromAtlas(atlas)
-    log("NOT IMPLEMENTED")
 end
 
 function DelveCompanionIconWithLabelAndTooltipMixin:SetFrameInfo(frameType, frameCode)
@@ -47,6 +35,13 @@ function DelveCompanionIconWithLabelAndTooltipMixin:OnLoad()
         Mixin(self.Label, AutoScalingFontStringMixin)
     end
 
+    if self.useMask then
+        self.CircleMask:SetPoint("TOPLEFT", self, "CENTER", self.maskSizeOffset, -self.maskSizeOffset);
+        self.CircleMask:SetPoint("BOTTOMRIGHT", self, "CENTER", -self.maskSizeOffset, self.maskSizeOffset);
+        self.CircleMask:Show()
+        self.Icon:AddMaskTexture(self.CircleMask)
+    end
+
     if self.labelRelPoint and self.labelPadding then
         self.Label:ClearAllPoints()
         local point = self.labelRelPoint
@@ -66,6 +61,11 @@ function DelveCompanionIconWithLabelAndTooltipMixin:OnLoad()
         elseif point == "RIGHT" then
         elseif point == "CENTER" then
         end
+    else
+        -- Set default anchor
+        local relKey = self.useMask and self.CircleMask or self.Icon
+        self.Label:ClearAllPoints()
+        self.Label:SetPoint("RIGHT", relKey, "LEFT", -5, 0)
     end
 
     if self.fontOverride then

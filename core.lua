@@ -133,10 +133,6 @@ addon.eventsCatcherFrame:SetScript(
                 addon.gvDetailsFrame.shouldRefresh = true
             end
             return
-        elseif event == "CURRENCY_DISPLAY_UPDATE" then
-            if addon.delvesListFrame:IsShown() then
-                addon.delvesListFrame:UpdateKeysWidget()
-            end
         elseif event == "QUEST_LOG_UPDATE" then
             addon.CacheKeysData()
             return

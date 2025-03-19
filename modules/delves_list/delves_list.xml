@@ -143,20 +143,46 @@
 				inherits="DelveCompanionIconWithLabelAndTooltipTemplate">
 				<Size x="40" y="26" />
 				<KeyValues>
-					<KeyValue key="iconSizeX" value="24" type="number" />
-					<KeyValue key="iconSizeY" value="24" type="number" />
+					<KeyValue key="iconSizeX" value="28" type="number" />
+					<KeyValue key="iconSizeY" value="28" type="number" />
 					<KeyValue key="displayLabel" value="true" type="boolean" />
 					<KeyValue key="frameType" value="currency" type="string" />
 					<KeyValue key="frameCode" value="300" type="number" />
-					<KeyValue key="labelRelPoint" value="BOTTOMLEFT" type="string" />
-					<KeyValue key="labelPadding" value="-5" type="number" />
 					<KeyValue key="fontOverride" value="GameFontHighlightLarge"
 						type="string" />
 				</KeyValues>
 				<Anchors>
-					<Anchor point="BOTTOMLEFT" relativeKey="$parent.Title"
-						relativePoint="BOTTOMRIGHT" x="25" y="-1" />
+					<Anchor point="LEFT" relativeKey="$parent.Title"
+						relativePoint="RIGHT" x="25" y="-1" />
 				</Anchors>
+			</Frame>
+			<Frame parentKey="AffixWidget"
+				inherits="DelveCompanionIconWithLabelAndTooltipTemplate">
+				<Size x="40" y="26" />
+				<KeyValues>
+					<KeyValue key="iconSizeX" value="50" type="number" />
+					<KeyValue key="iconSizeY" value="50" type="number" />
+					<KeyValue key="useMask" value="true" type="boolean" />
+					<KeyValue key="maskSizeOffset" value="20" type="number" />
+					<KeyValue key="displayLabel" value="true" type="boolean" />
+					<KeyValue key="frameType" value="spell" type="string" />
+					<KeyValue key="frameCode" value="300" type="number" />
+					<KeyValue key="fontOverride" value="GameFontHighlightLarge"
+						type="string" />
+				</KeyValues>
+				<Anchors>
+					<Anchor point="TOPRIGHT" relativePoint="TOPRIGHT" x="-25" y="-10" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<Texture parentKey="Ring" atlas="charactercreate-ring-metallight">
+							<Anchors>
+								<Anchor point="TOPLEFT" relativePoint="CENTER" x="-30" y="30" />
+								<Anchor point="BOTTOMRIGHT" relativePoint="CENTER" x="30" y="-30" />
+							</Anchors>
+						</Texture>
+					</Layer>
+				</Layers>
 			</Frame>
 			<ScrollFrame parentKey="DelvesListScroll"
 				inherits="ScrollFrameTemplate">
@@ -193,6 +219,7 @@
 			<OnLoad method="OnLoad" />
 			<OnShow method="OnShow" />
 			<OnHide method="OnHide" />
+			<OnEvent method="OnEvent" />
 		</Scripts>
 	</Frame>
 </Ui>
