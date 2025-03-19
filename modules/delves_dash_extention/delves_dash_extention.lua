@@ -215,11 +215,9 @@ function DelveCompanionGreatVaultDetailsMixin:Refresh()
             return
         end
 
-        self.updateTimer = GREAT_VAULT_REFRESH_ATTEMPT_FREQUENCY
-        self:SetScript("OnUpdate", self.OnUpdate)
-
         for index, rewLabel in ipairs(self.Rewards:GetLayoutChildren()) do
             rewLabel.info = activitiesInfo[index]
+            rewLabel.unlocked = self:GetNumUnlockedRewards() >= index
             rewLabel:Update()
         end
 
@@ -236,7 +234,6 @@ function DelveCompanionGreatVaultDetailsMixin:OnLoad()
     for i = 1, self:GetMaxNumRewards(addon.config.ACTIVITY_TYPE), 1 do
         local rewFrame = CreateFrame("Frame", nil, self.Rewards, "DelveCompanionGreatVaultItemTemplate")
         rewFrame.layoutIndex = i
-        rewFrame.unlocked = self:GetNumUnlockedRewards() >= i
     end
     self.Rewards:Layout()
 
