@@ -22,7 +22,7 @@ function Get-AddonVersion {
     if (Test-Path $tocFilePath) {
         $tocContent = Get-Content -Path $tocFilePath
         foreach ($line in $tocContent) {
-            if ($line -match "^##\s*Version:\s*v(.+)$") {
+            if ($line -match "^##\s*Version:\s*(.+)$") {
                 return $matches[1]
             }
         }
