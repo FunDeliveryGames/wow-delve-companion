@@ -191,7 +191,7 @@ function DelveCompanionSettingsFrameMixin:OnLoad()
     end)
     self.TogglesContainer:Layout()
 
-    self.ReloadButton:SetText(format(lockit["ui-settings-apply-button"], _G["SETTINGS_APPLY"], _G["RELOADUI"]))
+    self.ReloadButton:SetText(format(_G["SETTINGS_SUBCATEGORY_FMT"], _G["SETTINGS_APPLY"], _G["RELOADUI"]))
 
     self:Hide()
 end
