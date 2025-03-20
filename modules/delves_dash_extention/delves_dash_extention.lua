@@ -350,15 +350,15 @@ function DelveCompanionOverviewBountifulButtonMixin:UpdateTooltip()
     end
 
     GameTooltip:ClearLines()
-    GameTooltip:AddLine(self.delveName);
-    GameTooltip:AddLine(self.parentMapName, 1, 1, 1, true);
+    GameTooltip:AddLine(self.delveName)
+    GameTooltip:AddLine(self.parentMapName, 1, 1, 1, true)
     GameTooltip:AddLine(" ")
     GameTooltip:AddLine(text, 1, 1, 1, true)
     GameTooltip:Show()
 end
 
 function DelveCompanionOverviewBountifulButtonMixin:OnEnter()
-    GameTooltip:SetOwner(self, "ANCHOR_TOP");
+    GameTooltip:SetOwner(self, "ANCHOR_TOP")
     self:UpdateTooltip()
 end
 

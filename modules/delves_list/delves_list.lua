@@ -12,6 +12,9 @@ local DELVES_LIST_VIEW_BUTTONS_PADDING = 5
 
 --============ DelveInstanceButton ======================
 
+DelveCompanionDelveProgressWidgetMixin = {}
+--============ DelveInstanceButton ======================
+
 DelveCompanionDelveInstanceButtonMixin = {}
 
 function DelveCompanionDelveInstanceButtonMixin:Update(isBountiful)
@@ -87,6 +90,47 @@ function DelveCompanionDelvesListMixin:CreateMapHeader(parent, mapName)
     return header
 end
 
+function DelveCompanionDelvesListMixin:CreateDelveProgressWidget(parent, config)
+    local widget = CreateFrame("Frame", nil, parent, "DelveCompanionDelveProgressWidgetTemplate")
+
+    do
+        -- Story progress
+        local achID = config.achievements.story
+        widget.Story:SetFrameInfo(enums.CodeType.Achievement, achID)
+
+        local totalCount = GetAchievementNumCriteria(achID)
+        local completedCount = 0
+        for index = 1, totalCount, 1 do
+            local completed = select(3, GetAchievementCriteriaInfo(achID, index))
+            if completed then
+                completedCount = completedCount + 1
+            end
+        end
+        local text = format(_G["GENERIC_FRACTION_STRING"], completedCount, totalCount)
+        if completedCount == totalCount then
+            text = _G["GREEN_FONT_COLOR"]:WrapTextInColorCode(text)
+        end
+        widget.Story:SetLabelText(text)
+        widget.Story:SetOnClick(function() OpenAchievementFrameToAchievement(achID) end)
+    end
+
+    do
+        -- Chest progress
+        local achID = config.achievements.chest
+        widget.Chest:SetFrameInfo(enums.CodeType.Achievement, achID)
+
+        local quantity, reqQuantity = select(4, GetAchievementCriteriaInfo(achID, 1))
+        local text = format(_G["GENERIC_FRACTION_STRING"], quantity, reqQuantity)
+        if quantity == reqQuantity then
+            text = _G["GREEN_FONT_COLOR"]:WrapTextInColorCode(text)
+        end
+        widget.Chest:SetLabelText(text)
+        widget.Chest:SetOnClick(function() OpenAchievementFrameToAchievement(achID) end)
+    end
+
+    return widget
+end
+
 function DelveCompanionDelvesListMixin:CreateDelveInstanceButton(parent, config)
     local item = CreateFrame("Button", nil, parent, "DelveCompanionDelveInstanceButtonTemplate")
     item.config = config
@@ -101,31 +145,12 @@ function DelveCompanionDelvesListMixin:CreateDelveInstanceButton(parent, config)
     return item
 end
 
-function DelveCompanionDelvesListMixin:UpdateKeysWidget()
-    local keyCurrInfo = C_CurrencyInfo.GetCurrencyInfo(addon.config.BOUNTIFUL_KEY_CURRENCY_CODE)
-    if not keyCurrInfo then
-        self.KeysWidget:Hide()
-        return
-    end
-
-    self.KeysWidget:SetLabelText(keyCurrInfo.quantity)
-
-    self.KeysWidget:Show()
-end
-
-function DelveCompanionDelvesListMixin:OnLoad()
-    --log("DelvesList OnLoad start")
-    self.Title:SetText(_G["DELVES_LABEL"])
-    self.KeysWidget:SetFrameInfo(enums.CodeType.Currency, addon.config.BOUNTIFUL_KEY_CURRENCY_CODE)
-
-    self.AffixWidget:SetFrameInfo(enums.CodeType.Spell, addon.config.NEMESIS_AFFIX_SPELL_CODE)
-    self.AffixWidget:SetLabelText(format(_G["MYTHIC_PLUS_SEASON_DESC3"], ""))
-
+function DelveCompanionDelvesListMixin:InitDelvesList()
     local offsetX, offsetY = DELVES_LIST_VIEW_BUTTONS_OFFSET, 0
     local instanceButtons = {}
     for _, mapID in ipairs(addon.config.DELVES_MAPS_DATA) do
         local areaName = C_Map.GetMapInfo(mapID).name
-        local header = DelveCompanionDelvesListMixin:CreateMapHeader(self.DelvesListScroll.Content, areaName)
+        local header = self:CreateMapHeader(self.DelvesListScroll.Content, areaName)
         header:SetPoint("TOPLEFT", self.DelvesListScroll.Content, "TOPLEFT", 0, -offsetY)
 
         offsetY = offsetY + header:GetHeight() + DELVES_LIST_VIEW_BUTTONS_PADDING
@@ -137,7 +162,7 @@ function DelveCompanionDelvesListMixin:OnLoad()
             local parentMapID = C_Map.GetMapInfo(delveConfig.uiMapID).parentMapID
 
             if parentMapID == mapID then
-                local instanceButton = DelveCompanionDelvesListMixin:CreateDelveInstanceButton(
+                local instanceButton = self:CreateDelveInstanceButton(
                     self.DelvesListScroll.Content,
                     delveConfig)
                 count = count + 1
@@ -160,6 +185,12 @@ function DelveCompanionDelvesListMixin:OnLoad()
 
                 instanceButton:SetPoint("TOPLEFT", header, "BOTTOMLEFT", anchorX,
                     anchorY)
+
+                if delveConfig.achievements then
+                    local progressWidget = self:CreateDelveProgressWidget(self.DelvesListScroll.Content,
+                        delveConfig)
+                    progressWidget:SetPoint("TOPLEFT", instanceButton, "BOTTOMLEFT", 0, 0)
+                end
             end
         end
         offsetY = offsetY + cellHeight + DELVES_LIST_VIEW_BUTTONS_OFFSET * 2 +
@@ -167,6 +198,29 @@ function DelveCompanionDelvesListMixin:OnLoad()
     end
 
     self.instanceButtons = instanceButtons
+end
+
+function DelveCompanionDelvesListMixin:UpdateKeysWidget()
+    local keyCurrInfo = C_CurrencyInfo.GetCurrencyInfo(addon.config.BOUNTIFUL_KEY_CURRENCY_CODE)
+    if not keyCurrInfo then
+        self.KeysWidget:Hide()
+        return
+    end
+
+    self.KeysWidget:SetLabelText(keyCurrInfo.quantity)
+
+    self.KeysWidget:Show()
+end
+
+function DelveCompanionDelvesListMixin:OnLoad()
+    --log("DelvesList OnLoad start")
+    self.Title:SetText(_G["DELVES_LABEL"])
+    self.KeysWidget:SetFrameInfo(enums.CodeType.Currency, addon.config.BOUNTIFUL_KEY_CURRENCY_CODE)
+
+    self.AffixWidget:SetFrameInfo(enums.CodeType.Spell, addon.config.NEMESIS_AFFIX_SPELL_CODE)
+    self.AffixWidget:SetLabelText(strtrim(format(_G["MYTHIC_PLUS_SEASON_DESC3"], "")))
+
+    self:InitDelvesList()
 end
 
 function DelveCompanionDelvesListMixin:OnEvent(event, ...)

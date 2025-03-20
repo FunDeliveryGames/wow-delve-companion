@@ -1,7 +1,6 @@
-<Ui
-	xmlns="http://www.blizzard.com/wow/ui/"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-	<!-- TEMPLATES -->
+<Ui xmlns="http://www.blizzard.com/wow/ui/"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.blizzard.com/wow/ui/ https://raw.githubusercontent.com/Gethe/wow-ui-source/live/Interface/AddOns/Blizzard_SharedXML/UI.xsd">
 	<Frame name="DelveCompanionMapHeaderTemplate" virtual="true">
 		<Size x="748" y="30" />
 		<Layers>
@@ -100,6 +99,49 @@
 		</Scripts>
 	</Button>
 
+	<Frame name="DelveCompanionDelveProgressWidgetTemplate"
+		mixin="DelveCompanionDelveProgressWidgetMixin" virtual="true">
+		<Size x="174" y="26" />
+		<Frames>
+			<Frame parentKey="Story"
+				inherits="DelveCompanionIconWithLabelAndTooltipTemplate">
+				<Size x="40" y="26" />
+				<KeyValues>
+					<!-- <KeyValue key="atlasTexture" value="questlog-storylineicon" type="string"
+					/> -->
+					<KeyValue key="iconSizeX" value="20" type="number" />
+					<KeyValue key="iconSizeY" value="20" type="number" />
+					<KeyValue key="displayLabel" value="true" type="boolean" />
+					<KeyValue key="labelRelPoint" value="RIGHT" type="string" />
+					<KeyValue key="labelOffsetX" value="2" type="number" />
+					<KeyValue key="frameType" value="achievement" type="string" />
+					<KeyValue key="frameCode" value="300" type="number" />
+				</KeyValues>
+				<Anchors>
+					<Anchor point="LEFT" x="-5" y="0" />
+				</Anchors>
+			</Frame>
+			<Frame parentKey="Chest"
+				inherits="DelveCompanionIconWithLabelAndTooltipTemplate">
+				<Size x="40" y="26" />
+				<KeyValues>
+					<KeyValue key="iconSizeX" value="20" type="number" />
+					<KeyValue key="iconSizeY" value="20" type="number" />
+					<KeyValue key="displayLabel" value="true" type="boolean" />
+					<KeyValue key="labelRelPoint" value="RIGHT" type="string" />
+					<KeyValue key="labelOffsetX" value="2" type="number" />
+					<KeyValue key="frameType" value="achievement" type="string" />
+					<KeyValue key="frameCode" value="300" type="number" />
+				</KeyValues>
+				<Anchors>
+					<Anchor point="LEFT" relativeKey="$parent.Story" relativePoint="RIGHT" x="15"
+						y="0" />
+				</Anchors>
+			</Frame>
+		</Frames>
+
+	</Frame>
+
 	<Frame name="DelveCompanionDelvesListFrameTemplate" mixin="DelveCompanionDelvesListMixin"
 		virtual="true" enableMouse="true" hidden="true">
 		<Size x="748" y="367" />
@@ -168,10 +210,10 @@
 					<KeyValue key="useMask" value="true" type="boolean" />
 					<KeyValue key="maskSizeOffset" value="20" type="number" />
 					<KeyValue key="displayLabel" value="true" type="boolean" />
+					<KeyValue key="fontOverride" value="GameFontHighlightLarge" type="string" />
+					<KeyValue key="labelOffsetX" value="-3" type="number" />
 					<KeyValue key="frameType" value="spell" type="string" />
 					<KeyValue key="frameCode" value="300" type="number" />
-					<KeyValue key="fontOverride" value="GameFontHighlightLarge"
-						type="string" />
 				</KeyValues>
 				<Anchors>
 					<Anchor point="TOPRIGHT" relativePoint="TOPRIGHT" x="-25" y="-10" />

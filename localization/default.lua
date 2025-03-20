@@ -40,7 +40,7 @@ addon.lockit = setmetatable(
     },
     {
         __index = function(_, ...)
-            addon.log("Key is not found in the lockit: %s!", ...);
+            addon.log("Key is not found in the lockit: %s!", ...)
         end
     }
 )
