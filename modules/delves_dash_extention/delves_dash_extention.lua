@@ -240,7 +240,6 @@ function DelveCompanionGreatVaultDetailsMixin:OnLoad()
     self.LoadingLabel:SetText(_G["SEARCH_LOADING_TEXT"])
     self.GVButton:SetTextToFit(_G["RAF_VIEW_ALL_REWARDS"])
 
-    self:SetScript("OnEvent", self.Refresh)
     self.shouldRefresh = true
 end
 
@@ -327,38 +326,17 @@ end
 
 DelveCompanionOverviewBountifulButtonMixin = {}
 
-function DelveCompanionOverviewBountifulButtonMixin:UpdateTracking()
-    local function Set()
-        self.isTracking = true
-        self.WaypointIcon:Show()
-    end
-
-    local function Clear()
-        self.isTracking = false
-        self.WaypointIcon:Hide()
-    end
-
-    if not C_SuperTrack.IsSuperTrackingAnything() then
-        Clear()
-    end
-
-    local type, typeID = C_SuperTrack.GetSuperTrackedMapPin()
-    if type ~= Enum.SuperTrackingMapPinType.AreaPOI then
-        Clear()
-    elseif typeID ~= self.poiID then
-        Clear()
-    else
-        Set()
-    end
+function DelveCompanionOverviewBountifulButtonMixin:OnLoad()
+    --log("OverviewBountifulButton OnLoad start")
 end
 
-function DelveCompanionOverviewBountifulButtonMixin:OnLoad()
-    self:SetScript("OnEvent", self.UpdateTracking)
+function DelveCompanionOverviewBountifulButtonMixin:OnEvent()
+    self:OnSuperTrackChanged()
 end
 
 function DelveCompanionOverviewBountifulButtonMixin:OnShow()
     self:RegisterEvent("SUPER_TRACKING_CHANGED")
-    self:UpdateTracking()
+    self:OnSuperTrackChanged()
 end
 
 function DelveCompanionOverviewBountifulButtonMixin:OnHide()
@@ -450,9 +428,10 @@ function DelveCompanionOverviewBountifulFrameMixin:OnShow()
     self.KeysInfo.Keys.Label:SetText(C_CurrencyInfo.GetCurrencyInfo(addon.config.BOUNTIFUL_KEY_CURRENCY_CODE).quantity)
     self.KeysInfo.BountyMap.Label:SetText(C_Item.GetItemCount(addon.config.BOUNTY_MAP_ITEM_CODE))
     self.KeysInfo.Echoes.Label:SetText(C_Item.GetItemCount(addon.config.ECHO_ITEM_CODE))
+
     local shardsCount = C_Item.GetItemCount(addon.config.KEY_SHARD_ITEM_CODE)
     local shardsLine = tostring(shardsCount)
-    if shardsCount > addon.config.SHARDS_FOR_KEY then
+    if shardsCount >= addon.config.SHARDS_FOR_KEY then
         shardsLine = _G["GREEN_FONT_COLOR"]:WrapTextInColorCode(tostring(shardsLine))
     end
     self.KeysInfo.Shards.Label:SetText(shardsLine)
@@ -463,14 +442,16 @@ end
 --============ Init ======================
 
 function DelveCompanion_DelvesDashExtension_Init()
-    local lootInfoFrame = CreateFrame("Frame", "$parentLootInfoFrame", DelvesDashboardFrame,
+    local lootInfoFrame = CreateFrame("Frame", "$parent.LootInfoFrame", DelvesDashboardFrame,
         "DelveCompanionLootInfoFrame")
     addon.lootInfoFrame = lootInfoFrame
 
     if DelveCompanionCharacterData.gvDetailsEnabled then
         local gvPanel = DelvesDashboardFrame.ButtonPanelLayoutFrame.GreatVaultButtonPanel
 
-        local gvDetailsFrame = CreateFrame("Frame", "GVDetailsFrame", gvPanel,
+        local gvDetailsFrame = CreateFrame("Frame",
+            "$parent.CustomDetails",
+            gvPanel,
             "DelveCompanionGreatVaultDetailsFrame")
         addon.gvDetailsFrame = gvDetailsFrame
         addon.eventsCatcherFrame:RegisterEvent("WEEKLY_REWARDS_UPDATE")

@@ -436,7 +436,8 @@
 
 
     <Button name="DelveCompanionOverviewBountifulButtonTemplate" virtual="true"
-        mixin="DelveCompanionOverviewBountifulButtonMixin" registerForClicks="LeftButtonUp">
+        mixin="DelveCompanionOverviewBountifulButtonMixin, DelveCompanionDelveTrackingButtonMixin"
+        registerForClicks="LeftButtonUp">
         <Size x="27" y="27" />
         <KeyValues>
             <KeyValue key="layoutIndex" value="0" type="number" />
@@ -492,6 +493,7 @@
             <OnEnter method="OnEnter" />
             <OnLeave method="OnLeave" />
             <OnClick method="OnClick" />
+            <OnEvent method="OnEvent" />
         </Scripts>
     </Button>
 </Ui>

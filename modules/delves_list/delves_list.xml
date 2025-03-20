@@ -6,7 +6,7 @@
 		<Size x="748" y="30" />
 		<Layers>
 			<Layer level="BACKGROUND">
-				<Texture name="$parentBackground" parentKey="background"
+				<Texture parentKey="Background"
 					file="Interface\EncounterJournal\UI-EncounterJournalTextures">
 					<Anchors>
 						<Anchor point="TOPLEFT" x="0" y="0" />
@@ -17,8 +17,8 @@
 				</Texture>
 			</Layer>
 			<Layer level="OVERLAY">
-				<FontString name="$parentAreName" inherits="GameFontNormal"
-					parentKey="mapName" text="MAP_NAME">
+				<FontString parentKey="MapName" inherits="GameFontNormal"
+					text="MAP_NAME">
 					<Anchors>
 						<Anchor point="CENTER" relativeKey="$parentBackground"
 							relativePoint="CENTER" y="4" />
@@ -29,12 +29,12 @@
 	</Frame>
 
 	<Button name="DelveCompanionDelveInstanceButtonTemplate"
-		mixin="DelveCompanionDelveInstanceButtonMixin" registerForClicks="LeftButtonUp"
-		virtual="true">
+		mixin="DelveCompanionDelveInstanceButtonMixin, DelveCompanionDelveTrackingButtonMixin"
+		registerForClicks="LeftButtonUp" virtual="true">
 		<Size x="174" y="96" />
 		<Layers>
 			<Layer level="BACKGROUND" textureSubLevel="-5">
-				<Texture name="$parentBackground" parentKey="background"
+				<Texture parentKey="DefaultBg"
 					file="Interface\DialogFrame\UI-DialogBox-Background">
 					<Anchors>
 						<Anchor point="TOPLEFT" x="7" y="-7" />
@@ -43,7 +43,7 @@
 				</Texture>
 			</Layer>
 			<Layer level="ARTWORK" textureSubLevel="-1">
-				<Texture name="$parentArtBg" parentKey="artBg">
+				<Texture parentKey="DelveArtBg">
 					<Anchors>
 						<Anchor point="TOPLEFT" x="5" y="-5" />
 						<Anchor point="BOTTOMRIGHT" x="-5" y="5" />
@@ -52,15 +52,15 @@
 				</Texture>
 			</Layer>
 			<Layer level="OVERLAY">
-				<FontString name="$parentDelveName" inherits="QuestTitleFontBlackShadow"
-					parentKey="delveName" text="DELVE_NAME">
+				<FontString parentKey="DelveName" inherits="QuestTitleFontBlackShadow"
+					text="DELVE_NAME">
 					<Size x="150" />
 					<Anchors>
 						<Anchor point="TOP" relativeKey="$parentBackground" relativePoint="CENTER"
 							y="35" />
 					</Anchors>
 				</FontString>
-				<Texture name="$parentBountifulIcon" parentKey="bountifulIcon"
+				<Texture parentKey="BountifulIcon"
 					atlas="delves-bountiful" hidden="true">
 					<Size x="36" y="36" />
 					<Anchors>
@@ -68,7 +68,7 @@
 							relativePoint="BOTTOMLEFT" x="3" y="2" />
 					</Anchors>
 				</Texture>
-				<Texture name="$parentWaypointIcon" parentKey="waypointIcon"
+				<Texture parentKey="WaypointIcon"
 					atlas="Waypoint-MapPin-Minimap-Tracked" hidden="true">
 					<Size x="32" y="32" />
 					<Anchors>
@@ -91,6 +91,9 @@
 			<TexCoords left="0.34570313" right="0.68554688" top="0.33300781" bottom="0.42675781" />
 		</HighlightTexture>
 		<Scripts>
+			<OnShow method="OnShow" />
+			<OnHide method="OnHide" />
+			<OnEvent method="OnEvent" />
 			<OnEnter method="OnEnter" />
 			<OnLeave method="OnLeave" />
 			<OnClick method="OnClick" />

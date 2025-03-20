@@ -52,7 +52,7 @@
         <Scripts>
             <OnLoad method="OnLoad" />
             <OnShow method="OnShow" />
-            <!-- <OnHide method="OnHide" /> -->
+            <OnHide method="OnHide" />
             <OnEnter method="OnEnter" />
             <OnLeave method="OnLeave" />
             <!-- <OnClick method="OnClick" /> -->

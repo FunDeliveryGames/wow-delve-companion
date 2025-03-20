@@ -18,20 +18,24 @@ function DelveCompanionDelveInstanceButtonMixin:Update(isBountiful)
     local poiIDs = self.config.poiIDs
     if isBountiful then
         self.poiID = poiIDs.bountiful
-        self.bountifulIcon:Show()
+        self.BountifulIcon:Show()
     else
         self.poiID = poiIDs.regular
-        self.bountifulIcon:Hide()
+        self.BountifulIcon:Hide()
     end
+end
 
-    if not C_SuperTrack.IsSuperTrackingAnything() then
-        addon.ClearTrackedDelve(self)
-    elseif C_SuperTrack.IsSuperTrackingMapPin then
-        local type, typeID = C_SuperTrack.GetSuperTrackedMapPin()
-        if type == Enum.SuperTrackingMapPinType.AreaPOI and (typeID == poiIDs.regular or typeID == poiIDs.bountiful) then
-            addon.SetTrackedDelve(self)
-        end
-    end
+function DelveCompanionDelveInstanceButtonMixin:OnEvent(event, ...)
+    self:OnSuperTrackChanged()
+end
+
+function DelveCompanionDelveInstanceButtonMixin:OnShow()
+    self:RegisterEvent("SUPER_TRACKING_CHANGED")
+    self:OnSuperTrackChanged()
+end
+
+function DelveCompanionDelveInstanceButtonMixin:OnHide()
+    self:UnregisterEvent("SUPER_TRACKING_CHANGED")
 end
 
 function DelveCompanionDelveInstanceButtonMixin:UpdateTooltip()
@@ -65,10 +69,8 @@ function DelveCompanionDelveInstanceButtonMixin:OnClick()
     if IsShiftKeyDown() then
         if self.isTracking then
             C_SuperTrack.ClearSuperTrackedMapPin()
-            addon.ClearTrackedDelve(self)
         else
             C_SuperTrack.SetSuperTrackedMapPin(Enum.SuperTrackingMapPinType.AreaPOI, self.poiID)
-            addon.SetTrackedDelve(self)
         end
         self:UpdateTooltip()
     end
@@ -80,7 +82,7 @@ DelveCompanionDelvesListMixin = {}
 
 function DelveCompanionDelvesListMixin:CreateMapHeader(parent, mapName)
     local header = CreateFrame("Frame", nil, parent, "DelveCompanionMapHeaderTemplate")
-    header.mapName:SetText(mapName)
+    header.MapName:SetText(mapName)
 
     return header
 end
@@ -91,9 +93,9 @@ function DelveCompanionDelvesListMixin:CreateDelveInstanceButton(parent, config)
     item.isTracking = false
 
     local delveMap = C_Map.GetMapInfo(config.uiMapID)
-    item.delveName:SetText(delveMap.name)
+    item.DelveName:SetText(delveMap.name)
     if C_Texture.GetAtlasInfo(config.atlasBgID) ~= nil then
-        item.artBg:SetAtlas(config.atlasBgID)
+        item.DelveArtBg:SetAtlas(config.atlasBgID)
     end
 
     return item
@@ -167,7 +169,7 @@ function DelveCompanionDelvesListMixin:OnLoad()
     self.instanceButtons = instanceButtons
 end
 
-function DelveCompanionDelvesListMixin:OnEvent()
+function DelveCompanionDelvesListMixin:OnEvent(event, ...)
     self:UpdateKeysWidget()
 end
 

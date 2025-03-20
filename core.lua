@@ -20,32 +20,6 @@ addon.CacheActiveBountiful = function()
     addon.activeBountifulDelves = activeBountifulDelves
 end
 
-addon.SetTrackedDelve = function(instanceButton)
-    if instanceButton == nil then
-        log("[SetTrackedDelve] Cannot set SuperTrack. Missing button reference")
-    end
-
-    if addon.delvesListFrame.trackedDelveButton ~= nil and addon.delvesListFrame.trackedDelveButton ~= instanceButton then
-        addon.delvesListFrame.trackedDelveButton.waypointIcon:Hide()
-        addon.delvesListFrame.trackedDelveButton.isTracking = false
-    end
-
-    instanceButton.waypointIcon:Show()
-    instanceButton.isTracking = true
-    addon.delvesListFrame.trackedDelveButton = instanceButton
-end
-
-addon.ClearTrackedDelve = function(instanceButton)
-    if instanceButton == nil then
-        log("[ClearTrackedDelve] Cannot clear SuperTrack. Missing button reference")
-    end
-
-    instanceButton.waypointIcon:Hide()
-    instanceButton.isTracking = false
-
-    addon.delvesListFrame.trackedDelveButton = nil
-end
-
 addon.CacheKeysData = function()
     local keysCollected = 0
     for _, questId in ipairs(addon.config.BOUNTIFUL_KEY_QUESTS_DATA) do
@@ -93,7 +67,7 @@ addon.eventsCatcherFrame:RegisterEvent("ADDON_LOADED")
 --- TODO: split creation and parenting to reduce load dependencies. Check LoadAddon.
 addon.eventsCatcherFrame:SetScript(
     "OnEvent",
-    function(_, event, arg1, arg2)
+    function(self, event, arg1, arg2, ...)
         if event == "ADDON_LOADED" then
             local loadedName = arg1
             if loadedName == addonName then

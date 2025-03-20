@@ -100,6 +100,10 @@ function DelveCompanionIconWithLabelAndTooltipMixin:OnShow()
     end
 end
 
+function DelveCompanionIconWithLabelAndTooltipMixin:OnHide()
+    -- log("DelveCompanionIconWithTextAndTooltip OnHide start")
+end
+
 function DelveCompanionIconWithLabelAndTooltipMixin:OnEnter()
     GameTooltip:SetOwner(self, "ANCHOR_TOP")
     local type, code = self.frameType, self.frameCode
@@ -160,4 +164,33 @@ function DelveCompanionSettingsFrameMixin:OnLoad()
     self.ReloadButton:SetText(format(lockit["ui-settings-apply-button"], _G["SETTINGS_APPLY"], _G["RELOADUI"]))
 
     self:Hide()
+end
+
+--============ Delve Tracking Button ======================
+
+DelveCompanionDelveTrackingButtonMixin = {}
+
+function DelveCompanionDelveTrackingButtonMixin:SetTracking()
+    self.isTracking = true
+    self.WaypointIcon:Show()
+end
+
+function DelveCompanionDelveTrackingButtonMixin:ClearTracking()
+    self.isTracking = false
+    self.WaypointIcon:Hide()
+end
+
+function DelveCompanionDelveTrackingButtonMixin:OnSuperTrackChanged()
+    if not C_SuperTrack.IsSuperTrackingAnything() then
+        self:ClearTracking()
+    end
+
+    local type, typeID = C_SuperTrack.GetSuperTrackedMapPin()
+    if type ~= Enum.SuperTrackingMapPinType.AreaPOI then
+        self:ClearTracking()
+    elseif typeID ~= self.poiID then
+        self:ClearTracking()
+    else
+        self:SetTracking()
+    end
 end
