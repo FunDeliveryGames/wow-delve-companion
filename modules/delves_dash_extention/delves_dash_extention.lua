@@ -348,20 +348,22 @@ function DelveCompanionOverviewGildedStashFrameMixin:OnShow()
         local collectedCount = tonumber(strsub(strmatch(tooltipDesc, "%d/%d"), 1, 1))
         self.tooltipDesc = tooltipDesc
 
-        for _, stash in pairs(self.Container:GetLayoutChildren()) do
-            if collectedCount >= stash.layoutIndex then
-                stash.CheckMark:Show()
-                stash.FadeBg:Hide()
-                stash.RedX:Hide()
-            else
-                stash.CheckMark:Hide()
-                stash.FadeBg:Show()
-                stash.RedX:Show()
+        C_Timer.After(0.15, function()
+            for _, stash in pairs(self.Container:GetLayoutChildren()) do
+                if collectedCount >= stash.layoutIndex then
+                    stash.CheckMark:Show()
+                    stash.FadeBg:Hide()
+                    stash.RedX:Hide()
+                else
+                    stash.CheckMark:Hide()
+                    stash.FadeBg:Show()
+                    stash.RedX:Show()
+                end
             end
-        end
 
-        self.ErrorLabel:Hide()
-        self.Container:Show()
+            self.ErrorLabel:Hide()
+            self.Container:Show()
+        end)
     end
 
     -- if not DelveCompanionCharacterData.GildedStashData.isInited then
