@@ -1,5 +1,10 @@
 # Change Log
- 
+
+ ## [0.3] - 2025-03-19
+- **Delves Tab**: New widgets have been added to track Story and Chest achievements of each delve and number of `Restored Coffer Keys`. Also, `Nemesis Strongbox` affix is shown at the tab.
+- **Delves UI**: Fixed `Gilded Stash` section. Now it should properly display the progress.
+- Polished different layouts and labels.
+
 ## [0.2.1] - 2025-03-19
 - Fixed addon zip archive.
 
