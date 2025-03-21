@@ -31,6 +31,23 @@ addon.CacheKeysData = function()
     addon.keysCollected = keysCollected
 end
 
+addon.GetContinentMapIDForMap = function(mapID)
+    if not mapID then
+        return nil
+    end
+
+    local mapInfo = C_Map.GetMapInfo(mapID)
+    while mapInfo and mapInfo.mapType ~= Enum.UIMapType.Continent do
+        mapInfo = C_Map.GetMapInfo(mapInfo.parentMapID)
+    end
+
+    if mapInfo then
+        return mapInfo.mapID
+    end
+
+    return nil
+end
+
 -- TODO: Explore a new Settings API. Maybe Settings.RegisterAddOnSetting is more convenient way to setup settings.
 addon.InitSettings = function()
     local addonNameStr = tostring(addonName) -- TODO: explore why addonName can be a table instead of a string
@@ -59,6 +76,7 @@ end
 
 addon.eventsCatcherFrame = CreateFrame("Frame")
 addon.eventsCatcherFrame:RegisterEvent("ADDON_LOADED")
+-- addon.eventsCatcherFrame:RegisterEvent("GOSSIP_SHOW")
 -- addon.eventsCatcherFrame:RegisterEvent("PLAYER_LOGIN")
 -- addon.eventsCatcherFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
 -- addon.eventsCatcherFrame:RegisterEvent("UPDATE_UI_WIDGET")
@@ -104,6 +122,18 @@ addon.eventsCatcherFrame:SetScript(
                 addon.gvDetailsFrame.shouldRefresh = true
             end
             return
+            -- elseif event == "GOSSIP_SHOW" then
+            --     if arg1 == "delves-difficulty-picker" then
+            --         local options = DelvesDifficultyPickerFrame:GetOptions()
+            --         for key, value in pairs(options) do
+            --             log("%s: %s", key, tostring(value.gossipOptionID))
+            --         end
+
+            --         for key, value in pairs(DelvesDifficultyPickerFrame.DelveModifiersWidgetContainer.widgetFrames) do
+            --             log("%s: %s (index: %d)", key, tostring(value),
+            --                 C_UIWidgetManager.GetSpellDisplayVisualizationInfo(key).orderIndex)
+            --         end
+            --     end
         elseif event == "QUEST_LOG_UPDATE" then
             addon.CacheKeysData()
             return

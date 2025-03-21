@@ -204,8 +204,7 @@
             <KeyValue type="boolean" key="isCompanionButtonPanelFrame" value="true" />
         </KeyValues>
         <Frames>
-            <Frame parentKey="GildedStashFrame" mixin="DelveCompanionOverviewGildedStashFrameMixin"
-                hidden="false">
+            <Frame parentKey="GildedStashFrame" mixin="DelveCompanionOverviewGildedStashFrameMixin">
                 <Size x="140" y="70" />
                 <Anchors>
                     <Anchor point="TOP" y="-15" />
@@ -220,11 +219,20 @@
                                 <Anchor point="TOP" x="0" y="0" />
                             </Anchors>
                         </FontString>
+                        <FontString parentKey="ErrorLabel" inherits="GameFontDisableMed2"
+                            justifyH="CENTER" text="ERROR" mixin="AutoScalingFontStringMixin"
+                            wordwrap="true" maxLines="2" justifyV="MIDDLE" hidden="true">
+                            <Size x="120" y="40" />
+                            <Anchors>
+                                <Anchor point="TOP" relativeKey="$parent.Name"
+                                    relativePoint="BOTTOM" x="0" y="0" />
+                            </Anchors>
+                        </FontString>
                     </Layer>
                 </Layers>
                 <Frames>
                     <Frame parentKey="Container"
-                        inherits="HorizontalLayoutFrame">
+                        inherits="HorizontalLayoutFrame" hidden="true">
                         <Size y="70" />
                         <KeyValues>
                             <KeyValue key="expand" value="false" type="boolean" />
@@ -238,8 +246,6 @@
                 <Scripts>
                     <OnLoad method="OnLoad" />
                     <OnShow method="OnShow" />
-                    <OnEnter method="OnEnter" />
-                    <OnLeave method="OnLeave" />
                 </Scripts>
             </Frame>
 

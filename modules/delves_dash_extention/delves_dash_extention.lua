@@ -275,6 +275,21 @@ end
 
 DelveCompanionOverviewGildedStashFrameMixin = {}
 
+function DelveCompanionOverviewGildedStashFrameMixin:PrepareContainerTooltip()
+    self.Container:HookScript("OnEnter", function()
+        local tooltip = GameTooltip
+        tooltip:SetOwner(self, "ANCHOR_TOP")
+
+        GameTooltip_AddNormalLine(tooltip, self.tooltipDesc, true)
+        GameTooltip_AddBlankLineToTooltip(tooltip)
+        GameTooltip_AddHighlightLine(tooltip, lockit["ui-gilded-stash-bountiful-note"], true)
+        tooltip:Show()
+    end)
+    self.Container:HookScript("OnLeave", function()
+        GameTooltip:Hide()
+    end)
+end
+
 function DelveCompanionOverviewGildedStashFrameMixin:OnLoad()
     -- log("GildedStash OnLoad start")
 
@@ -290,15 +305,49 @@ function DelveCompanionOverviewGildedStashFrameMixin:OnLoad()
         end
         self.Container:Layout()
     end)
+    self:PrepareContainerTooltip()
+
+    self.ErrorLabel:SetText(".Cannot get progress, visit Khaz Algar")
+end
+
+function DelveCompanionOverviewGildedStashFrameMixin:CanRetrieveGildedStashInfo()
+    local currentMap = C_Map.GetBestMapForUnit("player")
+    if not (currentMap and MapUtil.IsMapTypeZone(currentMap)) then
+        return false
+    end
+
+    local continent = addon.GetContinentMapIDForMap(currentMap)
+    return continent and continent == addon.config.KHAZ_ALGAR_MAP_ID
+end
+
+function DelveCompanionOverviewGildedStashFrameMixin:TryGetStashInfo()
+    for _, delveConfig in ipairs(addon.config.DELVES_REGULAR_DATA) do
+        if delveConfig.gildedStashUiWidgetID then
+            local result = C_UIWidgetManager.GetSpellDisplayVisualizationInfo(delveConfig.gildedStashUiWidgetID)
+
+            if result then
+                return result
+            end
+        end
+    end
+
+    return nil
 end
 
 function DelveCompanionOverviewGildedStashFrameMixin:OnShow()
     -- log("GildedStash OnShow start")
 
-    local stashSpell = Spell:CreateFromSpellID(addon.config.GILDED_STASH_SPELL_CODE)
-    stashSpell:ContinueOnSpellLoad(function()
-        local desc = stashSpell:GetSpellDescription()
-        local collectedCount = tonumber(strsub(strmatch(desc, "%d/%d"), 1, 1))
+    if not self:CanRetrieveGildedStashInfo() then
+        self.ErrorLabel:Show()
+        self.Container:Hide()
+        return
+    end
+
+    local stashDisplayInfo = self:TryGetStashInfo()
+    if stashDisplayInfo then
+        local tooltipDesc = stashDisplayInfo.spellInfo.tooltip
+        local collectedCount = tonumber(strsub(strmatch(tooltipDesc, "%d/%d"), 1, 1))
+        self.tooltipDesc = tooltipDesc
 
         for _, stash in pairs(self.Container:GetLayoutChildren()) do
             if collectedCount >= stash.layoutIndex then
@@ -311,18 +360,17 @@ function DelveCompanionOverviewGildedStashFrameMixin:OnShow()
                 stash.RedX:Show()
             end
         end
-    end)
-end
 
-function DelveCompanionOverviewGildedStashFrameMixin:OnEnter()
-    GameTooltip:SetOwner(self, "ANCHOR_TOP")
-    GameTooltip:SetSpellByID(addon.config.GILDED_STASH_SPELL_CODE)
-    GameTooltip:AddLine(lockit["ui-gilded-stash-bountiful-note"], 1, 1, 1, true)
-    GameTooltip:Show()
-end
+        self.ErrorLabel:Hide()
+        self.Container:Show()
+    end
 
-function DelveCompanionOverviewGildedStashFrameMixin:OnLeave()
-    GameTooltip:Hide()
+    -- if not DelveCompanionCharacterData.GildedStashData.isInited then
+    --     log("Not inited, false")
+    --     return false
+    -- end
+    -- DelveCompanionCharacterData.GildedStashData.cachedGildedStashCount = collectedCount
+    -- DelveCompanionCharacterData.GildedStashData.isInited = true
 end
 
 --============ Bountiful Frame ======================

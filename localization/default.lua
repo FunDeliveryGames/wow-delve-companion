@@ -27,7 +27,7 @@ addon.lockit = setmetatable(
         ["ui-loot-info-bountilful-gear-title"] = "Bountiful", -- Replace with https://www.wowhead.com/item=228942/bountiful-coffer
 
         -- Keys Info
-        ["ui-bountiful-keys-count-caches-prefix"] = "Keys from Caches",
+        ["ui-bountiful-keys-count-caches-prefix"] = "Keys from caches",
 
         -- Settings
         ["ui-settings-gv-details"] = "Delves UI: Display detailed Great Vault section.",

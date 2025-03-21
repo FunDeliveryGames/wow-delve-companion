@@ -165,6 +165,10 @@ function DelveCompanionSettingsFrameMixin:OnLoad()
             gvDetailsEnabled = true,
             keysCapTooltipEnabled = true,
             dashOverviewEnabled = true,
+            GildedStashData = {
+                isInited = false,
+                cachedCollectedCount = 0
+            }
         }
     end
 
