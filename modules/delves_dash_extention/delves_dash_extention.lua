@@ -324,7 +324,6 @@ function DelveCompanionOverviewGildedStashFrameMixin:TryGetStashInfo()
     for _, delveConfig in ipairs(addon.config.DELVES_REGULAR_DATA) do
         if delveConfig.gildedStashUiWidgetID then
             local result = C_UIWidgetManager.GetSpellDisplayVisualizationInfo(delveConfig.gildedStashUiWidgetID)
-
             if result then
                 return result
             end
