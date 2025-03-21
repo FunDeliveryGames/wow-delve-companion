@@ -205,18 +205,27 @@
         </KeyValues>
         <Frames>
             <Frame parentKey="GildedStashFrame" mixin="DelveCompanionOverviewGildedStashFrameMixin">
-                <Size x="140" y="70" />
+                <Size x="140" y="80" />
                 <Anchors>
                     <Anchor point="TOP" y="-15" />
                 </Anchors>
                 <Layers>
+                    <Layer level="ARTWORK">
+                        <Texture name="Divider" atlas="delves-companion-divider"
+                            useAtlasSize="false">
+                            <Size x="120" y="5" />
+                            <Anchors>
+                                <Anchor point="BOTTOM" y="-3" />
+                            </Anchors>
+                        </Texture>
+                    </Layer>
                     <Layer level="OVERLAY">
                         <FontString parentKey="Name" inherits="GameFontNormal"
                             justifyH="CENTER" text="GILDED_STASH" mixin="AutoScalingFontStringMixin"
                             wordwrap="false" justifyV="MIDDLE">
-                            <Size x="140" y="30" />
+                            <Size x="140" y="25" />
                             <Anchors>
-                                <Anchor point="TOP" x="0" y="0" />
+                                <Anchor point="TOP" x="0" y="-5" />
                             </Anchors>
                         </FontString>
                         <FontString parentKey="ErrorLabel" inherits="GameFontDisableMed2"
@@ -239,7 +248,8 @@
                             <KeyValue key="spacing" value="5" type="number" />
                         </KeyValues>
                         <Anchors>
-                            <Anchor point="TOP" relativeKey="$parent.Name" relativePoint="BOTTOM" />
+                            <Anchor point="TOP" relativeKey="$parent.Name" relativePoint="BOTTOM"
+                                y="-5" />
                         </Anchors>
                     </Frame>
                 </Frames>
@@ -250,19 +260,28 @@
             </Frame>
 
             <Frame parentKey="BountifulFrame" mixin="DelveCompanionOverviewBountifulFrameMixin">
-                <Size x="140" y="30" />
+                <Size x="140" y="65" />
                 <Anchors>
                     <Anchor point="TOP" relativeKey="$parent.GildedStashFrame"
-                        relativePoint="BOTTOM" y="-10" />
+                        relativePoint="BOTTOM" y="0" />
                 </Anchors>
                 <Layers>
+                    <Layer level="ARTWORK">
+                        <Texture name="Divider" atlas="delves-companion-divider"
+                            useAtlasSize="false">
+                            <Size x="120" y="5" />
+                            <Anchors>
+                                <Anchor point="BOTTOM" y="-3" />
+                            </Anchors>
+                        </Texture>
+                    </Layer>
                     <Layer level="OVERLAY">
                         <FontString parentKey="Title" inherits="GameFontNormal"
                             text="BOUNTIFUL" mixin="AutoScalingFontStringMixin"
                             justifyH="CENTER" wordwrap="true" justifyV="MIDDLE" maxLines="2">
-                            <Size x="140" />
+                            <Size x="140" y="20" />
                             <Anchors>
-                                <Anchor point="TOP" />
+                                <Anchor point="TOP" y="-3" />
                             </Anchors>
                         </FontString>
                     </Layer>
@@ -313,7 +332,7 @@
                 <Size x="110" y="40" />
                 <Anchors>
                     <Anchor point="TOP" relativeKey="$parent.BountifulFrame"
-                        relativePoint="BOTTOM" y="-20" />
+                        relativePoint="BOTTOM" y="0" />
                 </Anchors>
                 <Frames>
                     <Frame parentKey="Keys"

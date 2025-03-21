@@ -19,6 +19,7 @@ addon.lockit = setmetatable(
         ["ui-delve-instance-button-tooltip-current-text"] = "Waypoint set.\nShift + Left Click to clear waypoint.",
 
         -- DashboardOverview
+        ["ui-gilded-stash-cannot-retrieve-data"] = "Visit Khaz Algar zones to see the progress",
         ["ui-gilded-stash-bountiful-note"] =
         "Appears only in |cnNORMAL_FONT_COLOR:Tier 11|r Bountiful Delves|A:delves-bountiful:16:16|a.",
         ["ui-no-active-bountiful"] = "No active delves",

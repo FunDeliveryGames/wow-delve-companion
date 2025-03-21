@@ -26,6 +26,7 @@ local function EnableKeysCapInfo()
     --- https://wowhead.com/item=239120
     --- https://wowhead.com/item=238208
     --- https://wowhead.com/item=239121
+    --- https://wowhead.com/item=239118
 end
 
 function DelveCompanion_TooltipExtension_Init()

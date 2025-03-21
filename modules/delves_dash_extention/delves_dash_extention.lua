@@ -307,7 +307,7 @@ function DelveCompanionOverviewGildedStashFrameMixin:OnLoad()
     end)
     self:PrepareContainerTooltip()
 
-    self.ErrorLabel:SetText(".Cannot get progress, visit Khaz Algar")
+    self.ErrorLabel:SetText(lockit["ui-gilded-stash-cannot-retrieve-data"])
 end
 
 function DelveCompanionOverviewGildedStashFrameMixin:CanRetrieveGildedStashInfo()
