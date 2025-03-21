@@ -1,7 +1,6 @@
-<Ui
-    xmlns="http://www.blizzard.com/wow/ui/"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-
+<Ui xmlns="http://www.blizzard.com/wow/ui/"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.blizzard.com/wow/ui/ https://raw.githubusercontent.com/Gethe/wow-ui-source/live/Interface/AddOns/Blizzard_SharedXML/UI.xsd">
     <!-- Loot Info frame -->
     <Frame name="DelveCompanionColumnWithTitleTemplate" virtual="true">
         <Size x="200" y="300" />
@@ -178,7 +177,7 @@
         </KeyValues>
         <Size x="160" y="40" />
         <Layers>
-            <Layer name="OVERLAY">
+            <Layer level="OVERLAY">
                 <FontString parentKey="ItemInfoLabel" inherits="GameFontNormal"
                     text="ILVL" mixin="AutoScalingFontStringMixin" wordwrap="true"
                     justifyV="MIDDLE" justifyH="CENTER">
@@ -205,59 +204,84 @@
             <KeyValue type="boolean" key="isCompanionButtonPanelFrame" value="true" />
         </KeyValues>
         <Frames>
-            <Frame parentKey="GildedStashFrame" mixin="DelveCompanionOverviewGildedStashFrameMixin"
-                hidden="false">
-                <Size x="140" y="70" />
+            <Frame parentKey="GildedStashFrame" mixin="DelveCompanionOverviewGildedStashFrameMixin">
+                <Size x="140" y="80" />
                 <Anchors>
                     <Anchor point="TOP" y="-15" />
                 </Anchors>
                 <Layers>
+                    <Layer level="ARTWORK">
+                        <Texture name="Divider" atlas="delves-companion-divider"
+                            useAtlasSize="false">
+                            <Size x="120" y="5" />
+                            <Anchors>
+                                <Anchor point="BOTTOM" y="-3" />
+                            </Anchors>
+                        </Texture>
+                    </Layer>
                     <Layer level="OVERLAY">
                         <FontString parentKey="Name" inherits="GameFontNormal"
                             justifyH="CENTER" text="GILDED_STASH" mixin="AutoScalingFontStringMixin"
                             wordwrap="false" justifyV="MIDDLE">
-                            <Size x="140" y="30" />
+                            <Size x="140" y="25" />
                             <Anchors>
-                                <Anchor point="TOP" x="0" y="0" />
+                                <Anchor point="TOP" x="0" y="-5" />
+                            </Anchors>
+                        </FontString>
+                        <FontString parentKey="ErrorLabel" inherits="GameFontDisableMed2"
+                            justifyH="CENTER" text="ERROR" mixin="AutoScalingFontStringMixin"
+                            wordwrap="true" maxLines="2" justifyV="MIDDLE" hidden="true">
+                            <Size x="120" y="40" />
+                            <Anchors>
+                                <Anchor point="TOP" relativeKey="$parent.Name"
+                                    relativePoint="BOTTOM" x="0" y="0" />
                             </Anchors>
                         </FontString>
                     </Layer>
                 </Layers>
                 <Frames>
                     <Frame parentKey="Container"
-                        inherits="HorizontalLayoutFrame">
+                        inherits="HorizontalLayoutFrame" hidden="true">
                         <Size y="70" />
                         <KeyValues>
                             <KeyValue key="expand" value="false" type="boolean" />
                             <KeyValue key="spacing" value="5" type="number" />
                         </KeyValues>
                         <Anchors>
-                            <Anchor point="TOP" relativeKey="$parent.Name" relativePoint="BOTTOM" />
+                            <Anchor point="TOP" relativeKey="$parent.Name" relativePoint="BOTTOM"
+                                y="-5" />
                         </Anchors>
                     </Frame>
                 </Frames>
                 <Scripts>
                     <OnLoad method="OnLoad" />
                     <OnShow method="OnShow" />
-                    <OnEnter method="OnEnter" />
-                    <OnLeave method="OnLeave" />
                 </Scripts>
             </Frame>
 
             <Frame parentKey="BountifulFrame" mixin="DelveCompanionOverviewBountifulFrameMixin">
-                <Size x="140" y="30" />
+                <Size x="140" y="65" />
                 <Anchors>
                     <Anchor point="TOP" relativeKey="$parent.GildedStashFrame"
-                        relativePoint="BOTTOM" y="-10" />
+                        relativePoint="BOTTOM" y="0" />
                 </Anchors>
                 <Layers>
+                    <Layer level="ARTWORK">
+                        <Texture name="Divider" atlas="delves-companion-divider"
+                            useAtlasSize="false">
+                            <Size x="120" y="5" />
+                            <Anchors>
+                                <Anchor point="BOTTOM" y="-3" />
+                            </Anchors>
+                        </Texture>
+                    </Layer>
                     <Layer level="OVERLAY">
                         <FontString parentKey="Title" inherits="GameFontNormal"
                             text="BOUNTIFUL" mixin="AutoScalingFontStringMixin"
                             justifyH="CENTER" wordwrap="true" justifyV="MIDDLE" maxLines="2">
-                            <Size x="140" />
+                            <Size x="140" y="20" />
                             <Anchors>
-                                <Anchor point="TOP" />
+                                <Anchor point="TOP" y="-3" />
                             </Anchors>
                         </FontString>
                     </Layer>
@@ -295,90 +319,98 @@
                             </Frame>
                         </Frames>
                     </Frame>
-
-                    <Frame parentKey="KeysInfo">
-                        <Size x="110" y="40" />
-                        <Anchors>
-                            <Anchor point="TOP" relativeKey="$parent.ActiveDelves"
-                                relativePoint="BOTTOM" y="-5" />
-                        </Anchors>
-                        <Frames>
-                            <Frame parentKey="Keys"
-                                inherits="DelveCompanionIconWithLabelAndTooltipTemplate">
-                                <Size x="40" y="26" />
-                                <KeyValues>
-                                    <KeyValue key="iconSizeX" value="26" type="number" />
-                                    <KeyValue key="iconSizeY" value="26" type="number" />
-                                    <KeyValue key="frameType" value="currency" type="string" />
-                                </KeyValues>
-                                <Anchors>
-                                    <Anchor point="LEFT" x="18" />
-                                </Anchors>
-                            </Frame>
-                            <Frame parentKey="Shards"
-                                inherits="DelveCompanionIconWithLabelAndTooltipTemplate">
-                                <Size x="40" y="26" />
-                                <KeyValues>
-                                    <KeyValue key="iconSizeX" value="26" type="number" />
-                                    <KeyValue key="iconSizeY" value="26" type="number" />
-                                    <KeyValue key="frameType" value="item" type="string" />
-                                    <KeyValue key="useAutoScaling" value="true" type="boolean" />
-                                </KeyValues>
-                                <Anchors>
-                                    <Anchor point="TOP" relativeKey="$parent.Keys"
-                                        relativePoint="BOTTOM" y="-5" />
-                                </Anchors>
-                            </Frame>
-                            <Frame parentKey="BountyMap"
-                                inherits="DelveCompanionIconWithLabelAndTooltipTemplate">
-                                <Size x="40" y="26" />
-                                <KeyValues>
-                                    <KeyValue key="iconSizeX" value="26" type="number" />
-                                    <KeyValue key="iconSizeY" value="26" type="number" />
-                                    <KeyValue key="frameType" value="item" type="string" />
-                                </KeyValues>
-                                <Anchors>
-                                    <Anchor point="RIGHT" />
-                                </Anchors>
-                            </Frame>
-                            <Frame parentKey="Echoes"
-                                inherits="DelveCompanionIconWithLabelAndTooltipTemplate">
-                                <Size x="40" y="26" />
-                                <KeyValues>
-                                    <KeyValue key="iconSizeX" value="26" type="number" />
-                                    <KeyValue key="iconSizeY" value="26" type="number" />
-                                    <KeyValue key="frameType" value="item" type="string" />
-                                </KeyValues>
-                                <Anchors>
-                                    <Anchor point="TOP" relativeKey="$parent.BountyMap"
-                                        relativePoint="BOTTOM" y="-5" />
-                                </Anchors>
-                            </Frame>
-                        </Frames>
-                    </Frame>
-
-                    <Button parentKey="WorldMapButton"
-                        inherits="MagicButtonTemplate" text="MAP">
-                        <Size x="130" y="30" />
-                        <KeyValues>
-                            <KeyValue key="fitTextWidthPadding" value="10" type="number" />
-                        </KeyValues>
-                        <Anchors>
-                            <Anchor point="BOTTOM" relativeTo="$parent" x="0" y="27" />
-                        </Anchors>
-                        <Scripts>
-                            <OnClick>
-                                ToggleQuestLog()
-                                QuestMapFrame:SetDisplayMode(QuestLogDisplayMode.Events)
-                            </OnClick>
-                        </Scripts>
-                    </Button>
                 </Frames>
                 <Scripts>
                     <OnLoad method="OnLoad" />
                     <OnShow method="OnShow" />
+                    <OnHide method="OnHide" />
                 </Scripts>
             </Frame>
+
+            <Frame parentKey="ConsumablesWidget"
+                mixin="DelveCompanionOverviewConsumablesWidgetMixin">
+                <Size x="110" y="40" />
+                <Anchors>
+                    <Anchor point="TOP" relativeKey="$parent.BountifulFrame"
+                        relativePoint="BOTTOM" y="0" />
+                </Anchors>
+                <Frames>
+                    <Frame parentKey="Keys"
+                        inherits="DelveCompanionIconWithLabelAndTooltipTemplate">
+                        <Size x="40" y="26" />
+                        <KeyValues>
+                            <KeyValue key="iconSizeX" value="26" type="number" />
+                            <KeyValue key="iconSizeY" value="26" type="number" />
+                            <KeyValue key="frameType" value="currency" type="string" />
+                        </KeyValues>
+                        <Anchors>
+                            <Anchor point="LEFT" x="18" />
+                        </Anchors>
+                    </Frame>
+                    <Frame parentKey="Shards"
+                        inherits="DelveCompanionIconWithLabelAndTooltipTemplate">
+                        <Size x="40" y="26" />
+                        <KeyValues>
+                            <KeyValue key="iconSizeX" value="26" type="number" />
+                            <KeyValue key="iconSizeY" value="26" type="number" />
+                            <KeyValue key="frameType" value="item" type="string" />
+                            <KeyValue key="useAutoScaling" value="true" type="boolean" />
+                        </KeyValues>
+                        <Anchors>
+                            <Anchor point="TOP" relativeKey="$parent.Keys"
+                                relativePoint="BOTTOM" y="-5" />
+                        </Anchors>
+                    </Frame>
+                    <Frame parentKey="BountyMap"
+                        inherits="DelveCompanionIconWithLabelAndTooltipTemplate">
+                        <Size x="40" y="26" />
+                        <KeyValues>
+                            <KeyValue key="iconSizeX" value="26" type="number" />
+                            <KeyValue key="iconSizeY" value="26" type="number" />
+                            <KeyValue key="frameType" value="item" type="string" />
+                        </KeyValues>
+                        <Anchors>
+                            <Anchor point="RIGHT" />
+                        </Anchors>
+                    </Frame>
+                    <Frame parentKey="Echoes"
+                        inherits="DelveCompanionIconWithLabelAndTooltipTemplate">
+                        <Size x="40" y="26" />
+                        <KeyValues>
+                            <KeyValue key="iconSizeX" value="26" type="number" />
+                            <KeyValue key="iconSizeY" value="26" type="number" />
+                            <KeyValue key="frameType" value="item" type="string" />
+                        </KeyValues>
+                        <Anchors>
+                            <Anchor point="TOP" relativeKey="$parent.BountyMap"
+                                relativePoint="BOTTOM" y="-5" />
+                        </Anchors>
+                    </Frame>
+                </Frames>
+                <Scripts>
+                    <OnLoad method="OnLoad" />
+                    <OnShow method="OnShow" />
+                    <OnHide method="OnHide" />
+                    <OnEvent method="OnEvent" />
+                </Scripts>
+            </Frame>
+
+            <Button parentKey="WorldMapButton"
+                inherits="MagicButtonTemplate" text="MAP">
+                <Size x="130" y="30" />
+                <KeyValues>
+                    <KeyValue key="fitTextWidthPadding" value="10" type="number" />
+                </KeyValues>
+                <Anchors>
+                    <Anchor point="BOTTOM" relativeTo="$parent" x="0" y="27" />
+                </Anchors>
+                <Scripts>
+                    <OnClick>
+                        ToggleQuestLog()
+                        QuestMapFrame:SetDisplayMode(QuestLogDisplayMode.Events)
+                    </OnClick>
+                </Scripts>
+            </Button>
         </Frames>
         <Scripts>
             <OnLoad method="OnLoad" />
@@ -436,7 +468,8 @@
 
 
     <Button name="DelveCompanionOverviewBountifulButtonTemplate" virtual="true"
-        mixin="DelveCompanionOverviewBountifulButtonMixin" registerForClicks="LeftButtonUp">
+        mixin="DelveCompanionOverviewBountifulButtonMixin, DelveCompanionDelveTrackingButtonMixin"
+        registerForClicks="LeftButtonUp">
         <Size x="27" y="27" />
         <KeyValues>
             <KeyValue key="layoutIndex" value="0" type="number" />
@@ -492,6 +525,7 @@
             <OnEnter method="OnEnter" />
             <OnLeave method="OnLeave" />
             <OnClick method="OnClick" />
+            <OnEvent method="OnEvent" />
         </Scripts>
     </Button>
 </Ui>

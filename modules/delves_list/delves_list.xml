@@ -1,12 +1,11 @@
-<Ui
-	xmlns="http://www.blizzard.com/wow/ui/"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-	<!-- TEMPLATES -->
+<Ui xmlns="http://www.blizzard.com/wow/ui/"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.blizzard.com/wow/ui/ https://raw.githubusercontent.com/Gethe/wow-ui-source/live/Interface/AddOns/Blizzard_SharedXML/UI.xsd">
 	<Frame name="DelveCompanionMapHeaderTemplate" virtual="true">
 		<Size x="748" y="30" />
 		<Layers>
 			<Layer level="BACKGROUND">
-				<Texture name="$parentBackground" parentKey="background"
+				<Texture parentKey="Background"
 					file="Interface\EncounterJournal\UI-EncounterJournalTextures">
 					<Anchors>
 						<Anchor point="TOPLEFT" x="0" y="0" />
@@ -17,8 +16,8 @@
 				</Texture>
 			</Layer>
 			<Layer level="OVERLAY">
-				<FontString name="$parentAreName" inherits="GameFontNormal"
-					parentKey="mapName" text="MAP_NAME">
+				<FontString parentKey="MapName" inherits="GameFontNormal"
+					text="MAP_NAME">
 					<Anchors>
 						<Anchor point="CENTER" relativeKey="$parentBackground"
 							relativePoint="CENTER" y="4" />
@@ -29,12 +28,12 @@
 	</Frame>
 
 	<Button name="DelveCompanionDelveInstanceButtonTemplate"
-		mixin="DelveCompanionDelveInstanceButtonMixin" registerForClicks="LeftButtonUp"
-		virtual="true">
+		mixin="DelveCompanionDelveInstanceButtonMixin, DelveCompanionDelveTrackingButtonMixin"
+		registerForClicks="LeftButtonUp" virtual="true">
 		<Size x="174" y="96" />
 		<Layers>
 			<Layer level="BACKGROUND" textureSubLevel="-5">
-				<Texture name="$parentBackground" parentKey="background"
+				<Texture parentKey="DefaultBg"
 					file="Interface\DialogFrame\UI-DialogBox-Background">
 					<Anchors>
 						<Anchor point="TOPLEFT" x="7" y="-7" />
@@ -43,7 +42,7 @@
 				</Texture>
 			</Layer>
 			<Layer level="ARTWORK" textureSubLevel="-1">
-				<Texture name="$parentArtBg" parentKey="artBg">
+				<Texture parentKey="DelveArtBg">
 					<Anchors>
 						<Anchor point="TOPLEFT" x="5" y="-5" />
 						<Anchor point="BOTTOMRIGHT" x="-5" y="5" />
@@ -52,15 +51,15 @@
 				</Texture>
 			</Layer>
 			<Layer level="OVERLAY">
-				<FontString name="$parentDelveName" inherits="QuestTitleFontBlackShadow"
-					parentKey="delveName" text="DELVE_NAME">
+				<FontString parentKey="DelveName" inherits="QuestTitleFontBlackShadow"
+					text="DELVE_NAME">
 					<Size x="150" />
 					<Anchors>
 						<Anchor point="TOP" relativeKey="$parentBackground" relativePoint="CENTER"
 							y="35" />
 					</Anchors>
 				</FontString>
-				<Texture name="$parentBountifulIcon" parentKey="bountifulIcon"
+				<Texture parentKey="BountifulIcon"
 					atlas="delves-bountiful" hidden="true">
 					<Size x="36" y="36" />
 					<Anchors>
@@ -68,7 +67,7 @@
 							relativePoint="BOTTOMLEFT" x="3" y="2" />
 					</Anchors>
 				</Texture>
-				<Texture name="$parentWaypointIcon" parentKey="waypointIcon"
+				<Texture parentKey="WaypointIcon"
 					atlas="Waypoint-MapPin-Minimap-Tracked" hidden="true">
 					<Size x="32" y="32" />
 					<Anchors>
@@ -91,11 +90,57 @@
 			<TexCoords left="0.34570313" right="0.68554688" top="0.33300781" bottom="0.42675781" />
 		</HighlightTexture>
 		<Scripts>
+			<OnShow method="OnShow" />
+			<OnHide method="OnHide" />
+			<OnEvent method="OnEvent" />
 			<OnEnter method="OnEnter" />
 			<OnLeave method="OnLeave" />
 			<OnClick method="OnClick" />
 		</Scripts>
 	</Button>
+
+	<Frame name="DelveCompanionDelveProgressWidgetTemplate"
+		mixin="DelveCompanionDelveProgressWidgetMixin" virtual="true">
+		<Size x="174" y="26" />
+		<Frames>
+			<Frame parentKey="Story"
+				inherits="DelveCompanionIconWithLabelAndTooltipTemplate">
+				<Size x="40" y="26" />
+				<KeyValues>
+					<!-- <KeyValue key="atlasTexture" value="questlog-storylineicon" type="string"
+					/> -->
+					<KeyValue key="iconSizeX" value="20" type="number" />
+					<KeyValue key="iconSizeY" value="20" type="number" />
+					<KeyValue key="displayLabel" value="true" type="boolean" />
+					<KeyValue key="labelRelPoint" value="RIGHT" type="string" />
+					<KeyValue key="labelOffsetX" value="2" type="number" />
+					<KeyValue key="frameType" value="achievement" type="string" />
+					<KeyValue key="frameCode" value="300" type="number" />
+				</KeyValues>
+				<Anchors>
+					<Anchor point="LEFT" x="-5" y="0" />
+				</Anchors>
+			</Frame>
+			<Frame parentKey="Chest"
+				inherits="DelveCompanionIconWithLabelAndTooltipTemplate">
+				<Size x="40" y="26" />
+				<KeyValues>
+					<KeyValue key="iconSizeX" value="20" type="number" />
+					<KeyValue key="iconSizeY" value="20" type="number" />
+					<KeyValue key="displayLabel" value="true" type="boolean" />
+					<KeyValue key="labelRelPoint" value="RIGHT" type="string" />
+					<KeyValue key="labelOffsetX" value="2" type="number" />
+					<KeyValue key="frameType" value="achievement" type="string" />
+					<KeyValue key="frameCode" value="300" type="number" />
+				</KeyValues>
+				<Anchors>
+					<Anchor point="LEFT" relativeKey="$parent.Story" relativePoint="RIGHT" x="15"
+						y="0" />
+				</Anchors>
+			</Frame>
+		</Frames>
+
+	</Frame>
 
 	<Frame name="DelveCompanionDelvesListFrameTemplate" mixin="DelveCompanionDelvesListMixin"
 		virtual="true" enableMouse="true" hidden="true">
@@ -129,37 +174,62 @@
 			</Layer>
 			-->
 			<Layer level="OVERLAY">
-				<FontString name="$parentFrameTitle" parentKey="frameTitle"
+				<FontString parentKey="Title"
 					inherits="GameFontNormalLarge2"
 					justifyH="LEFT" text="DELVES">
 					<Anchors>
 						<Anchor point="TOPLEFT" x="20" y="-15" />
 					</Anchors>
 				</FontString>
-				<Texture name="$parentKeysIcon" parentKey="keysIcon">
-					<Size x="24" y="24" />
-					<Anchors>
-						<Anchor point="BOTTOMLEFT" relativeTo="$parentFrameTitle"
-							relativePoint="BOTTOMRIGHT" x="20" y="0" />
-					</Anchors>
-				</Texture>
-				<FontString name="$parentKeysCount" parentKey="keysCountLabel"
-					inherits="GameFontHighlightLarge"
-					justifyH="LEFT" text="KEYS_COUNT">
-					<Anchors>
-						<Anchor point="BOTTOMLEFT" relativeTo="$parentKeysIcon"
-							relativePoint="BOTTOMRIGHT" x="5" y="0" />
-					</Anchors>
-				</FontString>
 			</Layer>
 		</Layers>
 		<Frames>
-			<Frame name="$parentKeysTooltipCatcher" parentKey="keysTooltipCatcher">
+			<Frame parentKey="KeysWidget"
+				inherits="DelveCompanionIconWithLabelAndTooltipTemplate">
+				<Size x="40" y="26" />
+				<KeyValues>
+					<KeyValue key="iconSizeX" value="28" type="number" />
+					<KeyValue key="iconSizeY" value="28" type="number" />
+					<KeyValue key="displayLabel" value="true" type="boolean" />
+					<KeyValue key="frameType" value="currency" type="string" />
+					<KeyValue key="frameCode" value="300" type="number" />
+					<KeyValue key="fontOverride" value="GameFontHighlightLarge"
+						type="string" />
+				</KeyValues>
 				<Anchors>
-					<Anchor point="CENTER" relativeTo="$parentKeysIcon" />
+					<Anchor point="LEFT" relativeKey="$parent.Title"
+						relativePoint="RIGHT" x="25" y="-1" />
 				</Anchors>
 			</Frame>
-			<ScrollFrame name="$parentScrollFrame" parentKey="delvesListScroll"
+			<Frame parentKey="AffixWidget"
+				inherits="DelveCompanionIconWithLabelAndTooltipTemplate">
+				<Size x="40" y="26" />
+				<KeyValues>
+					<KeyValue key="iconSizeX" value="50" type="number" />
+					<KeyValue key="iconSizeY" value="50" type="number" />
+					<KeyValue key="useMask" value="true" type="boolean" />
+					<KeyValue key="maskSizeOffset" value="20" type="number" />
+					<KeyValue key="displayLabel" value="true" type="boolean" />
+					<KeyValue key="fontOverride" value="GameFontHighlightLarge" type="string" />
+					<KeyValue key="labelOffsetX" value="-3" type="number" />
+					<KeyValue key="frameType" value="spell" type="string" />
+					<KeyValue key="frameCode" value="300" type="number" />
+				</KeyValues>
+				<Anchors>
+					<Anchor point="TOPRIGHT" relativePoint="TOPRIGHT" x="-25" y="-10" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<Texture parentKey="Ring" atlas="charactercreate-ring-metallight">
+							<Anchors>
+								<Anchor point="TOPLEFT" relativePoint="CENTER" x="-30" y="30" />
+								<Anchor point="BOTTOMRIGHT" relativePoint="CENTER" x="30" y="-30" />
+							</Anchors>
+						</Texture>
+					</Layer>
+				</Layers>
+			</Frame>
+			<ScrollFrame parentKey="DelvesListScroll"
 				inherits="ScrollFrameTemplate">
 				<KeyValues>
 					<KeyValue key="scrollBarX" value="10" type="number" />
@@ -171,7 +241,7 @@
 					<Anchor point="BOTTOMRIGHT" x="-30" y="15" />
 				</Anchors>
 				<ScrollChild>
-					<Frame name="$parentContent" parentKey="content">
+					<Frame parentKey="Content">
 						<Size x="748" y="367" />
 						<Layers>
 							<Layer level="BACKGROUND">
@@ -193,6 +263,8 @@
 		<Scripts>
 			<OnLoad method="OnLoad" />
 			<OnShow method="OnShow" />
+			<OnHide method="OnHide" />
+			<OnEvent method="OnEvent" />
 		</Scripts>
 	</Frame>
 </Ui>

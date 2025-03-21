@@ -1,6 +1,7 @@
 local addonName, addon = ...
 local log = addon.log
 local lockit = addon.lockit
+local enums = addon.enums
 --=========== CONSTANTS ============================
 local EJ_DELVES_TAB_BUTTON_ID = 6
 local EJ_TABS_NUMBER = 6
@@ -11,26 +12,33 @@ local DELVES_LIST_VIEW_BUTTONS_PADDING = 5
 
 --============ DelveInstanceButton ======================
 
+DelveCompanionDelveProgressWidgetMixin = {}
+--============ DelveInstanceButton ======================
+
 DelveCompanionDelveInstanceButtonMixin = {}
 
 function DelveCompanionDelveInstanceButtonMixin:Update(isBountiful)
     local poiIDs = self.config.poiIDs
     if isBountiful then
         self.poiID = poiIDs.bountiful
-        self.bountifulIcon:Show()
+        self.BountifulIcon:Show()
     else
         self.poiID = poiIDs.regular
-        self.bountifulIcon:Hide()
+        self.BountifulIcon:Hide()
     end
+end
 
-    if not C_SuperTrack.IsSuperTrackingAnything() then
-        addon.ClearTrackedDelve(self)
-    elseif C_SuperTrack.IsSuperTrackingMapPin then
-        local type, typeID = C_SuperTrack.GetSuperTrackedMapPin()
-        if type == Enum.SuperTrackingMapPinType.AreaPOI and (typeID == poiIDs.regular or typeID == poiIDs.bountiful) then
-            addon.SetTrackedDelve(self)
-        end
-    end
+function DelveCompanionDelveInstanceButtonMixin:OnEvent(event, ...)
+    self:OnSuperTrackChanged()
+end
+
+function DelveCompanionDelveInstanceButtonMixin:OnShow()
+    self:RegisterEvent("SUPER_TRACKING_CHANGED")
+    self:OnSuperTrackChanged()
+end
+
+function DelveCompanionDelveInstanceButtonMixin:OnHide()
+    self:UnregisterEvent("SUPER_TRACKING_CHANGED")
 end
 
 function DelveCompanionDelveInstanceButtonMixin:UpdateTooltip()
@@ -64,10 +72,8 @@ function DelveCompanionDelveInstanceButtonMixin:OnClick()
     if IsShiftKeyDown() then
         if self.isTracking then
             C_SuperTrack.ClearSuperTrackedMapPin()
-            addon.ClearTrackedDelve(self)
         else
             C_SuperTrack.SetSuperTrackedMapPin(Enum.SuperTrackingMapPinType.AreaPOI, self.poiID)
-            addon.SetTrackedDelve(self)
         end
         self:UpdateTooltip()
     end
@@ -79,9 +85,50 @@ DelveCompanionDelvesListMixin = {}
 
 function DelveCompanionDelvesListMixin:CreateMapHeader(parent, mapName)
     local header = CreateFrame("Frame", nil, parent, "DelveCompanionMapHeaderTemplate")
-    header.mapName:SetText(mapName)
+    header.MapName:SetText(mapName)
 
     return header
+end
+
+function DelveCompanionDelvesListMixin:CreateDelveProgressWidget(parent, config)
+    local widget = CreateFrame("Frame", nil, parent, "DelveCompanionDelveProgressWidgetTemplate")
+
+    do
+        -- Story progress
+        local achID = config.achievements.story
+        widget.Story:SetFrameInfo(enums.CodeType.Achievement, achID)
+
+        local totalCount = GetAchievementNumCriteria(achID)
+        local completedCount = 0
+        for index = 1, totalCount, 1 do
+            local completed = select(3, GetAchievementCriteriaInfo(achID, index))
+            if completed then
+                completedCount = completedCount + 1
+            end
+        end
+        local text = format(_G["GENERIC_FRACTION_STRING"], completedCount, totalCount)
+        if completedCount == totalCount then
+            text = _G["GREEN_FONT_COLOR"]:WrapTextInColorCode(text)
+        end
+        widget.Story:SetLabelText(text)
+        widget.Story:SetOnClick(function() OpenAchievementFrameToAchievement(achID) end)
+    end
+
+    do
+        -- Chest progress
+        local achID = config.achievements.chest
+        widget.Chest:SetFrameInfo(enums.CodeType.Achievement, achID)
+
+        local quantity, reqQuantity = select(4, GetAchievementCriteriaInfo(achID, 1))
+        local text = format(_G["GENERIC_FRACTION_STRING"], quantity, reqQuantity)
+        if quantity == reqQuantity then
+            text = _G["GREEN_FONT_COLOR"]:WrapTextInColorCode(text)
+        end
+        widget.Chest:SetLabelText(text)
+        widget.Chest:SetOnClick(function() OpenAchievementFrameToAchievement(achID) end)
+    end
+
+    return widget
 end
 
 function DelveCompanionDelvesListMixin:CreateDelveInstanceButton(parent, config)
@@ -90,46 +137,21 @@ function DelveCompanionDelvesListMixin:CreateDelveInstanceButton(parent, config)
     item.isTracking = false
 
     local delveMap = C_Map.GetMapInfo(config.uiMapID)
-    item.delveName:SetText(delveMap.name)
+    item.DelveName:SetText(delveMap.name)
     if C_Texture.GetAtlasInfo(config.atlasBgID) ~= nil then
-        item.artBg:SetAtlas(config.atlasBgID)
+        item.DelveArtBg:SetAtlas(config.atlasBgID)
     end
 
     return item
 end
 
-function DelveCompanionDelvesListMixin:OnLoad()
-    --log("DelvesList OnLoad start")
-    self.frameTitle:SetText(_G["DELVES_LABEL"])
-
-    if addon.maxLevelReached then
-        local keyCurrInfo = C_CurrencyInfo.GetCurrencyInfo(addon.config.BOUNTIFUL_KEY_CURRENCY_CODE)
-        self.keysCountLabel:SetText(format(lockit["ui-bountiful-keys-count-owned-format"],
-            ITEM_EPIC_COLOR:WrapTextInColorCode(keyCurrInfo.name),
-            AVAILABLE,
-            keyCurrInfo.quantity))
-        self.keysIcon:SetTexture(keyCurrInfo.iconFileID)
-        self.keysTooltipCatcher:SetSize(self.keysIcon:GetSize())
-        self.keysTooltipCatcher:SetScript("OnEnter", function()
-            GameTooltip:SetOwner(self.keysIcon, "ANCHOR_RIGHT");
-            GameTooltip:SetCurrencyByID(keyCurrInfo.currencyID);
-            GameTooltip:Show()
-        end)
-        self.keysTooltipCatcher:SetScript("OnLeave", function()
-            GameTooltip:Hide()
-        end)
-    else
-        self.keysCountLabel:Hide()
-        self.keysIcon:Hide()
-        self.keysTooltipCatcher:Hide()
-    end
-
+function DelveCompanionDelvesListMixin:InitDelvesList()
     local offsetX, offsetY = DELVES_LIST_VIEW_BUTTONS_OFFSET, 0
     local instanceButtons = {}
     for _, mapID in ipairs(addon.config.DELVES_MAPS_DATA) do
         local areaName = C_Map.GetMapInfo(mapID).name
-        local header = DelveCompanionDelvesListMixin:CreateMapHeader(self.delvesListScroll.content, areaName)
-        header:SetPoint("TOPLEFT", self.delvesListScroll.content, "TOPLEFT", 0, -offsetY)
+        local header = self:CreateMapHeader(self.DelvesListScroll.Content, areaName)
+        header:SetPoint("TOPLEFT", self.DelvesListScroll.Content, "TOPLEFT", 0, -offsetY)
 
         offsetY = offsetY + header:GetHeight() + DELVES_LIST_VIEW_BUTTONS_PADDING
 
@@ -140,8 +162,9 @@ function DelveCompanionDelvesListMixin:OnLoad()
             local parentMapID = C_Map.GetMapInfo(delveConfig.uiMapID).parentMapID
 
             if parentMapID == mapID then
-                local instanceButton = DelveCompanionDelvesListMixin:CreateDelveInstanceButton(
-                    self.delvesListScroll.content, delveConfig)
+                local instanceButton = self:CreateDelveInstanceButton(
+                    self.DelvesListScroll.Content,
+                    delveConfig)
                 count = count + 1
                 table.insert(instanceButtons, instanceButton)
 
@@ -162,6 +185,12 @@ function DelveCompanionDelvesListMixin:OnLoad()
 
                 instanceButton:SetPoint("TOPLEFT", header, "BOTTOMLEFT", anchorX,
                     anchorY)
+
+                if delveConfig.achievements then
+                    local progressWidget = self:CreateDelveProgressWidget(self.DelvesListScroll.Content,
+                        delveConfig)
+                    progressWidget:SetPoint("TOPLEFT", instanceButton, "BOTTOMLEFT", 0, 0)
+                end
             end
         end
         offsetY = offsetY + cellHeight + DELVES_LIST_VIEW_BUTTONS_OFFSET * 2 +
@@ -169,6 +198,33 @@ function DelveCompanionDelvesListMixin:OnLoad()
     end
 
     self.instanceButtons = instanceButtons
+end
+
+function DelveCompanionDelvesListMixin:UpdateKeysWidget()
+    local keyCurrInfo = C_CurrencyInfo.GetCurrencyInfo(addon.config.BOUNTIFUL_KEY_CURRENCY_CODE)
+    if not keyCurrInfo then
+        self.KeysWidget:Hide()
+        return
+    end
+
+    self.KeysWidget:SetLabelText(keyCurrInfo.quantity)
+
+    self.KeysWidget:Show()
+end
+
+function DelveCompanionDelvesListMixin:OnLoad()
+    --log("DelvesList OnLoad start")
+    self.Title:SetText(_G["DELVES_LABEL"])
+    self.KeysWidget:SetFrameInfo(enums.CodeType.Currency, addon.config.BOUNTIFUL_KEY_CURRENCY_CODE)
+
+    self.AffixWidget:SetFrameInfo(enums.CodeType.Spell, addon.config.NEMESIS_AFFIX_SPELL_CODE)
+    self.AffixWidget:SetLabelText(strtrim(format(_G["MYTHIC_PLUS_SEASON_DESC3"], "")))
+
+    self:InitDelvesList()
+end
+
+function DelveCompanionDelvesListMixin:OnEvent(event, ...)
+    self:UpdateKeysWidget()
 end
 
 function DelveCompanionDelvesListMixin:OnShow()
@@ -181,25 +237,35 @@ function DelveCompanionDelvesListMixin:OnShow()
         end)
         instanceButton:Update(isBountiful)
     end
+
+    if addon.maxLevelReached then
+        self:UpdateKeysWidget()
+        self:RegisterEvent("CURRENCY_DISPLAY_UPDATE")
+    else
+        self.KeysWidget:Hide()
+    end
+end
+
+function DelveCompanionDelvesListMixin:OnHide()
+    --log("DelvesList OnHide start")
+    self:UnregisterEvent("CURRENCY_DISPLAY_UPDATE")
 end
 
 --============ Init ======================
 function DelveCompanion_DelvesListFrame_Init()
-    if addon.delvesListFrame == nil then
-        local button = CreateFrame("Button", "$parentDelvesTab", EncounterJournal,
-            "BottomEncounterTierTabTemplate")
-        button:SetPoint("LEFT", EncounterJournal.LootJournalTab, "RIGHT", -15, 0)
-        button:SetText(_G["DELVES_LABEL"])
-        button:SetID(EJ_DELVES_TAB_BUTTON_ID)
-        button:SetParentKey("devlesTab")
+    local button = CreateFrame("Button", "$parent.DelvesTab", EncounterJournal,
+        "BottomEncounterTierTabTemplate")
+    button:SetPoint("LEFT", EncounterJournal.LootJournalTab, "RIGHT", -15, 0)
+    button:SetText(_G["DELVES_LABEL"])
+    button:SetID(EJ_DELVES_TAB_BUTTON_ID)
+    button:SetParentKey("devlesTab")
+    PanelTemplates_SetNumTabs(EncounterJournal, EJ_TABS_NUMBER)
 
-        PanelTemplates_SetNumTabs(EncounterJournal, EJ_TABS_NUMBER)
+    addon.delvesListFrame = CreateFrame("Frame", "$parent.DelvesListFrame", EncounterJournal,
+        "DelveCompanionDelvesListFrameTemplate")
 
-        addon.delvesListFrame = CreateFrame("Frame", "$parentDelvesListFrame", EncounterJournal,
-            "DelveCompanionDelvesListFrameTemplate")
-
-        EventRegistry:RegisterCallback("EncounterJournal.TabSet", function(_, EncounterJournal, tabID)
-            -- addon.CacheActiveBountiful()
+    EventRegistry:RegisterCallback("EncounterJournal.TabSet",
+        function(_, EncounterJournal, tabID)
             if tabID == EJ_DELVES_TAB_BUTTON_ID then
                 -- EncounterJournal.instanceSelect.Title:SetText(_G["DELVES_LABEL"])
                 EJ_HideNonInstancePanels()
@@ -207,6 +273,6 @@ function DelveCompanion_DelvesListFrame_Init()
             else
                 addon.delvesListFrame:Hide()
             end
-        end, addon)
-    end
+        end,
+        addon)
 end

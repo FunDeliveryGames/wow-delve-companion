@@ -19,6 +19,7 @@ addon.lockit = setmetatable(
         ["ui-delve-instance-button-tooltip-current-text"] = "Waypoint set.\nShift + Left Click to clear waypoint.",
 
         -- DashboardOverview
+        ["ui-gilded-stash-cannot-retrieve-data"] = "Visit Khaz Algar zones to see the progress",
         ["ui-gilded-stash-bountiful-note"] =
         "Appears only in |cnNORMAL_FONT_COLOR:Tier 11|r Bountiful Delves|A:delves-bountiful:16:16|a.",
         ["ui-no-active-bountiful"] = "No active delves",
@@ -27,20 +28,19 @@ addon.lockit = setmetatable(
         ["ui-loot-info-bountilful-gear-title"] = "Bountiful", -- Replace with https://www.wowhead.com/item=228942/bountiful-coffer
 
         -- Keys Info
-        ["ui-bountiful-keys-count-owned-format"] = "%s %s: %d",
+        ["ui-bountiful-keys-count-caches-prefix"] = "Keys from caches",
 
         -- Settings
-        ["ui-settings-apply-button"] = "%s (%s)",
-        ["ui-settings-gv-details"] = "Delves UI: Enable informative Great Vault details.",
-        ["ui-settings-dashboard-overview"] = "Delves UI: Enable Overview section (Gilded Stash, Bountiful Delves).",
-        ["ui-settings-keys-cap"] = "Display Keys weekly cap in tooltips.",
+        ["ui-settings-gv-details"] = "Delves UI: Display detailed Great Vault section.",
+        ["ui-settings-dashboard-overview"] = "Delves UI: Display Overview section (Gilded Stash, Bountiful Delves).",
+        ["ui-settings-keys-cap"] = "Display Keys obtained this week in tooltips.",
 
         -- Debug
         ["debug-unexpected-enum-element"] = "Enum %s doesn't contain element: %s.",
     },
     {
         __index = function(_, ...)
-            addon.log("Key is not found in the lockit: %s!", ...);
+            addon.log("Key is not found in the lockit: %s!", ...)
         end
     }
 )

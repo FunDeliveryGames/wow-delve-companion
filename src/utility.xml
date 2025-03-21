@@ -1,7 +1,6 @@
-<Ui
-    xmlns="http://www.blizzard.com/wow/ui/"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-
+<Ui xmlns="http://www.blizzard.com/wow/ui/"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.blizzard.com/wow/ui/ https://raw.githubusercontent.com/Gethe/wow-ui-source/live/Interface/AddOns/Blizzard_SharedXML/UI.xsd">
     <!--
     Generic template to display an icon with a tooltip and text
     frameType is a value of enums.CodeType
@@ -16,20 +15,34 @@
             <KeyValue key="frameCode" value="300" type="number" />
             <KeyValue key="useAutoScaling" value="false" type="boolean" />
             <!--
-            <KeyValue key="labelPoint" value="LEFT" type="string"/>
-            <KeyValue key="labelPadding" value="5" type="number"/>
+            <KeyValue key="atlasTexture" value="atlas-id" type="string" />
+            <KeyValue key="useMask" value="true" type="boolean" />
+            <KeyValue key="maskSizeOffset" value="5" type="number" />
+            <KeyValue key="labelRelPoint" value="LEFT" type="string"/>
+            <KeyValue key="labelOffsetX" value="5" type="number"/>
+            <KeyValue key="labeloffsetY" value="5" type="number"/>
+            <KeyValue key="fontOverride" value="FontName" type="string"/>
             -->
         </KeyValues>
         <Layers>
-            <Layer level="OVERLAY">
-                <Texture parentKey="Icon">
+            <Layer level="BACKGROUND">
+                <Texture parentKey="Icon" file="interface/icons/inv_misc_questionmark">
                     <Anchors>
                         <Anchor point="CENTER" />
                     </Anchors>
                 </Texture>
-                <FontString parentKey="Label"
-                    inherits="GameFontHighlightMed2"
-                    justifyH="RIGHT" text="COUNT">
+            </Layer>
+            <Layer level="OVERLAY">
+                <MaskTexture parentKey="CircleMask"
+                    file="Interface\CharacterFrame\TempPortraitAlphaMask"
+                    hWrapMode="CLAMPTOBLACKADDITIVE" vWrapMode="CLAMPTOBLACKADDITIVE" hidden="true">
+                    <Anchors>
+                        <Anchor point="TOPLEFT" relativePoint="CENTER" x="-15" y="15" />
+                        <Anchor point="BOTTOMRIGHT" relativePoint="CENTER" x="15" y="-15" />
+                    </Anchors>
+                </MaskTexture>
+                <FontString parentKey="Label" inherits="GameFontHighlightMed2"
+                    justifyH="RIGHT" text="?">
                     <Anchors>
                         <Anchor point="RIGHT" relativeKey="$parent.Icon"
                             relativePoint="LEFT" x="-5" y="0" />
@@ -37,13 +50,17 @@
                 </FontString>
             </Layer>
         </Layers>
+        <Frames>
+            <Button parentKey="ClickCatcher" registerForClicks="LeftButtonUp"
+                propagateMouseInput="Motion">
+            </Button>
+        </Frames>
         <Scripts>
             <OnLoad method="OnLoad" />
             <OnShow method="OnShow" />
-            <!-- <OnHide method="OnHide" /> -->
+            <OnHide method="OnHide" />
             <OnEnter method="OnEnter" />
             <OnLeave method="OnLeave" />
-            <!-- <OnClick method="OnClick" /> -->
         </Scripts>
     </Frame>
 
