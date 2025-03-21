@@ -73,21 +73,18 @@ addon.eventsCatcherFrame:SetScript(
             if loadedName == addonName then
                 addon.Init()
 
-                if addon.maxLevelReached == false then
-                    return
+                if addon.maxLevelReached then
+                    DelveCompanion_TooltipExtension_Init()
                 end
-                DelveCompanion_TooltipExtension_Init()
             elseif loadedName == enums.DependencyAddonNames.delvesDashboardUI then
                 if DelvesDashboardFrame == nil then
-                    log("DelvesDashboardFrame is nil. Delves UI extention is not inited.")
+                    log("DelvesDashboardFrame is nil. Delves UI extension is not inited.")
                     return
                 end
 
-                if addon.maxLevelReached == false then
-                    return
+                if addon.maxLevelReached then
+                    DelveCompanion_DelvesDashExtension_Init()
                 end
-
-                DelveCompanion_DelvesDashExtension_Init()
             elseif loadedName == enums.DependencyAddonNames.encounterJournal then
                 if EncounterJournal == nil then
                     log("EncounterJournal is nil. Delves tab is not inited.")

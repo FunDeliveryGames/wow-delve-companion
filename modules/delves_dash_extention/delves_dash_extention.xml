@@ -294,90 +294,98 @@
                             </Frame>
                         </Frames>
                     </Frame>
-
-                    <Frame parentKey="KeysInfo">
-                        <Size x="110" y="40" />
-                        <Anchors>
-                            <Anchor point="TOP" relativeKey="$parent.ActiveDelves"
-                                relativePoint="BOTTOM" y="-5" />
-                        </Anchors>
-                        <Frames>
-                            <Frame parentKey="Keys"
-                                inherits="DelveCompanionIconWithLabelAndTooltipTemplate">
-                                <Size x="40" y="26" />
-                                <KeyValues>
-                                    <KeyValue key="iconSizeX" value="26" type="number" />
-                                    <KeyValue key="iconSizeY" value="26" type="number" />
-                                    <KeyValue key="frameType" value="currency" type="string" />
-                                </KeyValues>
-                                <Anchors>
-                                    <Anchor point="LEFT" x="18" />
-                                </Anchors>
-                            </Frame>
-                            <Frame parentKey="Shards"
-                                inherits="DelveCompanionIconWithLabelAndTooltipTemplate">
-                                <Size x="40" y="26" />
-                                <KeyValues>
-                                    <KeyValue key="iconSizeX" value="26" type="number" />
-                                    <KeyValue key="iconSizeY" value="26" type="number" />
-                                    <KeyValue key="frameType" value="item" type="string" />
-                                    <KeyValue key="useAutoScaling" value="true" type="boolean" />
-                                </KeyValues>
-                                <Anchors>
-                                    <Anchor point="TOP" relativeKey="$parent.Keys"
-                                        relativePoint="BOTTOM" y="-5" />
-                                </Anchors>
-                            </Frame>
-                            <Frame parentKey="BountyMap"
-                                inherits="DelveCompanionIconWithLabelAndTooltipTemplate">
-                                <Size x="40" y="26" />
-                                <KeyValues>
-                                    <KeyValue key="iconSizeX" value="26" type="number" />
-                                    <KeyValue key="iconSizeY" value="26" type="number" />
-                                    <KeyValue key="frameType" value="item" type="string" />
-                                </KeyValues>
-                                <Anchors>
-                                    <Anchor point="RIGHT" />
-                                </Anchors>
-                            </Frame>
-                            <Frame parentKey="Echoes"
-                                inherits="DelveCompanionIconWithLabelAndTooltipTemplate">
-                                <Size x="40" y="26" />
-                                <KeyValues>
-                                    <KeyValue key="iconSizeX" value="26" type="number" />
-                                    <KeyValue key="iconSizeY" value="26" type="number" />
-                                    <KeyValue key="frameType" value="item" type="string" />
-                                </KeyValues>
-                                <Anchors>
-                                    <Anchor point="TOP" relativeKey="$parent.BountyMap"
-                                        relativePoint="BOTTOM" y="-5" />
-                                </Anchors>
-                            </Frame>
-                        </Frames>
-                    </Frame>
-
-                    <Button parentKey="WorldMapButton"
-                        inherits="MagicButtonTemplate" text="MAP">
-                        <Size x="130" y="30" />
-                        <KeyValues>
-                            <KeyValue key="fitTextWidthPadding" value="10" type="number" />
-                        </KeyValues>
-                        <Anchors>
-                            <Anchor point="BOTTOM" relativeTo="$parent" x="0" y="27" />
-                        </Anchors>
-                        <Scripts>
-                            <OnClick>
-                                ToggleQuestLog()
-                                QuestMapFrame:SetDisplayMode(QuestLogDisplayMode.Events)
-                            </OnClick>
-                        </Scripts>
-                    </Button>
                 </Frames>
                 <Scripts>
                     <OnLoad method="OnLoad" />
                     <OnShow method="OnShow" />
+                    <OnHide method="OnHide" />
                 </Scripts>
             </Frame>
+
+            <Frame parentKey="ConsumablesWidget"
+                mixin="DelveCompanionOverviewConsumablesWidgetMixin">
+                <Size x="110" y="40" />
+                <Anchors>
+                    <Anchor point="TOP" relativeKey="$parent.BountifulFrame"
+                        relativePoint="BOTTOM" y="-20" />
+                </Anchors>
+                <Frames>
+                    <Frame parentKey="Keys"
+                        inherits="DelveCompanionIconWithLabelAndTooltipTemplate">
+                        <Size x="40" y="26" />
+                        <KeyValues>
+                            <KeyValue key="iconSizeX" value="26" type="number" />
+                            <KeyValue key="iconSizeY" value="26" type="number" />
+                            <KeyValue key="frameType" value="currency" type="string" />
+                        </KeyValues>
+                        <Anchors>
+                            <Anchor point="LEFT" x="18" />
+                        </Anchors>
+                    </Frame>
+                    <Frame parentKey="Shards"
+                        inherits="DelveCompanionIconWithLabelAndTooltipTemplate">
+                        <Size x="40" y="26" />
+                        <KeyValues>
+                            <KeyValue key="iconSizeX" value="26" type="number" />
+                            <KeyValue key="iconSizeY" value="26" type="number" />
+                            <KeyValue key="frameType" value="item" type="string" />
+                            <KeyValue key="useAutoScaling" value="true" type="boolean" />
+                        </KeyValues>
+                        <Anchors>
+                            <Anchor point="TOP" relativeKey="$parent.Keys"
+                                relativePoint="BOTTOM" y="-5" />
+                        </Anchors>
+                    </Frame>
+                    <Frame parentKey="BountyMap"
+                        inherits="DelveCompanionIconWithLabelAndTooltipTemplate">
+                        <Size x="40" y="26" />
+                        <KeyValues>
+                            <KeyValue key="iconSizeX" value="26" type="number" />
+                            <KeyValue key="iconSizeY" value="26" type="number" />
+                            <KeyValue key="frameType" value="item" type="string" />
+                        </KeyValues>
+                        <Anchors>
+                            <Anchor point="RIGHT" />
+                        </Anchors>
+                    </Frame>
+                    <Frame parentKey="Echoes"
+                        inherits="DelveCompanionIconWithLabelAndTooltipTemplate">
+                        <Size x="40" y="26" />
+                        <KeyValues>
+                            <KeyValue key="iconSizeX" value="26" type="number" />
+                            <KeyValue key="iconSizeY" value="26" type="number" />
+                            <KeyValue key="frameType" value="item" type="string" />
+                        </KeyValues>
+                        <Anchors>
+                            <Anchor point="TOP" relativeKey="$parent.BountyMap"
+                                relativePoint="BOTTOM" y="-5" />
+                        </Anchors>
+                    </Frame>
+                </Frames>
+                <Scripts>
+                    <OnLoad method="OnLoad" />
+                    <OnShow method="OnShow" />
+                    <OnHide method="OnHide" />
+                    <OnEvent method="OnEvent" />
+                </Scripts>
+            </Frame>
+
+            <Button parentKey="WorldMapButton"
+                inherits="MagicButtonTemplate" text="MAP">
+                <Size x="130" y="30" />
+                <KeyValues>
+                    <KeyValue key="fitTextWidthPadding" value="10" type="number" />
+                </KeyValues>
+                <Anchors>
+                    <Anchor point="BOTTOM" relativeTo="$parent" x="0" y="27" />
+                </Anchors>
+                <Scripts>
+                    <OnClick>
+                        ToggleQuestLog()
+                        QuestMapFrame:SetDisplayMode(QuestLogDisplayMode.Events)
+                    </OnClick>
+                </Scripts>
+            </Button>
         </Frames>
         <Scripts>
             <OnLoad method="OnLoad" />

@@ -1,6 +1,7 @@
 local addonName, addon = ...
 local log = addon.log
 local lockit = addon.lockit
+local enums = addon.enums
 
 --============ LootInfoFrame ======================
 
@@ -262,6 +263,8 @@ function DelveCompanionDashboardOverviewMixin:OnLoad()
     --log("DashboardOverview OnLoad start")
     self.PanelTitle:Hide()
     self.PanelDescription:Hide()
+
+    self.WorldMapButton:SetText(_G["WORLDMAP_BUTTON"])
 end
 
 function DelveCompanionDashboardOverviewMixin:OnShow()
@@ -380,21 +383,20 @@ end
 DelveCompanionOverviewBountifulFrameMixin = {}
 
 function DelveCompanionOverviewBountifulFrameMixin:OnLoad()
-    -- log("Bountiful OnLoad start")
+    -- log("OverviewBountifulFrame OnLoad start")
     self.Title:SetText(lockit["ui-common-bountiful-delve"])
-
-    self.KeysInfo.Keys.frameCode = addon.config.BOUNTIFUL_KEY_CURRENCY_CODE
-    self.KeysInfo.Shards.frameCode = addon.config.KEY_SHARD_ITEM_CODE
-    self.KeysInfo.BountyMap.frameCode = addon.config.BOUNTY_MAP_ITEM_CODE
-    self.KeysInfo.Echoes.frameCode = addon.config.ECHO_ITEM_CODE
 
     self.ActiveDelves.NoBountifulLabel:SetText(lockit["ui-no-active-bountiful"])
     self.bountifulButtonsPool = CreateFramePool("BUTTON", self.ActiveDelves.Container,
         "DelveCompanionOverviewBountifulButtonTemplate")
 end
 
+function DelveCompanionOverviewBountifulFrameMixin:OnEvent(event, ...)
+    -- log("OverviewBountifulFrame OnEvent start")
+end
+
 function DelveCompanionOverviewBountifulFrameMixin:OnShow()
-    -- log("Bountiful OnShow start")
+    -- log("OverviewBountifulFrame OnShow start")
     addon.CacheActiveBountiful()
     self.bountifulButtonsPool:ReleaseAll()
 
@@ -405,7 +407,7 @@ function DelveCompanionOverviewBountifulFrameMixin:OnShow()
             local config = FindValueInTableIf(addon.config.DELVES_REGULAR_DATA, function(delveConfig)
                 return poiID == delveConfig.poiIDs.bountiful
             end)
-            local _, _, _, _, _, _, _, _, _, achIcon = GetAchievementInfo(config.achievements.story)
+            local achIcon = select(10, GetAchievementInfo(config.achievements.story))
 
             local button = self.bountifulButtonsPool:Acquire()
             button.layoutIndex = index
@@ -423,20 +425,58 @@ function DelveCompanionOverviewBountifulFrameMixin:OnShow()
     else
         self.ActiveDelves.NoBountifulLabel:Show()
     end
+end
 
+function DelveCompanionOverviewBountifulFrameMixin:OnHide()
+    -- log("OverviewBountifulFrame OnHide start")
+end
+
+--============ Consumables Widget ======================
+DelveCompanionOverviewConsumablesWidgetMixin = {}
+
+function DelveCompanionOverviewConsumablesWidgetMixin:UpdateConsumables()
     addon.CacheKeysData()
-    self.KeysInfo.Keys.Label:SetText(C_CurrencyInfo.GetCurrencyInfo(addon.config.BOUNTIFUL_KEY_CURRENCY_CODE).quantity)
-    self.KeysInfo.BountyMap.Label:SetText(C_Item.GetItemCount(addon.config.BOUNTY_MAP_ITEM_CODE))
-    self.KeysInfo.Echoes.Label:SetText(C_Item.GetItemCount(addon.config.ECHO_ITEM_CODE))
+    self.Keys.Label:SetText(C_CurrencyInfo.GetCurrencyInfo(addon.config.BOUNTIFUL_KEY_CURRENCY_CODE)
+        .quantity)
+
+    self.BountyMap.Label:SetText(C_Item.GetItemCount(addon.config.BOUNTY_MAP_ITEM_CODE))
+    self.Echoes.Label:SetText(C_Item.GetItemCount(addon.config.ECHO_ITEM_CODE))
 
     local shardsCount = C_Item.GetItemCount(addon.config.KEY_SHARD_ITEM_CODE)
     local shardsLine = tostring(shardsCount)
     if shardsCount >= addon.config.SHARDS_FOR_KEY then
         shardsLine = _G["GREEN_FONT_COLOR"]:WrapTextInColorCode(tostring(shardsLine))
     end
-    self.KeysInfo.Shards.Label:SetText(shardsLine)
+    self.Shards.Label:SetText(shardsLine)
+end
 
-    self.WorldMapButton:SetText(_G["WORLDMAP_BUTTON"])
+function DelveCompanionOverviewConsumablesWidgetMixin:OnLoad()
+    -- log("OverviewConsumablesWidget OnLoad start")
+
+    self.Keys:SetFrameInfo(enums.CodeType.Currency, addon.config.BOUNTIFUL_KEY_CURRENCY_CODE)
+    self.Shards:SetFrameInfo(enums.CodeType.Item, addon.config.KEY_SHARD_ITEM_CODE)
+    self.BountyMap:SetFrameInfo(enums.CodeType.Item, addon.config.BOUNTY_MAP_ITEM_CODE)
+    self.Echoes:SetFrameInfo(enums.CodeType.Item, addon.config.ECHO_ITEM_CODE)
+end
+
+function DelveCompanionOverviewConsumablesWidgetMixin:OnEvent(event, ...)
+    -- log("OverviewConsumablesWidget OnEvent start")
+    C_Timer.After(0.5, function()
+        self:UpdateConsumables()
+    end)
+end
+
+function DelveCompanionOverviewConsumablesWidgetMixin:OnShow()
+    -- log("OverviewConsumablesWidget OnShow start")
+    self:UpdateConsumables()
+    self:RegisterEvent("CURRENCY_DISPLAY_UPDATE")
+    self:RegisterEvent("BAG_UPDATE")
+end
+
+function DelveCompanionOverviewConsumablesWidgetMixin:OnHide()
+    -- log("OverviewConsumablesWidget OnHide start")
+    self:UnregisterEvent("CURRENCY_DISPLAY_UPDATE")
+    self:UnregisterEvent("BAG_UPDATE")
 end
 
 --============ Init ======================

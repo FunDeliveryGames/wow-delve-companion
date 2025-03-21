@@ -24,7 +24,8 @@ local function EnableKeysCapInfo()
     --- Chests with keys:
     --- https://wowhead.com/item=239128
     --- https://wowhead.com/item=239120
-    --- https://wowhead.com/item=239128
+    --- https://wowhead.com/item=238208
+    --- https://wowhead.com/item=239121
 end
 
 function DelveCompanion_TooltipExtension_Init()
