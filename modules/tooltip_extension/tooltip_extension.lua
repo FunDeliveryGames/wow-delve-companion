@@ -15,11 +15,18 @@ local function EnableKeysCapInfo()
         local keysAmountText = keysAmountWrapColor:WrapTextInColorCode(format("%d/%d", addon.keysCollected,
             addon.config.BOUNTIFUL_KEY_MAX_PER_WEEK))
 
-        local line = _G["GameTooltipTextLeft4"]
-        local text = format(line:GetText() .. "\n%s%s",
-            _G["NORMAL_FONT_COLOR"]:WrapTextInColorCode(weekText .. ": "),
-            keysAmountText)
-        line:SetText(text)
+        local lineToMatch = format(_G["CURRENCY_TOTAL"], "", "%s*(.+)")
+        for i = 1, tooltip:NumLines(), 1 do
+            local line = _G["GameTooltipTextLeft" .. i]
+            if line and line:GetText() and strmatch(line:GetText(), lineToMatch) then
+                local text = format(line:GetText() .. "\n%s%s",
+                    _G["NORMAL_FONT_COLOR"]:WrapTextInColorCode(weekText .. ": "),
+                    keysAmountText)
+                line:SetText(text)
+
+                return
+            end
+        end
     end)
     --- Chests with keys:
     --- https://wowhead.com/item=239128
@@ -31,8 +38,8 @@ end
 
 function DelveCompanion_TooltipExtension_Init()
     if DelveCompanionCharacterData.keysCapTooltipEnabled then
-        addon.eventsCatcherFrame:RegisterEvent("QUEST_LOG_UPDATE")
         EnableKeysCapInfo()
+        addon.eventsCatcherFrame:RegisterEvent("QUEST_LOG_UPDATE")
     end
 
     ---
