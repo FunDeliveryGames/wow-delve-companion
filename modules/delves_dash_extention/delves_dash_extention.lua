@@ -10,12 +10,16 @@ DelveCompanionLootInfoFrameMixin = {}
 function DelveCompanionLootInfoFrameMixin:OnLoad()
     -- log("LootInfo OnLoad start")
     self.TitleContainer.TitleText:SetText(_G["LOOT"])
-    self.header:SetText(lockit["ui-loot-info-description"])
+    self.Header:SetText(lockit["ui-loot-info-description"])
 
-    self.delveTiers.title:SetText(strtrim(format(_G["GREAT_VAULT_WORLD_TIER"], "")))
-    self.bountifulGear.title:SetText(lockit["ui-loot-info-bountilful-gear-title"] ..
-        CreateAtlasMarkup("delves-bountiful", 16, 16))
-    self.vaultGear.title:SetText(_G["DELVES_GREAT_VAULT_LABEL"] .. CreateAtlasMarkup("GreatVault-32x32", 16, 16))
+    self.DelveTiers.Title:SetText(strtrim(format(_G["GARRISON_TIER"], "")))
+
+    local bountiful = Item:CreateFromItemID(addon.config.BOUNTIFUL_COFFER_ITEM_CODE)
+    bountiful:ContinueOnItemLoad(function()
+        self.BountifulGear.Title:SetText(bountiful:GetItemName() .. CreateAtlasMarkup("delves-bountiful", 16, 16))
+    end)
+
+    self.VaultGear.Title:SetText(_G["DELVES_GREAT_VAULT_LABEL"] .. CreateAtlasMarkup("GreatVault-32x32", 16, 16))
 
     local tiersText, bountifulText, vaultText = "", "", ""
     for tier, lootInfo in ipairs(addon.config.DELVES_LOOT_INFO_DATA) do
@@ -24,9 +28,9 @@ function DelveCompanionLootInfoFrameMixin:OnLoad()
         vaultText = vaultText .. lootInfo.vaultLvl .. "\n"
     end
 
-    self.delveTiers.text:SetText(tiersText)
-    self.bountifulGear.text:SetText(bountifulText)
-    self.vaultGear.text:SetText(vaultText)
+    self.DelveTiers.Text:SetText(tiersText)
+    self.BountifulGear.Text:SetText(bountifulText)
+    self.VaultGear.Text:SetText(vaultText)
 
     self:GetParent():HookScript("OnShow", function()
         if self:GetParent().ButtonPanelLayoutFrame.GreatVaultButtonPanel.disabled then
@@ -206,10 +210,13 @@ function DelveCompanionGreatVaultDetailsMixin:SetStateCustom()
     self.LoadingLabel:Hide()
 end
 
-function DelveCompanionGreatVaultDetailsMixin:Refresh()
-    if self:HasUnlockedRewards(addon.config.ACTIVITY_TYPE) and not C_WeeklyRewards.CanClaimRewards() then
-        -- log("Rewards availalbe.")
+function DelveCompanionGreatVaultDetailsMixin:CanDisplayCustomState()
+    return self:HasUnlockedRewards(addon.config.ACTIVITY_TYPE) and
+        not (C_WeeklyRewards.HasAvailableRewards() or C_WeeklyRewards.HasGeneratedRewards())
+end
 
+function DelveCompanionGreatVaultDetailsMixin:Refresh()
+    if self:CanDisplayCustomState() then
         local activitiesInfo = C_WeeklyRewards.GetActivities(addon.config.ACTIVITY_TYPE)
         if not activitiesInfo then
             log("Cannot get Activity info")
@@ -224,9 +231,9 @@ function DelveCompanionGreatVaultDetailsMixin:Refresh()
 
         self:SetStateCustom()
     else
-        -- log("No rewards.")
         self:SetStateDefault()
     end
+
     self.shouldRefresh = false
 end
 

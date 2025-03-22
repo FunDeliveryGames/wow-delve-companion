@@ -23,7 +23,6 @@ lockit["ui-no-active-bountiful"] = "Нет активных вылазок"
 
 -- Информация о добыче
 lockit["ui-loot-info-description"] = "Завершите вылазку, чтобы получить:"
-lockit["ui-loot-info-bountilful-gear-title"] = "Многообещающая"
 
 -- Информация о ключах
 lockit["ui-bountiful-keys-count-caches-prefix"] = "Ключей из тайников"

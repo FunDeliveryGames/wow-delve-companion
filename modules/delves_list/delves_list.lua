@@ -218,7 +218,7 @@ function DelveCompanionDelvesListMixin:OnLoad()
     self.KeysWidget:SetFrameInfo(enums.CodeType.Currency, addon.config.BOUNTIFUL_KEY_CURRENCY_CODE)
 
     self.AffixWidget:SetFrameInfo(enums.CodeType.Spell, addon.config.NEMESIS_AFFIX_SPELL_CODE)
-    self.AffixWidget:SetLabelText(strtrim(format(_G["MYTHIC_PLUS_SEASON_DESC3"], "")))
+    self.AffixWidget:SetLabelText(_G["MODIFIERS_COLON"])
 
     self:InitDelvesList()
 end

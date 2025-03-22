@@ -6,6 +6,9 @@ local lockit = addon.lockit
 Lockit rules:
 - The default locale: enUS. It contains all the keys used by the addon.
 - Other languages override existing keys with a corresponding translation.
+- The main intent: all locales should follow in-game terms, tiltes, names, etc. Situations when this rule can be broken:
+--- To fit the text into UI. However, each case is considered separately to find the best solution.
+--- There is another "word" widely used in a community to name something. E.g. `iLvl` is a common substitution for `Item Level` regardless of the language.
 - Key names should have prefixes to indicate a kind of a key:
 --- ui
 --- debug
@@ -31,8 +34,6 @@ lockit["ui-no-active-bountiful"] = "No active delves"
 
 -- Loot Info
 lockit["ui-loot-info-description"] = "Complete a delve to get:"
-lockit["ui-loot-info-bountilful-gear-title"] =
-"Bountiful" -- Replace with https://www.wowhead.com/item=228942/bountiful-coffer
 
 -- Keys Info
 lockit["ui-bountiful-keys-count-caches-prefix"] = "Keys from caches"

@@ -9,19 +9,20 @@
         </Anchors>
         <Layers>
             <Layer level="OVERLAY">
-                <FontString name="$parentTitle" inherits="GameFontNormalLarge2"
-                    parentKey="title">
+                <FontString parentKey="Title" inherits="GameFontNormalMed2"
+                    mixin="AutoScalingFontStringMixin" wordwrap="true" maxLines="2"
+                    justifyV="MIDDLE" justifyH="CENTER">
+                    <Size x="100" y="25" />
                     <Anchors>
                         <Anchor point="TOP" />
                     </Anchors>
                 </FontString>
-                <FontString name="$parentText" inherits="GameFontNormal" parentKey="text"
-                    justifyH="CENTER"
-                    justifyV="MIDDLE" spacing="5">
+                <FontString parentKey="Text" inherits="GameFontHighlightMed2"
+                    justifyH="CENTER" justifyV="MIDDLE" spacing="5">
                     <Anchors>
-                        <Anchor point="TOP" relativeTo="$parentTitle" relativePoint="BOTTOM" y="-10" />
+                        <Anchor point="TOP" relativeKey="$parent.Title" relativePoint="BOTTOM"
+                            y="-15" />
                     </Anchors>
-                    <Color r="1" g="1" b="1" a="1" />
                 </FontString>
             </Layer>
         </Layers>
@@ -37,7 +38,7 @@
         </Anchors>
         <Layers>
             <Layer level="OVERLAY">
-                <FontString parentKey="header" inherits="GameFontNormalLarge2"
+                <FontString parentKey="Header" inherits="GameFontNormalLarge2"
                     justifyH="LEFT" text="DELVES">
                     <Anchors>
                         <Anchor point="TOPLEFT" x="20" y="-35" />
@@ -46,32 +47,26 @@
             </Layer>
         </Layers>
         <Frames>
-            <Button name="$parentCloseButton" parentKey="CloseButton"
-                inherits="UIPanelCloseButtonDefaultAnchors" />
-            <Frame name="$parentDelveTiers" parentKey="delveTiers"
-                inherits="DelveCompanionColumnWithTitleTemplate">
+            <Button parentKey="CloseButton" inherits="UIPanelCloseButtonDefaultAnchors" />
+            <Frame parentKey="DelveTiers" inherits="DelveCompanionColumnWithTitleTemplate">
                 <Size x="100" />
                 <Anchors>
-                    <Anchor point="TOPLEFT" relativeTo="$parent" relativePoint="TOPLEFT"
-                        x="15" y="-73" />
+                    <Anchor point="TOPLEFT" relativeTo="$parent"
+                        relativePoint="TOPLEFT" x="15" y="-70" />
                 </Anchors>
             </Frame>
-            <Frame name="$parentBountifulGear" parentKey="bountifulGear"
-                inherits="DelveCompanionColumnWithTitleTemplate">
+            <Frame parentKey="BountifulGear" inherits="DelveCompanionColumnWithTitleTemplate">
                 <Size x="100" />
                 <Anchors>
-                    <Anchor point="TOPLEFT" relativeTo="$parentDelveTiers"
-                        relativePoint="TOPRIGHT"
-                        x="0" y="3" />
+                    <Anchor point="TOPLEFT" relativeKey="$parent.DelveTiers"
+                        relativePoint="TOPRIGHT" x="15" />
                 </Anchors>
             </Frame>
-            <Frame name="$parentVaultGear" parentKey="vaultGear"
-                inherits="DelveCompanionColumnWithTitleTemplate">
+            <Frame parentKey="VaultGear" inherits="DelveCompanionColumnWithTitleTemplate">
                 <Size x="100" />
                 <Anchors>
-                    <Anchor point="TOPLEFT" relativeTo="$parentBountifulGear"
-                        relativePoint="TOPRIGHT"
-                        x="20" />
+                    <Anchor point="TOPLEFT" relativeKey="$parent.BountifulGear"
+                        relativePoint="TOPRIGHT" x="20" />
                 </Anchors>
             </Frame>
             <!-- TODO: Explore as an alternative
@@ -221,9 +216,9 @@
                     </Layer>
                     <Layer level="OVERLAY">
                         <FontString parentKey="Name" inherits="GameFontNormal"
-                            justifyH="CENTER" text="GILDED_STASH" mixin="AutoScalingFontStringMixin"
-                            wordwrap="false" justifyV="MIDDLE">
-                            <Size x="140" y="25" />
+                            text="GILDED_STASH" mixin="AutoScalingFontStringMixin"
+                            wordwrap="false" justifyV="MIDDLE" justifyH="CENTER">
+                            <Size x="130" y="25" />
                             <Anchors>
                                 <Anchor point="TOP" x="0" y="-5" />
                             </Anchors>
@@ -314,7 +309,7 @@
                                     <KeyValue key="maximumWidth" value="140" type="number" />
                                 </KeyValues>
                                 <Anchors>
-                                    <Anchor point="TOP" y="-5" />
+                                    <Anchor point="TOP" y="-10" />
                                 </Anchors>
                             </Frame>
                         </Frames>
