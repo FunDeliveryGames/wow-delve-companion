@@ -38,9 +38,11 @@ data\enums.lua
 src\utility.xml
 src\utility.lua
 
-modules\tooltip_extension\tooltip_extension.lua
+src\modules\settings\settings.xml
+src\modules\settings\settings.lua
+src\modules\tooltip_extension\tooltip_extension.lua
 src\core.lua
-modules\delves_list\delves_list.xml
-modules\delves_list\delves_list.lua
-modules\delves_dash_extention\delves_dash_extention.xml
-modules\delves_dash_extention\delves_dash_extention.lua
+src\modules\delves_list\delves_list.xml
+src\modules\delves_list\delves_list.lua
+src\modules\delves_dash_extention\delves_dash_extention.xml
+src\modules\delves_dash_extention\delves_dash_extention.lua

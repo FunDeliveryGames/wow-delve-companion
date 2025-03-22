@@ -1,0 +1,124 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.blizzard.com/wow/ui/ https://raw.githubusercontent.com/Gethe/wow-ui-source/live/Interface/AddOns/Blizzard_SharedXML/UI.xsd">
+
+
+    <!-- Settings frame -->
+    <Frame name="DelveCompanionSettingsFrame" mixin="DelveCompanionSettingsFrameMixin"
+        virtual="true">
+        <Frames>
+            <Frame parentKey="TitlePanel">
+                <Anchors>
+                    <Anchor point="TOPLEFT" />
+                    <Anchor point="BOTTOMRIGHT" relativeTo="$parent" relativePoint="TOPRIGHT"
+                        y="-40" />
+                </Anchors>
+                <Layers>
+                    <Layer level="OVERLAY">
+                        <FontString parentKey="Title" inherits="GameFontNormalHuge2"
+                            justifyH="CENTER" text="TITLE">
+                            <Anchors>
+                                <Anchor point="TOP" />
+                            </Anchors>
+                        </FontString>
+                    </Layer>
+                </Layers>
+            </Frame>
+
+            <Frame parentKey="TogglesContainer" inherits="VerticalLayoutFrame">
+                <KeyValues>
+                    <KeyValue key="maximumWidth" value="400" type="number" />
+                    <KeyValue key="expand" value="true" type="boolean" />
+                    <KeyValue key="spacing" value="5" type="number" />
+                </KeyValues>
+                <Anchors>
+                    <Anchor point="TOPLEFT" relativeKey="$parent.TitlePanel"
+                        relativePoint="BOTTOMLEFT" />
+                </Anchors>
+                <Frames>
+                    <CheckButton parentKey="keysCapTooltipCheckButton"
+                        inherits="DelveCompanionSettingsCheckButtonTemplate">
+                        <KeyValues>
+                            <KeyValue key="layoutIndex" value="1" type="number" />
+                        </KeyValues>
+                    </CheckButton>
+                    <CheckButton parentKey="gvDetailsCheckButton"
+                        inherits="DelveCompanionSettingsCheckButtonTemplate">
+                        <KeyValues>
+                            <KeyValue key="layoutIndex" value="2" type="number" />
+                        </KeyValues>
+                    </CheckButton>
+                    <CheckButton parentKey="dashOverviewCheckButton"
+                        inherits="DelveCompanionSettingsCheckButtonTemplate">
+                        <KeyValues>
+                            <KeyValue key="layoutIndex" value="3" type="number" />
+                        </KeyValues>
+                    </CheckButton>
+                </Frames>
+            </Frame>
+
+            <Button parentKey="ReloadButton" text="RELOAD" inherits="MagicButtonTemplate">
+                <Size x="250" y="30" />
+                <Scripts>
+                    <OnClick>
+                        C_UI.Reload()
+                    </OnClick>
+                </Scripts>
+            </Button>
+
+            <Frame parentKey="LocalizationFrame">
+                <Size x="100" y="75" />
+                <Anchors>
+                    <Anchor point="BOTTOMLEFT" />
+                </Anchors>
+                <Layers>
+                    <Layer level="OVERLAY">
+                        <FontString parentKey="Title" inherits="GameFontNormalLarge"
+                            justifyH="LEFT" text="THANKS">
+                            <Anchors>
+                                <Anchor point="TOPLEFT" />
+                            </Anchors>
+                        </FontString>
+                    </Layer>
+                </Layers>
+                <Frames>
+                    <Frame parentKey="ruRU">
+                        <Size x="100" y="25" />
+                        <Anchors>
+                            <Anchor point="TOPLEFT" relativeKey="$parent.Title"
+                                relativePoint="BOTTOMLEFT" x="15" y="-10" />
+                        </Anchors>
+                        <Layers>
+                            <Layer level="OVERLAY">
+                                <Texture parentKey="FlagIcon"
+                                    file="Interface\AddOns\DelveCompanion\images\ruRU">
+                                    <Size x="25" y="25" />
+                                    <Anchors>
+                                        <Anchor point="TOPLEFT" />
+                                    </Anchors>
+                                </Texture>
+                                <FontString parentKey="Name" inherits="GameFontHighlightLarge"
+                                    justifyH="LEFT" text="ZamestoTV">
+                                    <Anchors>
+                                        <Anchor point="LEFT" relativeKey="$parent.FlagIcon"
+                                            relativePoint="RIGHT" x="10" />
+                                    </Anchors>
+                                </FontString>
+                            </Layer>
+                        </Layers>
+                    </Frame>
+                </Frames>
+            </Frame>
+        </Frames>
+        <Scripts>
+            <OnLoad method="OnLoad" />
+        </Scripts>
+    </Frame>
+
+    <CheckButton name="DelveCompanionSettingsCheckButtonTemplate"
+        inherits="ChatConfigCheckButtonTemplate" text="CHECK_BUTTON_DESC" virtual="true">
+        <Anchors>
+            <Anchor point="TOPLEFT" />
+        </Anchors>
+    </CheckButton>
+</Ui>
