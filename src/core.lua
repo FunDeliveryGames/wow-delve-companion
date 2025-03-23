@@ -60,16 +60,46 @@ addon.InitSettings = function()
     end
 end
 
-addon.Init = function()
-    addon.InitSettings()
-
-    addon.maxLevelReached = UnitLevel("player") == addon.config.MAX_LEVEL
-end
-
 function DelveCompanionShowSettings()
     if Settings and Settings.OpenToCategory then
         Settings.OpenToCategory(tostring(addonName))
     end
+end
+
+local SAVE_VERSION_ACCOUNT = 1
+local SAVE_VERSION_CHARACTER = 2
+
+local function InitAccountSave()
+    if not DelveCompanionAccountData then
+        DelveCompanionAccountData = {
+            saveVersion = SAVE_VERSION_ACCOUNT,
+            achievementWidgetsEnabled = true
+        }
+    elseif not DelveCompanionAccountData.saveVersion or DelveCompanionAccountData.saveVersion < SAVE_VERSION_ACCOUNT then
+        DelveCompanionAccountData.saveVersion = SAVE_VERSION_ACCOUNT
+    end
+end
+
+local function InitCharacterSave()
+    if not DelveCompanionCharacterData then
+        DelveCompanionCharacterData = {
+            saveVersion = SAVE_VERSION_CHARACTER,
+            gvDetailsEnabled = true,
+            keysCapTooltipEnabled = true,
+            dashOverviewEnabled = true
+        }
+    elseif not DelveCompanionCharacterData.saveVersion or DelveCompanionCharacterData.saveVersion < SAVE_VERSION_CHARACTER then
+        DelveCompanionCharacterData.saveVersion = SAVE_VERSION_CHARACTER
+    end
+end
+
+addon.Init = function()
+    InitAccountSave()
+    InitCharacterSave()
+
+    addon.InitSettings()
+
+    addon.maxLevelReached = UnitLevel("player") == addon.config.MAX_LEVEL
 end
 
 -- Addon Boot

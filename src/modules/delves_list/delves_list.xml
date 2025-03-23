@@ -99,7 +99,7 @@
 		</Scripts>
 	</Button>
 
-	<Frame name="DelveCompanionDelveProgressWidgetTemplate"
+	<Frame name="DelveCompanionDelveAchievementsWidgetTemplate"
 		mixin="DelveCompanionDelveProgressWidgetMixin" virtual="true">
 		<Size x="174" y="26" />
 		<Frames>
@@ -107,8 +107,6 @@
 				inherits="DelveCompanionIconWithLabelAndTooltipTemplate">
 				<Size x="40" y="26" />
 				<KeyValues>
-					<!-- <KeyValue key="atlasTexture" value="questlog-storylineicon" type="string"
-					/> -->
 					<KeyValue key="iconSizeX" value="20" type="number" />
 					<KeyValue key="iconSizeY" value="20" type="number" />
 					<KeyValue key="displayLabel" value="true" type="boolean" />
