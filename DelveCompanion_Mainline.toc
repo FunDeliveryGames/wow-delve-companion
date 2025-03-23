@@ -16,6 +16,7 @@
 ## Category-zhCN: 地下堡
 ## Category-zhTW: 探究
 ## AddonCompartmentFunc: DelveCompanionShowSettings
+## SavedVariables: DelveCompanionAccountData
 ## SavedVariablesPerCharacter: DelveCompanionCharacterData
 
 ## X-Curse-Project-ID: 1218457

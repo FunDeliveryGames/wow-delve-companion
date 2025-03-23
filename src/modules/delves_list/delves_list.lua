@@ -90,8 +90,8 @@ function DelveCompanionDelvesListMixin:CreateMapHeader(parent, mapName)
     return header
 end
 
-function DelveCompanionDelvesListMixin:CreateDelveProgressWidget(parent, config)
-    local widget = CreateFrame("Frame", nil, parent, "DelveCompanionDelveProgressWidgetTemplate")
+function DelveCompanionDelvesListMixin:CreateDelveAchievementsWidget(parent, config)
+    local widget = CreateFrame("Frame", nil, parent, "DelveCompanionDelveAchievementsWidgetTemplate")
 
     do
         -- Story progress
@@ -186,8 +186,8 @@ function DelveCompanionDelvesListMixin:InitDelvesList()
                 instanceButton:SetPoint("TOPLEFT", header, "BOTTOMLEFT", anchorX,
                     anchorY)
 
-                if delveConfig.achievements then
-                    local progressWidget = self:CreateDelveProgressWidget(self.DelvesListScroll.Content,
+                if DelveCompanionAccountData.achievementWidgetsEnabled and delveConfig.achievements then
+                    local progressWidget = self:CreateDelveAchievementsWidget(self.DelvesListScroll.Content,
                         delveConfig)
                     progressWidget:SetPoint("TOPLEFT", instanceButton, "BOTTOMLEFT", 0, 0)
                 end
