@@ -155,51 +155,6 @@ function DelveCompanionIconWithLabelAndTooltipMixin:OnLeave()
     GameTooltip:Hide()
 end
 
---============ Settings ======================
-DelveCompanionSettingsFrameMixin = {}
-
-function DelveCompanionSettingsFrameMixin:OnLoad()
-    -- log("SettingsFrame OnLoad start...")
-    if not DelveCompanionCharacterData then
-        DelveCompanionCharacterData = {
-            gvDetailsEnabled = true,
-            keysCapTooltipEnabled = true,
-            dashOverviewEnabled = true,
-            GildedStashData = {
-                isInited = false,
-                cachedCollectedCount = 0
-            }
-        }
-    end
-
-    self:SetAllPoints()
-    self.TitlePanel.Title:SetText(lockit["ui-addon-name"])
-
-    -- Prepare toggles
-    self.TogglesContainer.gvDetailsCheckButton:SetChecked(DelveCompanionCharacterData.gvDetailsEnabled)
-    self.TogglesContainer.gvDetailsCheckButton.Text:SetText(lockit["ui-settings-gv-details"])
-    self.TogglesContainer.gvDetailsCheckButton:HookScript("OnClick", function(cb)
-        DelveCompanionCharacterData.gvDetailsEnabled = cb:GetChecked()
-    end)
-
-    self.TogglesContainer.keysCapTooltipCheckButton:SetChecked(DelveCompanionCharacterData.keysCapTooltipEnabled)
-    self.TogglesContainer.keysCapTooltipCheckButton.Text:SetText(lockit["ui-settings-keys-cap"])
-    self.TogglesContainer.keysCapTooltipCheckButton:HookScript("OnClick", function(cb)
-        DelveCompanionCharacterData.keysCapTooltipEnabled = cb:GetChecked()
-    end)
-
-    self.TogglesContainer.dashOverviewCheckButton:SetChecked(DelveCompanionCharacterData.dashOverviewEnabled)
-    self.TogglesContainer.dashOverviewCheckButton.Text:SetText(lockit["ui-settings-dashboard-overview"])
-    self.TogglesContainer.dashOverviewCheckButton:HookScript("OnClick", function(cb)
-        DelveCompanionCharacterData.dashOverviewEnabled = cb:GetChecked()
-    end)
-    self.TogglesContainer:Layout()
-
-    self.ReloadButton:SetText(format(_G["SETTINGS_SUBCATEGORY_FMT"], _G["SETTINGS_APPLY"], _G["RELOADUI"]))
-
-    self:Hide()
-end
-
 --============ Delve Tracking Button ======================
 
 DelveCompanionDelveTrackingButtonMixin = {}
@@ -219,11 +174,11 @@ function DelveCompanionDelveTrackingButtonMixin:OnSuperTrackChanged()
         self:ClearTracking()
     end
 
-    local type, typeID = C_SuperTrack.GetSuperTrackedMapPin()
+        local type, typeID = C_SuperTrack.GetSuperTrackedMapPin()
     if type ~= Enum.SuperTrackingMapPinType.AreaPOI then
         self:ClearTracking()
     elseif typeID ~= self.poiID then
-        self:ClearTracking()
+            self:ClearTracking()
     else
         self:SetTracking()
     end
