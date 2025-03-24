@@ -33,7 +33,7 @@ lockit["ui-settings-section-title-character"] = "Параметры персон
 lockit["ui-settings-gv-details"] = "Интерфейс вылазок: Отображать подробные детали Великого Хранилища."
 lockit["ui-settings-dashboard-overview"] =
 "Интерфейс вылазок: Отображать раздел обзора (Позолоченный тайник, Многообещающая Вылазка)."
-lockit["ui-settings-keys-cap"] = "Отображать дополнительную информацию в подсказках."
+lockit["ui-settings-keys-cap"] = "Отображать еженедельные лимиты в подсказках."
 lockit["ui-settings-ach-widgets"] = "Список вылазок: Отображать прогресс достижений (истории и сундуки)."
 lockit["ui-settings-translation-title"] = "Особая благодарность за помощь с переводом:"
 

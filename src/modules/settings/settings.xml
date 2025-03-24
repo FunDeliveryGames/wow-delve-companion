@@ -89,8 +89,8 @@
                         <KeyValues>
                             <KeyValue key="layoutIndex" value="1" type="number" />
                             <KeyValue key="saveType" value="character" type="string" />
-                            <KeyValue key="saveVar" value="gvDetailsEnabled" type="string" />
-                            <KeyValue key="localeKey" value="ui-settings-gv-details" type="string" />
+                            <KeyValue key="saveVar" value="keysCapTooltipEnabled" type="string" />
+                            <KeyValue key="localeKey" value="ui-settings-keys-cap" type="string" />
                         </KeyValues>
                     </CheckButton>
                     <CheckButton parentKey="gvDetailsCheckButton"
@@ -98,8 +98,8 @@
                         <KeyValues>
                             <KeyValue key="layoutIndex" value="2" type="number" />
                             <KeyValue key="saveType" value="character" type="string" />
-                            <KeyValue key="saveVar" value="keysCapTooltipEnabled" type="string" />
-                            <KeyValue key="localeKey" value="ui-settings-keys-cap" type="string" />
+                            <KeyValue key="saveVar" value="gvDetailsEnabled" type="string" />
+                            <KeyValue key="localeKey" value="ui-settings-gv-details" type="string" />
                         </KeyValues>
                     </CheckButton>
                     <CheckButton parentKey="dashOverviewCheckButton"
