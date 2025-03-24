@@ -402,22 +402,7 @@ function DelveCompanionOverviewBountifulButtonMixin:OnHide()
     self:UnregisterEvent("SUPER_TRACKING_CHANGED")
 end
 
-function DelveCompanionOverviewBountifulButtonMixin:UpdateTooltip()
-    local text = lockit["ui-delve-instance-button-tooltip-click-text"]
-    if self.isTracking then
-        text = lockit["ui-delve-instance-button-tooltip-current-text"]
-    end
-
-    GameTooltip:ClearLines()
-    GameTooltip:AddLine(self.delveName)
-    GameTooltip:AddLine(self.parentMapName, 1, 1, 1, true)
-    GameTooltip:AddLine(" ")
-    GameTooltip:AddLine(text, 1, 1, 1, true)
-    GameTooltip:Show()
-end
-
 function DelveCompanionOverviewBountifulButtonMixin:OnEnter()
-    GameTooltip:SetOwner(self, "ANCHOR_TOP")
     self:UpdateTooltip()
 end
 

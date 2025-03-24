@@ -23,8 +23,9 @@ lockit["ui-addon-name"] = "Delve Companion" -- Do not translate
 lockit["ui-common-bountiful-delve"] = "Bountiful Delve"
 
 -- Delves List
-lockit["ui-delve-instance-button-tooltip-click-text"] = "Shift + Left Click to set waypoint to the delve."
-lockit["ui-delve-instance-button-tooltip-current-text"] = "Waypoint set.\nShift + Left Click to clear waypoint."
+lockit["ui-delve-instance-button-tooltip-click-instruction"] = "<Shift + Left Click to set waypoint to the delve>"
+lockit["ui-delve-instance-button-tooltip-current-text"] = "Waypoint set."
+lockit["ui-delve-instance-button-tooltip-current-instruction"] = "<Shift + Left Click to clear waypoint>"
 
 -- Delves UI
 lockit["ui-gilded-stash-cannot-retrieve-data"] = "Visit Khaz Algar zones to see the progress"

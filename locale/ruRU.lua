@@ -11,9 +11,9 @@ lockit["ui-addon-name"] = "Delve Companion" -- Do not translate
 lockit["ui-common-bountiful-delve"] = "Многообещающая Вылазка"
 
 -- Список вылазок
-lockit["ui-delve-instance-button-tooltip-click-text"] = "Shift + ЛКМ, чтобы установить точку маршрута к вылазке."
-lockit["ui-delve-instance-button-tooltip-current-text"] =
-"Точка маршрута установлена.\nShift + ЛКМ, чтобы сбросить точку маршрута."
+lockit["ui-delve-instance-button-tooltip-click-instruction"] = "<Shift + ЛКМ, чтобы установить точку маршрута к вылазке>"
+lockit["ui-delve-instance-button-tooltip-current-text"] = "Точка маршрута установлена."
+lockit["ui-delve-instance-button-tooltip-current-instruction"] = "<Shift + ЛКМ, чтобы сбросить точку маршрута>"
 
 -- Интерфейс вылазок
 lockit["ui-gilded-stash-cannot-retrieve-data"] = "Посетите Каз Алгар, чтобы увидеть прогресс"

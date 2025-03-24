@@ -159,6 +159,24 @@ end
 
 DelveCompanionDelveTrackingButtonMixin = {}
 
+function DelveCompanionDelveTrackingButtonMixin:UpdateTooltip()
+    local tooltip = GameTooltip
+
+    tooltip:SetOwner(self, "ANCHOR_TOP")
+    tooltip:ClearLines()
+    GameTooltip_AddNormalLine(tooltip, self.delveName, true)
+    GameTooltip_AddHighlightLine(tooltip, self.parentMapName, true)
+    GameTooltip_AddBlankLineToTooltip(tooltip)
+
+    local text = lockit["ui-delve-instance-button-tooltip-click-instruction"]
+    if self.isTracking then
+        GameTooltip_AddHighlightLine(tooltip, lockit["ui-delve-instance-button-tooltip-current-text"], true)
+        text = lockit["ui-delve-instance-button-tooltip-current-instruction"]
+    end
+    GameTooltip_AddInstructionLine(tooltip, text, true)
+    tooltip:Show()
+end
+
 function DelveCompanionDelveTrackingButtonMixin:SetTracking()
     self.isTracking = true
     self.WaypointIcon:Show()
@@ -170,16 +188,14 @@ function DelveCompanionDelveTrackingButtonMixin:ClearTracking()
 end
 
 function DelveCompanionDelveTrackingButtonMixin:OnSuperTrackChanged()
-    if not C_SuperTrack.IsSuperTrackingAnything() then
-        self:ClearTracking()
-    end
-
+    if C_SuperTrack.IsSuperTrackingAnything() then
         local type, typeID = C_SuperTrack.GetSuperTrackedMapPin()
-    if type ~= Enum.SuperTrackingMapPinType.AreaPOI then
-        self:ClearTracking()
-    elseif typeID ~= self.poiID then
+        if type == Enum.SuperTrackingMapPinType.AreaPOI and typeID == self.poiID then
+            self:SetTracking()
+        else
             self:ClearTracking()
+        end
     else
-        self:SetTracking()
+        self:ClearTracking()
     end
 end

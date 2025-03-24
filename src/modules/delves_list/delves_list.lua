@@ -26,6 +26,8 @@ function DelveCompanionDelveInstanceButtonMixin:Update(isBountiful)
         self.poiID = poiIDs.regular
         self.BountifulIcon:Hide()
     end
+
+    self:OnSuperTrackChanged()
 end
 
 function DelveCompanionDelveInstanceButtonMixin:OnEvent(event, ...)
@@ -34,21 +36,10 @@ end
 
 function DelveCompanionDelveInstanceButtonMixin:OnShow()
     self:RegisterEvent("SUPER_TRACKING_CHANGED")
-    self:OnSuperTrackChanged()
 end
 
 function DelveCompanionDelveInstanceButtonMixin:OnHide()
     self:UnregisterEvent("SUPER_TRACKING_CHANGED")
-end
-
-function DelveCompanionDelveInstanceButtonMixin:UpdateTooltip()
-    local text = lockit["ui-delve-instance-button-tooltip-click-text"]
-    if self.isTracking then
-        text = lockit["ui-delve-instance-button-tooltip-current-text"]
-    end
-
-    GameTooltip:SetText(text, 1, 1, 1)
-    GameTooltip:Show()
 end
 
 function DelveCompanionDelveInstanceButtonMixin:OnEnter()
@@ -56,7 +47,6 @@ function DelveCompanionDelveInstanceButtonMixin:OnEnter()
         return
     end
 
-    GameTooltip:SetOwner(self, "ANCHOR_TOP")
     self:UpdateTooltip()
 end
 
@@ -141,6 +131,9 @@ function DelveCompanionDelvesListMixin:CreateDelveInstanceButton(parent, config)
     if C_Texture.GetAtlasInfo(config.atlasBgID) ~= nil then
         item.DelveArtBg:SetAtlas(config.atlasBgID)
     end
+
+    item.delveName = delveMap.name
+    item.parentMapName = C_Map.GetMapInfo(delveMap.parentMapID).name
 
     return item
 end
@@ -228,7 +221,7 @@ function DelveCompanionDelvesListMixin:OnEvent(event, ...)
 end
 
 function DelveCompanionDelvesListMixin:OnShow()
-    --log("DelvesList OnShow start")
+    -- log("DelvesList OnShow start")
     addon.CacheActiveBountiful()
 
     for _, instanceButton in ipairs(self.instanceButtons) do
