@@ -20,32 +20,6 @@ addon.CacheActiveBountiful = function()
     addon.activeBountifulDelves = activeBountifulDelves
 end
 
-addon.SetTrackedDelve = function(instanceButton)
-    if instanceButton == nil then
-        log("[SetTrackedDelve] Cannot set SuperTrack. Missing button reference")
-    end
-
-    if addon.delvesListFrame.trackedDelveButton ~= nil and addon.delvesListFrame.trackedDelveButton ~= instanceButton then
-        addon.delvesListFrame.trackedDelveButton.waypointIcon:Hide()
-        addon.delvesListFrame.trackedDelveButton.isTracking = false
-    end
-
-    instanceButton.waypointIcon:Show()
-    instanceButton.isTracking = true
-    addon.delvesListFrame.trackedDelveButton = instanceButton
-end
-
-addon.ClearTrackedDelve = function(instanceButton)
-    if instanceButton == nil then
-        log("[ClearTrackedDelve] Cannot clear SuperTrack. Missing button reference")
-    end
-
-    instanceButton.waypointIcon:Hide()
-    instanceButton.isTracking = false
-
-    addon.delvesListFrame.trackedDelveButton = nil
-end
-
 addon.CacheKeysData = function()
     local keysCollected = 0
     for _, questId in ipairs(addon.config.BOUNTIFUL_KEY_QUESTS_DATA) do
@@ -55,6 +29,23 @@ addon.CacheKeysData = function()
     end
 
     addon.keysCollected = keysCollected
+end
+
+addon.GetContinentMapIDForMap = function(mapID)
+    if not mapID then
+        return nil
+    end
+
+    local mapInfo = C_Map.GetMapInfo(mapID)
+    while mapInfo and mapInfo.mapType ~= Enum.UIMapType.Continent do
+        mapInfo = C_Map.GetMapInfo(mapInfo.parentMapID)
+    end
+
+    if mapInfo then
+        return mapInfo.mapID
+    end
+
+    return nil
 end
 
 -- TODO: Explore a new Settings API. Maybe Settings.RegisterAddOnSetting is more convenient way to setup settings.
@@ -69,22 +60,53 @@ addon.InitSettings = function()
     end
 end
 
-addon.Init = function()
-    addon.InitSettings()
-
-    addon.maxLevelReached = UnitLevel("player") == addon.config.MAX_LEVEL
-end
-
 function DelveCompanionShowSettings()
     if Settings and Settings.OpenToCategory then
         Settings.OpenToCategory(tostring(addonName))
     end
 end
 
+local SAVE_VERSION_ACCOUNT = 1
+local SAVE_VERSION_CHARACTER = 2
+
+local function InitAccountSave()
+    if not DelveCompanionAccountData then
+        DelveCompanionAccountData = {
+            saveVersion = SAVE_VERSION_ACCOUNT,
+            achievementWidgetsEnabled = true
+        }
+    elseif not DelveCompanionAccountData.saveVersion or DelveCompanionAccountData.saveVersion < SAVE_VERSION_ACCOUNT then
+        DelveCompanionAccountData.saveVersion = SAVE_VERSION_ACCOUNT
+    end
+end
+
+local function InitCharacterSave()
+    if not DelveCompanionCharacterData then
+        DelveCompanionCharacterData = {
+            saveVersion = SAVE_VERSION_CHARACTER,
+            gvDetailsEnabled = true,
+            keysCapTooltipEnabled = true,
+            dashOverviewEnabled = true
+        }
+    elseif not DelveCompanionCharacterData.saveVersion or DelveCompanionCharacterData.saveVersion < SAVE_VERSION_CHARACTER then
+        DelveCompanionCharacterData.saveVersion = SAVE_VERSION_CHARACTER
+    end
+end
+
+addon.Init = function()
+    InitAccountSave()
+    InitCharacterSave()
+
+    addon.InitSettings()
+
+    addon.maxLevelReached = UnitLevel("player") == addon.config.MAX_LEVEL
+end
+
 -- Addon Boot
 
 addon.eventsCatcherFrame = CreateFrame("Frame")
 addon.eventsCatcherFrame:RegisterEvent("ADDON_LOADED")
+-- addon.eventsCatcherFrame:RegisterEvent("GOSSIP_SHOW")
 -- addon.eventsCatcherFrame:RegisterEvent("PLAYER_LOGIN")
 -- addon.eventsCatcherFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
 -- addon.eventsCatcherFrame:RegisterEvent("UPDATE_UI_WIDGET")
@@ -93,27 +115,24 @@ addon.eventsCatcherFrame:RegisterEvent("ADDON_LOADED")
 --- TODO: split creation and parenting to reduce load dependencies. Check LoadAddon.
 addon.eventsCatcherFrame:SetScript(
     "OnEvent",
-    function(_, event, arg1, arg2)
+    function(self, event, arg1, arg2, ...)
         if event == "ADDON_LOADED" then
             local loadedName = arg1
             if loadedName == addonName then
                 addon.Init()
 
-                if addon.maxLevelReached == false then
-                    return
+                if addon.maxLevelReached then
+                    DelveCompanion_TooltipExtension_Init()
                 end
-                DelveCompanion_TooltipExtension_Init()
             elseif loadedName == enums.DependencyAddonNames.delvesDashboardUI then
                 if DelvesDashboardFrame == nil then
-                    log("DelvesDashboardFrame is nil. Delves UI extention is not inited.")
+                    log("DelvesDashboardFrame is nil. Delves UI extension is not inited.")
                     return
                 end
 
-                if addon.maxLevelReached == false then
-                    return
+                if addon.maxLevelReached then
+                    DelveCompanion_DelvesDashExtension_Init()
                 end
-
-                DelveCompanion_DelvesDashExtension_Init()
             elseif loadedName == enums.DependencyAddonNames.encounterJournal then
                 if EncounterJournal == nil then
                     log("EncounterJournal is nil. Delves tab is not inited.")
@@ -133,6 +152,18 @@ addon.eventsCatcherFrame:SetScript(
                 addon.gvDetailsFrame.shouldRefresh = true
             end
             return
+            -- elseif event == "GOSSIP_SHOW" then
+            --     if arg1 == "delves-difficulty-picker" then
+            --         local options = DelvesDifficultyPickerFrame:GetOptions()
+            --         for key, value in pairs(options) do
+            --             log("%s: %s", key, tostring(value.gossipOptionID))
+            --         end
+
+            --         for key, value in pairs(DelvesDifficultyPickerFrame.DelveModifiersWidgetContainer.widgetFrames) do
+            --             log("%s: %s (index: %d)", key, tostring(value),
+            --                 C_UIWidgetManager.GetSpellDisplayVisualizationInfo(key).orderIndex)
+            --         end
+            --     end
         elseif event == "QUEST_LOG_UPDATE" then
             addon.CacheKeysData()
             return

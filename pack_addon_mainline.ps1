@@ -79,6 +79,6 @@ if (Test-Path $zipFilePath) {
 }
 
 Write-Output "Creating ZIP archive at '$zipFilePath'."
-Compress-Archive -Path $sourceDir\* -DestinationPath $zipFilePath -Force
+Compress-Archive -Path $sourceDir -DestinationPath $zipFilePath -Force
 
 Write-Output "Packaging complete. ZIP archive located at '$zipFilePath'."

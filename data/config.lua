@@ -4,7 +4,9 @@ local config = {}
 
 config.MAX_LEVEL = 80
 config.ACTIVITY_TYPE = Enum.WeeklyRewardChestThresholdType.World
+config.KHAZ_ALGAR_MAP_ID = 2274
 
+config.BOUNTIFUL_COFFER_ITEM_CODE = 228942
 config.BOUNTIFUL_KEY_CURRENCY_CODE = 3028
 config.BOUNTIFUL_KEY_MAX_PER_WEEK = 4
 config.BOUNTIFUL_KEY_QUESTS_DATA = {
@@ -13,15 +15,43 @@ config.BOUNTIFUL_KEY_QUESTS_DATA = {
     [3] = 84738,
     [4] = 84739,
 }
+config.BOUNTIFUL_KEY_SOURCE_CACHES_DATA = {
+    -- Season 1
+    [1] = 226263,
+    [2] = 226273,
+    [3] = 226264,
+    [4] = 224784,
+    [5] = 225571,
+    [6] = 225572,
+    [7] = 225573,
+    [8] = 228361,
+    -- Season 2
+    [9] = 239128,
+    [10] = 239121,
+    [11] = 239126,
+    [12] = 239118,
+    [13] = 239125,
+    [14] = 239122,
+    [15] = 239124,
+    [16] = 238208,
+    [17] = 235639,
+    [18] = 235610,
+    [19] = 239120
+}
 
 config.GILDED_STASH_WEEKLY_CAP = 3
 config.GILDED_STASH_SPELL_CODE = 1216211
-config.BOUNTIFUL_COFFER_ITEM_CODE = 233071
 -- Seasonal items
 config.BOUNTY_MAP_ITEM_CODE = 233071
+config.BOUNTY_MAP_MAX_PER_WEEK = 1
+config.BOUNTY_MAP_QUEST = 86371
+
 config.ECHO_ITEM_CODE = 235897
+
 config.KEY_SHARD_ITEM_CODE = 236096
 config.SHARDS_FOR_KEY = 100
+-- Seasonal modifiers
+config.NEMESIS_AFFIX_SPELL_CODE = 472952 -- Nemesis Strongbox
 --===
 
 -- Table of maps which contain Delves
@@ -42,10 +72,7 @@ config.DELVES_REGULAR_DATA = {
             regular = 7863,
             bountiful = 7787
         },
-        coordinates = {
-            x = 38.6,
-            y = 74.0
-        },
+        gildedStashUiWidgetID = 6723,
         atlasBgID = "delve-entrance-background-earthcrawl-mines",
         achievements = {
             chest = 40806,
@@ -66,10 +93,7 @@ config.DELVES_REGULAR_DATA = {
             regular = 7864,
             bountiful = 7779
         },
-        coordinates = {
-            x = 52.03,
-            y = 65.77
-        },
+        gildedStashUiWidgetID = 6728,
         atlasBgID = "delve-entrance-background-fungal-folly",
         achievements = {
             chest = 40803,
@@ -86,10 +110,7 @@ config.DELVES_REGULAR_DATA = {
             regular = 7865,
             bountiful = 7781
         },
-        coordinates = {
-            x = 62.19,
-            y = 42.70
-        },
+        gildedStashUiWidgetID = 6719,
         atlasBgID = "delve-entrance-background-kriegvals-rest",
         achievements = {
             chest = 40807,
@@ -105,10 +126,7 @@ config.DELVES_REGULAR_DATA = {
             regular = 7866,
             bountiful = 7782
         },
-        coordinates = {
-            x = 46.42,
-            y = 48.71
-        },
+        gildedStashUiWidgetID = 6720,
         atlasBgID = "delve-entrance-background-the-waterworks",
         achievements = {
             chest = 40816,
@@ -124,10 +142,7 @@ config.DELVES_REGULAR_DATA = {
             regular = 7867,
             bountiful = 7788
         },
-        coordinates = {
-            x = 74.2,
-            y = 37.3
-        },
+        gildedStashUiWidgetID = 6724,
         atlasBgID = "delve-entrance-background-the-dread-pit",
         achievements = {
             chest = 40812,
@@ -143,10 +158,7 @@ config.DELVES_REGULAR_DATA = {
             regular = 8143,
             bountiful = 8181
         },
-        coordinates = {
-            x = 75.96,
-            y = 96.41
-        },
+        gildedStashUiWidgetID = 6659,
         atlasBgID = "delve-entrance-background-the-undermine",
         achievements = {
             chest = 41100,
@@ -162,10 +174,7 @@ config.DELVES_REGULAR_DATA = {
             regular = 7870,
             bountiful = 7783
         },
-        coordinates = {
-            x = 50.6,
-            y = 53.3
-        },
+        gildedStashUiWidgetID = 6721,
         atlasBgID = "delve-entrance-background-the-sinkhole",
         achievements = {
             chest = 40813,
@@ -181,10 +190,7 @@ config.DELVES_REGULAR_DATA = {
             regular = 7868,
             bountiful = 7785
         },
-        coordinates = {
-            x = 34.32,
-            y = 47.43
-        },
+        gildedStashUiWidgetID = 6727,
         atlasBgID = "delve-entrance-background-nightfall-sanctum",
         achievements = {
             chest = 40809,
@@ -200,10 +206,7 @@ config.DELVES_REGULAR_DATA = {
             regular = 7869,
             bountiful = 7780
         },
-        coordinates = {
-            x = 71.3,
-            y = 31.2
-        },
+        gildedStashUiWidgetID = 6729,
         atlasBgID = "delve-entrance-background-mycomancer-cavern",
         achievements = {
             chest = 40808,
@@ -219,10 +222,7 @@ config.DELVES_REGULAR_DATA = {
             regular = 7871,
             bountiful = 7789
         },
-        coordinates = {
-            x = 65.48,
-            y = 61.74
-        },
+        gildedStashUiWidgetID = 6725,
         atlasBgID = "delve-entrance-background-skittering-breach",
         achievements = {
             chest = 40810,
@@ -238,10 +238,7 @@ config.DELVES_REGULAR_DATA = {
             regular = 7874,
             bountiful = 7790
         },
-        coordinates = {
-            x = 45.0,
-            y = 19.0
-        },
+        gildedStashUiWidgetID = 6726,
         atlasBgID = "delve-entrance-background-the-spiral-weave",
         achievements = {
             chest = 40814,
@@ -257,10 +254,7 @@ config.DELVES_REGULAR_DATA = {
             regular = 7872,
             bountiful = 7786
         },
-        coordinates = {
-            x = 51.85,
-            y = 88.30
-        },
+        gildedStashUiWidgetID = 6794,
         atlasBgID = "delve-entrance-background-the-underkeep",
         achievements = {
             chest = 40815,
@@ -276,10 +270,7 @@ config.DELVES_REGULAR_DATA = {
             regular = 7873,
             bountiful = 7784
         },
-        coordinates = {
-            x = 55.0,
-            y = 73.92
-        },
+        gildedStashUiWidgetID = 6722,
         atlasBgID = "delve-entrance-background-tak-rethan-abyss",
         achievements = {
             chest = 40811,
@@ -295,10 +286,7 @@ config.DELVES_REGULAR_DATA = {
             regular = 8140,
             bountiful = 8246
         },
-        coordinates = {
-            x = 35.12,
-            y = 53.04
-        },
+        gildedStashUiWidgetID = 6718,
         atlasBgID = "delves-entrance-background-sewers",
         achievements = {
             chest = 41101,
