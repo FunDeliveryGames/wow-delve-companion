@@ -6,6 +6,7 @@ config.MAX_LEVEL = 80
 config.ACTIVITY_TYPE = Enum.WeeklyRewardChestThresholdType.World
 config.KHAZ_ALGAR_MAP_ID = 2274
 
+config.BOUNTIFUL_COFFER_ITEM_CODE = 228942
 config.BOUNTIFUL_KEY_CURRENCY_CODE = 3028
 config.BOUNTIFUL_KEY_MAX_PER_WEEK = 4
 config.BOUNTIFUL_KEY_QUESTS_DATA = {
@@ -14,16 +15,43 @@ config.BOUNTIFUL_KEY_QUESTS_DATA = {
     [3] = 84738,
     [4] = 84739,
 }
+config.BOUNTIFUL_KEY_SOURCE_CACHES_DATA = {
+    -- Season 1
+    [1] = 226263,
+    [2] = 226273,
+    [3] = 226264,
+    [4] = 224784,
+    [5] = 225571,
+    [6] = 225572,
+    [7] = 225573,
+    [8] = 228361,
+    -- Season 2
+    [9] = 239128,
+    [10] = 239121,
+    [11] = 239126,
+    [12] = 239118,
+    [13] = 239125,
+    [14] = 239122,
+    [15] = 239124,
+    [16] = 238208,
+    [17] = 235639,
+    [18] = 235610,
+    [19] = 239120
+}
 
 config.GILDED_STASH_WEEKLY_CAP = 3
 config.GILDED_STASH_SPELL_CODE = 1216211
-config.BOUNTIFUL_COFFER_ITEM_CODE = 228942
 -- Seasonal items
-config.NEMESIS_AFFIX_SPELL_CODE = 472952 -- Nemesis Strongbox
 config.BOUNTY_MAP_ITEM_CODE = 233071
+config.BOUNTY_MAP_MAX_PER_WEEK = 1
+config.BOUNTY_MAP_QUEST = 86371
+
 config.ECHO_ITEM_CODE = 235897
+
 config.KEY_SHARD_ITEM_CODE = 236096
 config.SHARDS_FOR_KEY = 100
+-- Seasonal modifiers
+config.NEMESIS_AFFIX_SPELL_CODE = 472952 -- Nemesis Strongbox
 --===
 
 -- Table of maps which contain Delves

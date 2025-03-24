@@ -54,7 +54,7 @@ DelveCompanionGreatVaultItemMixin = {}
 
 function DelveCompanionGreatVaultItemMixin:Update()
     if self.info.progress < self.info.threshold then
-        self.ItemInfoLabel:SetText(format("%d/%d", self.info.progress, self.info.threshold))
+        self.ItemInfoLabel:SetText(format(_G["GENERIC_FRACTION_STRING"], self.info.progress, self.info.threshold))
         return
     end
 
@@ -352,7 +352,7 @@ function DelveCompanionOverviewGildedStashFrameMixin:OnShow()
     local stashDisplayInfo = self:TryGetStashInfo()
     if stashDisplayInfo then
         local tooltipDesc = stashDisplayInfo.spellInfo.tooltip
-        local collectedCount = tonumber(strsub(strmatch(tooltipDesc, "%d/%d"), 1, 1))
+        local collectedCount = tonumber(strsub(strmatch(tooltipDesc, _G["GENERIC_FRACTION_STRING"]), 1, 1))
         self.tooltipDesc = tooltipDesc
 
         C_Timer.After(0.15, function()
