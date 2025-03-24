@@ -262,7 +262,7 @@
                 </Anchors>
                 <Layers>
                     <Layer level="ARTWORK">
-                        <Texture name="Divider" atlas="delves-companion-divider"
+                        <Texture parentKey="Divider" atlas="delves-companion-divider"
                             useAtlasSize="false">
                             <Size x="120" y="5" />
                             <Anchors>
@@ -274,7 +274,7 @@
                         <FontString parentKey="Title" inherits="GameFontNormal"
                             text="BOUNTIFUL" mixin="AutoScalingFontStringMixin"
                             justifyH="CENTER" wordwrap="true" justifyV="MIDDLE" maxLines="2">
-                            <Size x="140" y="20" />
+                            <Size x="140" />
                             <Anchors>
                                 <Anchor point="TOP" y="-3" />
                             </Anchors>
@@ -302,14 +302,13 @@
                         </Layers>
                         <Frames>
                             <Frame parentKey="Container" inherits="HorizontalLayoutFrame">
-                                <Size y="40" />
                                 <KeyValues>
                                     <KeyValue key="expand" value="false" type="boolean" />
                                     <KeyValue key="spacing" value="5" type="number" />
                                     <KeyValue key="maximumWidth" value="140" type="number" />
                                 </KeyValues>
                                 <Anchors>
-                                    <Anchor point="TOP" y="-10" />
+                                    <Anchor point="CENTER" />
                                 </Anchors>
                             </Frame>
                         </Frames>
@@ -468,6 +467,7 @@
         <Size x="27" y="27" />
         <KeyValues>
             <KeyValue key="layoutIndex" value="0" type="number" />
+            <KeyValue key="align" value="center" type="string" />
         </KeyValues>
         <Anchors>
             <Anchor point="CENTER" />

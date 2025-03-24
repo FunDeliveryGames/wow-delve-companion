@@ -285,7 +285,7 @@ DelveCompanionOverviewGildedStashFrameMixin = {}
 function DelveCompanionOverviewGildedStashFrameMixin:PrepareContainerTooltip()
     self.Container:HookScript("OnEnter", function()
         local tooltip = GameTooltip
-        tooltip:SetOwner(self, "ANCHOR_TOP")
+        tooltip:SetOwner(self.Container, "ANCHOR_TOP")
 
         GameTooltip_AddNormalLine(tooltip, self.tooltipDesc, true)
         GameTooltip_AddBlankLineToTooltip(tooltip)
@@ -477,6 +477,9 @@ function DelveCompanionOverviewBountifulFrameMixin:OnShow()
             button:Show()
         end
 
+        local spaceAvailable = self.Title:GetBottom() - self.Divider:GetTop()
+        self.ActiveDelves:SetHeight(spaceAvailable)
+        self.ActiveDelves.Container.fixedHeight = spaceAvailable
         self.ActiveDelves.Container:Layout()
     else
         self.ActiveDelves.NoBountifulLabel:Show()
