@@ -1,6 +1,13 @@
 # Change Log
 
- ## [0.3] - 2025-03-19
+## [0.4] - 2025-03-24
+- **Delves Tab**: Add a new settings toggle to hide Story and Chest achievements from the list.
+- [Delver's Bounty](https://www.wowhead.com/item=233071/delvers-bounty) tooltip: Display whether it has been looted this week.
+- Display [Restored Coffer Key](https://www.wowhead.com/currency=3028/restored-coffer-key) weekly limits in tooltips of the corresponding Caches (e.g. [Seasoned Adventurer's Cache](https://www.wowhead.com/item=235639/seasoned-adventurers-cache)).
+- **Localization**: Add `ruRU` translation (thanks to `ZamestoTV` for contribution).
+- Minor polishing and bug fixing.
+
+## [0.3] - 2025-03-19
 - **Delves Tab**: New widgets have been added to track Story and Chest achievements of each delve and number of `Restored Coffer Keys`. Also, `Nemesis Strongbox` affix is shown at the tab.
 - **Delves UI**: Fixed `Gilded Stash` section. Now it should properly display the progress.
 - Polished different layouts and labels.
