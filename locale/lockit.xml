@@ -4,4 +4,5 @@
 	<Script file="init_lockit.lua" />
 	<Script file="enUS.lua" />
 	<Script file="ruRU.lua" />
+	<Script file="zhCN.lua" />
 </Ui>

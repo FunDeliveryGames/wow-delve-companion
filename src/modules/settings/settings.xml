@@ -129,7 +129,7 @@
             </Button>
 
             <Frame parentKey="LocalizationFrame">
-                <Size x="100" y="75" />
+                <Size x="100" y="100" />
                 <Anchors>
                     <Anchor point="BOTTOMLEFT" />
                 </Anchors>
@@ -161,6 +161,31 @@
                                 </Texture>
                                 <FontString parentKey="Name" inherits="GameFontHighlightLarge"
                                     justifyH="LEFT" text="ZamestoTV">
+                                    <Anchors>
+                                        <Anchor point="LEFT" relativeKey="$parent.FlagIcon"
+                                            relativePoint="RIGHT" x="10" />
+                                    </Anchors>
+                                </FontString>
+                            </Layer>
+                        </Layers>
+                    </Frame>
+                    <Frame parentKey="zhCN">
+                        <Size x="100" y="25" />
+                        <Anchors>
+                            <Anchor point="TOPLEFT" relativeKey="$parent.ruRU"
+                                relativePoint="BOTTOMLEFT" y="-10" />
+                        </Anchors>
+                        <Layers>
+                            <Layer level="OVERLAY">
+                                <Texture parentKey="FlagIcon"
+                                    file="Interface\AddOns\DelveCompanion\images\zhCN">
+                                    <Size x="25" y="25" />
+                                    <Anchors>
+                                        <Anchor point="TOPLEFT" />
+                                    </Anchors>
+                                </Texture>
+                                <FontString parentKey="Name" inherits="GameFontHighlightLarge"
+                                    justifyH="LEFT" text="XingDvD">
                                     <Anchors>
                                         <Anchor point="LEFT" relativeKey="$parent.FlagIcon"
                                             relativePoint="RIGHT" x="10" />
