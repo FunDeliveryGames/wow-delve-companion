@@ -1,5 +1,8 @@
 # Change Log
 
+## [0.4.5-alpha] - 2025-04-01
+- **Localization**: Add `zhCN` translation (thanks to `XingDvD` for contribution).
+
 ## [0.4] - 2025-03-24
 - **Delves Tab**: Add a new settings toggle to hide Story and Chest achievements from the list.
 - [Delver's Bounty](https://www.wowhead.com/item=233071/delvers-bounty) tooltip: Display whether it has been looted this week.
