@@ -149,10 +149,9 @@
 		</Anchors>
 		<Layers>
 			<Layer level="BACKGROUND">
-				<Texture atlas="UI-EJ-TheWarWithin">
+				<Texture atlas="UI-EJ-TheWarWithin" useAtlasSize="true">
 					<Anchors>
 						<Anchor point="TOPLEFT" x="3" y="-1" />
-						<Anchor point="BOTTOMRIGHT" x="-3" y="1" />
 					</Anchors>
 				</Texture>
 			</Layer>
@@ -172,8 +171,7 @@
 			</Layer>
 			-->
 			<Layer level="OVERLAY">
-				<FontString parentKey="Title"
-					inherits="GameFontNormalLarge2"
+				<FontString parentKey="Title" inherits="GameFontNormalLarge2"
 					justifyH="LEFT" text="DELVES">
 					<Anchors>
 						<Anchor point="TOPLEFT" x="20" y="-15" />
@@ -199,6 +197,7 @@
 						relativePoint="RIGHT" x="25" y="-1" />
 				</Anchors>
 			</Frame>
+
 			<Frame parentKey="AffixWidget"
 				inherits="DelveCompanionIconWithLabelAndTooltipTemplate">
 				<Size x="40" y="26" />
@@ -227,10 +226,10 @@
 					</Layer>
 				</Layers>
 			</Frame>
-			<ScrollFrame parentKey="DelvesListScroll"
-				inherits="ScrollFrameTemplate">
+
+			<ScrollFrame parentKey="DelvesListScroll" inherits="ScrollFrameTemplate">
 				<KeyValues>
-					<KeyValue key="scrollBarX" value="10" type="number" />
+					<KeyValue key="scrollBarX" value="15" type="number" />
 					<KeyValue key="scrollBarTopY" value="4" type="number" />
 					<KeyValue key="scrollBarBottomY" value="-7" type="number" />
 				</KeyValues>
