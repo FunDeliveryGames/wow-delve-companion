@@ -99,8 +99,7 @@
 		</Scripts>
 	</Button>
 
-	<Frame name="DelveCompanionDelveAchievementsWidgetTemplate"
-		mixin="DelveCompanionDelveProgressWidgetMixin" virtual="true">
+	<Frame name="DelveCompanionDelveAchievementsWidgetTemplate" virtual="true">
 		<Size x="174" y="26" />
 		<Frames>
 			<Frame parentKey="Story"
@@ -137,49 +136,6 @@
 				</Anchors>
 			</Frame>
 		</Frames>
-
-	</Frame>
-
-	<Frame name="DelveCompanionModifierFrame" virtual="true"
-		inherits="RingedFrameWithTooltipTemplate">
-		<Size x="50" y="50" />
-		<KeyValues>
-			<KeyValue key="layoutIndex" value="0" type="number" />
-		</KeyValues>
-		<Anchors>
-			<Anchor point="CENTER" />
-		</Anchors>
-		<Layers>
-			<Layer level="OVERLAY">
-				<Texture name="$parentmodifierIcon" parentKey="icon">
-					<Size x="36" y="36" />
-					<Anchors>
-						<Anchor point="CENTER" />
-					</Anchors>
-				</Texture>
-			</Layer>
-		</Layers>
-	</Frame>
-
-	<Frame name="DelveCompanionDelveInfoFrame" inherits="PortraitFrameTemplate" virtual="true"
-		toplevel="true" hidden="true" enableMouse="true" mixin="DelveCompanionDelveInfoFrameMixin">
-		<Size x="500" y="300" />
-		<Frames>
-			<Frame name="$parentModifiersContainer" inherits="HorizontalLayoutFrame"
-				parentKey="modifiersContainer">
-				<KeyValues>
-					<KeyValue key="expand" value="false" type="boolean" />
-					<KeyValue key="align" value="center" type="string" />
-				</KeyValues>
-				<Anchors>
-					<Anchor point="CENTER" />
-				</Anchors>
-			</Frame>
-		</Frames>
-		<Scripts>
-			<OnShow method="OnShow" />
-			<OnHide method="OnHide" />
-		</Scripts>
 	</Frame>
 
 	<Frame name="DelveCompanionDelvesListFrameTemplate" mixin="DelveCompanionDelvesListMixin"
@@ -299,6 +255,194 @@
 					</Frame>
 				</ScrollChild>
 			</ScrollFrame>
+
+			<Frame parentKey="DelveInfoFrame" frameStrata="HIGH" enableMouse="true"
+				hidden="true" mixin="DelveCompanionDelveInfoFrameMixin">
+				<Size x="785" y="425" />
+				<Anchors>
+					<Anchor point="BOTTOMRIGHT" x="-1" y="2" />
+				</Anchors>
+				<Layers>
+					<Layer level="BACKGROUND">
+						<Texture parentKey="Bg" file="Interface\EncounterJournal\UI-EJ-JournalBG">
+							<Size x="785" y="425" />
+							<Anchors>
+								<Anchor point="BOTTOMRIGHT" x="0" y="0" />
+							</Anchors>
+							<TexCoords left="0" right="0.766601562" top="0" bottom="0.830078125" />
+						</Texture>
+					</Layer>
+				</Layers>
+				<Frames>
+					<Button inherits="UIPanelCloseButtonDefaultAnchors" /> <!-- TEMP -->
+
+					<Frame parentKey="LeftPage">
+						<Size x="392" y="425" />
+						<Anchors>
+							<Anchor point="TOPLEFT" />
+						</Anchors>
+						<Layers>
+							<Layer level="BACKGROUND" textureSubLevel="3">
+								<Texture parentKey="Shadow" inherits="UI-EJ-LeftPageHeader">
+									<Anchors>
+										<Anchor point="TOP" x="0" y="-11" />
+									</Anchors>
+								</Texture>
+							</Layer>
+							<Layer level="ARTWORK">
+								<Texture parentKey="DelveBg">
+									<Size x="300" y="165" />
+									<Anchors>
+										<Anchor point="TOP" relativeKey="$parent.Shadow"
+											relativePoint="BOTTOM" x="0" y="-20" />
+									</Anchors>
+									<TexCoords left="0" right="0.6" top="0.1" bottom="0.8" />
+								</Texture>
+							</Layer>
+							<Layer level="OVERLAY">
+								<FontString parentKey="Title" inherits="GameFontNormalLarge"
+									justifyH="CENTER">
+									<Size x="290" y="12" />
+									<Anchors>
+										<Anchor point="CENTER" relativeKey="$parent.Shadow" y="5" />
+									</Anchors>
+									<Color r="0.902" g="0.788" b="0.671" />
+								</FontString>
+							</Layer>
+						</Layers>
+						<Frames>
+							<Button parentKey="StoryButton">
+								<Size x="300" y="55" />
+								<Anchors>
+									<Anchor point="TOP" relativeKey="$parent.DelveBg"
+										relativePoint="BOTTOM" y="-15" />
+								</Anchors>
+								<NormalTexture
+									file="Interface\EncounterJournal\UI-EncounterJournalTextures">
+									<TexCoords left="0.00195313" right="0.63671875" top="0.21386719"
+										bottom="0.26757813" />
+								</NormalTexture>
+								<PushedTexture
+									file="Interface\EncounterJournal\UI-EncounterJournalTextures">
+									<TexCoords left="0.00195313" right="0.63671875" top="0.10253906"
+										bottom="0.15625000" />
+								</PushedTexture>
+								<HighlightTexture
+									file="Interface\EncounterJournal\UI-EncounterJournalTextures">
+									<TexCoords left="0.00195313" right="0.63671875" top="0.15820313"
+										bottom="0.21191406" />
+								</HighlightTexture>
+								<ButtonText parentKey="Text" justifyH="LEFT" justifyV="MIDDLE">
+									<Size x="160" y="40" />
+									<Anchors>
+										<Anchor point="LEFT" x="105" y="-3" />
+									</Anchors>
+									<Color r="0.827" g="0.659" b="0.463" />
+								</ButtonText>
+								<NormalFont style="GameFontNormalMed3" />
+								<HighlightFont style="GameFontNormalMed3" />
+								<DisabledFont style="GameFontHighlightMedium" />
+							</Button>
+
+							<Button parentKey="BossButton">
+								<Size x="300" y="55" />
+								<Anchors>
+									<Anchor point="TOP" relativeKey="$parent.StoryButton"
+										relativePoint="BOTTOM" y="-15" />
+								</Anchors>
+								<NormalTexture
+									file="Interface\EncounterJournal\UI-EncounterJournalTextures">
+									<TexCoords left="0.00195313" right="0.63671875" top="0.21386719"
+										bottom="0.26757813" />
+								</NormalTexture>
+								<PushedTexture
+									file="Interface\EncounterJournal\UI-EncounterJournalTextures">
+									<TexCoords left="0.00195313" right="0.63671875" top="0.10253906"
+										bottom="0.15625000" />
+								</PushedTexture>
+								<HighlightTexture
+									file="Interface\EncounterJournal\UI-EncounterJournalTextures">
+									<TexCoords left="0.00195313" right="0.63671875" top="0.15820313"
+										bottom="0.21191406" />
+								</HighlightTexture>
+								<ButtonText parentKey="Text" justifyH="LEFT" justifyV="MIDDLE">
+									<Size x="160" y="40" />
+									<Anchors>
+										<Anchor point="LEFT" x="105" y="-3" />
+									</Anchors>
+									<Color r="0.827" g="0.659" b="0.463" />
+								</ButtonText>
+								<NormalFont style="GameFontNormalMed3" />
+								<HighlightFont style="GameFontNormalMed3" />
+								<DisabledFont style="GameFontHighlightMedium" />
+							</Button>
+						</Frames>
+					</Frame>
+
+					<Frame parentKey="RightPage">
+						<Size x="392" y="425" />
+						<Anchors>
+							<Anchor point="TOPRIGHT" />
+						</Anchors>
+						<Layers>
+							<Layer level="BACKGROUND" textureSubLevel="3">
+								<Texture parentKey="Shadow" inherits="UI-EJ-RightPageHeader"
+									hidden="false">
+									<Anchors>
+										<Anchor point="TOP" x="0" y="-11" />
+									</Anchors>
+								</Texture>
+							</Layer>
+
+							<!-- <Layer level="ARTWORK">
+								<Texture parentKey="DelveArt" inherits="UI-EJ-LeftPageHeader">
+									<Anchors>
+										<Anchor point="TOPLEFT" x="0" y="-45" />
+									</Anchors>
+								</Texture>
+							</Layer> -->
+						</Layers>
+					</Frame>
+					<!-- <Frame parentKey="Ability1" inherits="EncounterInfoTemplate">
+						<Size x="350" y="50" />
+						<Anchors>
+							<Anchor point="LEFT" x="25" />
+						</Anchors>
+						<Layers>
+							<Layer level="OVERLAY">
+								<Texture parentKey="Icon">
+									<Size x="24" y="24" />
+									<Anchors>
+										<Anchor point="LEFT" />
+									</Anchors>
+								</Texture>
+								<FontString parentKey="Name" inherits="GameFontHighlight"
+									justifyH="LEFT" text="AB_NAME">
+									<Anchors>
+										<Anchor point="LEFT" relativeKey="$parent.Icon"
+											relativePoint="RIGHT" x="5" />
+									</Anchors>
+								</FontString>
+								<FontString parentKey="Description" inherits="GameFontHighlight"
+									text="AB_NAME" mixin="AutoScalingFontStringMixin"
+									wordwrap="true"
+									justifyV="MIDDLE" justifyH="LEFT">
+									<Size x="150" />
+									<Anchors>
+										<Anchor point="TOPLEFT" relativeKey="$parent.Icon"
+											relativePoint="BOTTOMLEFT" y="-10" />
+									</Anchors>
+								</FontString>
+							</Layer>
+						</Layers>
+					</Frame> -->
+				</Frames>
+				<Scripts>
+					<OnLoad method="OnLoad" />
+					<OnShow method="OnShow" />
+					<OnHide method="OnHide" />
+				</Scripts>
+			</Frame>
 		</Frames>
 		<Scripts>
 			<OnLoad method="OnLoad" />

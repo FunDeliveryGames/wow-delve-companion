@@ -10,12 +10,37 @@ local DELVES_LIST_VIEW_COLS = 4
 local DELVES_LIST_VIEW_BUTTONS_OFFSET = 12
 local DELVES_LIST_VIEW_BUTTONS_PADDING = 5
 
---============ DelveInstanceButton ======================
+--============ DelveInfoFrame ======================
 
-DelveCompanionDelveProgressWidgetMixin = {}
+DelveCompanionDelveInfoFrameMixin = {}
+
+function DelveCompanionDelveInfoFrameMixin:OnLoad()
+    do
+        local page = self.LeftPage
+        page.StoryButton.Text:SetText(".Walkthrough")
+        page.BossButton.Text:SetText(".Enemies")
+    end
+
+    do
+        local page = self.RightPage
+    end
+end
+
+function DelveCompanionDelveInfoFrameMixin:OnShow()
+end
+
+function DelveCompanionDelveInfoFrameMixin:OnHide()
+end
+
 --============ DelveInstanceButton ======================
 
 DelveCompanionDelveInstanceButtonMixin = {}
+
+function DelveCompanionDelveInstanceButtonMixin:RequestInfoFrame()
+    if self.callback then
+        self.callback(self)
+    end
+end
 
 function DelveCompanionDelveInstanceButtonMixin:Update(isBountiful)
     local poiIDs = self.config.poiIDs
@@ -66,6 +91,8 @@ function DelveCompanionDelveInstanceButtonMixin:OnClick()
             C_SuperTrack.SetSuperTrackedMapPin(Enum.SuperTrackingMapPinType.AreaPOI, self.poiID)
         end
         self:UpdateTooltip()
+    else
+        self:RequestInfoFrame()
     end
 end
 
@@ -121,7 +148,7 @@ function DelveCompanionDelvesListMixin:CreateDelveAchievementsWidget(parent, con
     return widget
 end
 
-function DelveCompanionDelvesListMixin:CreateDelveInstanceButton(parent, config)
+function DelveCompanionDelvesListMixin:CreateDelveInstanceButton(parent, config, callback)
     local item = CreateFrame("Button", nil, parent, "DelveCompanionDelveInstanceButtonTemplate")
     item.config = config
     item.isTracking = false
@@ -134,8 +161,17 @@ function DelveCompanionDelvesListMixin:CreateDelveInstanceButton(parent, config)
 
     item.delveName = delveMap.name
     item.parentMapName = C_Map.GetMapInfo(delveMap.parentMapID).name
+    item.callback = callback
 
     return item
+end
+
+function DelveCompanionDelvesListMixin:OnInfoFrameRequested(delveButton)
+    local lp = self.DelveInfoFrame.LeftPage
+    lp.Title:SetText(delveButton.delveName)
+    lp.DelveBg:SetAtlas(delveButton.config.atlasBgID)
+
+    self.DelveInfoFrame:Show()
 end
 
 function DelveCompanionDelvesListMixin:InitDelvesList()
@@ -157,7 +193,10 @@ function DelveCompanionDelvesListMixin:InitDelvesList()
             if parentMapID == mapID then
                 local instanceButton = self:CreateDelveInstanceButton(
                     self.DelvesListScroll.Content,
-                    delveConfig)
+                    delveConfig,
+                    function(instanceButton) self:OnInfoFrameRequested(instanceButton) end
+                )
+
                 count = count + 1
                 table.insert(instanceButtons, instanceButton)
 
@@ -260,10 +299,10 @@ function DelveCompanion_DelvesListFrame_Init()
     EventRegistry:RegisterCallback("EncounterJournal.TabSet",
         function(_, EncounterJournal, tabID)
             if tabID == EJ_DELVES_TAB_BUTTON_ID then
-                -- EncounterJournal.instanceSelect.Title:SetText(_G["DELVES_LABEL"])
                 EJ_HideNonInstancePanels()
                 addon.delvesListFrame:Show()
             else
+                addon.delvesListFrame.DelveInfoFrame:Hide()
                 addon.delvesListFrame:Hide()
             end
         end,
