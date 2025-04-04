@@ -15,10 +15,10 @@ enums.CodeType = setmetatable({
     }
 )
 
-enums.DependencyAddonNames = {
+enums.DependencyAddonName = {
     delvesDashboardUI = "Blizzard_DelvesDashboardUI",
     encounterJournal = "Blizzard_EncounterJournal",
-    weeklyRewards = "Blizzard_WeeklyRewards",
+    weeklyRewards = "Blizzard_WeeklyRewards"
 }
 
 addon.enums = enums

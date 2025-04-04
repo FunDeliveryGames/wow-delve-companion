@@ -412,12 +412,7 @@ end
 
 function DelveCompanionOverviewBountifulButtonMixin:OnClick()
     if IsShiftKeyDown() then
-        if self.isTracking then
-            C_SuperTrack.ClearSuperTrackedMapPin()
-        else
-            C_SuperTrack.SetSuperTrackedMapPin(Enum.SuperTrackingMapPinType.AreaPOI, self.poiID)
-        end
-        self:UpdateTooltip()
+        self:HandleClick()
     end
 end
 
@@ -448,13 +443,15 @@ function DelveCompanionOverviewBountifulFrameMixin:OnShow()
             local config = FindValueInTableIf(addon.config.DELVES_REGULAR_DATA, function(delveConfig)
                 return poiID == delveConfig.poiIDs.bountiful
             end)
-            local achIcon = select(10, GetAchievementInfo(config.achievements.story))
 
             local button = self.bountifulButtonsPool:Acquire()
             button.layoutIndex = index
-            button.ArtBg:SetTexture(achIcon)
-            button.poiID = poiID
+            button.config = config
             button.isTracking = false
+            button.poiID = poiID
+
+            local achIcon = select(10, GetAchievementInfo(config.achievements.story))
+            button.ArtBg:SetTexture(achIcon)
 
             local delveMap = C_Map.GetMapInfo(config.uiMapID)
             button.delveName = delveMap.name

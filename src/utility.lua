@@ -157,6 +157,7 @@ end
 
 --============ Delve Tracking Button ======================
 
+local TOM_TOM_WAYPOINT_DISTANCE_CLEAR = 10
 DelveCompanionDelveTrackingButtonMixin = {}
 
 function DelveCompanionDelveTrackingButtonMixin:UpdateTooltip()
@@ -185,6 +186,43 @@ end
 function DelveCompanionDelveTrackingButtonMixin:ClearTracking()
     self.isTracking = false
     self.WaypointIcon:Hide()
+    self.tomtom = nil
+end
+
+function DelveCompanionDelveTrackingButtonMixin:ClearTomTomWaypoint()
+    TomTom:RemoveWaypoint(self.tomtom)
+    self:ClearTracking()
+end
+
+function DelveCompanionDelveTrackingButtonMixin:HandleClick()
+    if self.isTracking then
+        if DelveCompanionAccountData.useTomTomWaypoints and TomTom then
+            self:ClearTomTomWaypoint()
+        else
+            C_SuperTrack.ClearSuperTrackedMapPin()
+        end
+    else
+        if DelveCompanionAccountData.useTomTomWaypoints and TomTom then
+            local mapInfo = C_Map.GetMapInfo(self.config.uiMapID)
+            local poiInfo = C_AreaPoiInfo.GetAreaPOIInfo(mapInfo.parentMapID, self.poiID)
+
+            local defaultCallbacks = TomTom:DefaultCallbacks({})
+            defaultCallbacks.distance[TOM_TOM_WAYPOINT_DISTANCE_CLEAR] = function(...)
+                self:ClearTomTomWaypoint()
+            end
+
+            self.tomtom = TomTom:AddWaypoint(mapInfo.parentMapID, poiInfo.position.x, poiInfo.position.y, {
+                title = self.delveName,
+                from = lockit["ui-addon-name"],
+                persistent = false,
+                callbacks = defaultCallbacks
+            })
+            self:SetTracking()
+        else
+            C_SuperTrack.SetSuperTrackedMapPin(Enum.SuperTrackingMapPinType.AreaPOI, self.poiID)
+        end
+    end
+    self:UpdateTooltip()
 end
 
 function DelveCompanionDelveTrackingButtonMixin:OnSuperTrackChanged()

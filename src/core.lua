@@ -66,36 +66,29 @@ function DelveCompanionShowSettings()
     end
 end
 
-local SAVE_VERSION_ACCOUNT = 1
-local SAVE_VERSION_CHARACTER = 2
-
 local function InitAccountSave()
-    if not DelveCompanionAccountData then
-        DelveCompanionAccountData = {
-            saveVersion = SAVE_VERSION_ACCOUNT,
-            achievementWidgetsEnabled = true
-        }
-    elseif not DelveCompanionAccountData.saveVersion or DelveCompanionAccountData.saveVersion < SAVE_VERSION_ACCOUNT then
-        DelveCompanionAccountData.saveVersion = SAVE_VERSION_ACCOUNT
-    end
+    DelveCompanionAccountData = {
+        achievementWidgetsEnabled = true,
+        useTomTomWaypoints = false
+    }
 end
 
 local function InitCharacterSave()
-    if not DelveCompanionCharacterData then
-        DelveCompanionCharacterData = {
-            saveVersion = SAVE_VERSION_CHARACTER,
-            gvDetailsEnabled = true,
-            keysCapTooltipEnabled = true,
-            dashOverviewEnabled = true
-        }
-    elseif not DelveCompanionCharacterData.saveVersion or DelveCompanionCharacterData.saveVersion < SAVE_VERSION_CHARACTER then
-        DelveCompanionCharacterData.saveVersion = SAVE_VERSION_CHARACTER
-    end
+    DelveCompanionCharacterData = {
+        gvDetailsEnabled = true,
+        keysCapTooltipEnabled = true,
+        dashOverviewEnabled = true
+    }
 end
 
 addon.Init = function()
-    InitAccountSave()
-    InitCharacterSave()
+    if not DelveCompanionAccountData then
+        InitAccountSave()
+    end
+
+    if not DelveCompanionCharacterData then
+        InitCharacterSave()
+    end
 
     addon.InitSettings()
 
@@ -124,7 +117,7 @@ addon.eventsCatcherFrame:SetScript(
                 if addon.maxLevelReached then
                     DelveCompanion_TooltipExtension_Init()
                 end
-            elseif loadedName == enums.DependencyAddonNames.delvesDashboardUI then
+            elseif loadedName == enums.DependencyAddonName.delvesDashboardUI then
                 if DelvesDashboardFrame == nil then
                     log("DelvesDashboardFrame is nil. Delves UI extension is not inited.")
                     return
@@ -133,7 +126,7 @@ addon.eventsCatcherFrame:SetScript(
                 if addon.maxLevelReached then
                     DelveCompanion_DelvesDashExtension_Init()
                 end
-            elseif loadedName == enums.DependencyAddonNames.encounterJournal then
+            elseif loadedName == enums.DependencyAddonName.encounterJournal then
                 if EncounterJournal == nil then
                     log("EncounterJournal is nil. Delves tab is not inited.")
                     return

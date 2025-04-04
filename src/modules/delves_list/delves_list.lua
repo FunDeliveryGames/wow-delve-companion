@@ -10,11 +10,10 @@ local DELVES_LIST_VIEW_COLS = 4
 local DELVES_LIST_VIEW_BUTTONS_OFFSET = 12
 local DELVES_LIST_VIEW_BUTTONS_PADDING = 5
 
---============ DelveInstanceButton ======================
-
+--============ DelveProgressWidget ======================
 DelveCompanionDelveProgressWidgetMixin = {}
---============ DelveInstanceButton ======================
 
+--============ DelveInstanceButton ======================
 DelveCompanionDelveInstanceButtonMixin = {}
 
 function DelveCompanionDelveInstanceButtonMixin:Update(isBountiful)
@@ -27,7 +26,9 @@ function DelveCompanionDelveInstanceButtonMixin:Update(isBountiful)
         self.BountifulIcon:Hide()
     end
 
-    self:OnSuperTrackChanged()
+    if not DelveCompanionAccountData.useTomTomWaypoints then
+        self:OnSuperTrackChanged()
+    end
 end
 
 function DelveCompanionDelveInstanceButtonMixin:OnEvent(event, ...)
@@ -55,17 +56,12 @@ function DelveCompanionDelveInstanceButtonMixin:OnLeave()
 end
 
 function DelveCompanionDelveInstanceButtonMixin:OnClick()
-    if addon.maxLevelReached == false then
+    if not addon.maxLevelReached then
         return
     end
 
     if IsShiftKeyDown() then
-        if self.isTracking then
-            C_SuperTrack.ClearSuperTrackedMapPin()
-        else
-            C_SuperTrack.SetSuperTrackedMapPin(Enum.SuperTrackingMapPinType.AreaPOI, self.poiID)
-        end
-        self:UpdateTooltip()
+        self:HandleClick()
     end
 end
 
@@ -251,7 +247,7 @@ function DelveCompanion_DelvesListFrame_Init()
     button:SetPoint("LEFT", EncounterJournal.LootJournalTab, "RIGHT", -15, 0)
     button:SetText(_G["DELVES_LABEL"])
     button:SetID(EJ_DELVES_TAB_BUTTON_ID)
-    button:SetParentKey("devlesTab")
+    button:SetParentKey("delvesTab")
     PanelTemplates_SetNumTabs(EncounterJournal, EJ_TABS_NUMBER)
 
     addon.delvesListFrame = CreateFrame("Frame", "$parent.DelvesListFrame", EncounterJournal,
