@@ -412,7 +412,7 @@ end
 
 function DelveCompanionOverviewBountifulButtonMixin:OnClick()
     if IsShiftKeyDown() then
-        self:HandleClick()
+        self:HandleTrackingClick()
     end
 end
 

@@ -14,6 +14,7 @@ if ([string]::IsNullOrEmpty($yamlPath)) {
     Write-Error "YAML configuration is not provided. Check script args."
     exit 1
 }
+
 function Get-AddonVersion {
     param (
         [string]$tocFilePath
@@ -34,6 +35,7 @@ function Get-AddonVersion {
         exit 1
     }
 }
+
 # ======= CONFIGURATION =======
 # Path to the TOC file
 $tocPath = ".\DelveCompanion_Mainline.toc"

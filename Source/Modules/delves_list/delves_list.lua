@@ -61,7 +61,7 @@ function DelveCompanionDelveInstanceButtonMixin:OnClick()
     end
 
     if IsShiftKeyDown() then
-        self:HandleClick()
+        self:HandleTrackingClick()
     end
 end
 
