@@ -11,8 +11,7 @@
 						<Anchor point="TOPLEFT" x="0" y="0" />
 						<Anchor point="BOTTOMRIGHT" x="0" y="0" />
 					</Anchors>
-					<TexCoords left="0.02" right="0.635" top="0.58886719"
-						bottom="0.61621094" />
+					<TexCoords left="0.02" right="0.635" top="0.58886719" bottom="0.61621094" />
 				</Texture>
 			</Layer>
 			<Layer level="OVERLAY">

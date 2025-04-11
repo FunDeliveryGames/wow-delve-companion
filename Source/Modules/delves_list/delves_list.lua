@@ -2,13 +2,16 @@ local addonName, addon = ...
 local log = addon.log
 local lockit = addon.lockit
 local enums = addon.enums
---=========== CONSTANTS ============================
+
+--#region Constants
+
 local EJ_DELVES_TAB_BUTTON_ID = 6
 local EJ_TABS_NUMBER = 6
 
 local DELVES_LIST_VIEW_COLS = 4
 local DELVES_LIST_VIEW_BUTTONS_OFFSET = 12
 local DELVES_LIST_VIEW_BUTTONS_PADDING = 5
+--#endregion
 
 --============ DelveProgressWidget ======================
 DelveCompanionDelveProgressWidgetMixin = {}
@@ -26,7 +29,9 @@ function DelveCompanionDelveInstanceButtonMixin:Update(isBountiful)
         self.BountifulIcon:Hide()
     end
 
-    if not DelveCompanionAccountData.useTomTomWaypoints then
+    if DelveCompanionAccountData.useTomTomWaypoints then
+        self:CheckTomTomWaypoint()
+    else
         self:OnSuperTrackChanged()
     end
 end
@@ -120,16 +125,12 @@ end
 function DelveCompanionDelvesListMixin:CreateDelveInstanceButton(parent, config)
     local item = CreateFrame("Button", nil, parent, "DelveCompanionDelveInstanceButtonTemplate")
     item.config = config
-    item.isTracking = false
+    item:PrepareTracking()
 
-    local delveMap = C_Map.GetMapInfo(config.uiMapID)
-    item.DelveName:SetText(delveMap.name)
+    item.DelveName:SetText(item.delveName)
     if C_Texture.GetAtlasInfo(config.atlasBgID) ~= nil then
         item.DelveArtBg:SetAtlas(config.atlasBgID)
     end
-
-    item.delveName = delveMap.name
-    item.parentMapName = C_Map.GetMapInfo(delveMap.parentMapID).name
 
     return item
 end

@@ -389,13 +389,18 @@ function DelveCompanionOverviewBountifulButtonMixin:OnLoad()
     --log("OverviewBountifulButton OnLoad start")
 end
 
-function DelveCompanionOverviewBountifulButtonMixin:OnEvent()
+function DelveCompanionOverviewBountifulButtonMixin:OnEvent(event, ...)
     self:OnSuperTrackChanged()
 end
 
 function DelveCompanionOverviewBountifulButtonMixin:OnShow()
     self:RegisterEvent("SUPER_TRACKING_CHANGED")
-    self:OnSuperTrackChanged()
+
+    if DelveCompanionAccountData.useTomTomWaypoints then
+        self:CheckTomTomWaypoint()
+    else
+        self:OnSuperTrackChanged()
+    end
 end
 
 function DelveCompanionOverviewBountifulButtonMixin:OnHide()
@@ -445,17 +450,15 @@ function DelveCompanionOverviewBountifulFrameMixin:OnShow()
             end)
 
             local button = self.bountifulButtonsPool:Acquire()
-            button.layoutIndex = index
             button.config = config
-            button.isTracking = false
+            button:PrepareTracking()
+
+            button.layoutIndex = index
             button.poiID = poiID
 
             local achIcon = select(10, GetAchievementInfo(config.achievements.story))
             button.ArtBg:SetTexture(achIcon)
 
-            local delveMap = C_Map.GetMapInfo(config.uiMapID)
-            button.delveName = delveMap.name
-            button.parentMapName = C_Map.GetMapInfo(delveMap.parentMapID).name
             button:Show()
         end
 

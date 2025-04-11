@@ -10,6 +10,15 @@ local TOM_TOM_WAYPOINT_DISTANCE_CLEAR = 10
 
 DelveCompanionDelveTrackingButtonMixin = {}
 
+function DelveCompanionDelveTrackingButtonMixin:PrepareTracking()
+    self.isTracking = false
+
+    local delveMap = C_Map.GetMapInfo(self.config.uiMapID)
+
+    self.delveName = delveMap.name
+    self.parentMapName = C_Map.GetMapInfo(delveMap.parentMapID).name
+end
+
 function DelveCompanionDelveTrackingButtonMixin:UpdateTooltip()
     local tooltip = GameTooltip
     tooltip:SetOwner(self, "ANCHOR_TOP")
@@ -37,11 +46,11 @@ end
 function DelveCompanionDelveTrackingButtonMixin:ClearTracking()
     self.isTracking = false
     self.WaypointIcon:Hide()
-    self.tomtom = nil
 end
 
 function DelveCompanionDelveTrackingButtonMixin:ClearTomTomWaypoint()
     TomTom:RemoveWaypoint(self.tomtom)
+    self.tomtom = nil
     self:ClearTracking()
 end
 
@@ -74,6 +83,14 @@ function DelveCompanionDelveTrackingButtonMixin:HandleTrackingClick()
         end
     end
     self:UpdateTooltip()
+end
+
+function DelveCompanionDelveTrackingButtonMixin:CheckTomTomWaypoint()
+    if TomTom and self.tomtom and TomTom:IsValidWaypoint(self.tomtom) then
+        self:SetTracking()
+    else
+        self:ClearTomTomWaypoint()
+    end
 end
 
 function DelveCompanionDelveTrackingButtonMixin:OnSuperTrackChanged()
