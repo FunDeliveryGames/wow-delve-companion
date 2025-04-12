@@ -19,13 +19,10 @@ DelveCompanionDelveProgressWidgetMixin = {}
 --============ DelveInstanceButton ======================
 DelveCompanionDelveInstanceButtonMixin = {}
 
-function DelveCompanionDelveInstanceButtonMixin:Update(isBountiful)
-    local poiIDs = self.config.poiIDs
-    if isBountiful then
-        self.poiID = poiIDs.bountiful
+function DelveCompanionDelveInstanceButtonMixin:Update()
+    if self.data.isBountiful then
         self.BountifulIcon:Show()
     else
-        self.poiID = poiIDs.regular
         self.BountifulIcon:Hide()
     end
 
@@ -66,7 +63,7 @@ function DelveCompanionDelveInstanceButtonMixin:OnClick()
     end
 
     if IsShiftKeyDown() then
-        self:HandleTrackingClick()
+        self:ToggleTracking()
     end
 end
 
@@ -122,14 +119,13 @@ function DelveCompanionDelvesListMixin:CreateDelveAchievementsWidget(parent, con
     return widget
 end
 
-function DelveCompanionDelvesListMixin:CreateDelveInstanceButton(parent, config)
+function DelveCompanionDelvesListMixin:CreateDelveInstanceButton(parent, delveData)
     local item = CreateFrame("Button", nil, parent, "DelveCompanionDelveInstanceButtonTemplate")
-    item.config = config
-    item:PrepareTracking()
+    item.data = delveData
 
-    item.DelveName:SetText(item.delveName)
-    if C_Texture.GetAtlasInfo(config.atlasBgID) ~= nil then
-        item.DelveArtBg:SetAtlas(config.atlasBgID)
+    item.DelveName:SetText(delveData.delveName)
+    if C_Texture.GetAtlasInfo(delveData.config.atlasBgID) ~= nil then
+        item.DelveArtBg:SetAtlas(delveData.config.atlasBgID)
     end
 
     return item
@@ -148,13 +144,14 @@ function DelveCompanionDelvesListMixin:InitDelvesList()
         local count = 0
         local cellHeight = 0
         local prevRow = 0
-        for _, delveConfig in ipairs(addon.config.DELVES_REGULAR_DATA) do
+        for _, delveData in ipairs(addon.delvesData) do
+            local delveConfig = delveData.config
             local parentMapID = C_Map.GetMapInfo(delveConfig.uiMapID).parentMapID
 
             if parentMapID == mapID then
                 local instanceButton = self:CreateDelveInstanceButton(
                     self.DelvesListScroll.Content,
-                    delveConfig)
+                    delveData)
                 count = count + 1
                 table.insert(instanceButtons, instanceButton)
 
@@ -222,10 +219,7 @@ function DelveCompanionDelvesListMixin:OnShow()
     addon.CacheActiveBountiful()
 
     for _, instanceButton in ipairs(self.instanceButtons) do
-        local isBountiful = FindValueInTableIf(addon.activeBountifulDelves, function(bountifulID)
-            return bountifulID == instanceButton.config.poiIDs.bountiful
-        end)
-        instanceButton:Update(isBountiful)
+        instanceButton:Update()
     end
 
     if addon.maxLevelReached then

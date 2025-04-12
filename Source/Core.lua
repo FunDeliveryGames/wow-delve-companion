@@ -3,21 +3,24 @@ local log = addon.log
 local enums = addon.enums
 
 addon.CacheActiveBountiful = function()
-    --log("Start fetching boutiful delves...")
-    local activeBountifulDelves = {}
-    for _, delveConfig in ipairs(addon.config.DELVES_REGULAR_DATA) do
+    -- log("Start fetching boutiful delves...")
+    for _, delveData in ipairs(addon.delvesData) do
+        local delveConfig = delveData.config
         local parentMapID = C_Map.GetMapInfo(delveConfig.uiMapID).parentMapID
         local poiIDs = delveConfig.poiIDs
 
         if poiIDs.bountiful ~= nil then
             local bountifulDelve = C_AreaPoiInfo.GetAreaPOIInfo(parentMapID, poiIDs.bountiful)
             if bountifulDelve ~= nil then
-                table.insert(activeBountifulDelves, poiIDs.bountiful)
+                delveData.poiID = poiIDs.bountiful
+                delveData.isBountiful = true
+            else
+                delveData.poiID = poiIDs.regular
+                delveData.isBountiful = false
             end
         end
     end
-
-    addon.activeBountifulDelves = activeBountifulDelves
+    -- log("Finished fetching boutiful delves...")
 end
 
 addon.CacheKeysData = function()
@@ -81,6 +84,29 @@ local function InitCharacterSave()
     }
 end
 
+local function PrepareDelvesData()
+    local delvesData = {}
+
+    for _, delveConfig in ipairs(addon.config.DELVES_REGULAR_DATA) do
+        local delveMap = C_Map.GetMapInfo(delveConfig.uiMapID)
+
+        local dataEl = {
+            config = delveConfig,
+            poiID = nil,
+            tomtom = nil,
+            delveName = delveMap.name,
+            parentMapName = C_Map.GetMapInfo(delveMap.parentMapID).name,
+            isTracking = false,
+            isBountiful = false
+        }
+
+        table.insert(delvesData, dataEl)
+    end
+
+    addon.delvesData = delvesData
+end
+
+-- Addon Boot
 addon.Init = function()
     if not DelveCompanionAccountData then
         InitAccountSave()
@@ -92,16 +118,17 @@ addon.Init = function()
 
     addon.InitSettings()
 
+    PrepareDelvesData()
+
     addon.maxLevelReached = UnitLevel("player") == addon.config.MAX_LEVEL
 end
 
--- Addon Boot
 
 addon.eventsCatcherFrame = CreateFrame("Frame")
 addon.eventsCatcherFrame:RegisterEvent("ADDON_LOADED")
--- addon.eventsCatcherFrame:RegisterEvent("GOSSIP_SHOW")
 -- addon.eventsCatcherFrame:RegisterEvent("PLAYER_LOGIN")
 -- addon.eventsCatcherFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
+-- addon.eventsCatcherFrame:RegisterEvent("GOSSIP_SHOW")
 -- addon.eventsCatcherFrame:RegisterEvent("UPDATE_UI_WIDGET")
 -- addon.eventsCatcherFrame:RegisterEvent("LOOT_OPENED")
 
