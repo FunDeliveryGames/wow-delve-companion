@@ -3,7 +3,9 @@ param (
     # Path to YAML configuration file
     [string]$yamlPath,
     # Path to WoW AddOns folder    
-    [string]$addonsLocation
+    [string]$addonsLocation,
+    # Path to WoW AddOns folder    
+    [string]$7zipPath
 )
 
 if ([string]::IsNullOrEmpty($addonsLocation)) {
@@ -81,6 +83,6 @@ if (Test-Path $zipFilePath) {
 }
 
 Write-Output "Creating ZIP archive at '$zipFilePath'."
-Compress-Archive -Path $sourceDir -DestinationPath $zipFilePath -Force
+& $7zipPath a -tzip $zipFilePath $sourceDir
 
 Write-Output "Packaging complete. ZIP archive located at '$zipFilePath'."
