@@ -28,11 +28,12 @@ lockit["ui-bountiful-keys-count-caches-prefix"] = "宝箱里获取的钥匙数�
 
 -- Settings
 lockit["ui-settings-section-title-account"] = "账号设置"
+lockit["ui-settings-ach-widgets"] = "冒险指南-地下堡：显示地下堡成就进度（故事和探索）。"
+
 lockit["ui-settings-section-title-character"] = "角色设置"
 lockit["ui-settings-gv-details"] = "地下堡：显示详细的宏伟宝库奖励。"
 lockit["ui-settings-dashboard-overview"] = "地下堡：显示地下堡的其他概要（鎏金藏匿物，丰裕地下堡）。"
 lockit["ui-settings-keys-cap"] = "提示里显示每周宝箱获取的钥匙数量。"
-lockit["ui-settings-ach-widgets"] = "冒险指南-地下堡：显示地下堡成就进度（故事和探索）。"
 lockit["ui-settings-translation-title"] = "特别鸣谢翻译贡献者："
 
 -- Debug

@@ -1,8 +1,8 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.blizzard.com/wow/ui/ https://raw.githubusercontent.com/Gethe/wow-ui-source/live/Interface/AddOns/Blizzard_SharedXML/UI.xsd">
-	<Script file="InitLockit.lua" />
-	<Script file="enUS.lua" />
-	<Script file="ruRU.lua" />
-	<Script file="zhCN.lua" />
+	<Include file="SettingsToggle.xml" />
+	<Script file="SettingsToggle.lua" />
+	<Include file="SettingsFrame.xml" />
+	<Script file="SettingsFrame.lua" />
 </Ui>

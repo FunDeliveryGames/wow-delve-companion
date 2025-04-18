@@ -15,6 +15,8 @@
 ## Category-ruRU: Вылазки
 ## Category-zhCN: 地下堡
 ## Category-zhTW: 探究
+
+## OptionalDeps: TomTom
 ## AddonCompartmentFunc: DelveCompanionShowSettings
 ## SavedVariables: DelveCompanionAccountData
 ## SavedVariablesPerCharacter: DelveCompanionCharacterData
@@ -22,28 +24,28 @@
 ## X-Curse-Project-ID: 1218457
 ## X-WoWI-ID: 26915
 ## X-Wago-ID: ZKxq4kGk
+## X-Category: Delves
 ## X-Website: https://github.com/FunDeliveryGames/wow-delve-companion
-## X-Category: Delve
 
 # Logging
-src\log.lua
+Source\Log.lua
 
 # Localization
-locale\lockit.xml
+Locale\Lockit.xml
 
 # Data
-data\config.lua
-data\enums.lua
+Data\Include.xml
+
+# Utility
+Source\Utility\Include.xml
+
+# Settings
+Source\Settings\Include.xml
 
 # Core
-src\utility.xml
-src\utility.lua
-
-src\modules\settings\settings.xml
-src\modules\settings\settings.lua
-src\modules\tooltip_extension\tooltip_extension.lua
-src\core.lua
-src\modules\delves_list\delves_list.xml
-src\modules\delves_list\delves_list.lua
-src\modules\delves_dash_extention\delves_dash_extention.xml
-src\modules\delves_dash_extention\delves_dash_extention.lua
+Source\Modules\tooltip_extension\tooltip_extension.lua
+Source\Core.lua
+Source\Modules\delves_list\delves_list.xml
+Source\Modules\delves_list\delves_list.lua
+Source\Modules\delves_dash_extention\delves_dash_extention.xml
+Source\Modules\delves_dash_extention\delves_dash_extention.lua

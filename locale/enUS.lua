@@ -40,12 +40,16 @@ lockit["ui-loot-info-description"] = "Complete a delve to get:"
 lockit["ui-bountiful-keys-count-caches-prefix"] = "Keys from caches"
 
 -- Settings
+lockit["ui-settings-missing-addon-title"] = "Required AddOn is missing: %s" -- %s: AddonName, e.g. DelveCompanion
+
 lockit["ui-settings-section-title-account"] = "Account-Wide"
+lockit["ui-settings-ach-widgets"] = "Delves list: Display progress of achievements (Stories and Chests)."
+lockit["ui-settings-tomtom-description"] = "Use Tom Tom waypoints instead of the Blizzard's Map Pin."
+
 lockit["ui-settings-section-title-character"] = "Character-Wide"
 lockit["ui-settings-gv-details"] = "Delves UI: Display detailed Great Vault section."
 lockit["ui-settings-dashboard-overview"] = "Delves UI: Display Overview section (Gilded Stash, Bountiful Delves)."
 lockit["ui-settings-keys-cap"] = "Display weekly limits info in tooltips."
-lockit["ui-settings-ach-widgets"] = "Delves list: Display progress of achievements (Stories and Chests)."
 lockit["ui-settings-translation-title"] = "Special thanks for the translation contribution:"
 
 -- Debug

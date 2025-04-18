@@ -2,32 +2,35 @@ local addonName, addon = ...
 local log = addon.log
 local lockit = addon.lockit
 local enums = addon.enums
---=========== CONSTANTS ============================
+
+--#region Constants
+
 local EJ_DELVES_TAB_BUTTON_ID = 6
 local EJ_TABS_NUMBER = 6
 
 local DELVES_LIST_VIEW_COLS = 4
 local DELVES_LIST_VIEW_BUTTONS_OFFSET = 12
 local DELVES_LIST_VIEW_BUTTONS_PADDING = 5
+--#endregion
 
---============ DelveInstanceButton ======================
-
+--============ DelveProgressWidget ======================
 DelveCompanionDelveProgressWidgetMixin = {}
---============ DelveInstanceButton ======================
 
+--============ DelveInstanceButton ======================
 DelveCompanionDelveInstanceButtonMixin = {}
 
-function DelveCompanionDelveInstanceButtonMixin:Update(isBountiful)
-    local poiIDs = self.config.poiIDs
-    if isBountiful then
-        self.poiID = poiIDs.bountiful
+function DelveCompanionDelveInstanceButtonMixin:Update()
+    if self.data.isBountiful then
         self.BountifulIcon:Show()
     else
-        self.poiID = poiIDs.regular
         self.BountifulIcon:Hide()
     end
 
-    self:OnSuperTrackChanged()
+    if DelveCompanionAccountData.useTomTomWaypoints then
+        self:CheckTomTomWaypoint()
+    else
+        self:OnSuperTrackChanged()
+    end
 end
 
 function DelveCompanionDelveInstanceButtonMixin:OnEvent(event, ...)
@@ -55,17 +58,12 @@ function DelveCompanionDelveInstanceButtonMixin:OnLeave()
 end
 
 function DelveCompanionDelveInstanceButtonMixin:OnClick()
-    if addon.maxLevelReached == false then
+    if not addon.maxLevelReached then
         return
     end
 
     if IsShiftKeyDown() then
-        if self.isTracking then
-            C_SuperTrack.ClearSuperTrackedMapPin()
-        else
-            C_SuperTrack.SetSuperTrackedMapPin(Enum.SuperTrackingMapPinType.AreaPOI, self.poiID)
-        end
-        self:UpdateTooltip()
+        self:ToggleTracking()
     end
 end
 
@@ -121,19 +119,14 @@ function DelveCompanionDelvesListMixin:CreateDelveAchievementsWidget(parent, con
     return widget
 end
 
-function DelveCompanionDelvesListMixin:CreateDelveInstanceButton(parent, config)
+function DelveCompanionDelvesListMixin:CreateDelveInstanceButton(parent, delveData)
     local item = CreateFrame("Button", nil, parent, "DelveCompanionDelveInstanceButtonTemplate")
-    item.config = config
-    item.isTracking = false
+    item.data = delveData
 
-    local delveMap = C_Map.GetMapInfo(config.uiMapID)
-    item.DelveName:SetText(delveMap.name)
-    if C_Texture.GetAtlasInfo(config.atlasBgID) ~= nil then
-        item.DelveArtBg:SetAtlas(config.atlasBgID)
+    item.DelveName:SetText(delveData.delveName)
+    if C_Texture.GetAtlasInfo(delveData.config.atlasBgID) ~= nil then
+        item.DelveArtBg:SetAtlas(delveData.config.atlasBgID)
     end
-
-    item.delveName = delveMap.name
-    item.parentMapName = C_Map.GetMapInfo(delveMap.parentMapID).name
 
     return item
 end
@@ -151,13 +144,14 @@ function DelveCompanionDelvesListMixin:InitDelvesList()
         local count = 0
         local cellHeight = 0
         local prevRow = 0
-        for _, delveConfig in ipairs(addon.config.DELVES_REGULAR_DATA) do
+        for _, delveData in ipairs(addon.delvesData) do
+            local delveConfig = delveData.config
             local parentMapID = C_Map.GetMapInfo(delveConfig.uiMapID).parentMapID
 
             if parentMapID == mapID then
                 local instanceButton = self:CreateDelveInstanceButton(
                     self.DelvesListScroll.Content,
-                    delveConfig)
+                    delveData)
                 count = count + 1
                 table.insert(instanceButtons, instanceButton)
 
@@ -225,10 +219,7 @@ function DelveCompanionDelvesListMixin:OnShow()
     addon.CacheActiveBountiful()
 
     for _, instanceButton in ipairs(self.instanceButtons) do
-        local isBountiful = FindValueInTableIf(addon.activeBountifulDelves, function(bountifulID)
-            return bountifulID == instanceButton.config.poiIDs.bountiful
-        end)
-        instanceButton:Update(isBountiful)
+        instanceButton:Update()
     end
 
     if addon.maxLevelReached then
@@ -251,7 +242,7 @@ function DelveCompanion_DelvesListFrame_Init()
     button:SetPoint("LEFT", EncounterJournal.LootJournalTab, "RIGHT", -15, 0)
     button:SetText(_G["DELVES_LABEL"])
     button:SetID(EJ_DELVES_TAB_BUTTON_ID)
-    button:SetParentKey("devlesTab")
+    button:SetParentKey("delvesTab")
     PanelTemplates_SetNumTabs(EncounterJournal, EJ_TABS_NUMBER)
 
     addon.delvesListFrame = CreateFrame("Frame", "$parent.DelvesListFrame", EncounterJournal,

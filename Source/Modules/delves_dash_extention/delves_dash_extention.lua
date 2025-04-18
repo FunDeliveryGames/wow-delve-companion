@@ -81,7 +81,6 @@ function DelveCompanionGreatVaultItemMixin:Update()
 
     if self.info.level >= addon.config.GREAT_VAULT_UPGRADE_MAX_TIER then
         self.maxUpgraded = true
-        -- log("Tooltip data: max level")
         return
     end
 
@@ -105,7 +104,6 @@ function DelveCompanionGreatVaultItemMixin:Update()
     if hasData then
         self.nextLevel = nextLevel
         self.nextItemLevel = nextItemLevel
-        -- log("Tooltip data: upgrade")
     else
         self.nextLevel = self.info.level + 1
         self.nextItemLevel = upgradeItemLevel
@@ -328,9 +326,10 @@ function DelveCompanionOverviewGildedStashFrameMixin:CanRetrieveGildedStashInfo(
 end
 
 function DelveCompanionOverviewGildedStashFrameMixin:TryGetStashInfo()
-    for _, delveConfig in ipairs(addon.config.DELVES_REGULAR_DATA) do
-        if delveConfig.gildedStashUiWidgetID then
-            local result = C_UIWidgetManager.GetSpellDisplayVisualizationInfo(delveConfig.gildedStashUiWidgetID)
+    for _, delveData in ipairs(addon.delvesData) do
+        local uiWidgetID = delveData.config.gildedStashUiWidgetID
+        if uiWidgetID then
+            local result = C_UIWidgetManager.GetSpellDisplayVisualizationInfo(uiWidgetID)
             if result then
                 return result
             end
@@ -386,16 +385,24 @@ end
 DelveCompanionOverviewBountifulButtonMixin = {}
 
 function DelveCompanionOverviewBountifulButtonMixin:OnLoad()
-    --log("OverviewBountifulButton OnLoad start")
+    -- log("OverviewBountifulButton OnLoad start")
+    -- NOTE: BountifulButton is acquired from a FramePool so OnLoad is called only once per button lifetime.
+    -- Only one-time initializations here.
 end
 
-function DelveCompanionOverviewBountifulButtonMixin:OnEvent()
+function DelveCompanionOverviewBountifulButtonMixin:OnEvent(event, ...)
     self:OnSuperTrackChanged()
 end
 
 function DelveCompanionOverviewBountifulButtonMixin:OnShow()
+    -- log("OverviewBountifulButton OnShow start")
     self:RegisterEvent("SUPER_TRACKING_CHANGED")
-    self:OnSuperTrackChanged()
+
+    if DelveCompanionAccountData.useTomTomWaypoints then
+        self:CheckTomTomWaypoint()
+    else
+        self:OnSuperTrackChanged()
+    end
 end
 
 function DelveCompanionOverviewBountifulButtonMixin:OnHide()
@@ -412,12 +419,7 @@ end
 
 function DelveCompanionOverviewBountifulButtonMixin:OnClick()
     if IsShiftKeyDown() then
-        if self.isTracking then
-            C_SuperTrack.ClearSuperTrackedMapPin()
-        else
-            C_SuperTrack.SetSuperTrackedMapPin(Enum.SuperTrackingMapPinType.AreaPOI, self.poiID)
-        end
-        self:UpdateTooltip()
+        self:ToggleTracking()
     end
 end
 
@@ -440,33 +442,27 @@ function DelveCompanionOverviewBountifulFrameMixin:OnShow()
     -- log("OverviewBountifulFrame OnShow start")
     addon.CacheActiveBountiful()
     self.bountifulButtonsPool:ReleaseAll()
+    self.ActiveDelves.NoBountifulLabel:Hide()
 
-    if #addon.activeBountifulDelves ~= 0 then
-        self.ActiveDelves.NoBountifulLabel:Hide()
-
-        for index, poiID in ipairs(addon.activeBountifulDelves) do
-            local config = FindValueInTableIf(addon.config.DELVES_REGULAR_DATA, function(delveConfig)
-                return poiID == delveConfig.poiIDs.bountiful
-            end)
-            local achIcon = select(10, GetAchievementInfo(config.achievements.story))
-
+    for index, delveData in ipairs(addon.delvesData) do
+        if delveData.isBountiful then
             local button = self.bountifulButtonsPool:Acquire()
             button.layoutIndex = index
-            button.ArtBg:SetTexture(achIcon)
-            button.poiID = poiID
-            button.isTracking = false
+            button.data = delveData
 
-            local delveMap = C_Map.GetMapInfo(config.uiMapID)
-            button.delveName = delveMap.name
-            button.parentMapName = C_Map.GetMapInfo(delveMap.parentMapID).name
+            local achIcon = select(10, GetAchievementInfo(delveData.config.achievements.story))
+            button.ArtBg:SetTexture(achIcon)
+
             button:Show()
         end
+    end
 
-        local spaceAvailable = self.Title:GetBottom() - self.Divider:GetTop()
-        self.ActiveDelves:SetHeight(spaceAvailable)
-        self.ActiveDelves.Container.fixedHeight = spaceAvailable
-        self.ActiveDelves.Container:Layout()
-    else
+    local spaceAvailable = self.Title:GetBottom() - self.Divider:GetTop()
+    self.ActiveDelves:SetHeight(spaceAvailable)
+    self.ActiveDelves.Container.fixedHeight = spaceAvailable
+    self.ActiveDelves.Container:Layout()
+
+    if #self.ActiveDelves.Container:GetLayoutChildren() == 0 then
         self.ActiveDelves.NoBountifulLabel:Show()
     end
 end

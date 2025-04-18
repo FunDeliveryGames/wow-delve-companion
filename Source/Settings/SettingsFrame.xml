@@ -56,7 +56,18 @@
                             <KeyValue key="layoutIndex" value="1" type="number" />
                             <KeyValue key="saveType" value="account" type="string" />
                             <KeyValue key="saveVar" value="achievementWidgetsEnabled" type="string" />
+                            <KeyValue key="defaultValue" value="true" type="boolean" />
                             <KeyValue key="localeKey" value="ui-settings-ach-widgets" type="string" />
+                        </KeyValues>
+                    </CheckButton>
+                    <CheckButton parentKey="useTomTomCheckButton"
+                        inherits="DelveCompanionSettingsCheckButtonTemplate">
+                        <KeyValues>
+                            <KeyValue key="layoutIndex" value="2" type="number" />
+                            <KeyValue key="saveType" value="account" type="string" />
+                            <KeyValue key="saveVar" value="useTomTomWaypoints" type="string" />
+                            <KeyValue key="defaultValue" value="false" type="boolean" />
+                            <KeyValue key="localeKey" value="ui-settings-tomtom-description" type="string" />
                         </KeyValues>
                     </CheckButton>
                 </Frames>
@@ -90,6 +101,7 @@
                             <KeyValue key="layoutIndex" value="1" type="number" />
                             <KeyValue key="saveType" value="character" type="string" />
                             <KeyValue key="saveVar" value="keysCapTooltipEnabled" type="string" />
+                            <KeyValue key="defaultValue" value="true" type="boolean" />
                             <KeyValue key="localeKey" value="ui-settings-keys-cap" type="string" />
                         </KeyValues>
                     </CheckButton>
@@ -99,6 +111,7 @@
                             <KeyValue key="layoutIndex" value="2" type="number" />
                             <KeyValue key="saveType" value="character" type="string" />
                             <KeyValue key="saveVar" value="gvDetailsEnabled" type="string" />
+                            <KeyValue key="defaultValue" value="true" type="boolean" />
                             <KeyValue key="localeKey" value="ui-settings-gv-details" type="string" />
                         </KeyValues>
                     </CheckButton>
@@ -108,6 +121,7 @@
                             <KeyValue key="layoutIndex" value="3" type="number" />
                             <KeyValue key="saveType" value="character" type="string" />
                             <KeyValue key="saveVar" value="dashOverviewEnabled" type="string" />
+                            <KeyValue key="defaultValue" value="true" type="boolean" />
                             <KeyValue key="localeKey" value="ui-settings-dashboard-overview"
                                 type="string" />
                         </KeyValues>
@@ -199,35 +213,7 @@
         </Frames>
         <Scripts>
             <OnLoad method="OnLoad" />
-        </Scripts>
-    </Frame>
-
-    <CheckButton name="DelveCompanionSettingsCheckButtonTemplate"
-        mixin="DelveCompanionSettingsToggleMixin"
-        inherits="ChatConfigBaseCheckButtonTemplate" virtual="true">
-        <Size x="24" y="24" />
-        <!-- <KeyValues>
-            <KeyValue key="saveType" value="account/character" type="string" />
-            <KeyValue key="saveVar" value="var" type="string" />
-            <KeyValue key="localeKey" value="key" type="string" />
-        </KeyValues> -->
-        <Anchors>
-            <Anchor point="TOPLEFT" />
-        </Anchors>
-        <Layers>
-            <Layer level="ARTWORK">
-                <FontString parentKey="Text" inherits="GameFontHighlight"
-                    mixin="AutoScalingFontStringMixin" wordwrap="true" maxLines="2"
-                    justifyV="MIDDLE" justifyH="LEFT" text="CHECK_BUTTON_DESC">
-                    <Anchors>
-                        <Anchor point="LEFT" relativePoint="RIGHT" x="0" y="2" />
-                    </Anchors>
-                </FontString>
-            </Layer>
-        </Layers>
-        <HitRectInsets left="0" right="-145" top="0" bottom="0" />
-        <Scripts>
             <OnShow method="OnShow" />
         </Scripts>
-    </CheckButton>
+    </Frame>
 </Ui>
