@@ -15,6 +15,8 @@
 ## Category-ruRU: Вылазки
 ## Category-zhCN: 地下堡
 ## Category-zhTW: 探究
+
+## OptionalDeps: TomTom
 ## AddonCompartmentFunc: DelveCompanionShowSettings
 ## SavedVariables: DelveCompanionAccountData
 ## SavedVariablesPerCharacter: DelveCompanionCharacterData

@@ -67,7 +67,7 @@
                             <KeyValue key="saveType" value="account" type="string" />
                             <KeyValue key="saveVar" value="useTomTomWaypoints" type="string" />
                             <KeyValue key="defaultValue" value="false" type="boolean" />
-                            <KeyValue key="localeKey" value="ui-settings-use-tomtom" type="string" />
+                            <KeyValue key="localeKey" value="ui-settings-tomtom-description" type="string" />
                         </KeyValues>
                     </CheckButton>
                 </Frames>
@@ -213,6 +213,7 @@
         </Frames>
         <Scripts>
             <OnLoad method="OnLoad" />
+            <OnShow method="OnShow" />
         </Scripts>
     </Frame>
 </Ui>

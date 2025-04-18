@@ -9,15 +9,12 @@ addon.CacheActiveBountiful = function()
         local parentMapID = C_Map.GetMapInfo(delveConfig.uiMapID).parentMapID
         local poiIDs = delveConfig.poiIDs
 
-        if poiIDs.bountiful ~= nil then
-            local bountifulDelve = C_AreaPoiInfo.GetAreaPOIInfo(parentMapID, poiIDs.bountiful)
-            if bountifulDelve ~= nil then
-                delveData.poiID = poiIDs.bountiful
-                delveData.isBountiful = true
-            else
-                delveData.poiID = poiIDs.regular
-                delveData.isBountiful = false
-            end
+        if poiIDs.bountiful and C_AreaPoiInfo.GetAreaPOIInfo(parentMapID, poiIDs.bountiful) then
+            delveData.poiID = poiIDs.bountiful
+            delveData.isBountiful = true
+        else
+            delveData.poiID = poiIDs.regular
+            delveData.isBountiful = false
         end
     end
     -- log("Finished fetching boutiful delves...")
@@ -90,7 +87,7 @@ local function PrepareDelvesData()
     for _, delveConfig in ipairs(addon.config.DELVES_REGULAR_DATA) do
         local delveMap = C_Map.GetMapInfo(delveConfig.uiMapID)
 
-        local dataEl = {
+        local data = {
             config = delveConfig,
             poiID = nil,
             tomtom = nil,
@@ -100,7 +97,7 @@ local function PrepareDelvesData()
             isBountiful = false
         }
 
-        table.insert(delvesData, dataEl)
+        table.insert(delvesData, data)
     end
 
     addon.delvesData = delvesData
@@ -116,17 +113,15 @@ addon.Init = function()
         InitCharacterSave()
     end
 
-    addon.InitSettings()
-
     PrepareDelvesData()
 
     addon.maxLevelReached = UnitLevel("player") == addon.config.MAX_LEVEL
+    addon.tomTomAvailable = TomTom ~= nil
 end
-
 
 addon.eventsCatcherFrame = CreateFrame("Frame")
 addon.eventsCatcherFrame:RegisterEvent("ADDON_LOADED")
--- addon.eventsCatcherFrame:RegisterEvent("PLAYER_LOGIN")
+addon.eventsCatcherFrame:RegisterEvent("PLAYER_LOGIN")
 -- addon.eventsCatcherFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
 -- addon.eventsCatcherFrame:RegisterEvent("GOSSIP_SHOW")
 -- addon.eventsCatcherFrame:RegisterEvent("UPDATE_UI_WIDGET")
@@ -163,7 +158,8 @@ addon.eventsCatcherFrame:SetScript(
             else
                 return
             end
-            -- elseif event == "PLAYER_LOGIN" then
+        elseif event == "PLAYER_LOGIN" then
+            addon.InitSettings()
             -- elseif event == "PLAYER_ENTERING_WORLD" then
         elseif event == "WEEKLY_REWARDS_UPDATE" then
             if addon.gvDetailsFrame:IsShown() then

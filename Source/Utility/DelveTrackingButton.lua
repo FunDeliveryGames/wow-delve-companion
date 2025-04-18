@@ -40,6 +40,10 @@ function DelveCompanionDelveTrackingButtonMixin:ClearTracking()
 end
 
 function DelveCompanionDelveTrackingButtonMixin:ClearTomTomWaypoint()
+    if not addon.tomTomAvailable then
+        return
+    end
+
     TomTom:RemoveWaypoint(self.data.tomtom)
     self.data.tomtom = nil
     self:ClearTracking()
@@ -48,27 +52,42 @@ end
 function DelveCompanionDelveTrackingButtonMixin:ToggleTracking()
     local delveData = self.data
     if delveData.isTracking then
-        if DelveCompanionAccountData.useTomTomWaypoints and TomTom then
+        if addon.tomTomAvailable and DelveCompanionAccountData.useTomTomWaypoints then
             self:ClearTomTomWaypoint()
         else
             C_SuperTrack.ClearSuperTrackedMapPin()
         end
     else
-        if DelveCompanionAccountData.useTomTomWaypoints and TomTom then
+        if addon.tomTomAvailable and DelveCompanionAccountData.useTomTomWaypoints then
             local mapInfo = C_Map.GetMapInfo(delveData.config.uiMapID)
             local poiInfo = C_AreaPoiInfo.GetAreaPOIInfo(mapInfo.parentMapID, delveData.poiID)
+
+            -- Blizzard removes Boss Delve POIs from Map with the season change. They're still can be entered but the API doesn't provide their coordinates.
+            local posX, posY = -1, -1
+            if poiInfo then
+                posX = poiInfo.position.x
+                posY = poiInfo.position.y
+            else
+                posX = delveData.config.coordinates.x / 100
+                posY = delveData.config.coordinates.y / 100
+            end
 
             local callbacks = TomTom:DefaultCallbacks({})
             callbacks.distance[TOM_TOM_WAYPOINT_DISTANCE_CLEAR] = function(...)
                 self:ClearTomTomWaypoint()
             end
 
-            delveData.tomtom = TomTom:AddWaypoint(mapInfo.parentMapID, poiInfo.position.x, poiInfo.position.y, {
+            local options = {
                 title = delveData.delveName,
                 from = lockit["ui-addon-name"],
                 persistent = false,
                 callbacks = callbacks
-            })
+            }
+
+            delveData.tomtom = TomTom:AddWaypoint(
+                mapInfo.parentMapID,
+                posX, posY,
+                options)
             self:SetTracking()
         else
             C_SuperTrack.SetSuperTrackedMapPin(Enum.SuperTrackingMapPinType.AreaPOI, delveData.poiID)
@@ -78,8 +97,12 @@ function DelveCompanionDelveTrackingButtonMixin:ToggleTracking()
 end
 
 function DelveCompanionDelveTrackingButtonMixin:CheckTomTomWaypoint()
+    if not addon.tomTomAvailable then
+        return
+    end
+
     local delveData = self.data
-    if TomTom and delveData and delveData.tomtom and TomTom:IsValidWaypoint(delveData.tomtom) then
+    if delveData and delveData.tomtom and TomTom:IsValidWaypoint(delveData.tomtom) then
         self:SetTracking()
     else
         self:ClearTomTomWaypoint()
