@@ -1,5 +1,10 @@
 # Change Log
 
+## [0.5] - 2025-04-18
+- **TomTom support**: Introduce support of `TomTom` waypoints (by default: disabled). It can be turned on in the AddOn Settings to use TomTom waypoints instead of the Blizzard's Map Pin.
+- **Localization**: Add `zhCN` translation (thanks to `XingDvD` for contribution).
+- Addressing the unzip issue on Mac when the addon is installed via CurseForge App.
+
 ## [0.4.5-alpha] - 2025-04-01
 - **Localization**: Add `zhCN` translation (thanks to `XingDvD` for contribution).
 
