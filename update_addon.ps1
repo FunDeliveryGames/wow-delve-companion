@@ -16,23 +16,30 @@ if ([string]::IsNullOrEmpty($yamlPath)) {
 }
 
 # ======= READ & PARSE YAML =======
-# Read the YAML file content
+# Use YAML file to make a list of ignored folders and files (so they are not needed in the addon folder)
 $yamlContent = Get-Content $yamlPath
 
-# Initialize variables
 $packageAs = ""
-$ignoreList = @()
+$ignoreDirs = @()
+$ignoreFiles = @()
 
 foreach ($line in $yamlContent) {
     $trimmed = $line.Trim()
     if ($trimmed -like "package-as:*") {
-        # Extract value after the colon and trim spaces
         $packageAs = $trimmed.Substring($trimmed.IndexOf(":") + 1).Trim()
     }
     elseif ($trimmed -like "-*") {
-        # Extract ignore items (remove leading dash and trim)
         $item = $trimmed.TrimStart("-").Trim()
-        $ignoreList += $item
+
+        if ($item.EndsWith(" #folder")) {
+            $item = $item.Split('#')[0].Trim()
+            $ignoreDirs += $item
+            # Write-Output "Ignore folder: " $item
+        }
+        else {
+            $ignoreFiles += $item
+            # Write-Output "Ignore file: " $item
+        }
     }
 }
 
@@ -44,30 +51,12 @@ if ([string]::IsNullOrEmpty($packageAs)) {
 # ======= ADD YAML CONFIG TO IGNORE =======
 # Ensure that the YAML configuration file itself is ignored during copying.
 $yamlFileName = Split-Path $yamlPath -Leaf
-$ignoreList += $yamlFileName
+$ignoreFiles += $yamlFileName
 
 # ======= DETERMINE DIRECTORIES =======
-# Source is the current directory (where this script and YAML file reside)
 $sourceDir = Get-Location
 $targetDir = Join-Path $addonsLocation $packageAs
 
-# ======= PREPARE IGNORE LISTS =======
-# Separate items into directories and files based on trailing backslash or slash.
-$ignoreDirs = @()
-$ignoreFiles = @()
-foreach ($item in $ignoreList) {
-    if ($item.EndsWith("\") -or $item.EndsWith("/")) {
-        # Remove trailing slash/backslash for consistency
-        $ignoreDirs += $item.TrimEnd("\", "/")
-    }
-    else {
-        $ignoreFiles += $item
-    }
-}
-# Also exclude the target folder (if it happens to be inside the source)
-# $ignoreDirs += $packageAs
-
-# ======= PREPARE TARGET FOLDER =======
 # If target folder exists, remove it first
 if (Test-Path $targetDir) {
     Write-Output "Target folder '$targetDir' exists. Deleting..."
@@ -88,7 +77,10 @@ $destinationPath = $targetDir
 
 $xdParams = ""
 if ($ignoreDirs.Count -gt 0) {
-    $xdParams = "/XD " + ($ignoreDirs -join " ")
+    $quotedDirs = $ignoreDirs | ForEach-Object {
+        if ($_ -match '\s') { '"{0}"' -f $_ } else { $_ }
+    }
+    $xdParams = "/XD " + ($quotedDirs -join " ")
 }
 
 $xfParams = ""
@@ -96,10 +88,6 @@ if ($ignoreFiles.Count -gt 0) {
     $xfParams = "/XF " + ($ignoreFiles -join " ")
 }
 
-# Construct and display the robocopy command
-$robocopyCmd = "robocopy `"$sourcePath`" `"$destinationPath`" /E $xdParams $xfParams"
-Write-Output "Executing command:"
-Write-Output $robocopyCmd
-
 # Execute the robocopy command
+$robocopyCmd = "robocopy `"$sourcePath`" `"$destinationPath`" /E $xdParams $xfParams"
 Invoke-Expression $robocopyCmd

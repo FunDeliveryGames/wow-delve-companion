@@ -1,8 +1,9 @@
 package-as: DelveCompanion
 ignore:
-  - .vscode\
-  - .git\
-  - releases\
+  - .vscode #folder
+  - .git #folder
+  - releases #folder
+  - Release Notes #folder
   - .gitignore
   - README.md
   - LICENSE

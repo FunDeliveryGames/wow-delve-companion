@@ -167,7 +167,7 @@
                         <Layers>
                             <Layer level="OVERLAY">
                                 <Texture parentKey="FlagIcon"
-                                    file="Interface\AddOns\DelveCompanion\images\ruRU">
+                                    file="Interface\AddOns\DelveCompanion\Images\ruRU">
                                     <Size x="25" y="25" />
                                     <Anchors>
                                         <Anchor point="TOPLEFT" />
@@ -192,7 +192,7 @@
                         <Layers>
                             <Layer level="OVERLAY">
                                 <Texture parentKey="FlagIcon"
-                                    file="Interface\AddOns\DelveCompanion\images\zhCN">
+                                    file="Interface\AddOns\DelveCompanion\Images\zhCN">
                                     <Size x="25" y="25" />
                                     <Anchors>
                                         <Anchor point="TOPLEFT" />
