@@ -31,7 +31,8 @@ lockit["ui-settings-missing-addon-title"] = "Отсутствует необхо
 
 lockit["ui-settings-section-title-account"] = "Параметры аккаунта:"
 lockit["ui-settings-ach-widgets"] = "Список вылазок: Отображать прогресс достижений (истории и сундуки)."
-lockit["ui-settings-tomtom-description"] = "Использовать путевые точки TomTom вместо значка карты Blizzard."
+lockit["ui-settings-tomtom-description"] = "Использовать путевые точки TomTom вместо маркеров карты Blizzard."
+lockit["ui-loot-info-button-tooltip-instruction"] = "<Нажмите, чтобы отобразить информацию о добыче Вылазок>"
 
 lockit["ui-settings-section-title-character"] = "Параметры персонажа:"
 lockit["ui-settings-gv-details"] = "Интерфейс вылазок: Отображать подробные детали Великого Хранилища."
