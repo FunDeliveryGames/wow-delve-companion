@@ -67,7 +67,8 @@
                             <KeyValue key="saveType" value="account" type="string" />
                             <KeyValue key="saveVar" value="useTomTomWaypoints" type="string" />
                             <KeyValue key="defaultValue" value="false" type="boolean" />
-                            <KeyValue key="localeKey" value="ui-settings-tomtom-description" type="string" />
+                            <KeyValue key="localeKey" value="ui-settings-tomtom-description"
+                                type="string" />
                         </KeyValues>
                     </CheckButton>
                 </Frames>
@@ -142,8 +143,14 @@
                 </Scripts>
             </Button>
 
-            <Frame parentKey="LocalizationFrame">
-                <Size x="100" y="100" />
+            <Frame parentKey="LocalizationFrame" inherits="VerticalLayoutFrame">
+                <KeyValues>
+                    <KeyValue key="maximumWidth" value="1000" type="number" />
+                    <KeyValue key="expand" value="true" type="boolean" />
+                    <KeyValue key="spacing" value="5" type="number" />
+                    <KeyValue key="topPadding" value="25" type="number" />
+                    <KeyValue key="bottomPadding" value="10" type="number" />
+                </KeyValues>
                 <Anchors>
                     <Anchor point="BOTTOMLEFT" />
                 </Anchors>
@@ -160,21 +167,20 @@
                 <Frames>
                     <Frame parentKey="ruRU">
                         <Size x="100" y="25" />
-                        <Anchors>
-                            <Anchor point="TOPLEFT" relativeKey="$parent.Title"
-                                relativePoint="BOTTOMLEFT" x="15" y="-10" />
-                        </Anchors>
+                        <KeyValues>
+                            <KeyValue key="layoutIndex" value="1" type="number" />
+                        </KeyValues>
                         <Layers>
                             <Layer level="OVERLAY">
                                 <Texture parentKey="FlagIcon"
-                                    file="Interface\AddOns\DelveCompanion\Images\ruRU">
+                                    file="Interface\AddOns\DelveCompanion\Images\lang_flag_russian">
                                     <Size x="25" y="25" />
                                     <Anchors>
                                         <Anchor point="TOPLEFT" />
                                     </Anchors>
                                 </Texture>
                                 <FontString parentKey="Name" inherits="GameFontHighlightLarge"
-                                    justifyH="LEFT" text="ZamestoTV">
+                                    justifyH="LEFT" text="ZamestoTV, Hollicsh">
                                     <Anchors>
                                         <Anchor point="LEFT" relativeKey="$parent.FlagIcon"
                                             relativePoint="RIGHT" x="10" />
@@ -185,14 +191,13 @@
                     </Frame>
                     <Frame parentKey="zhCN">
                         <Size x="100" y="25" />
-                        <Anchors>
-                            <Anchor point="TOPLEFT" relativeKey="$parent.ruRU"
-                                relativePoint="BOTTOMLEFT" y="-10" />
-                        </Anchors>
+                        <KeyValues>
+                            <KeyValue key="layoutIndex" value="2" type="number" />
+                        </KeyValues>
                         <Layers>
                             <Layer level="OVERLAY">
                                 <Texture parentKey="FlagIcon"
-                                    file="Interface\AddOns\DelveCompanion\Images\zhCN">
+                                    file="Interface\AddOns\DelveCompanion\Images\lang_flag_chinese">
                                     <Size x="25" y="25" />
                                     <Anchors>
                                         <Anchor point="TOPLEFT" />
@@ -200,6 +205,30 @@
                                 </Texture>
                                 <FontString parentKey="Name" inherits="GameFontHighlightLarge"
                                     justifyH="LEFT" text="XingDvD">
+                                    <Anchors>
+                                        <Anchor point="LEFT" relativeKey="$parent.FlagIcon"
+                                            relativePoint="RIGHT" x="10" />
+                                    </Anchors>
+                                </FontString>
+                            </Layer>
+                        </Layers>
+                    </Frame>
+                    <Frame parentKey="zhTW">
+                        <Size x="100" y="25" />
+                        <KeyValues>
+                            <KeyValue key="layoutIndex" value="3" type="number" />
+                        </KeyValues>
+                        <Layers>
+                            <Layer level="OVERLAY">
+                                <Texture parentKey="FlagIcon"
+                                    file="Interface\AddOns\DelveCompanion\Images\lang_flag_chinese">
+                                    <Size x="25" y="25" />
+                                    <Anchors>
+                                        <Anchor point="TOPLEFT" />
+                                    </Anchors>
+                                </Texture>
+                                <FontString parentKey="Name" inherits="GameFontHighlightLarge"
+                                    justifyH="LEFT" text="BlueNightSky">
                                     <Anchors>
                                         <Anchor point="LEFT" relativeKey="$parent.FlagIcon"
                                             relativePoint="RIGHT" x="10" />
