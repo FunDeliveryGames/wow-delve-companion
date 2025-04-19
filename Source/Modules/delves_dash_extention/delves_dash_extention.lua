@@ -4,7 +4,6 @@ local lockit = addon.lockit
 local enums = addon.enums
 
 --============ LootInfoFrame ======================
-
 DelveCompanionLootInfoFrameMixin = {}
 
 function DelveCompanionLootInfoFrameMixin:OnLoad()
@@ -32,19 +31,50 @@ function DelveCompanionLootInfoFrameMixin:OnLoad()
     self.BountifulGear.Text:SetText(bountifulText)
     self.VaultGear.Text:SetText(vaultText)
 
-    self:GetParent():HookScript("OnShow", function()
-        if self:GetParent().ButtonPanelLayoutFrame.GreatVaultButtonPanel.disabled then
-            return
-        end
-        self:Show()
-    end)
-    self:GetParent():HookScript("OnHide", function()
-        self:Hide()
-    end)
+    if C_AddOns.IsAddOnLoaded("RaiderIO") then
+        -- Display LootInfoFrame above the RIO Profile's Tooltip
+        self:SetFrameStrata("HIGH")
+    end
 end
 
 function DelveCompanionLootInfoFrameMixin:OnShow()
     --log("LootInfo OnShow start")
+end
+
+local function CreateLootInfoButton(parent)
+    local button = CreateFrame("Button",
+        "$parent.ShowLootInfoButton",
+        parent,
+        "UIPanelButtonNoTooltipTemplate")
+
+    button:SetFrameLevel(20)
+    button:SetSize(50, 20)
+    button:SetPoint("BOTTOMRIGHT", -5, 5)
+    button:SetText(_G["LOOT"])
+
+    button.fitTextWidthPadding = 20
+    button:FitToText()
+
+    button:HookScript("OnClick", function()
+        GameTooltip:Hide()
+        addon.lootInfoFrame:Show()
+    end)
+
+    button:HookScript("OnEnter", function()
+        if addon.lootInfoFrame:IsShown() then
+            return
+        end
+
+        local tooltip = GameTooltip
+        tooltip:SetOwner(button, "ANCHOR_TOP")
+        GameTooltip_AddInstructionLine(tooltip, lockit["ui-loot-info-button-tooltip-instruction"], true)
+
+        tooltip:Show()
+    end)
+
+    button:HookScript("OnLeave", function()
+        GameTooltip:Hide()
+    end)
 end
 
 --============ GreatVaultDetails ======================
@@ -519,12 +549,21 @@ function DelveCompanionOverviewConsumablesWidgetMixin:OnHide()
     self:UnregisterEvent("BAG_UPDATE")
 end
 
---============ Init ======================
+--============ DelvesDashExtension ======================
 
 function DelveCompanion_DelvesDashExtension_Init()
-    local lootInfoFrame = CreateFrame("Frame", "$parent.LootInfoFrame", DelvesDashboardFrame,
-        "DelveCompanionLootInfoFrame")
-    addon.lootInfoFrame = lootInfoFrame
+    do
+        local lootInfoFrame = CreateFrame("Frame",
+            "$parent.LootInfoFrame",
+            DelvesDashboardFrame,
+            "DelveCompanionLootInfoFrame")
+        addon.lootInfoFrame = lootInfoFrame
+
+        CreateLootInfoButton(DelvesDashboardFrame)
+        DelvesDashboardFrame:HookScript("OnHide", function()
+            addon.lootInfoFrame:Hide()
+        end)
+    end
 
     if DelveCompanionCharacterData.gvDetailsEnabled then
         local gvPanel = DelvesDashboardFrame.ButtonPanelLayoutFrame.GreatVaultButtonPanel

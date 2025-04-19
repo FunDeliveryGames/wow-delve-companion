@@ -32,6 +32,7 @@ lockit["ui-gilded-stash-cannot-retrieve-data"] = "Visit Khaz Algar zones to see 
 lockit["ui-gilded-stash-bountiful-note"] =
 "Appears only in |cnNORMAL_FONT_COLOR:Tier 11|r Bountiful Delves|A:delves-bountiful:16:16|a."
 lockit["ui-no-active-bountiful"] = "No active delves"
+lockit["ui-loot-info-button-tooltip-instruction"] = "<Click to display Delves' Loot info>"
 
 -- Loot Info
 lockit["ui-loot-info-description"] = "Complete a delve to get:"
