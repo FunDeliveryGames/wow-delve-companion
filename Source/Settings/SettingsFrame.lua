@@ -36,7 +36,6 @@ function DelveCompanionSettingsFrameMixin:OnLoad()
 
     self.AccountTogglesContainer.Title:SetText(lockit["ui-settings-section-title-account"])
     self.AccountTogglesContainer.maximumWidth = TOGGLE_CONTAINER_MAX_WIDTH
-
     self.AccountTogglesContainer:Layout()
 
     self.CharacterTogglesContainer.Title:SetText(lockit["ui-settings-section-title-character"])
@@ -47,6 +46,7 @@ function DelveCompanionSettingsFrameMixin:OnLoad()
 
     -- Localization section
     self.LocalizationFrame.Title:SetText(lockit["ui-settings-translation-title"])
+    self.LocalizationFrame:Layout()
 
     self:Hide()
 end
