@@ -22,6 +22,7 @@ lockit["ui-delve-instance-button-tooltip-current-instruction"] = "<Shift + 左�
 lockit["ui-gilded-stash-cannot-retrieve-data"] = "在卡茲阿爾加地區時可獲取鍍金儲物箱進度"
 lockit["ui-gilded-stash-bountiful-note"] = "僅出現在 |cnNORMAL_FONT_COLOR:難度 11|r 豐碩探究|A:delves-bountiful:16:16|a。"
 lockit["ui-no-active-bountiful"] = "任意難度11豐碩探究可啟動進度"
+lockit["ui-loot-info-button-tooltip-instruction"] = "<點擊來顯示探究的拾取資訊>"
 
 -- Loot Info
 
