@@ -21,7 +21,7 @@ lockit["ui-delve-instance-button-tooltip-current-instruction"] = "<Shift + 左�
 
 lockit["ui-gilded-stash-cannot-retrieve-data"] = "在卡兹阿加地区时可获取鎏金藏匿物进度"
 lockit["ui-gilded-stash-bountiful-note"] = "仅出现在 |cnNORMAL_FONT_COLOR:难度 11|r 丰裕地下堡|A:delves-bountiful:16:16|a。"
-lockit["ui-no-active-bountiful"] = "没有激活的地下堡"
+lockit["ui-no-active-bountiful"] = "任意难度11丰裕地下堡可激活进度"
 
 -- Loot Info
 
