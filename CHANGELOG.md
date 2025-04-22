@@ -1,5 +1,10 @@
 # Change Log
 
+## [0.5.1] - 2025-04-22
+- **Delves UI**: Delve's Loot info window is not shown automatically anymore. There is a dedicated button to show it at the bottom right corner.
+- **Localization**: Add `zhTW` translation (thanks to `BlueNightSky` for contribution).
+- Fixed overlap of the Loot info window with RIO Profile tooltip.
+
 ## [0.5] - 2025-04-18
 - **TomTom support**: Introduce support of `TomTom` waypoints (by default: disabled). It can be turned on in the AddOn Settings to use TomTom waypoints instead of the Blizzard's Map Pin.
 - **Localization**: Add `zhCN` translation (thanks to `XingDvD` for contribution).
