@@ -1,7 +1,8 @@
-local addonName, addon = ...
-local log = addon.log
-local enums = addon.enums
-local lockit = addon.lockit
+local addonName, DelveCompanion = ...
+---@type Logger
+local Logger = DelveCompanion.Logger
+local enums = DelveCompanion.enums
+local lockit = DelveCompanion.lockit
 
 --#region Constants
 
@@ -72,7 +73,7 @@ function DelveCompanionDelveTrackingButtonMixin:SetTomTomWaypoint(delveData)
 end
 
 function DelveCompanionDelveTrackingButtonMixin:ClearTomTomWaypoint()
-    if not addon.tomTomAvailable then
+    if not DelveCompanion.tomTomAvailable then
         return
     end
 
@@ -88,7 +89,7 @@ function DelveCompanionDelveTrackingButtonMixin:ToggleTracking()
         return
     end
 
-    if addon.tomTomAvailable and DelveCompanionAccountData.useTomTomWaypoints then
+    if DelveCompanion.tomTomAvailable and DelveCompanionAccountData.useTomTomWaypoints then
         if delveData.isTracking then
             self:ClearTomTomWaypoint()
         else
@@ -106,7 +107,7 @@ function DelveCompanionDelveTrackingButtonMixin:ToggleTracking()
 end
 
 function DelveCompanionDelveTrackingButtonMixin:CheckTomTomWaypoint()
-    if not addon.tomTomAvailable then
+    if not DelveCompanion.tomTomAvailable then
         return
     end
 

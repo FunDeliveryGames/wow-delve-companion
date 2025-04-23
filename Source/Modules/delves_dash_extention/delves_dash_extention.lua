@@ -1,19 +1,20 @@
-local addonName, addon = ...
-local log = addon.log
-local lockit = addon.lockit
-local enums = addon.enums
+local addonName, DelveCompanion = ...
+---@type Logger
+local Logger = DelveCompanion.Logger
+local lockit = DelveCompanion.lockit
+local enums = DelveCompanion.enums
 
 --============ LootInfoFrame ======================
 DelveCompanionLootInfoFrameMixin = {}
 
 function DelveCompanionLootInfoFrameMixin:OnLoad()
-    -- log("LootInfo OnLoad start")
+    -- Logger.Log("LootInfo OnLoad start")
     self.TitleContainer.TitleText:SetText(_G["LOOT"])
     self.Header:SetText(lockit["ui-loot-info-description"])
 
     self.DelveTiers.Title:SetText(strtrim(format(_G["GARRISON_TIER"], "")))
 
-    local bountiful = Item:CreateFromItemID(addon.config.BOUNTIFUL_COFFER_ITEM_CODE)
+    local bountiful = Item:CreateFromItemID(DelveCompanion.config.BOUNTIFUL_COFFER_ITEM_CODE)
     bountiful:ContinueOnItemLoad(function()
         self.BountifulGear.Title:SetText(bountiful:GetItemName() .. CreateAtlasMarkup("delves-bountiful", 16, 16))
     end)
@@ -21,7 +22,7 @@ function DelveCompanionLootInfoFrameMixin:OnLoad()
     self.VaultGear.Title:SetText(_G["DELVES_GREAT_VAULT_LABEL"] .. CreateAtlasMarkup("GreatVault-32x32", 16, 16))
 
     local tiersText, bountifulText, vaultText = "", "", ""
-    for tier, lootInfo in ipairs(addon.config.DELVES_LOOT_INFO_DATA) do
+    for tier, lootInfo in ipairs(DelveCompanion.config.DELVES_LOOT_INFO_DATA) do
         tiersText = tiersText .. tier .. "\n"
         bountifulText = bountifulText .. lootInfo.bountifulLvl .. "\n"
         vaultText = vaultText .. lootInfo.vaultLvl .. "\n"
@@ -38,7 +39,7 @@ function DelveCompanionLootInfoFrameMixin:OnLoad()
 end
 
 function DelveCompanionLootInfoFrameMixin:OnShow()
-    --log("LootInfo OnShow start")
+    --Logger.Log("LootInfo OnShow start")
 end
 
 local function CreateLootInfoButton(parent)
@@ -57,11 +58,11 @@ local function CreateLootInfoButton(parent)
 
     button:HookScript("OnClick", function()
         GameTooltip:Hide()
-        addon.lootInfoFrame:Show()
+        DelveCompanion.lootInfoFrame:Show()
     end)
 
     button:HookScript("OnEnter", function()
-        if addon.lootInfoFrame:IsShown() then
+        if DelveCompanion.lootInfoFrame:IsShown() then
             return
         end
 
@@ -90,7 +91,7 @@ function DelveCompanionGreatVaultItemMixin:Update()
 
     self.ItemInfoLabel:Hide()
     -- Curent level info
-    -- log("Updating %s with id: %d", self:GetDebugName(), self.info.id)
+    -- Logger.Log("Updating %s with id: %d", self:GetDebugName(), self.info.id)
     local itemLink, upgradeItemLink = C_WeeklyRewards.GetExampleRewardItemHyperlinks(self.info.id)
     local itemLevel
     if itemLink then
@@ -98,7 +99,7 @@ function DelveCompanionGreatVaultItemMixin:Update()
     end
 
     if not itemLevel then
-        -- log("Item level is not ready. Enable OnUpdate...")
+        -- Logger.Log("Item level is not ready. Enable OnUpdate...")
         self.updateTimer = 0
         self:SetScript("OnUpdate", self.OnUpdate)
         return
@@ -109,7 +110,7 @@ function DelveCompanionGreatVaultItemMixin:Update()
 
     -- Upgrade level info
 
-    if self.info.level >= addon.config.GREAT_VAULT_UPGRADE_MAX_TIER then
+    if self.info.level >= DelveCompanion.config.GREAT_VAULT_UPGRADE_MAX_TIER then
         self.maxUpgraded = true
         return
     end
@@ -120,7 +121,7 @@ function DelveCompanionGreatVaultItemMixin:Update()
     end
 
     if not upgradeItemLevel then
-        -- log("Item upgrade level is not ready. Enable OnUpdate...")
+        -- Logger.Log("Item upgrade level is not ready. Enable OnUpdate...")
         self.updateTimer = 0
         self:SetScript("OnUpdate", self.OnUpdate)
         return
@@ -155,7 +156,7 @@ function DelveCompanionGreatVaultItemMixin:ShowMaxUpgradeTooltip()
 
     GameTooltip_AddInstructionLine(tooltip, _G["WEEKLY_REWARDS_MAXED_REWARD"], true)
 
-    -- log("Show tooltip: max upgrade")
+    -- Logger.Log("Show tooltip: max upgrade")
     tooltip:Show()
 end
 
@@ -169,7 +170,7 @@ function DelveCompanionGreatVaultItemMixin:ShowUpgradeTooltip()
     local reqLine = format(_G["WEEKLY_REWARDS_COMPLETE_WORLD"], self.nextLevel)
     GameTooltip_AddHighlightLine(tooltip, reqLine, true)
 
-    -- log("Show tooltip: upgrade")
+    -- Logger.Log("Show tooltip: upgrade")
     tooltip:Show()
 end
 
@@ -188,12 +189,12 @@ function DelveCompanionGreatVaultItemMixin:ShowLockedTooltip()
     local diff = self.info.threshold - self.info.progress
     GameTooltip_AddNormalLine(tooltip, format(reqLine, diff), true)
 
-    -- log("Show tooltip: locked")
+    -- Logger.Log("Show tooltip: locked")
     tooltip:Show()
 end
 
 function DelveCompanionGreatVaultItemMixin:OnEnter()
-    -- log("%s OnEnter start", self:GetDebugName())
+    -- Logger.Log("%s OnEnter start", self:GetDebugName())
     if not self.unlocked then
         self:ShowLockedTooltip()
     elseif self.maxUpgraded then
@@ -239,15 +240,15 @@ function DelveCompanionGreatVaultDetailsMixin:SetStateCustom()
 end
 
 function DelveCompanionGreatVaultDetailsMixin:CanDisplayCustomState()
-    return self:HasUnlockedRewards(addon.config.ACTIVITY_TYPE) and
+    return self:HasUnlockedRewards(DelveCompanion.config.ACTIVITY_TYPE) and
         not (C_WeeklyRewards.HasAvailableRewards() or C_WeeklyRewards.HasGeneratedRewards())
 end
 
 function DelveCompanionGreatVaultDetailsMixin:Refresh()
     if self:CanDisplayCustomState() then
-        local activitiesInfo = C_WeeklyRewards.GetActivities(addon.config.ACTIVITY_TYPE)
+        local activitiesInfo = C_WeeklyRewards.GetActivities(DelveCompanion.config.ACTIVITY_TYPE)
         if not activitiesInfo then
-            log("Cannot get Activity info")
+            Logger.Log("Cannot get Activity info")
             return
         end
 
@@ -266,8 +267,8 @@ function DelveCompanionGreatVaultDetailsMixin:Refresh()
 end
 
 function DelveCompanionGreatVaultDetailsMixin:OnLoad()
-    -- log("GreatVaultDetails OnLoad start")
-    for i = 1, self:GetMaxNumRewards(addon.config.ACTIVITY_TYPE), 1 do
+    -- Logger.Log("GreatVaultDetails OnLoad start")
+    for i = 1, self:GetMaxNumRewards(DelveCompanion.config.ACTIVITY_TYPE), 1 do
         local rewFrame = CreateFrame("Frame", nil, self.Rewards, "DelveCompanionGreatVaultItemTemplate")
         rewFrame.layoutIndex = i
     end
@@ -280,14 +281,14 @@ function DelveCompanionGreatVaultDetailsMixin:OnLoad()
 end
 
 function DelveCompanionGreatVaultDetailsMixin:OnShow()
-    -- log("GreatVaultDetails OnShow start")
+    -- Logger.Log("GreatVaultDetails OnShow start")
     if self.shouldRefresh then
         self:Refresh()
     end
 end
 
 function DelveCompanionGreatVaultDetailsMixin:OnHide()
-    --log("GreatVaultDetails OnHide start")
+    --Logger.Log("GreatVaultDetails OnHide start")
 end
 
 --============ Delves DashboardOverview ======================
@@ -295,7 +296,7 @@ end
 DelveCompanionDashboardOverviewMixin = {}
 
 function DelveCompanionDashboardOverviewMixin:OnLoad()
-    --log("DashboardOverview OnLoad start")
+    --Logger.Log("DashboardOverview OnLoad start")
     self.PanelTitle:Hide()
     self.PanelDescription:Hide()
 
@@ -303,7 +304,7 @@ function DelveCompanionDashboardOverviewMixin:OnLoad()
 end
 
 function DelveCompanionDashboardOverviewMixin:OnShow()
-    --log("DashboardOverview OnShow start")
+    --Logger.Log("DashboardOverview OnShow start")
 end
 
 --============ GildedStash Frame ======================
@@ -326,12 +327,12 @@ function DelveCompanionOverviewGildedStashFrameMixin:PrepareContainerTooltip()
 end
 
 function DelveCompanionOverviewGildedStashFrameMixin:OnLoad()
-    -- log("GildedStash OnLoad start")
+    -- Logger.Log("GildedStash OnLoad start")
 
-    local stashSpell = Spell:CreateFromSpellID(addon.config.GILDED_STASH_SPELL_CODE)
+    local stashSpell = Spell:CreateFromSpellID(DelveCompanion.config.GILDED_STASH_SPELL_CODE)
     stashSpell:ContinueOnSpellLoad(function()
         self.Name:SetText(stashSpell:GetSpellName())
-        for i = 1, addon.config.GILDED_STASH_WEEKLY_CAP, 1 do
+        for i = 1, DelveCompanion.config.GILDED_STASH_WEEKLY_CAP, 1 do
             local stash = CreateFrame("Frame", nil, self.Container,
                 "DelveCompanionDashboardOverviewGildedStashTemplate")
             stash.layoutIndex = i
@@ -351,12 +352,12 @@ function DelveCompanionOverviewGildedStashFrameMixin:CanRetrieveGildedStashInfo(
         return false
     end
 
-    local continent = addon.GetContinentMapIDForMap(currentMap)
-    return continent and continent == addon.config.KHAZ_ALGAR_MAP_ID
+    local continent = DelveCompanion.GetContinentMapIDForMap(currentMap)
+    return continent and continent == DelveCompanion.config.KHAZ_ALGAR_MAP_ID
 end
 
 function DelveCompanionOverviewGildedStashFrameMixin:TryGetStashInfo()
-    for _, delveData in ipairs(addon.delvesData) do
+    for _, delveData in ipairs(DelveCompanion.delvesData) do
         local uiWidgetID = delveData.config.gildedStashUiWidgetID
         if uiWidgetID then
             local result = C_UIWidgetManager.GetSpellDisplayVisualizationInfo(uiWidgetID)
@@ -370,7 +371,7 @@ function DelveCompanionOverviewGildedStashFrameMixin:TryGetStashInfo()
 end
 
 function DelveCompanionOverviewGildedStashFrameMixin:OnShow()
-    -- log("GildedStash OnShow start")
+    -- Logger.Log("GildedStash OnShow start")
 
     if not self:CanRetrieveGildedStashInfo() then
         self.ErrorLabel:Show()
@@ -403,7 +404,7 @@ function DelveCompanionOverviewGildedStashFrameMixin:OnShow()
     end
 
     -- if not DelveCompanionCharacterData.GildedStashData.isInited then
-    --     log("Not inited, false")
+    --     Logger.Log("Not inited, false")
     --     return false
     -- end
     -- DelveCompanionCharacterData.GildedStashData.cachedGildedStashCount = collectedCount
@@ -415,7 +416,7 @@ end
 DelveCompanionOverviewBountifulButtonMixin = {}
 
 function DelveCompanionOverviewBountifulButtonMixin:OnLoad()
-    -- log("OverviewBountifulButton OnLoad start")
+    -- Logger.Log("OverviewBountifulButton OnLoad start")
     -- NOTE: BountifulButton is acquired from a FramePool so OnLoad is called only once per button lifetime.
     -- Only one-time initializations here.
 end
@@ -425,7 +426,7 @@ function DelveCompanionOverviewBountifulButtonMixin:OnEvent(event, ...)
 end
 
 function DelveCompanionOverviewBountifulButtonMixin:OnShow()
-    -- log("OverviewBountifulButton OnShow start")
+    -- Logger.Log("OverviewBountifulButton OnShow start")
     self:RegisterEvent("SUPER_TRACKING_CHANGED")
 
     if DelveCompanionAccountData.useTomTomWaypoints then
@@ -456,7 +457,7 @@ end
 DelveCompanionOverviewBountifulFrameMixin = {}
 
 function DelveCompanionOverviewBountifulFrameMixin:OnLoad()
-    -- log("OverviewBountifulFrame OnLoad start")
+    -- Logger.Log("OverviewBountifulFrame OnLoad start")
     self.Title:SetText(lockit["ui-common-bountiful-delve"])
 
     self.ActiveDelves.NoBountifulLabel:SetText(lockit["ui-no-active-bountiful"])
@@ -465,16 +466,16 @@ function DelveCompanionOverviewBountifulFrameMixin:OnLoad()
 end
 
 function DelveCompanionOverviewBountifulFrameMixin:OnEvent(event, ...)
-    -- log("OverviewBountifulFrame OnEvent start")
+    -- Logger.Log("OverviewBountifulFrame OnEvent start")
 end
 
 function DelveCompanionOverviewBountifulFrameMixin:OnShow()
-    -- log("OverviewBountifulFrame OnShow start")
-    addon.CacheActiveBountiful()
+    -- Logger.Log("OverviewBountifulFrame OnShow start")
+    DelveCompanion.CacheActiveBountiful()
     self.bountifulButtonsPool:ReleaseAll()
     self.ActiveDelves.NoBountifulLabel:Hide()
 
-    for index, delveData in ipairs(addon.delvesData) do
+    for index, delveData in ipairs(DelveCompanion.delvesData) do
         if delveData.isBountiful then
             local button = self.bountifulButtonsPool:Acquire()
             button.layoutIndex = index
@@ -498,53 +499,53 @@ function DelveCompanionOverviewBountifulFrameMixin:OnShow()
 end
 
 function DelveCompanionOverviewBountifulFrameMixin:OnHide()
-    -- log("OverviewBountifulFrame OnHide start")
+    -- Logger.Log("OverviewBountifulFrame OnHide start")
 end
 
 --============ Consumables Widget ======================
 DelveCompanionOverviewConsumablesWidgetMixin = {}
 
 function DelveCompanionOverviewConsumablesWidgetMixin:UpdateConsumables()
-    addon.CacheKeysData()
-    self.Keys.Label:SetText(C_CurrencyInfo.GetCurrencyInfo(addon.config.BOUNTIFUL_KEY_CURRENCY_CODE)
+    DelveCompanion.CacheKeysData()
+    self.Keys.Label:SetText(C_CurrencyInfo.GetCurrencyInfo(DelveCompanion.config.BOUNTIFUL_KEY_CURRENCY_CODE)
         .quantity)
 
-    self.BountyMap.Label:SetText(C_Item.GetItemCount(addon.config.BOUNTY_MAP_ITEM_CODE))
-    self.Echoes.Label:SetText(C_Item.GetItemCount(addon.config.ECHO_ITEM_CODE))
+    self.BountyMap.Label:SetText(C_Item.GetItemCount(DelveCompanion.config.BOUNTY_MAP_ITEM_CODE))
+    self.Echoes.Label:SetText(C_Item.GetItemCount(DelveCompanion.config.ECHO_ITEM_CODE))
 
-    local shardsCount = C_Item.GetItemCount(addon.config.KEY_SHARD_ITEM_CODE)
+    local shardsCount = C_Item.GetItemCount(DelveCompanion.config.KEY_SHARD_ITEM_CODE)
     local shardsLine = tostring(shardsCount)
-    if shardsCount >= addon.config.SHARDS_FOR_KEY then
+    if shardsCount >= DelveCompanion.config.SHARDS_FOR_KEY then
         shardsLine = _G["GREEN_FONT_COLOR"]:WrapTextInColorCode(tostring(shardsLine))
     end
     self.Shards.Label:SetText(shardsLine)
 end
 
 function DelveCompanionOverviewConsumablesWidgetMixin:OnLoad()
-    -- log("OverviewConsumablesWidget OnLoad start")
+    -- Logger.Log("OverviewConsumablesWidget OnLoad start")
 
-    self.Keys:SetFrameInfo(enums.CodeType.Currency, addon.config.BOUNTIFUL_KEY_CURRENCY_CODE)
-    self.Shards:SetFrameInfo(enums.CodeType.Item, addon.config.KEY_SHARD_ITEM_CODE)
-    self.BountyMap:SetFrameInfo(enums.CodeType.Item, addon.config.BOUNTY_MAP_ITEM_CODE)
-    self.Echoes:SetFrameInfo(enums.CodeType.Item, addon.config.ECHO_ITEM_CODE)
+    self.Keys:SetFrameInfo(enums.CodeType.Currency, DelveCompanion.config.BOUNTIFUL_KEY_CURRENCY_CODE)
+    self.Shards:SetFrameInfo(enums.CodeType.Item, DelveCompanion.config.KEY_SHARD_ITEM_CODE)
+    self.BountyMap:SetFrameInfo(enums.CodeType.Item, DelveCompanion.config.BOUNTY_MAP_ITEM_CODE)
+    self.Echoes:SetFrameInfo(enums.CodeType.Item, DelveCompanion.config.ECHO_ITEM_CODE)
 end
 
 function DelveCompanionOverviewConsumablesWidgetMixin:OnEvent(event, ...)
-    -- log("OverviewConsumablesWidget OnEvent start")
+    -- Logger.Log("OverviewConsumablesWidget OnEvent start")
     C_Timer.After(0.5, function()
         self:UpdateConsumables()
     end)
 end
 
 function DelveCompanionOverviewConsumablesWidgetMixin:OnShow()
-    -- log("OverviewConsumablesWidget OnShow start")
+    -- Logger.Log("OverviewConsumablesWidget OnShow start")
     self:UpdateConsumables()
     self:RegisterEvent("CURRENCY_DISPLAY_UPDATE")
     self:RegisterEvent("BAG_UPDATE")
 end
 
 function DelveCompanionOverviewConsumablesWidgetMixin:OnHide()
-    -- log("OverviewConsumablesWidget OnHide start")
+    -- Logger.Log("OverviewConsumablesWidget OnHide start")
     self:UnregisterEvent("CURRENCY_DISPLAY_UPDATE")
     self:UnregisterEvent("BAG_UPDATE")
 end
@@ -557,11 +558,11 @@ function DelveCompanion_DelvesDashExtension_Init()
             "$parent.LootInfoFrame",
             DelvesDashboardFrame,
             "DelveCompanionLootInfoFrame")
-        addon.lootInfoFrame = lootInfoFrame
+        DelveCompanion.lootInfoFrame = lootInfoFrame
 
         CreateLootInfoButton(DelvesDashboardFrame)
         DelvesDashboardFrame:HookScript("OnHide", function()
-            addon.lootInfoFrame:Hide()
+            DelveCompanion.lootInfoFrame:Hide()
         end)
     end
 
@@ -572,8 +573,8 @@ function DelveCompanion_DelvesDashExtension_Init()
             "$parent.CustomDetails",
             gvPanel,
             "DelveCompanionGreatVaultDetailsFrame")
-        addon.gvDetailsFrame = gvDetailsFrame
-        addon.eventsCatcherFrame:RegisterEvent("WEEKLY_REWARDS_UPDATE")
+        DelveCompanion.gvDetailsFrame = gvDetailsFrame
+        DelveCompanion.eventsCatcherFrame:RegisterEvent("WEEKLY_REWARDS_UPDATE")
     end
 
     if DelveCompanionCharacterData.dashOverviewEnabled then
@@ -583,6 +584,6 @@ function DelveCompanion_DelvesDashExtension_Init()
         DelvesDashboardFrame.ButtonPanelLayoutFrame.spacing = -20
         DelvesDashboardFrame.ButtonPanelLayoutFrame:Layout()
 
-        addon.delvesDashOverview = dashOverview
+        DelveCompanion.delvesDashOverview = dashOverview
     end
 end

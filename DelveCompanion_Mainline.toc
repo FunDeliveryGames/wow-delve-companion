@@ -29,7 +29,7 @@
 ## X-Website: https://github.com/FunDeliveryGames/wow-delve-companion
 
 # Logging
-Source\Log.lua
+Source\Logger.lua
 
 # Localization
 Locale\Lockit.xml

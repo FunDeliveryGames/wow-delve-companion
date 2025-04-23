@@ -1,7 +1,8 @@
-local addonName, addon = ...
-local log = addon.log
-local enums = addon.enums
-local lockit = addon.lockit
+local addonName, DelveCompanion = ...
+---@type Logger
+local Logger = DelveCompanion.Logger
+local enums = DelveCompanion.enums
+local lockit = DelveCompanion.lockit
 
 --============ DelveCompanionIconWithTextAndTooltip ======================
 
@@ -46,7 +47,7 @@ local function SetFromTexture(self)
     elseif type == enums.CodeType.Achievement then
         texture = select(10, GetAchievementInfo(code))
     else
-        log(lockit["ui-debug-unexpected-enum-element"], tostring(enums.CodeType), type)
+        Logger.Log(lockit["ui-debug-unexpected-enum-element"], tostring(enums.CodeType), type)
     end
 
     if texture then
@@ -65,7 +66,7 @@ function DelveCompanionIconWithLabelAndTooltipMixin:SetFrameInfo(frameType, fram
 end
 
 function DelveCompanionIconWithLabelAndTooltipMixin:OnLoad()
-    -- log("DelveCompanionIconWithTextAndTooltip OnLoad start")
+    -- Logger.Log("DelveCompanionIconWithTextAndTooltip OnLoad start")
     self.Icon:SetSize(self.iconSizeX, self.iconSizeY)
 
     if not self.displayLabel then
@@ -115,7 +116,7 @@ function DelveCompanionIconWithLabelAndTooltipMixin:OnLoad()
 end
 
 function DelveCompanionIconWithLabelAndTooltipMixin:OnShow()
-    -- log("DelveCompanionIconWithTextAndTooltip OnShow start")
+    -- Logger.Log("DelveCompanionIconWithTextAndTooltip OnShow start")
 
     if self.atlasTexture then
         SetFromAtlas(self)
@@ -125,7 +126,7 @@ function DelveCompanionIconWithLabelAndTooltipMixin:OnShow()
 end
 
 function DelveCompanionIconWithLabelAndTooltipMixin:OnHide()
-    -- log("DelveCompanionIconWithTextAndTooltip OnHide start")
+    -- Logger.Log("DelveCompanionIconWithTextAndTooltip OnHide start")
 end
 
 function DelveCompanionIconWithLabelAndTooltipMixin:OnEnter()
@@ -146,7 +147,7 @@ function DelveCompanionIconWithLabelAndTooltipMixin:OnEnter()
         -- GameTooltip:SetAchievementByID(code)
         GameTooltip:SetHyperlink(GetAchievementLink(code))
     else
-        log(lockit["ui-debug-unexpected-enum-element"], tostring(enums.CodeType), type)
+        Logger.Log(lockit["ui-debug-unexpected-enum-element"], tostring(enums.CodeType), type)
     end
     GameTooltip:Show()
 end

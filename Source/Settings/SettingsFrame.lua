@@ -1,6 +1,7 @@
-local addonName, addon = ...
-local log = addon.log
-local lockit = addon.lockit
+local addonName, DelveCompanion = ...
+---@type Logger
+local Logger = DelveCompanion.Logger
+local lockit = DelveCompanion.lockit
 
 --#region Constants
 
@@ -10,7 +11,7 @@ local TOGGLE_CONTAINER_MAX_WIDTH = 600
 DelveCompanionSettingsFrameMixin = {}
 
 function DelveCompanionSettingsFrameMixin:OnShow()
-    if not addon.tomTomAvailable then
+    if not DelveCompanion.tomTomAvailable then
         self.AccountTogglesContainer.useTomTomCheckButton:SetChecked(false)
         self.AccountTogglesContainer.useTomTomCheckButton:SetEnabled(false)
         self.AccountTogglesContainer.useTomTomCheckButton:SetScript("OnEnter", function()
@@ -28,7 +29,7 @@ function DelveCompanionSettingsFrameMixin:OnShow()
 end
 
 function DelveCompanionSettingsFrameMixin:OnLoad()
-    -- log("SettingsFrame OnLoad start...")
+    -- Logger.Log("SettingsFrame OnLoad start...")
 
     self:SetAllPoints()
     self.TitlePanel.Title:SetText(lockit["ui-addon-name"])

@@ -1,10 +1,11 @@
-local addonName, addon = ...
-local log = addon.log
-local enums = addon.enums
+local addonName, DelveCompanion = ...
+---@type Logger
+local Logger = DelveCompanion.Logger
+local enums = DelveCompanion.enums
 
-addon.CacheActiveBountiful = function()
-    -- log("Start fetching boutiful delves...")
-    for _, delveData in ipairs(addon.delvesData) do
+DelveCompanion.CacheActiveBountiful = function()
+    -- Logger.Log("Start fetching boutiful delves...")
+    for _, delveData in ipairs(DelveCompanion.delvesData) do
         local delveConfig = delveData.config
         local parentMapID = C_Map.GetMapInfo(delveConfig.uiMapID).parentMapID
         local poiIDs = delveConfig.poiIDs
@@ -17,21 +18,21 @@ addon.CacheActiveBountiful = function()
             delveData.isBountiful = false
         end
     end
-    -- log("Finished fetching boutiful delves...")
+    -- Logger.Log("Finished fetching boutiful delves...")
 end
 
-addon.CacheKeysData = function()
+DelveCompanion.CacheKeysData = function()
     local keysCollected = 0
-    for _, questId in ipairs(addon.config.BOUNTIFUL_KEY_QUESTS_DATA) do
+    for _, questId in ipairs(DelveCompanion.config.BOUNTIFUL_KEY_QUESTS_DATA) do
         if C_QuestLog.IsQuestFlaggedCompleted(questId) then
             keysCollected = keysCollected + 1
         end
     end
 
-    addon.keysCollected = keysCollected
+    DelveCompanion.keysCollected = keysCollected
 end
 
-addon.GetContinentMapIDForMap = function(mapID)
+DelveCompanion.GetContinentMapIDForMap = function(mapID)
     if not mapID then
         return nil
     end
@@ -49,7 +50,7 @@ addon.GetContinentMapIDForMap = function(mapID)
 end
 
 -- TODO: Explore a new Settings API. Maybe Settings.RegisterAddOnSetting is more convenient way to setup settings.
-addon.InitSettings = function()
+DelveCompanion.InitSettings = function()
     local addonNameStr = tostring(addonName) -- TODO: explore why addonName can be a table instead of a string
     local settingsFrame = CreateFrame("Frame", addonNameStr, nil, "DelveCompanionSettingsFrame")
     settingsFrame.name = addonNameStr
@@ -84,7 +85,7 @@ end
 local function PrepareDelvesData()
     local delvesData = {}
 
-    for _, delveConfig in ipairs(addon.config.DELVES_REGULAR_DATA) do
+    for _, delveConfig in ipairs(DelveCompanion.config.DELVES_REGULAR_DATA) do
         local delveMap = C_Map.GetMapInfo(delveConfig.uiMapID)
 
         local data = {
@@ -100,11 +101,11 @@ local function PrepareDelvesData()
         table.insert(delvesData, data)
     end
 
-    addon.delvesData = delvesData
+    DelveCompanion.delvesData = delvesData
 end
 
 -- Addon Boot
-addon.Init = function()
+DelveCompanion.Init = function()
     if not DelveCompanionAccountData then
         InitAccountSave()
     end
@@ -115,42 +116,47 @@ addon.Init = function()
 
     PrepareDelvesData()
 
-    addon.maxLevelReached = UnitLevel("player") == addon.config.MAX_LEVEL
-    addon.tomTomAvailable = TomTom ~= nil
+    DelveCompanion.maxLevelReached = UnitLevel("player") == DelveCompanion.config.MAX_LEVEL
+    DelveCompanion.tomTomAvailable = TomTom ~= nil
+
+    if DelveCompanion.maxLevelReached then
+        DelveCompanion_TooltipExtension_Init()
+    end
 end
 
-addon.eventsCatcherFrame = CreateFrame("Frame")
-addon.eventsCatcherFrame:RegisterEvent("ADDON_LOADED")
-addon.eventsCatcherFrame:RegisterEvent("PLAYER_LOGIN")
+DelveCompanion.eventsCatcherFrame = CreateFrame("Frame")
+DelveCompanion.eventsCatcherFrame:RegisterEvent("ADDON_LOADED")
+DelveCompanion.eventsCatcherFrame:RegisterEvent("PLAYER_LOGIN")
 -- addon.eventsCatcherFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
 -- addon.eventsCatcherFrame:RegisterEvent("GOSSIP_SHOW")
 -- addon.eventsCatcherFrame:RegisterEvent("UPDATE_UI_WIDGET")
 -- addon.eventsCatcherFrame:RegisterEvent("LOOT_OPENED")
 
 --- TODO: split creation and parenting to reduce load dependencies. Check LoadAddon.
-addon.eventsCatcherFrame:SetScript(
+DelveCompanion.eventsCatcherFrame:SetScript(
     "OnEvent",
     function(self, event, arg1, arg2, ...)
         if event == "ADDON_LOADED" then
             local loadedName = arg1
-            if loadedName == addonName then
+            --[[if loadedName == addonName then
                 addon.Init()
 
                 if addon.maxLevelReached then
                     DelveCompanion_TooltipExtension_Init()
                 end
-            elseif loadedName == enums.DependencyAddonName.delvesDashboardUI then
+            else]]
+            if loadedName == enums.DependencyAddonName.delvesDashboardUI then
                 if DelvesDashboardFrame == nil then
-                    log("DelvesDashboardFrame is nil. Delves UI extension is not inited.")
+                    Logger.Log("DelvesDashboardFrame is nil. Delves UI extension is not inited.")
                     return
                 end
 
-                if addon.maxLevelReached then
+                if DelveCompanion.maxLevelReached then
                     DelveCompanion_DelvesDashExtension_Init()
                 end
             elseif loadedName == enums.DependencyAddonName.encounterJournal then
                 if EncounterJournal == nil then
-                    log("EncounterJournal is nil. Delves tab is not inited.")
+                    Logger.Log("EncounterJournal is nil. Delves tab is not inited.")
                     return
                 end
 
@@ -159,34 +165,34 @@ addon.eventsCatcherFrame:SetScript(
                 return
             end
         elseif event == "PLAYER_LOGIN" then
-            addon.InitSettings()
+            DelveCompanion.InitSettings()
             -- elseif event == "PLAYER_ENTERING_WORLD" then
         elseif event == "WEEKLY_REWARDS_UPDATE" then
-            if addon.gvDetailsFrame:IsShown() then
-                addon.gvDetailsFrame:Refresh()
+            if DelveCompanion.gvDetailsFrame:IsShown() then
+                DelveCompanion.gvDetailsFrame:Refresh()
             else
-                addon.gvDetailsFrame.shouldRefresh = true
+                DelveCompanion.gvDetailsFrame.shouldRefresh = true
             end
             return
             -- elseif event == "GOSSIP_SHOW" then
             --     if arg1 == "delves-difficulty-picker" then
             --         local options = DelvesDifficultyPickerFrame:GetOptions()
             --         for key, value in pairs(options) do
-            --             log("%s: %s", key, tostring(value.gossipOptionID))
+            --             Logger.Log("%s: %s", key, tostring(value.gossipOptionID))
             --         end
 
             --         for key, value in pairs(DelvesDifficultyPickerFrame.DelveModifiersWidgetContainer.widgetFrames) do
-            --             log("%s: %s (index: %d)", key, tostring(value),
+            --             Logger.Log("%s: %s (index: %d)", key, tostring(value),
             --                 C_UIWidgetManager.GetSpellDisplayVisualizationInfo(key).orderIndex)
             --         end
             --     end
         elseif event == "QUEST_LOG_UPDATE" then
-            addon.CacheKeysData()
+            DelveCompanion.CacheKeysData()
             return
             -- elseif event == "UPDATE_UI_WIDGET" then
             --     local wi = arg1
             --     for key, value in pairs(wi) do
-            --         log("%s: %s", key, tostring(value))
+            --         Logger.Log("%s: %s", key, tostring(value))
             --     end
             --     return
             -- elseif event == "LOOT_OPENED" then
@@ -201,3 +207,5 @@ addon.eventsCatcherFrame:SetScript(
         end
     end
 )
+
+EventUtil.ContinueOnAddOnLoaded(addonName, DelveCompanion.Init)
