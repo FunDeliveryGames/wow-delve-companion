@@ -1,10 +1,25 @@
-# Script args
+<#
+.SYNOPSIS
+A script to pack addon into .zip archive.
+
+.DESCRIPTION
+The script copies all files of the addon from WoW AddOns folder and put them into .zip archive. The result archive is saved in the folder `./releases`.
+
+.PARAMETER yamlPath
+Path to YAML configuration file.
+
+.PARAMETER addonsLocation
+Path to WoW AddOns folder.
+
+.PARAMETER 7zipPath
+Path to 7zip.exe.
+
+.EXAMPLE
+.\pack_addon_mainline.ps1 -yamlPath ".\\.pkgmeta" -addonsLocation "C:\\Program Files\\World of Warcraft\\_retail_\\Interface\\AddOns" -7zipPath "C:\\Program Files\\7-Zip\\7z.exe"
+#>
 param (
-    # Path to YAML configuration file
     [string]$yamlPath,
-    # Path to WoW AddOns folder    
     [string]$addonsLocation,
-    # Path to WoW AddOns folder    
     [string]$7zipPath
 )
 
@@ -16,8 +31,28 @@ if ([string]::IsNullOrEmpty($yamlPath)) {
     Write-Error "YAML configuration is not provided. Check script args."
     exit 1
 }
+if ([string]::IsNullOrEmpty($7zipPath)) {
+    Write-Error "7zip path is not provided. Check script args."
+    exit 1
+}
 
 function Get-AddonVersion {
+    <#
+    .SYNOPSIS
+    A helper function to extract addon version from TOC file.
+
+    .PARAMETER tocFilePath
+    A description of what the 'Name' parameter is for.
+
+    .EXAMPLE
+    Get-AddonVersion -tocFilePath ".\DelveCompanion_Mainline.toc"
+
+    .OUTPUTS
+    String
+
+    .INPUTS
+    String
+    #>
     param (
         [string]$tocFilePath
     )
@@ -46,13 +81,10 @@ $tocPath = ".\DelveCompanion_Mainline.toc"
 # Read the YAML file content
 $yamlContent = Get-Content $yamlPath
 
-# Initialize variables
 $packageAs = ""
-
 foreach ($line in $yamlContent) {
     $trimmed = $line.Trim()
     if ($trimmed -like "package-as:*") {
-        # Extract value after the colon and trim spaces
         $packageAs = $trimmed.Substring($trimmed.IndexOf(":") + 1).Trim()
     }
 }
@@ -64,7 +96,7 @@ if ([string]::IsNullOrEmpty($packageAs)) {
 
 # ======= DETERMINE DIRECTORIES =======
 $sourceDir = Join-Path $addonsLocation $packageAs
-$targetDir = ".\releases"
+$targetDir = ".\Releases"
 if (-Not (Test-Path $targetDir)) {
     Write-Output "Creating release directory at '$targetDir'."
     New-Item -ItemType Directory -Path $targetDir | Out-Null
