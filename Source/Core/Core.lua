@@ -8,53 +8,6 @@ local Logger = DelveCompanion.Logger
 ---@type Config
 local Config = DelveCompanion.Config
 
---- Iterate through all Delves and update their runtime data
-DelveCompanion.CacheActiveBountiful = function()
-    -- Logger.Log("Start fetching boutiful delves...")
-    for _, delveData in ipairs(DelveCompanion.Variables.delvesData) do
-        local delveConfig = delveData.config
-        local parentMapID = C_Map.GetMapInfo(delveConfig.uiMapID).parentMapID
-        local poiIDs = delveConfig.poiIDs
-
-        if poiIDs.bountiful and C_AreaPoiInfo.GetAreaPOIInfo(parentMapID, poiIDs.bountiful) then
-            delveData.poiID = poiIDs.bountiful
-            delveData.isBountiful = true
-        else
-            delveData.poiID = poiIDs.regular
-            delveData.isBountiful = false
-        end
-    end
-    -- Logger.Log("Finished fetching boutiful delves...")
-end
-
-DelveCompanion.CacheKeysData = function()
-    local keysCollected = 0
-    for _, questId in ipairs(Config.BOUNTIFUL_KEY_QUESTS_DATA) do
-        if C_QuestLog.IsQuestFlaggedCompleted(questId) then
-            keysCollected = keysCollected + 1
-        end
-    end
-
-    DelveCompanion.Variables.keysCollected = keysCollected
-end
-
-DelveCompanion.GetContinentMapIDForMap = function(mapID)
-    if not mapID then
-        return nil
-    end
-
-    local mapInfo = C_Map.GetMapInfo(mapID)
-    while mapInfo and mapInfo.mapType ~= Enum.UIMapType.Continent do
-        mapInfo = C_Map.GetMapInfo(mapInfo.parentMapID)
-    end
-
-    if mapInfo then
-        return mapInfo.mapID
-    end
-
-    return nil
-end
-
 -- TODO: Explore a new Settings API. Maybe Settings.RegisterAddOnSetting is more convenient way to setup settings.
 DelveCompanion.InitSettings = function()
     local addonNameStr = tostring(addonName) -- TODO: explore why addonName can be a table instead of a string
@@ -73,73 +26,6 @@ function DelveCompanionShowSettings()
     end
 end
 
-local function InitAccountSave()
-    DelveCompanionAccountData = {
-        achievementWidgetsEnabled = true,
-        useTomTomWaypoints = false
-    }
-end
-
-local function InitCharacterSave()
-    DelveCompanionCharacterData = {
-        gvDetailsEnabled = true,
-        keysCapTooltipEnabled = true,
-        dashOverviewEnabled = true
-    }
-end
-
-local function PrepareDelvesData()
-    ---@type DelveData[]
-    local delvesData = {}
-
-    for _, delveConfig in ipairs(Config.DELVES_CONFIG) do
-        local delveMap = C_Map.GetMapInfo(delveConfig.uiMapID)
-
-        --- Shared table containing runtime Delve data.
-        ---@class (exact) DelveData
-        ---@field config DelveConfig [DelveConfig](lua://DelveConfig) table associated with this Delve.
-        ---@field poiID number? Current [areaPoiID](https://wago.tools/db2/areapoi) of this Delve.
-        ---@field tomtom any? Reference to TomTom waypoint set for the Delve. `nil` if not set.
-        ---@field delveName string Localized name of the Delve.
-        ---@field parentMapName string Localized name of the map this Delve located in.
-        ---@field isTracking boolean Whether player is tracking this Delve.
-        ---@field isBountiful boolean Whether this Delve is bountiful now.
-        local data = {
-            config = delveConfig,
-            poiID = nil,
-            tomtom = nil,
-            delveName = delveMap.name,
-            parentMapName = C_Map.GetMapInfo(delveMap.parentMapID).name,
-            isTracking = false,
-            isBountiful = false
-        }
-
-        table.insert(delvesData, data)
-    end
-
-    DelveCompanion.Variables.delvesData = delvesData
-end
-
--- Addon Boot
-DelveCompanion.Init = function()
-    if not DelveCompanionAccountData then
-        InitAccountSave()
-    end
-
-    if not DelveCompanionCharacterData then
-        InitCharacterSave()
-    end
-
-    PrepareDelvesData()
-
-    DelveCompanion.Variables.maxLevelReached = UnitLevel("player") == Config.EXPANSION_MAX_LEVEL
-    DelveCompanion.tomTomAvailable = TomTom ~= nil
-
-    if DelveCompanion.Variables.maxLevelReached then
-        DelveCompanion_TooltipExtension_Init()
-    end
-end
-
 DelveCompanion.eventsCatcherFrame = CreateFrame("Frame")
 DelveCompanion.eventsCatcherFrame:RegisterEvent("ADDON_LOADED")
 DelveCompanion.eventsCatcherFrame:RegisterEvent("PLAYER_LOGIN")
@@ -155,13 +41,7 @@ DelveCompanion.eventsCatcherFrame:SetScript(
         if event == "ADDON_LOADED" then
             local Enums = DelveCompanion.Enums
             local loadedName = arg1
-            --[[if loadedName == addonName then
-                addon.Init()
 
-                if addon.maxLevelReached then
-                    DelveCompanion_TooltipExtension_Init()
-                end
-            else]]
             if loadedName == Enums.DependencyAddonName.delvesDashboardUI then
                 if DelvesDashboardFrame == nil then
                     Logger.Log("DelvesDashboardFrame is nil. Delves UI extension is not inited.")
@@ -204,7 +84,7 @@ DelveCompanion.eventsCatcherFrame:SetScript(
             --         end
             --     end
         elseif event == "QUEST_LOG_UPDATE" then
-            DelveCompanion.CacheKeysData()
+            DelveCompanion:CacheKeysCount()
             return
             -- elseif event == "UPDATE_UI_WIDGET" then
             --     local wi = arg1
@@ -225,4 +105,6 @@ DelveCompanion.eventsCatcherFrame:SetScript(
     end
 )
 
-EventUtil.ContinueOnAddOnLoaded(addonName, DelveCompanion.Init)
+EventUtil.ContinueOnAddOnLoaded(addonName, function()
+    DelveCompanion:OnAddonLoaded()
+end)

@@ -77,7 +77,7 @@ function DelveCompanionDelveTrackingButtonMixin:SetTomTomWaypoint(delveData)
 end
 
 function DelveCompanionDelveTrackingButtonMixin:ClearTomTomWaypoint()
-    if not DelveCompanion.tomTomAvailable then
+    if not DelveCompanion.Variables.tomTomAvailable then
         return
     end
 
@@ -93,7 +93,7 @@ function DelveCompanionDelveTrackingButtonMixin:ToggleTracking()
         return
     end
 
-    if DelveCompanion.tomTomAvailable and DelveCompanionAccountData.useTomTomWaypoints then
+    if DelveCompanion.Variables.tomTomAvailable and DelveCompanionAccountData.useTomTomWaypoints then
         if delveData.isTracking then
             self:ClearTomTomWaypoint()
         else
@@ -111,7 +111,7 @@ function DelveCompanionDelveTrackingButtonMixin:ToggleTracking()
 end
 
 function DelveCompanionDelveTrackingButtonMixin:CheckTomTomWaypoint()
-    if not DelveCompanion.tomTomAvailable then
+    if not DelveCompanion.Variables.tomTomAvailable then
         return
     end
 

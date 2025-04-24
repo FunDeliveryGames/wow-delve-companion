@@ -224,7 +224,7 @@ end
 
 function DelveCompanionDelvesListMixin:OnShow()
     -- Logger.Log("DelvesList OnShow start")
-    DelveCompanion.CacheActiveBountiful()
+    DelveCompanion:UpdateDelvesData()
 
     for _, instanceButton in ipairs(self.instanceButtons) do
         instanceButton:Update()

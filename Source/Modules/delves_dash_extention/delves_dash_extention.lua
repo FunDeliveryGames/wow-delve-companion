@@ -358,7 +358,7 @@ function DelveCompanionOverviewGildedStashFrameMixin:CanRetrieveGildedStashInfo(
         return false
     end
 
-    local continent = DelveCompanion.GetContinentMapIDForMap(currentMap)
+    local continent = DelveCompanion:GetContinentMapIDForMap(currentMap)
     return continent and continent == Config.KHAZ_ALGAR_MAP_ID
 end
 
@@ -477,7 +477,7 @@ end
 
 function DelveCompanionOverviewBountifulFrameMixin:OnShow()
     -- Logger.Log("OverviewBountifulFrame OnShow start")
-    DelveCompanion.CacheActiveBountiful()
+    DelveCompanion:UpdateDelvesData()
     self.bountifulButtonsPool:ReleaseAll()
     self.ActiveDelves.NoBountifulLabel:Hide()
 
@@ -512,7 +512,7 @@ end
 DelveCompanionOverviewConsumablesWidgetMixin = {}
 
 function DelveCompanionOverviewConsumablesWidgetMixin:UpdateConsumables()
-    DelveCompanion.CacheKeysData()
+    DelveCompanion:CacheKeysCount()
     self.Keys.Label:SetText(C_CurrencyInfo.GetCurrencyInfo(Config.BOUNTIFUL_KEY_CURRENCY_CODE)
         .quantity)
 

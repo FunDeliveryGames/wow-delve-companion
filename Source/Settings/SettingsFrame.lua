@@ -16,7 +16,7 @@ local TOGGLE_CONTAINER_MAX_WIDTH = 600
 DelveCompanionSettingsFrameMixin = {}
 
 function DelveCompanionSettingsFrameMixin:OnShow()
-    if not DelveCompanion.tomTomAvailable then
+    if not DelveCompanion.Variables.tomTomAvailable then
         self.AccountTogglesContainer.useTomTomCheckButton:SetChecked(false)
         self.AccountTogglesContainer.useTomTomCheckButton:SetEnabled(false)
         self.AccountTogglesContainer.useTomTomCheckButton:SetScript("OnEnter", function()
