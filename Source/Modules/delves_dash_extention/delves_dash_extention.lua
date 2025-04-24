@@ -581,7 +581,14 @@ function DelveCompanion_DelvesDashExtension_Init()
             gvPanel,
             "DelveCompanionGreatVaultDetailsFrame")
         DelveCompanion.gvDetailsFrame = gvDetailsFrame
-        DelveCompanion.eventsCatcherFrame:RegisterEvent("WEEKLY_REWARDS_UPDATE")
+
+        EventRegistry:RegisterFrameEventAndCallback("WEEKLY_REWARDS_UPDATE", function()
+            if DelveCompanion.gvDetailsFrame:IsShown() then
+                DelveCompanion.gvDetailsFrame:Refresh()
+            else
+                DelveCompanion.gvDetailsFrame.shouldRefresh = true
+            end
+        end)
     end
 
     if DelveCompanionCharacterData.dashOverviewEnabled then

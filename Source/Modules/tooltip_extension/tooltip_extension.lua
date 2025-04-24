@@ -87,5 +87,7 @@ function DelveCompanion_TooltipExtension_Init()
     end
 
     EnableTooltipCapInfo()
-    DelveCompanion.eventsCatcherFrame:RegisterEvent("QUEST_LOG_UPDATE")
+    EventRegistry:RegisterFrameEventAndCallback("QUEST_LOG_UPDATE", function()
+        DelveCompanion:CacheKeysCount()
+    end)
 end

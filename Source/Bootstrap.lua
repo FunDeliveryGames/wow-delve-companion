@@ -1,0 +1,58 @@
+local addonName, AddonTbl = ...
+
+---@type DelveCompanion
+local DelveCompanion = AddonTbl.DelveCompanion
+
+---@type Logger
+local Logger = DelveCompanion.Logger
+---@type Config
+local Config = DelveCompanion.Config
+
+local function OnPlayerLogin()
+    -- Logger.Log("OnPlayerLogin start...")
+    DelveCompanion.AddonSettings:Init()
+    -- Logger.Log("OnPlayerLogin finish")
+end
+
+local function OnAddonLoaded()
+    -- Logger.Log("OnAddonLoaded start...")
+    if not DelveCompanionAccountData then
+        DelveCompanion:InitAccountSave()
+    end
+
+    if not DelveCompanionCharacterData then
+        DelveCompanion:InitCharacterSave()
+    end
+
+    DelveCompanion:InitDelvesData()
+
+    DelveCompanion.Variables.maxLevelReached = UnitLevel("player") == DelveCompanion.Config.EXPANSION_MAX_LEVEL
+    DelveCompanion.Variables.tomTomAvailable = TomTom ~= nil
+
+    if DelveCompanion.Variables.maxLevelReached then
+        DelveCompanion_TooltipExtension_Init()
+    end
+
+    -- Logger.Log("OnAddonLoaded finish")
+end
+
+EventRegistry:RegisterFrameEventAndCallback("PLAYER_LOGIN", OnPlayerLogin)
+EventUtil.ContinueOnAddOnLoaded(DelveCompanion.Enums.DependencyAddonName.delvesDashboardUI, function()
+    if DelvesDashboardFrame == nil then
+        Logger.Log("DelvesDashboardFrame is nil. Delves UI extension is not inited.")
+        return
+    end
+
+    if DelveCompanion.Variables.maxLevelReached then
+        DelveCompanion_DelvesDashExtension_Init()
+    end
+end)
+EventUtil.ContinueOnAddOnLoaded(DelveCompanion.Enums.DependencyAddonName.encounterJournal, function()
+    if EncounterJournal == nil then
+        Logger.Log("EncounterJournal is nil. Delves tab is not inited.")
+        return
+    end
+
+    DelveCompanion_DelvesListFrame_Init()
+end)
+EventUtil.ContinueOnAddOnLoaded(addonName, OnAddonLoaded)

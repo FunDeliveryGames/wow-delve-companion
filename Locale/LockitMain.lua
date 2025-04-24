@@ -29,7 +29,7 @@ DelveCompanion.Lockit = Lockit
 --- DATA
 --- CONFIG
 --- etc
-- Keys can have a description of the context if it matters.
+- Keys can have a description to provide context where they are used if it matters.
 ]]
 --#endregion
 

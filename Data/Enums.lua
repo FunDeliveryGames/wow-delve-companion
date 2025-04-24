@@ -23,11 +23,9 @@ setmetatable(CodeType, {
 ---@class DependencyAddonName
 ---@field delvesDashboardUI string `Blizzard_DelvesDashboardUI`
 ---@field encounterJournal string `Blizzard_EncounterJournal`
----@field weeklyRewards string `Blizzard_WeeklyRewards`
 local DependencyAddonName = {
     delvesDashboardUI = "Blizzard_DelvesDashboardUI",
-    encounterJournal = "Blizzard_EncounterJournal",
-    weeklyRewards = "Blizzard_WeeklyRewards"
+    encounterJournal = "Blizzard_EncounterJournal"
 }
 
 --- Enum-like tables used across addon modules.

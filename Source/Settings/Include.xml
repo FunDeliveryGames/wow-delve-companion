@@ -5,4 +5,5 @@
 	<Script file="SettingsToggle.lua" />
 	<Include file="SettingsFrame.xml" />
 	<Script file="SettingsFrame.lua" />
+	<Script file="SettingsMain.lua" />
 </Ui>

@@ -1,12 +1,13 @@
 local addonName, AddonTbl = ...
 
---- Addon metatable containing all functions and variables it uses.
+--- Addon master-table containing all functions and variables it uses.
 ---@class DelveCompanion
 ---@field Logger Logger
 ---@field Config Config
 ---@field Lockit Lockit
 ---@field Enums Enums
 ---@field Variables Variables
+---@field AddonSettings AddonSettings
 local DelveCompanion = {}
 AddonTbl.DelveCompanion = DelveCompanion
 
@@ -80,7 +81,7 @@ function DelveCompanion:CacheKeysCount()
     self.Variables.keysCollected = keysCollected
 end
 
---- Tries to retrieve the `uiMapID` of the parent map with `Enum.UIMapType.Continent` for the given [uiMapID](https://warcraft.wiki.gg/wiki/UiMapID).
+--- Tries to retrieve `uiMapID` of the parent map with `Enum.UIMapType.Continent` for the given [uiMapID](https://warcraft.wiki.gg/wiki/UiMapID).
 ---@param self DelveCompanion
 ---@param mapID number [uiMapID](https://warcraft.wiki.gg/wiki/UiMapID) for which the Continent is retrieved.
 ---@return number|nil # Retrieved `uiMapID` of the Continent or `nil` otherwise.
@@ -129,28 +130,6 @@ function DelveCompanion:InitCharacterSave()
         keysCapTooltipEnabled = true,
         dashOverviewEnabled = true
     }
-end
-
---- Addon initialization.
----@param self DelveCompanion
----@return nil
-function DelveCompanion:OnAddonLoaded()
-    if not DelveCompanionAccountData then
-        self:InitAccountSave()
-    end
-
-    if not DelveCompanionCharacterData then
-        self:InitCharacterSave()
-    end
-
-    self:InitDelvesData()
-
-    self.Variables.maxLevelReached = UnitLevel("player") == self.Config.EXPANSION_MAX_LEVEL
-    self.Variables.tomTomAvailable = TomTom ~= nil
-
-    if self.Variables.maxLevelReached then
-        DelveCompanion_TooltipExtension_Init()
-    end
 end
 
 --#region Shared annotations
