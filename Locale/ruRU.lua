@@ -2,50 +2,55 @@ if GetLocale() ~= "ruRU" then
     return
 end
 
-local _, Addon = ...
+local _, AddonTbl = ...
+
+---@type DelveCompanion
+local DelveCompanion = AddonTbl.DelveCompanion
+
 ---@type Logger
-local Logger = Addon.Logger
-local lockit = Addon.lockit
+local Logger = DelveCompanion.Logger
+---@type Lockit
+local Lockit = DelveCompanion.Lockit
 --====================== NO ADDON DATA BELOW, ONLY LOCKIT ===================================================
 
 -- Общие
 
-lockit["ui-common-bountiful-delve"] = "Многообещающая Вылазка"
+Lockit.UI_COMMON_BOUNTIFUL_DELVE_TITLE = "Многообещающая Вылазка"
 
 -- Список вылазок
 
-lockit["ui-delve-instance-button-tooltip-click-instruction"] = "<Shift + ЛКМ, чтобы установить точку маршрута к вылазке>"
-lockit["ui-delve-instance-button-tooltip-current-text"] = "Точка маршрута установлена."
-lockit["ui-delve-instance-button-tooltip-current-instruction"] = "<Shift + ЛКМ, чтобы сбросить точку маршрута>"
+Lockit.UI_DELVE_INSTANCE_BUTTON_TOOLTIP_CLICK_INSTRUCTION = "<Shift + ЛКМ, чтобы установить точку маршрута к вылазке>"
+Lockit.UI_DELVE_INSTANCE_BUTTON_TOOLTIP_CURRENT_TEXT = "Точка маршрута установлена."
+Lockit.UI_DELVE_INSTANCE_BUTTON_TOOLTIP_CURRENT_INSTRUCTION = "<Shift + ЛКМ, чтобы сбросить точку маршрута>"
 
 -- Интерфейс вылазок
 
-lockit["ui-gilded-stash-cannot-retrieve-data"] = "Посетите Каз Алгар, чтобы увидеть прогресс"
-lockit["ui-gilded-stash-bountiful-note"] =
+Lockit.UI_GILDED_STASH_CANNOT_RETRIEVE_DATA = "Посетите Каз Алгар, чтобы увидеть прогресс"
+Lockit.UI_GILDED_STASH_BOUNTIFUL_NOTE =
 "Появляется только на |cnNORMAL_FONT_COLOR:11-ом Уровне|r Многообещающих Вылазок|A:delves-bountiful:16:16|a."
-lockit["ui-no-active-bountiful"] = "Нет активных вылазок"
-lockit["ui-loot-info-button-tooltip-instruction"] = "<Нажмите, чтобы отобразить информацию о добыче Вылазок>"
+Lockit.UI_NO_ACTIVE_BOUNTIFUL = "Нет активных вылазок"
+Lockit.UI_LOOT_INFO_BUTTON_TOOLTIP_INSTRUCTION = "<Нажмите, чтобы отобразить информацию о добыче Вылазок>"
 
 -- Информация о добыче
 
-lockit["ui-loot-info-description"] = "Завершите вылазку, чтобы получить:"
+Lockit.UI_LOOT_INFO_DESCRIPTION = "Завершите вылазку, чтобы получить:"
 
 -- Информация о ключах
 
-lockit["ui-bountiful-keys-count-caches-prefix"] = "Ключей из тайников"
+Lockit.UI_BOUNTIFUL_KEYS_COUNT_CACHES_PREFIX = "Ключей из тайников"
 
 -- Настройки
 
-lockit["ui-settings-missing-addon-title"] =
+Lockit.UI_SETTINGS_MISSING_ADDON_TITLE =
 "Отсутствует необходимый аддон: %s" -- %s: Имя аддона. Например, DelveCompanion
 
-lockit["ui-settings-section-title-account"] = "Параметры аккаунта:"
-lockit["ui-settings-ach-widgets"] = "Список вылазок: Отображать прогресс достижений (истории и сундуки)."
-lockit["ui-settings-tomtom-description"] = "Использовать путевые точки TomTom вместо маркеров карты Blizzard."
+Lockit.UI_SETTINGS_SECTION_TITLE_ACCOUNT = "Параметры аккаунта:"
+Lockit.UI_SETTINGS_ACH_WIDGETS = "Список вылазок: Отображать прогресс достижений (истории и сундуки)."
+Lockit.UI_SETTINGS_TOMTOM_DESCRIPTION = "Использовать путевые точки TomTom вместо маркеров карты Blizzard."
 
-lockit["ui-settings-section-title-character"] = "Параметры персонажа:"
-lockit["ui-settings-gv-details"] = "Интерфейс вылазок: Отображать подробные детали Великого Хранилища."
-lockit["ui-settings-dashboard-overview"] =
+Lockit.UI_SETTINGS_SECTION_TITLE_CHARACTER = "Параметры персонажа:"
+Lockit.UI_SETTINGS_GV_DETAILS = "Интерфейс вылазок: Отображать подробные детали Великого Хранилища."
+Lockit.UI_SETTINGS_DASHBOARD_OVERVIEW =
 "Интерфейс вылазок: Отображать раздел обзора (Позолоченный тайник, Многообещающая Вылазка)."
-lockit["ui-settings-keys-cap"] = "Отображать еженедельные лимиты в подсказках."
-lockit["ui-settings-translation-title"] = "Особая благодарность за помощь с переводом:"
+Lockit.UI_SETTINGS_KEYS_CAP = "Отображать еженедельные лимиты в подсказках."
+Lockit.UI_SETTINGS_TRANSLATION_TITLE = "Особая благодарность за помощь с переводом:"

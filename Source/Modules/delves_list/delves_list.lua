@@ -1,8 +1,14 @@
-local addonName, DelveCompanion = ...
+local addonName, AddonTbl = ...
+
+---@type DelveCompanion
+local DelveCompanion = AddonTbl.DelveCompanion
+
 ---@type Logger
 local Logger = DelveCompanion.Logger
-local lockit = DelveCompanion.lockit
-local enums = DelveCompanion.enums
+---@type Config
+local Config = DelveCompanion.Config
+---@type Lockit
+local Lockit = DelveCompanion.Lockit
 
 --#region Constants
 
@@ -47,7 +53,7 @@ function DelveCompanionDelveInstanceButtonMixin:OnHide()
 end
 
 function DelveCompanionDelveInstanceButtonMixin:OnEnter()
-    if DelveCompanion.maxLevelReached == false then
+    if DelveCompanion.Variables.maxLevelReached == false then
         return
     end
 
@@ -59,7 +65,7 @@ function DelveCompanionDelveInstanceButtonMixin:OnLeave()
 end
 
 function DelveCompanionDelveInstanceButtonMixin:OnClick()
-    if not DelveCompanion.maxLevelReached then
+    if not DelveCompanion.Variables.maxLevelReached then
         return
     end
 
@@ -82,10 +88,11 @@ end
 function DelveCompanionDelvesListMixin:CreateDelveAchievementsWidget(parent, config)
     local widget = CreateFrame("Frame", nil, parent, "DelveCompanionDelveAchievementsWidgetTemplate")
 
+    local Enums = DelveCompanion.Enums
     do
         -- Story progress
         local achID = config.achievements.story
-        widget.Story:SetFrameInfo(enums.CodeType.Achievement, achID)
+        widget.Story:SetFrameInfo(Enums.CodeType.Achievement, achID)
 
         local totalCount = GetAchievementNumCriteria(achID)
         local completedCount = 0
@@ -106,7 +113,7 @@ function DelveCompanionDelvesListMixin:CreateDelveAchievementsWidget(parent, con
     do
         -- Chest progress
         local achID = config.achievements.chest
-        widget.Chest:SetFrameInfo(enums.CodeType.Achievement, achID)
+        widget.Chest:SetFrameInfo(Enums.CodeType.Achievement, achID)
 
         local quantity, reqQuantity = select(4, GetAchievementCriteriaInfo(achID, 1))
         local text = format(_G["GENERIC_FRACTION_STRING"], quantity, reqQuantity)
@@ -135,7 +142,7 @@ end
 function DelveCompanionDelvesListMixin:InitDelvesList()
     local offsetX, offsetY = DELVES_LIST_VIEW_BUTTONS_OFFSET, 0
     local instanceButtons = {}
-    for _, mapID in ipairs(DelveCompanion.config.DELVES_MAPS_DATA) do
+    for _, mapID in ipairs(Config.MAPS_WITH_DELVES) do
         local areaName = C_Map.GetMapInfo(mapID).name
         local header = self:CreateMapHeader(self.DelvesListScroll.Content, areaName)
         header:SetPoint("TOPLEFT", self.DelvesListScroll.Content, "TOPLEFT", 0, -offsetY)
@@ -145,7 +152,7 @@ function DelveCompanionDelvesListMixin:InitDelvesList()
         local count = 0
         local cellHeight = 0
         local prevRow = 0
-        for _, delveData in ipairs(DelveCompanion.delvesData) do
+        for _, delveData in ipairs(DelveCompanion.Variables.delvesData) do
             local delveConfig = delveData.config
             local parentMapID = C_Map.GetMapInfo(delveConfig.uiMapID).parentMapID
 
@@ -189,7 +196,7 @@ function DelveCompanionDelvesListMixin:InitDelvesList()
 end
 
 function DelveCompanionDelvesListMixin:UpdateKeysWidget()
-    local keyCurrInfo = C_CurrencyInfo.GetCurrencyInfo(DelveCompanion.config.BOUNTIFUL_KEY_CURRENCY_CODE)
+    local keyCurrInfo = C_CurrencyInfo.GetCurrencyInfo(Config.BOUNTIFUL_KEY_CURRENCY_CODE)
     if not keyCurrInfo then
         self.KeysWidget:Hide()
         return
@@ -203,9 +210,9 @@ end
 function DelveCompanionDelvesListMixin:OnLoad()
     --Logger.Log("DelvesList OnLoad start")
     self.Title:SetText(_G["DELVES_LABEL"])
-    self.KeysWidget:SetFrameInfo(enums.CodeType.Currency, DelveCompanion.config.BOUNTIFUL_KEY_CURRENCY_CODE)
+    self.KeysWidget:SetFrameInfo(DelveCompanion.Enums.CodeType.Currency, Config.BOUNTIFUL_KEY_CURRENCY_CODE)
 
-    self.AffixWidget:SetFrameInfo(enums.CodeType.Spell, DelveCompanion.config.NEMESIS_AFFIX_SPELL_CODE)
+    self.AffixWidget:SetFrameInfo(DelveCompanion.Enums.CodeType.Spell, Config.NEMESIS_AFFIX_SPELL_CODE)
     self.AffixWidget:SetLabelText(_G["MODIFIERS_COLON"])
 
     self:InitDelvesList()
@@ -223,7 +230,7 @@ function DelveCompanionDelvesListMixin:OnShow()
         instanceButton:Update()
     end
 
-    if DelveCompanion.maxLevelReached then
+    if DelveCompanion.Variables.maxLevelReached then
         self:UpdateKeysWidget()
         self:RegisterEvent("CURRENCY_DISPLAY_UPDATE")
     else

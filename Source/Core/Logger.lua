@@ -1,12 +1,14 @@
-local addonName, DelveCompanion = ...
+local addonName, AddonTbl = ...
 
+---@type DelveCompanion
+local DelveCompanion = AddonTbl.DelveCompanion
+
+--- Utility class for printing debug information.
 ---@class Logger
----@field logsEnabled boolean Controls whether the addon can log anything
+---@field logsEnabled boolean Top-level toggle to control logging
 local Logger = {
     logsEnabled = true
 }
-
----@type Logger
 DelveCompanion.Logger = Logger
 
 --- Logs a formatted string to the console if logging is enabled.
@@ -23,7 +25,7 @@ end
 
 --- Logs the contents of a table as key-value pairs.
 --- Only top-level entries are shown; nested tables and functions are not recursively expanded.
----@param tbl table Table to be logged
+---@param tbl table The table to log.
 function Logger.LogTable(tbl)
     if type(tbl) ~= "table" then
         return

@@ -1,8 +1,12 @@
-local addonName, DelveCompanion = ...
+local addonName, AddonTbl = ...
+
+---@type DelveCompanion
+local DelveCompanion = AddonTbl.DelveCompanion
+
 ---@type Logger
 local Logger = DelveCompanion.Logger
-local enums = DelveCompanion.enums
-local lockit = DelveCompanion.lockit
+---@type Lockit
+local Lockit = DelveCompanion.Lockit
 
 --============ DelveCompanionIconWithTextAndTooltip ======================
 
@@ -38,16 +42,17 @@ local function SetFromTexture(self)
         return
     end
 
-    if type == enums.CodeType.Item then
+    local Enums = DelveCompanion.Enums
+    if type == Enums.CodeType.Item then
         texture = C_Item.GetItemIconByID(code)
-    elseif type == enums.CodeType.Spell then
+    elseif type == Enums.CodeType.Spell then
         texture = C_Spell.GetSpellTexture(code)
-    elseif type == enums.CodeType.Currency then
+    elseif type == Enums.CodeType.Currency then
         texture = C_CurrencyInfo.GetCurrencyInfo(code).iconFileID
-    elseif type == enums.CodeType.Achievement then
+    elseif type == Enums.CodeType.Achievement then
         texture = select(10, GetAchievementInfo(code))
     else
-        Logger.Log(lockit["ui-debug-unexpected-enum-element"], tostring(enums.CodeType), type)
+        Logger.Log(Lockit.DEBUG_UNEXPECTED_ENUM_ELEMENT, tostring(Enums.CodeType), type)
     end
 
     if texture then
@@ -56,7 +61,7 @@ local function SetFromTexture(self)
 end
 
 function DelveCompanionIconWithLabelAndTooltipMixin:SetFrameInfo(frameType, frameCode)
-    if frameType and FindInTable(enums.CodeType, frameType) then
+    if frameType and FindInTable(DelveCompanion.Enums.CodeType, frameType) then
         self.frameType = frameType
     end
 
@@ -137,17 +142,18 @@ function DelveCompanionIconWithLabelAndTooltipMixin:OnEnter()
         return
     end
 
-    if type == enums.CodeType.Item then
+    local Enums = DelveCompanion.Enums
+    if type == Enums.CodeType.Item then
         GameTooltip:SetItemByID(code)
-    elseif type == enums.CodeType.Spell then
+    elseif type == Enums.CodeType.Spell then
         GameTooltip:SetSpellByID(code)
-    elseif type == enums.CodeType.Currency then
+    elseif type == Enums.CodeType.Currency then
         GameTooltip:SetCurrencyByID(code)
-    elseif type == enums.CodeType.Achievement then
+    elseif type == Enums.CodeType.Achievement then
         -- GameTooltip:SetAchievementByID(code)
         GameTooltip:SetHyperlink(GetAchievementLink(code))
     else
-        Logger.Log(lockit["ui-debug-unexpected-enum-element"], tostring(enums.CodeType), type)
+        Logger.Log(Lockit.DEBUG_UNEXPECTED_ENUM_ELEMENT, tostring(Enums.CodeType), type)
     end
     GameTooltip:Show()
 end

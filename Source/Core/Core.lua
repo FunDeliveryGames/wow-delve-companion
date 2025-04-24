@@ -1,11 +1,17 @@
-local addonName, DelveCompanion = ...
+local addonName, AddonTbl = ...
+
+---@type DelveCompanion
+local DelveCompanion = AddonTbl.DelveCompanion
+
 ---@type Logger
 local Logger = DelveCompanion.Logger
-local enums = DelveCompanion.enums
+---@type Config
+local Config = DelveCompanion.Config
 
+--- Iterate through all Delves and update their runtime data
 DelveCompanion.CacheActiveBountiful = function()
     -- Logger.Log("Start fetching boutiful delves...")
-    for _, delveData in ipairs(DelveCompanion.delvesData) do
+    for _, delveData in ipairs(DelveCompanion.Variables.delvesData) do
         local delveConfig = delveData.config
         local parentMapID = C_Map.GetMapInfo(delveConfig.uiMapID).parentMapID
         local poiIDs = delveConfig.poiIDs
@@ -23,13 +29,13 @@ end
 
 DelveCompanion.CacheKeysData = function()
     local keysCollected = 0
-    for _, questId in ipairs(DelveCompanion.config.BOUNTIFUL_KEY_QUESTS_DATA) do
+    for _, questId in ipairs(Config.BOUNTIFUL_KEY_QUESTS_DATA) do
         if C_QuestLog.IsQuestFlaggedCompleted(questId) then
             keysCollected = keysCollected + 1
         end
     end
 
-    DelveCompanion.keysCollected = keysCollected
+    DelveCompanion.Variables.keysCollected = keysCollected
 end
 
 DelveCompanion.GetContinentMapIDForMap = function(mapID)
@@ -83,11 +89,21 @@ local function InitCharacterSave()
 end
 
 local function PrepareDelvesData()
+    ---@type DelveData[]
     local delvesData = {}
 
-    for _, delveConfig in ipairs(DelveCompanion.config.DELVES_REGULAR_DATA) do
+    for _, delveConfig in ipairs(Config.DELVES_CONFIG) do
         local delveMap = C_Map.GetMapInfo(delveConfig.uiMapID)
 
+        --- Shared table containing runtime Delve data.
+        ---@class (exact) DelveData
+        ---@field config DelveConfig [DelveConfig](lua://DelveConfig) table associated with this Delve.
+        ---@field poiID number? Current [areaPoiID](https://wago.tools/db2/areapoi) of this Delve.
+        ---@field tomtom any? Reference to TomTom waypoint set for the Delve. `nil` if not set.
+        ---@field delveName string Localized name of the Delve.
+        ---@field parentMapName string Localized name of the map this Delve located in.
+        ---@field isTracking boolean Whether player is tracking this Delve.
+        ---@field isBountiful boolean Whether this Delve is bountiful now.
         local data = {
             config = delveConfig,
             poiID = nil,
@@ -101,7 +117,7 @@ local function PrepareDelvesData()
         table.insert(delvesData, data)
     end
 
-    DelveCompanion.delvesData = delvesData
+    DelveCompanion.Variables.delvesData = delvesData
 end
 
 -- Addon Boot
@@ -116,10 +132,10 @@ DelveCompanion.Init = function()
 
     PrepareDelvesData()
 
-    DelveCompanion.maxLevelReached = UnitLevel("player") == DelveCompanion.config.MAX_LEVEL
+    DelveCompanion.Variables.maxLevelReached = UnitLevel("player") == Config.EXPANSION_MAX_LEVEL
     DelveCompanion.tomTomAvailable = TomTom ~= nil
 
-    if DelveCompanion.maxLevelReached then
+    if DelveCompanion.Variables.maxLevelReached then
         DelveCompanion_TooltipExtension_Init()
     end
 end
@@ -137,6 +153,7 @@ DelveCompanion.eventsCatcherFrame:SetScript(
     "OnEvent",
     function(self, event, arg1, arg2, ...)
         if event == "ADDON_LOADED" then
+            local Enums = DelveCompanion.Enums
             local loadedName = arg1
             --[[if loadedName == addonName then
                 addon.Init()
@@ -145,16 +162,16 @@ DelveCompanion.eventsCatcherFrame:SetScript(
                     DelveCompanion_TooltipExtension_Init()
                 end
             else]]
-            if loadedName == enums.DependencyAddonName.delvesDashboardUI then
+            if loadedName == Enums.DependencyAddonName.delvesDashboardUI then
                 if DelvesDashboardFrame == nil then
                     Logger.Log("DelvesDashboardFrame is nil. Delves UI extension is not inited.")
                     return
                 end
 
-                if DelveCompanion.maxLevelReached then
+                if DelveCompanion.Variables.maxLevelReached then
                     DelveCompanion_DelvesDashExtension_Init()
                 end
-            elseif loadedName == enums.DependencyAddonName.encounterJournal then
+            elseif loadedName == Enums.DependencyAddonName.encounterJournal then
                 if EncounterJournal == nil then
                     Logger.Log("EncounterJournal is nil. Delves tab is not inited.")
                     return

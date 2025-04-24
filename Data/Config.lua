@@ -1,22 +1,42 @@
-local addonName, DelveCompanion = ...
+local addonName, AddonTbl = ...
 
-local config = {}
+---@type DelveCompanion
+local DelveCompanion = AddonTbl.DelveCompanion
 
-config.MAX_LEVEL = 80
-config.ACTIVITY_TYPE = Enum.WeeklyRewardChestThresholdType.World
-config.KHAZ_ALGAR_MAP_ID = 2274
+--- Table containing all addon external parameters, such as game entity IDs, Delves parameters, limits, etc.
+---@class Config
+local Config = {}
+DelveCompanion.Config = Config
 
-config.BOUNTIFUL_COFFER_ITEM_CODE = 228942
-config.BOUNTIFUL_KEY_CURRENCY_CODE = 3028
-config.BOUNTIFUL_KEY_MAX_PER_WEEK = 4
-config.BOUNTIFUL_KEY_QUESTS_DATA = {
+---@type integer Player's maximum level in the current expansion.
+Config.EXPANSION_MAX_LEVEL = 80
+
+--#region Great Vault
+
+---@type integer Delves' Activity ID to retrieve Great Vault rewards state.
+Config.ACTIVITY_TYPE = Enum.WeeklyRewardChestThresholdType.World
+---@type integer Max tier of the Delve which upgrades Great Vault rewards.
+Config.GREAT_VAULT_UPGRADE_MAX_TIER = 8
+---@type integer Item ID of [Bountiful Coffer](https://www.wowhead.com/item=228942/bountiful-coffer).
+Config.BOUNTIFUL_COFFER_ITEM_CODE = 228942
+--#endregion
+
+--#region Restored Coffer Key
+
+---@type integer Currency ID of [Restored Coffer Key](https://www.wowhead.com/currency=3028/restored-coffer-key).
+Config.BOUNTIFUL_KEY_CURRENCY_CODE = 3028
+---@type integer Weekly cap of [Restored Coffer Keys](https://www.wowhead.com/currency=3028/restored-coffer-key) player can get from Caches like [Pinnacle Cache](https://www.wowhead.com/item=239118/pinnacle-cache).
+Config.BOUNTIFUL_KEY_MAX_PER_WEEK = 4
+---@type table<integer, number> Indexed table of Quest IDs used to track [Restored Coffer Keys](https://www.wowhead.com/currency=3028/restored-coffer-key) player has received during the week.
+Config.BOUNTIFUL_KEY_QUESTS_DATA = {
     [1] = 84736,
     [2] = 84737,
     [3] = 84738,
-    [4] = 84739,
+    [4] = 84739
 }
-config.BOUNTIFUL_KEY_SOURCE_CACHES_DATA = {
-    -- Season 1
+---@type table<integer, number> Indexed table of Caches containing [Restored Coffer Keys](https://www.wowhead.com/currency=3028/restored-coffer-key) (e.g. [Pinnacle Cache](https://www.wowhead.com/item=239118/pinnacle-cache)).
+Config.BOUNTIFUL_KEY_SOURCE_CACHES_DATA = {
+    -- TWW Season 1
     [1]  = 226263,
     [2]  = 226273,
     [3]  = 226264,
@@ -25,7 +45,7 @@ config.BOUNTIFUL_KEY_SOURCE_CACHES_DATA = {
     [6]  = 225572,
     [7]  = 225573,
     [8]  = 228361,
-    -- Season 2
+    -- TWW Season 2
     [9]  = 239128,
     [10] = 239121,
     [11] = 239126,
@@ -38,33 +58,65 @@ config.BOUNTIFUL_KEY_SOURCE_CACHES_DATA = {
     [18] = 235610,
     [19] = 239120
 }
+--#endregion
 
-config.GILDED_STASH_WEEKLY_CAP = 3
-config.GILDED_STASH_SPELL_CODE = 1216211
--- Seasonal items
-config.BOUNTY_MAP_ITEM_CODE = 233071
-config.BOUNTY_MAP_MAX_PER_WEEK = 1
-config.BOUNTY_MAP_QUEST = 86371
+--#region Gilded Stash
 
-config.ECHO_ITEM_CODE = 235897
+---@type integer Spell ID of [Gilded Stash](https://www.wowhead.com/spell=1216211/gilded-stash).
+Config.GILDED_STASH_SPELL_CODE = 1216211
+---@type integer [Gilded Stash](https://www.wowhead.com/spell=1216211/gilded-stash) player can open per week.
+Config.GILDED_STASH_WEEKLY_CAP = 3
+--#endregion
 
-config.KEY_SHARD_ITEM_CODE = 236096
-config.SHARDS_FOR_KEY = 100
--- Seasonal modifiers
-config.NEMESIS_AFFIX_SPELL_CODE = 472952 -- Nemesis Strongbox
---===
+--#region Delve-related entities which are updated every season
 
--- Table of maps which contain Delves
-config.DELVES_MAPS_DATA = {
+---@type integer Item ID of [Delver's Bounty](https://www.wowhead.com/item=233071/delvers-bounty).
+Config.BOUNTY_MAP_ITEM_CODE = 233071
+---@type integer Weekly cap of [Delver's Bounty](https://www.wowhead.com/item=233071/delvers-bounty).
+Config.BOUNTY_MAP_MAX_PER_WEEK = 1
+---@type integer Quest ID used to track whether player has looted [Delver's Bounty](https://www.wowhead.com/item=233071/delvers-bounty) during the week.
+Config.BOUNTY_MAP_QUEST = 86371
+
+---@type integer Item ID of [Radiant Echo](https://www.wowhead.com/item=235897/radiant-echo).
+Config.ECHO_ITEM_CODE = 235897
+
+---@type integer Item ID of [Coffer Key Shard](https://www.wowhead.com/item=236096/coffer-key-shard).
+Config.KEY_SHARD_ITEM_CODE = 236096
+---@type integer Number of [Coffer Key Shards](https://www.wowhead.com/item=236096/coffer-key-shard) required to assemble [Restored Coffer Key](https://www.wowhead.com/currency=3028/restored-coffer-key).
+Config.SHARDS_FOR_KEY = 100
+--#endregion
+
+--#region Seasonal modifiers
+
+---@type integer Spell ID of [Nemesis Strongbox](https://www.wowhead.com/spell=472952/nemesis-strongbox).
+Config.NEMESIS_AFFIX_SPELL_CODE = 472952
+--#endregion
+
+--#region Delves
+
+---@type integer Khaz Algar [uiMapID](https://warcraft.wiki.gg/wiki/UiMapID).
+Config.KHAZ_ALGAR_MAP_ID = 2274
+
+---@type table<integer, number> Indexed table of [uiMapIDs](https://warcraft.wiki.gg/wiki/UiMapID) which contain Delves.
+Config.MAPS_WITH_DELVES = {
     [1] = 2248,
     [2] = 2214,
     [3] = 2215,
     [4] = 2255,
-    [5] = 2346,
+    [5] = 2346
 }
 
--- Table of Delves by their UI Map IDs
-config.DELVES_REGULAR_DATA = {
+--- Table with Delve parameters.
+---@class (exact) DelveConfig
+---@field uiMapID number Delve [uiMapID](https://warcraft.wiki.gg/wiki/UiMapID).
+---@field poiIDs {regular: number, bountiful: number?} Delve [areaPoiIDs](https://wago.tools/db2/areapoi).
+---@field gildedStashUiWidgetID number? [UiWidgetID](https://wago.tools/db2/UiWidget) used to retrieve information about [Gilded Stash](https://www.wowhead.com/spell=1216211/gilded-stash) weekly progress.
+---@field atlasBgID string [AtlasID](https://warcraft.wiki.gg/wiki/AtlasID) used to get Delve's background texture.
+---@field achievements {chest: number, story: number}? Achievement IDs related to the Delve.
+---@field coordinates MapCoord? Delve entrance coordinates. Used primarly for Boss Delves and TomTom waypoints.
+
+---@type DelveConfig[] Indexed table of all Delves in the game and their parameters.
+Config.DELVES_CONFIG = {
     -- "Earthcrawl Mines"
     [1] = {
         uiMapID = 2269,
@@ -288,10 +340,14 @@ config.DELVES_REGULAR_DATA = {
     }
 }
 
-config.GREAT_VAULT_UPGRADE_MAX_TIER = 8
+--- Table with Delve Loot information
+---@class DelveLootInfo
+---@field bountifulLvl integer Item Level player gets opening [Bountiful Coffer](https://www.wowhead.com/item=228942/bountiful-coffer).
+---@field vaultLvl integer Item Level player gets from the Great Vault completing the corresponding Delve Tier.
 
--- Table of loot by Delves Tier
-config.DELVES_LOOT_INFO_DATA = {
+--- Indexed table of Delves Loot information (index = Tier).
+---@type DelveLootInfo[]
+Config.DELVES_LOOT_INFO_DATA = {
     [1] = {
         bountifulLvl = 610,
         vaultLvl = 623
@@ -335,7 +391,6 @@ config.DELVES_LOOT_INFO_DATA = {
     [11] = {
         bountifulLvl = 639,
         vaultLvl = 649
-    },
+    }
 }
-
-DelveCompanion.config = config
+--#endregion

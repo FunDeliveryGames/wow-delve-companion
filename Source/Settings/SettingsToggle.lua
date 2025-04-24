@@ -1,7 +1,12 @@
-local addonName, DelveCompanion = ...
+local addonName, AddonTbl = ...
+
+---@type DelveCompanion
+local DelveCompanion = AddonTbl.DelveCompanion
+
 ---@type Logger
 local Logger = DelveCompanion.Logger
-local lockit = DelveCompanion.lockit
+---@type Lockit
+local Lockit = DelveCompanion.Lockit
 
 DelveCompanionSettingsToggleMixin = {}
 
@@ -18,6 +23,6 @@ function DelveCompanionSettingsToggleMixin:OnShow()
         save[self.saveVar] = cb:GetChecked()
     end)
 
-    self.Text:SetText(lockit[self.localeKey])
+    self.Text:SetText(Lockit[self.localeKey])
     self.Text:SetWidth(self:GetParent().maximumWidth)
 end

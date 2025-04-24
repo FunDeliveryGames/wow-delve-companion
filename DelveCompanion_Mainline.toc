@@ -28,8 +28,8 @@
 ## X-Category: Delves
 ## X-Website: https://github.com/FunDeliveryGames/wow-delve-companion
 
-# Logging
-Source\Logger.lua
+# Core
+Source\Core\Include.xml
 
 # Localization
 Locale\Lockit.xml
@@ -45,7 +45,7 @@ Source\Settings\Include.xml
 
 # Core
 Source\Modules\tooltip_extension\tooltip_extension.lua
-Source\Core.lua
+Source\Core\Core.lua
 Source\Modules\delves_list\delves_list.xml
 Source\Modules\delves_list\delves_list.lua
 Source\Modules\delves_dash_extention\delves_dash_extention.xml

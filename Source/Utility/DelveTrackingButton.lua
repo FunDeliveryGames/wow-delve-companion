@@ -1,8 +1,12 @@
-local addonName, DelveCompanion = ...
+local addonName, AddonTbl = ...
+
+---@type DelveCompanion
+local DelveCompanion = AddonTbl.DelveCompanion
+
 ---@type Logger
 local Logger = DelveCompanion.Logger
-local enums = DelveCompanion.enums
-local lockit = DelveCompanion.lockit
+---@type Lockit
+local Lockit = DelveCompanion.Lockit
 
 --#region Constants
 
@@ -20,10 +24,10 @@ function DelveCompanionDelveTrackingButtonMixin:UpdateTooltip()
     GameTooltip_AddHighlightLine(tooltip, self.data.parentMapName, true)
     GameTooltip_AddBlankLineToTooltip(tooltip)
 
-    local text = lockit["ui-delve-instance-button-tooltip-click-instruction"]
+    local text = Lockit.UI_DELVE_INSTANCE_BUTTON_TOOLTIP_CLICK_INSTRUCTION
     if self.data.isTracking then
-        GameTooltip_AddHighlightLine(tooltip, lockit["ui-delve-instance-button-tooltip-current-text"], true)
-        text = lockit["ui-delve-instance-button-tooltip-current-instruction"]
+        GameTooltip_AddHighlightLine(tooltip, Lockit.UI_DELVE_INSTANCE_BUTTON_TOOLTIP_CURRENT_TEXT, true)
+        text = Lockit.UI_DELVE_INSTANCE_BUTTON_TOOLTIP_CURRENT_INSTRUCTION
     end
     GameTooltip_AddInstructionLine(tooltip, text, true)
 
@@ -41,7 +45,7 @@ function DelveCompanionDelveTrackingButtonMixin:ClearTracking()
 end
 
 function DelveCompanionDelveTrackingButtonMixin:SetTomTomWaypoint(delveData)
-    local mapInfo = C_Map.GetMapInfo(delveData.config.uiMapID)
+    local mapInfo = C_Map.GetMapInfo(delveData.Config.uiMapID)
     local poiInfo = C_AreaPoiInfo.GetAreaPOIInfo(mapInfo.parentMapID, delveData.poiID)
 
     -- Blizzard removes Boss Delve POIs from Map with the season change. They can be entered but the API doesn't provide their POIInfo.
@@ -50,8 +54,8 @@ function DelveCompanionDelveTrackingButtonMixin:SetTomTomWaypoint(delveData)
         posX = poiInfo.position.x
         posY = poiInfo.position.y
     else
-        posX = delveData.config.coordinates.x / 100
-        posY = delveData.config.coordinates.y / 100
+        posX = delveData.Config.coordinates.x / 100
+        posY = delveData.Config.coordinates.y / 100
     end
 
     local callbacks = TomTom:DefaultCallbacks({})
@@ -61,7 +65,7 @@ function DelveCompanionDelveTrackingButtonMixin:SetTomTomWaypoint(delveData)
 
     local options = {
         title = delveData.delveName,
-        from = lockit["ui-addon-name"],
+        from = Lockit.UI_ADDON_NAME,
         persistent = false,
         callbacks = callbacks
     }
