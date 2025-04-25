@@ -14,6 +14,7 @@ local EJ_DELVES_TAB_BUTTON_ID = 6
 local EJ_TABS_COUNT = 6
 --#endregion
 
+--- Callback to handle tabs switch in EncounterJournal and show/hide Delves list.
 ---@param _ any
 ---@param EncounterJournal Frame
 ---@param tabID integer
@@ -26,8 +27,10 @@ local function OnTabSet(_, EncounterJournal, tabID)
     end
 end
 
+--- Create a tab button in EncounterJournal to open Delves list.
 ---@return Button
 local function CreateDelvesTabButton()
+    ---@type Button
     local button = CreateFrame("Button", "$parent.DelvesTab", EncounterJournal,
         "BottomEncounterTierTabTemplate")
     button:SetPoint("LEFT", EncounterJournal.LootJournalTab, "RIGHT", -15, 0)
@@ -42,14 +45,17 @@ local function CreateDelvesTabButton()
     return button
 end
 
+--- Initialize Delves list and a tab button for it.
 local function InitDelvesList()
     if not EncounterJournal then
         Logger.Log("EncounterJournal is nil. Delves tab is not inited.")
         return
     end
 
+    ---@type DelvesListFrame
     local delvesListFrame = CreateFrame("Frame", "$parent.DelvesListFrame", EncounterJournal,
         "DelveCompanionDelvesListFrameTemplate")
+    ---@type Button
     local tabButton = CreateDelvesTabButton()
 
     DelveCompanion.DelvesList = {
