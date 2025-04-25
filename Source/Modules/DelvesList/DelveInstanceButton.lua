@@ -1,0 +1,77 @@
+local addonName, AddonTbl = ...
+
+---@type DelveCompanion
+local DelveCompanion = AddonTbl.DelveCompanion
+
+---@type Logger
+local Logger = DelveCompanion.Logger
+
+--- A button representing a Delve in the Delves list.
+---@class (exact) DelveInstanceButton : DelveInstanceButtonXml, DelveTrackingButton
+---@field data DelveData?
+DelveCompanion_DelveInstanceButtonMixin = {}
+
+---@param self DelveInstanceButton
+function DelveCompanion_DelveInstanceButtonMixin:Update()
+    if self.data.isBountiful then
+        self.BountifulIcon:Show()
+    else
+        self.BountifulIcon:Hide()
+    end
+
+    if DelveCompanionAccountData.useTomTomWaypoints then
+        self:CheckTomTomWaypoint()
+    else
+        self:OnSuperTrackChanged()
+    end
+end
+
+---@param self DelveInstanceButton
+function DelveCompanion_DelveInstanceButtonMixin:OnEvent(event, ...)
+    self:OnSuperTrackChanged()
+end
+
+---@param self DelveInstanceButton
+function DelveCompanion_DelveInstanceButtonMixin:OnShow()
+    self:RegisterEvent("SUPER_TRACKING_CHANGED")
+end
+
+---@param self DelveInstanceButton
+function DelveCompanion_DelveInstanceButtonMixin:OnHide()
+    self:UnregisterEvent("SUPER_TRACKING_CHANGED")
+end
+
+---@param self DelveInstanceButton
+function DelveCompanion_DelveInstanceButtonMixin:OnEnter()
+    if DelveCompanion.Variables.maxLevelReached == false then
+        return
+    end
+
+    self:UpdateTooltip()
+end
+
+---@param self DelveInstanceButton
+function DelveCompanion_DelveInstanceButtonMixin:OnLeave()
+    GameTooltip:Hide()
+end
+
+---@param self DelveInstanceButton
+function DelveCompanion_DelveInstanceButtonMixin:OnClick()
+    if not DelveCompanion.Variables.maxLevelReached then
+        return
+    end
+
+    if IsShiftKeyDown() then
+        self:ToggleTracking()
+    end
+end
+
+--#region DelveInstanceButtonXml annotations
+
+---@class DelveInstanceButtonXml : Button
+---@field DefaultBg Texture
+---@field DelveArtBg Texture
+---@field DelveName FontString
+---@field BountifulIcon Texture
+---@field WaypointIcon Texture
+--#endregion

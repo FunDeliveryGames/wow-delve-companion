@@ -7,96 +7,50 @@ local DelveCompanion = AddonTbl.DelveCompanion
 local Logger = DelveCompanion.Logger
 ---@type Config
 local Config = DelveCompanion.Config
----@type Lockit
-local Lockit = DelveCompanion.Lockit
 
 --#region Constants
-
-local EJ_DELVES_TAB_BUTTON_ID = 6
-local EJ_TABS_NUMBER = 6
 
 local DELVES_LIST_VIEW_COLS = 4
 local DELVES_LIST_VIEW_BUTTONS_OFFSET = 12
 local DELVES_LIST_VIEW_BUTTONS_PADDING = 5
 --#endregion
 
---============ DelveProgressWidget ======================
-DelveCompanionDelveProgressWidgetMixin = {}
+--- A list with all Delves displayed in the EncounterJournal.
+---@class (exact) DelvesListFrame : DelvesListXml
+---@field instanceButtons DelveInstanceButton[]
+DelveCompanion_DelvesListFrameMixin = {}
 
---============ DelveInstanceButton ======================
-DelveCompanionDelveInstanceButtonMixin = {}
-
-function DelveCompanionDelveInstanceButtonMixin:Update()
-    if self.data.isBountiful then
-        self.BountifulIcon:Show()
-    else
-        self.BountifulIcon:Hide()
-    end
-
-    if DelveCompanionAccountData.useTomTomWaypoints then
-        self:CheckTomTomWaypoint()
-    else
-        self:OnSuperTrackChanged()
-    end
-end
-
-function DelveCompanionDelveInstanceButtonMixin:OnEvent(event, ...)
-    self:OnSuperTrackChanged()
-end
-
-function DelveCompanionDelveInstanceButtonMixin:OnShow()
-    self:RegisterEvent("SUPER_TRACKING_CHANGED")
-end
-
-function DelveCompanionDelveInstanceButtonMixin:OnHide()
-    self:UnregisterEvent("SUPER_TRACKING_CHANGED")
-end
-
-function DelveCompanionDelveInstanceButtonMixin:OnEnter()
-    if DelveCompanion.Variables.maxLevelReached == false then
-        return
-    end
-
-    self:UpdateTooltip()
-end
-
-function DelveCompanionDelveInstanceButtonMixin:OnLeave()
-    GameTooltip:Hide()
-end
-
-function DelveCompanionDelveInstanceButtonMixin:OnClick()
-    if not DelveCompanion.Variables.maxLevelReached then
-        return
-    end
-
-    if IsShiftKeyDown() then
-        self:ToggleTracking()
-    end
-end
-
---============ DelvesListFrame ======================
-
-DelveCompanionDelvesListMixin = {}
-
-function DelveCompanionDelvesListMixin:CreateMapHeader(parent, mapName)
-    local header = CreateFrame("Frame", nil, parent, "DelveCompanionMapHeaderTemplate")
+---@param self DelvesListFrame
+---@param parent any
+---@param mapName string
+---@return DelvesMapHeader
+function DelveCompanion_DelvesListFrameMixin:CreateMapHeader(parent, mapName)
+    ---@type DelvesMapHeader
+    local header = CreateFrame("Frame", nil, parent, "DelveCompanionDelveMapHeaderTemplate")
     header.MapName:SetText(mapName)
 
     return header
 end
 
-function DelveCompanionDelvesListMixin:CreateDelveAchievementsWidget(parent, config)
-    local widget = CreateFrame("Frame", nil, parent, "DelveCompanionDelveAchievementsWidgetTemplate")
+---@param self DelvesListFrame
+---@param parent any
+---@param config DelveConfig
+---@return DelvesProgressWidget
+function DelveCompanion_DelvesListFrameMixin:CreateDelveProgressWidget(parent, config)
+    ---@type DelvesProgressWidget
+    local widget = CreateFrame("Frame", nil, parent, "DelveCompanionDelveProgressWidgetTemplate")
 
     local Enums = DelveCompanion.Enums
     do
         -- Story progress
+
         local achID = config.achievements.story
         widget.Story:SetFrameInfo(Enums.CodeType.Achievement, achID)
 
         local totalCount = GetAchievementNumCriteria(achID)
         local completedCount = 0
         for index = 1, totalCount, 1 do
+            ---@type boolean
             local completed = select(3, GetAchievementCriteriaInfo(achID, index))
             if completed then
                 completedCount = completedCount + 1
@@ -112,9 +66,11 @@ function DelveCompanionDelvesListMixin:CreateDelveAchievementsWidget(parent, con
 
     do
         -- Chest progress
+
         local achID = config.achievements.chest
         widget.Chest:SetFrameInfo(Enums.CodeType.Achievement, achID)
 
+        ---@type number, number
         local quantity, reqQuantity = select(4, GetAchievementCriteriaInfo(achID, 1))
         local text = format(_G["GENERIC_FRACTION_STRING"], quantity, reqQuantity)
         if quantity == reqQuantity then
@@ -127,7 +83,12 @@ function DelveCompanionDelvesListMixin:CreateDelveAchievementsWidget(parent, con
     return widget
 end
 
-function DelveCompanionDelvesListMixin:CreateDelveInstanceButton(parent, delveData)
+---@param self DelvesListFrame
+---@param parent any
+---@param delveData any
+---@return DelveInstanceButton
+function DelveCompanion_DelvesListFrameMixin:CreateDelveInstanceButton(parent, delveData)
+    ---@type DelveInstanceButton
     local item = CreateFrame("Button", nil, parent, "DelveCompanionDelveInstanceButtonTemplate")
     item.data = delveData
 
@@ -139,9 +100,13 @@ function DelveCompanionDelvesListMixin:CreateDelveInstanceButton(parent, delveDa
     return item
 end
 
-function DelveCompanionDelvesListMixin:InitDelvesList()
+---@param self DelvesListFrame
+function DelveCompanion_DelvesListFrameMixin:InitDelvesList()
     local offsetX, offsetY = DELVES_LIST_VIEW_BUTTONS_OFFSET, 0
+
+    ---@type DelveInstanceButton[]
     local instanceButtons = {}
+
     for _, mapID in ipairs(Config.MAPS_WITH_DELVES) do
         local areaName = C_Map.GetMapInfo(mapID).name
         local header = self:CreateMapHeader(self.DelvesListScroll.Content, areaName)
@@ -157,6 +122,7 @@ function DelveCompanionDelvesListMixin:InitDelvesList()
             local parentMapID = C_Map.GetMapInfo(delveConfig.uiMapID).parentMapID
 
             if parentMapID == mapID then
+                ---@type DelveInstanceButton
                 local instanceButton = self:CreateDelveInstanceButton(
                     self.DelvesListScroll.Content,
                     delveData)
@@ -182,7 +148,8 @@ function DelveCompanionDelvesListMixin:InitDelvesList()
                     anchorY)
 
                 if DelveCompanionAccountData.achievementWidgetsEnabled and delveConfig.achievements then
-                    local progressWidget = self:CreateDelveAchievementsWidget(self.DelvesListScroll.Content,
+                    ---@type DelvesProgressWidget
+                    local progressWidget = self:CreateDelveProgressWidget(self.DelvesListScroll.Content,
                         delveConfig)
                     progressWidget:SetPoint("TOPLEFT", instanceButton, "BOTTOMLEFT", 0, 0)
                 end
@@ -195,7 +162,8 @@ function DelveCompanionDelvesListMixin:InitDelvesList()
     self.instanceButtons = instanceButtons
 end
 
-function DelveCompanionDelvesListMixin:UpdateKeysWidget()
+---@param self DelvesListFrame
+function DelveCompanion_DelvesListFrameMixin:UpdateKeysWidget()
     local keyCurrInfo = C_CurrencyInfo.GetCurrencyInfo(Config.BOUNTIFUL_KEY_CURRENCY_CODE)
     if not keyCurrInfo then
         self.KeysWidget:Hide()
@@ -207,7 +175,8 @@ function DelveCompanionDelvesListMixin:UpdateKeysWidget()
     self.KeysWidget:Show()
 end
 
-function DelveCompanionDelvesListMixin:OnLoad()
+---@param self DelvesListFrame
+function DelveCompanion_DelvesListFrameMixin:OnLoad()
     --Logger.Log("DelvesList OnLoad start")
     self.Title:SetText(_G["DELVES_LABEL"])
     self.KeysWidget:SetFrameInfo(DelveCompanion.Enums.CodeType.Currency, Config.BOUNTIFUL_KEY_CURRENCY_CODE)
@@ -218,11 +187,13 @@ function DelveCompanionDelvesListMixin:OnLoad()
     self:InitDelvesList()
 end
 
-function DelveCompanionDelvesListMixin:OnEvent(event, ...)
+---@param self DelvesListFrame
+function DelveCompanion_DelvesListFrameMixin:OnEvent(event, ...)
     self:UpdateKeysWidget()
 end
 
-function DelveCompanionDelvesListMixin:OnShow()
+---@param self DelvesListFrame
+function DelveCompanion_DelvesListFrameMixin:OnShow()
     -- Logger.Log("DelvesList OnShow start")
     DelveCompanion:UpdateDelvesData()
 
@@ -238,33 +209,21 @@ function DelveCompanionDelvesListMixin:OnShow()
     end
 end
 
-function DelveCompanionDelvesListMixin:OnHide()
+---@param self DelvesListFrame
+function DelveCompanion_DelvesListFrameMixin:OnHide()
     --Logger.Log("DelvesList OnHide start")
     self:UnregisterEvent("CURRENCY_DISPLAY_UPDATE")
 end
 
---============ Init ======================
-function DelveCompanion_DelvesListFrame_Init()
-    local button = CreateFrame("Button", "$parent.DelvesTab", EncounterJournal,
-        "BottomEncounterTierTabTemplate")
-    button:SetPoint("LEFT", EncounterJournal.LootJournalTab, "RIGHT", -15, 0)
-    button:SetText(_G["DELVES_LABEL"])
-    button:SetID(EJ_DELVES_TAB_BUTTON_ID)
-    button:SetParentKey("delvesTab")
-    PanelTemplates_SetNumTabs(EncounterJournal, EJ_TABS_NUMBER)
+--#region DelvesListXml annotations
 
-    DelveCompanion.delvesListFrame = CreateFrame("Frame", "$parent.DelvesListFrame", EncounterJournal,
-        "DelveCompanionDelvesListFrameTemplate")
+---@class DelvesListScroll : ScrollFrame
+---@field Content Frame
 
-    EventRegistry:RegisterCallback("EncounterJournal.TabSet",
-        function(_, EncounterJournal, tabID)
-            if tabID == EJ_DELVES_TAB_BUTTON_ID then
-                -- EncounterJournal.instanceSelect.Title:SetText(_G["DELVES_LABEL"])
-                EJ_HideNonInstancePanels()
-                DelveCompanion.delvesListFrame:Show()
-            else
-                DelveCompanion.delvesListFrame:Hide()
-            end
-        end,
-        DelveCompanion)
-end
+---@class DelvesListXml : Frame
+---@field Title FontString
+---@field KeysWidget IconWithLabelAndTooltip
+---@field AffixWidget IconWithLabelAndTooltip
+---@field AffixWidget.Ring Texture
+---@field DelvesListScroll DelvesListScroll
+--#endregion

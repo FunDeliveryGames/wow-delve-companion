@@ -462,7 +462,7 @@
 
 
     <Button name="DelveCompanionOverviewBountifulButtonTemplate" virtual="true"
-        mixin="DelveCompanionOverviewBountifulButtonMixin, DelveCompanionDelveTrackingButtonMixin"
+        mixin="DelveCompanionOverviewBountifulButtonMixin, DelveCompanion_DelveTrackingButtonMixin"
         registerForClicks="LeftButtonUp" hidden="true">
         <Size x="27" y="27" />
         <KeyValues>

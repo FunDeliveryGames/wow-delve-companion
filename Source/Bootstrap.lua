@@ -47,12 +47,4 @@ EventUtil.ContinueOnAddOnLoaded(DelveCompanion.Enums.DependencyAddonName.delvesD
         DelveCompanion_DelvesDashExtension_Init()
     end
 end)
-EventUtil.ContinueOnAddOnLoaded(DelveCompanion.Enums.DependencyAddonName.encounterJournal, function()
-    if EncounterJournal == nil then
-        Logger.Log("EncounterJournal is nil. Delves tab is not inited.")
-        return
-    end
-
-    DelveCompanion_DelvesListFrame_Init()
-end)
 EventUtil.ContinueOnAddOnLoaded(addonName, OnAddonLoaded)

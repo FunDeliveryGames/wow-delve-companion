@@ -13,19 +13,28 @@ local Lockit = DelveCompanion.Lockit
 local TOM_TOM_WAYPOINT_DISTANCE_CLEAR = 10
 --#endregion
 
-DelveCompanionDelveTrackingButtonMixin = {}
+---@class (exact) DelveTrackingButton
+DelveCompanion_DelveTrackingButtonMixin = {}
 
-function DelveCompanionDelveTrackingButtonMixin:UpdateTooltip()
+---@param self DelveInstanceButton
+function DelveCompanion_DelveTrackingButtonMixin:UpdateTooltip()
+    ---@type DelveData
+    local data = self.data
+
+    if not data then
+        return
+    end
+
     local tooltip = GameTooltip
     tooltip:SetOwner(self, "ANCHOR_TOP")
     tooltip:ClearLines()
 
-    GameTooltip_AddNormalLine(tooltip, self.data.delveName, true)
-    GameTooltip_AddHighlightLine(tooltip, self.data.parentMapName, true)
+    GameTooltip_AddNormalLine(tooltip, data.delveName, true)
+    GameTooltip_AddHighlightLine(tooltip, data.parentMapName, true)
     GameTooltip_AddBlankLineToTooltip(tooltip)
 
     local text = Lockit.UI_DELVE_INSTANCE_BUTTON_TOOLTIP_CLICK_INSTRUCTION
-    if self.data.isTracking then
+    if data.isTracking then
         GameTooltip_AddHighlightLine(tooltip, Lockit.UI_DELVE_INSTANCE_BUTTON_TOOLTIP_CURRENT_TEXT, true)
         text = Lockit.UI_DELVE_INSTANCE_BUTTON_TOOLTIP_CURRENT_INSTRUCTION
     end
@@ -34,28 +43,33 @@ function DelveCompanionDelveTrackingButtonMixin:UpdateTooltip()
     tooltip:Show()
 end
 
-function DelveCompanionDelveTrackingButtonMixin:SetTracking()
+---@param self DelveInstanceButton
+function DelveCompanion_DelveTrackingButtonMixin:SetTracking()
     self.data.isTracking = true
     self.WaypointIcon:Show()
 end
 
-function DelveCompanionDelveTrackingButtonMixin:ClearTracking()
+---@param self DelveInstanceButton
+function DelveCompanion_DelveTrackingButtonMixin:ClearTracking()
     self.data.isTracking = false
     self.WaypointIcon:Hide()
 end
 
-function DelveCompanionDelveTrackingButtonMixin:SetTomTomWaypoint(delveData)
-    local mapInfo = C_Map.GetMapInfo(delveData.Config.uiMapID)
+---@param self DelveInstanceButton
+---@param delveData DelveData
+function DelveCompanion_DelveTrackingButtonMixin:SetTomTomWaypoint(delveData)
+    local mapInfo = C_Map.GetMapInfo(delveData.config.uiMapID)
     local poiInfo = C_AreaPoiInfo.GetAreaPOIInfo(mapInfo.parentMapID, delveData.poiID)
 
     -- Blizzard removes Boss Delve POIs from Map with the season change. They can be entered but the API doesn't provide their POIInfo.
+    -- To set a waypoint, coordinates from the Config are used.
     local posX, posY = -1, -1
     if poiInfo then
         posX = poiInfo.position.x
         posY = poiInfo.position.y
     else
-        posX = delveData.Config.coordinates.x / 100
-        posY = delveData.Config.coordinates.y / 100
+        posX = delveData.config.coordinates.x / 100
+        posY = delveData.config.coordinates.y / 100
     end
 
     local callbacks = TomTom:DefaultCallbacks({})
@@ -76,7 +90,8 @@ function DelveCompanionDelveTrackingButtonMixin:SetTomTomWaypoint(delveData)
         options)
 end
 
-function DelveCompanionDelveTrackingButtonMixin:ClearTomTomWaypoint()
+---@param self DelveInstanceButton
+function DelveCompanion_DelveTrackingButtonMixin:ClearTomTomWaypoint()
     if not DelveCompanion.Variables.tomTomAvailable then
         return
     end
@@ -86,7 +101,8 @@ function DelveCompanionDelveTrackingButtonMixin:ClearTomTomWaypoint()
     self:ClearTracking()
 end
 
-function DelveCompanionDelveTrackingButtonMixin:ToggleTracking()
+---@param self DelveInstanceButton
+function DelveCompanion_DelveTrackingButtonMixin:ToggleTracking()
     local delveData = self.data
 
     if not delveData then
@@ -110,7 +126,8 @@ function DelveCompanionDelveTrackingButtonMixin:ToggleTracking()
     self:UpdateTooltip()
 end
 
-function DelveCompanionDelveTrackingButtonMixin:CheckTomTomWaypoint()
+---@param self DelveInstanceButton
+function DelveCompanion_DelveTrackingButtonMixin:CheckTomTomWaypoint()
     if not DelveCompanion.Variables.tomTomAvailable then
         return
     end
@@ -123,7 +140,8 @@ function DelveCompanionDelveTrackingButtonMixin:CheckTomTomWaypoint()
     end
 end
 
-function DelveCompanionDelveTrackingButtonMixin:OnSuperTrackChanged()
+---@param self DelveInstanceButton
+function DelveCompanion_DelveTrackingButtonMixin:OnSuperTrackChanged()
     if C_SuperTrack.IsSuperTrackingAnything() then
         local type, typeID = C_SuperTrack.GetSuperTrackedMapPin()
         if type == Enum.SuperTrackingMapPinType.AreaPOI and typeID == self.data.poiID then

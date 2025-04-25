@@ -8,11 +8,24 @@ local Logger = DelveCompanion.Logger
 ---@type Lockit
 local Lockit = DelveCompanion.Lockit
 
---============ DelveCompanionIconWithTextAndTooltip ======================
-
 local DEFAULT_LABEL_OFFSET_X = -5
 local DEFAULT_LABEL_OFFSET_Y = 0
 local DEFAULT_LABEL_ANCHOR = "LEFT"
+
+---@class (exact) IconWithLabelAndTooltip : IconWithLabelAndTooltipXml
+---@field iconSizeX number
+---@field iconSizeY number
+---@field displayLabel boolean
+---@field frameType string
+---@field frameCode number
+---@field useAutoScaling boolean
+---@field atlasTexture string?
+---@field useMask boolean?
+---@field maskSizeOffset number?
+---@field labelRelPoint string?
+---@field labelOffsetX number?
+---@field labelOffsetY number?
+---@field fontOverride string?
 DelveCompanionIconWithLabelAndTooltipMixin = {}
 
 function DelveCompanionIconWithLabelAndTooltipMixin:SetOnClick(func)
@@ -161,3 +174,12 @@ end
 function DelveCompanionIconWithLabelAndTooltipMixin:OnLeave()
     GameTooltip:Hide()
 end
+
+--#region IconWithLabelAndTooltipXml annotations
+
+---@class IconWithLabelAndTooltipXml : Frame
+---@field Icon Texture
+---@field CircleMask MaskTexture
+---@field Label FontString
+---@field ClickCatcher Button
+--#endregion

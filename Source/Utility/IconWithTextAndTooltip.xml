@@ -20,7 +20,7 @@
             <KeyValue key="maskSizeOffset" value="5" type="number" />
             <KeyValue key="labelRelPoint" value="LEFT" type="string"/>
             <KeyValue key="labelOffsetX" value="5" type="number"/>
-            <KeyValue key="labeloffsetY" value="5" type="number"/>
+            <KeyValue key="labelOffsetY" value="5" type="number"/>
             <KeyValue key="fontOverride" value="FontName" type="string"/>
             -->
         </KeyValues>

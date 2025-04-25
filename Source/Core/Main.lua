@@ -8,6 +8,7 @@ local addonName, AddonTbl = ...
 ---@field Enums Enums
 ---@field Variables Variables
 ---@field AddonSettings AddonSettings
+---@field DelvesList DelvesList
 local DelveCompanion = {}
 AddonTbl.DelveCompanion = DelveCompanion
 
@@ -138,6 +139,5 @@ end
 ---@class MapCoord
 ---@field x number X-coordinate on the map [0.0–100.0].
 ---@field y number Y-coordinate on the map [0.0–100.0].
-
 
 --#endregion

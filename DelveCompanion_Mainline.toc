@@ -45,10 +45,11 @@ Source\Utility\Include.xml
 # Settings
 Source\Settings\Include.xml
 
-# Core
+# Modules
 Source\Modules\tooltip_extension\tooltip_extension.lua
-Source\Modules\delves_list\delves_list.xml
-Source\Modules\delves_list\delves_list.lua
+Source\Modules\DelvesList\Include.xml
 Source\Modules\delves_dash_extention\delves_dash_extention.xml
 Source\Modules\delves_dash_extention\delves_dash_extention.lua
+
+# Addon init. Should be the last one
 Source\Bootstrap.lua
