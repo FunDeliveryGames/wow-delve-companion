@@ -10,12 +10,15 @@ local Config = DelveCompanion.Config
 
 local function OnPlayerLogin()
     -- Logger.Log("OnPlayerLogin start...")
+
     DelveCompanion.AddonSettings:Init()
+
     -- Logger.Log("OnPlayerLogin finish")
 end
 
 local function OnAddonLoaded()
     -- Logger.Log("OnAddonLoaded start...")
+
     if not DelveCompanionAccountData then
         DelveCompanion:InitAccountSave()
     end

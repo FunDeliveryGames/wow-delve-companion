@@ -1,6 +1,6 @@
 local addonName, AddonTbl = ...
 
---- Addon master-table containing all functions and variables it uses.
+--- Addon master-table containing references to all components.
 ---@class DelveCompanion
 ---@field Logger Logger
 ---@field Config Config

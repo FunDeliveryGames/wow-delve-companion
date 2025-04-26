@@ -4,10 +4,10 @@ local addonName, AddonTbl = ...
 local DelveCompanion = AddonTbl.DelveCompanion
 
 ---@class CodeType
----@field Item string Alias for Item ID: `item`.
----@field Spell string Alias for Spell ID: `spell`.
----@field Currency string Alias for Currency ID: `currency`.
----@field Achievement string Alias for Achievement ID: `achievement`.
+---@field Item string Alias for `item`.
+---@field Spell string Alias for `spell`.
+---@field Currency string Alias for `currency`.
+---@field Achievement string Alias for `achievement`.
 local CodeType = {
     Item = "item",
     Spell = "spell",
@@ -23,9 +23,11 @@ setmetatable(CodeType, {
 ---@class DependencyAddonName
 ---@field delvesDashboardUI string `Blizzard_DelvesDashboardUI`
 ---@field encounterJournal string `Blizzard_EncounterJournal`
+---@field rio string `RaiderIO`
 local DependencyAddonName = {
     delvesDashboardUI = "Blizzard_DelvesDashboardUI",
-    encounterJournal = "Blizzard_EncounterJournal"
+    encounterJournal = "Blizzard_EncounterJournal",
+    rio = "RaiderIO"
 }
 
 --- Enum-like tables used across addon modules.

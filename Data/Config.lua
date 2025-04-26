@@ -92,7 +92,7 @@ Config.SHARDS_FOR_KEY = 100
 Config.NEMESIS_AFFIX_SPELL_CODE = 472952
 --#endregion
 
---#region Delves
+--#region Delves data
 
 ---@type integer Khaz Algar [uiMapID](https://warcraft.wiki.gg/wiki/UiMapID).
 Config.KHAZ_ALGAR_MAP_ID = 2274
