@@ -1,11 +1,17 @@
-local addonName, addon = ...
-local log = addon.log
-local lockit = addon.lockit
+local addonName, AddonTbl = ...
+
+---@type DelveCompanion
+local DelveCompanion = AddonTbl.DelveCompanion
+
+---@type Logger
+local Logger = DelveCompanion.Logger
+---@type Lockit
+local Lockit = DelveCompanion.Lockit
 
 DelveCompanionSettingsToggleMixin = {}
 
 function DelveCompanionSettingsToggleMixin:OnShow()
-    -- log("SettingToggle OnShow start...")
+    -- Logger.Log("SettingToggle OnShow start...")
 
     local save = self.saveType == "account" and DelveCompanionAccountData or DelveCompanionCharacterData
     if save[self.saveVar] == nil then
@@ -17,6 +23,6 @@ function DelveCompanionSettingsToggleMixin:OnShow()
         save[self.saveVar] = cb:GetChecked()
     end)
 
-    self.Text:SetText(lockit[self.localeKey])
+    self.Text:SetText(Lockit[self.localeKey])
     self.Text:SetWidth(self:GetParent().maximumWidth)
 end

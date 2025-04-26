@@ -1,15 +1,39 @@
-local addonName, addon = ...
-local log = addon.log
-local enums = addon.enums
-local lockit = addon.lockit
+local addonName, AddonTbl = ...
 
---============ DelveCompanionIconWithTextAndTooltip ======================
+---@type DelveCompanion
+local DelveCompanion = AddonTbl.DelveCompanion
+
+---@type Logger
+local Logger = DelveCompanion.Logger
+---@type Lockit
+local Lockit = DelveCompanion.Lockit
+
+--#region Constants
 
 local DEFAULT_LABEL_OFFSET_X = -5
 local DEFAULT_LABEL_OFFSET_Y = 0
 local DEFAULT_LABEL_ANCHOR = "LEFT"
+--#endregion
+
+---@class (exact) IconWithLabelAndTooltip : IconWithLabelAndTooltipXml
+---@field iconSizeX number
+---@field iconSizeY number
+---@field displayLabel boolean
+---@field frameType string
+---@field frameCode number
+---@field useAutoScaling boolean
+---@field atlasTexture string?
+---@field useMask boolean?
+---@field maskSizeOffset number?
+---@field labelRelPoint string?
+---@field labelOffsetX number?
+---@field labelOffsetY number?
+---@field fontOverride string?
 DelveCompanionIconWithLabelAndTooltipMixin = {}
 
+--- Set `OnClick` function.
+---@param self IconWithLabelAndTooltip
+---@param func function
 function DelveCompanionIconWithLabelAndTooltipMixin:SetOnClick(func)
     local relKey = self.useMask and self.CircleMask or self
     self.ClickCatcher:SetAllPoints(relKey)
@@ -17,36 +41,41 @@ function DelveCompanionIconWithLabelAndTooltipMixin:SetOnClick(func)
     self.ClickCatcher:SetScript("OnClick", func)
 end
 
+---@param self IconWithLabelAndTooltip
+---@param text string|integer|number
 function DelveCompanionIconWithLabelAndTooltipMixin:SetLabelText(text)
     if text then
-        self.Label:SetText(text)
+        self.Label:SetText(tostring(text))
     end
 end
 
+---@param self IconWithLabelAndTooltip
 local function SetFromAtlas(self)
     if self.atlasTexture then
         self.Icon:SetAtlas(self.atlasTexture)
     end
 end
 
+---@param self IconWithLabelAndTooltip
 local function SetFromTexture(self)
     local texture = nil
-    local type, code = self.frameType, tonumber(self.frameCode)
+    local type, code = self.frameType, self.frameCode
 
     if not code then
         return
     end
 
-    if type == enums.CodeType.Item then
+    local Enums = DelveCompanion.Enums
+    if type == Enums.CodeType.Item then
         texture = C_Item.GetItemIconByID(code)
-    elseif type == enums.CodeType.Spell then
+    elseif type == Enums.CodeType.Spell then
         texture = C_Spell.GetSpellTexture(code)
-    elseif type == enums.CodeType.Currency then
+    elseif type == Enums.CodeType.Currency then
         texture = C_CurrencyInfo.GetCurrencyInfo(code).iconFileID
-    elseif type == enums.CodeType.Achievement then
+    elseif type == Enums.CodeType.Achievement then
         texture = select(10, GetAchievementInfo(code))
     else
-        log(lockit["ui-debug-unexpected-enum-element"], tostring(enums.CodeType), type)
+        Logger.Log(Lockit.DEBUG_UNEXPECTED_ENUM_ELEMENT, tostring(Enums.CodeType), type)
     end
 
     if texture then
@@ -54,18 +83,22 @@ local function SetFromTexture(self)
     end
 end
 
+--- Set what kind of game entity this Frame displays. Used to display a proper tooltip.
+---@param self IconWithLabelAndTooltip
+---@param frameType string Game entity type from [CodeType](lua://CodeType).
+---@param frameCode number Corresponding in-game ID (e.g. `Item` ID).
 function DelveCompanionIconWithLabelAndTooltipMixin:SetFrameInfo(frameType, frameCode)
-    if frameType and FindInTable(enums.CodeType, frameType) then
-        self.frameType = frameType
+    if not (frameType and FindInTable(DelveCompanion.Enums.CodeType, frameType) and frameCode) then
+        return
     end
 
-    if frameCode and tonumber(frameCode) then
-        self.frameCode = tonumber(frameCode)
-    end
+    self.frameType = frameType
+    self.frameCode = frameCode
 end
 
+---@param self IconWithLabelAndTooltip
 function DelveCompanionIconWithLabelAndTooltipMixin:OnLoad()
-    -- log("DelveCompanionIconWithTextAndTooltip OnLoad start")
+    -- Logger.Log("DelveCompanionIconWithTextAndTooltip OnLoad start")
     self.Icon:SetSize(self.iconSizeX, self.iconSizeY)
 
     if not self.displayLabel then
@@ -114,8 +147,9 @@ function DelveCompanionIconWithLabelAndTooltipMixin:OnLoad()
     end
 end
 
+---@param self IconWithLabelAndTooltip
 function DelveCompanionIconWithLabelAndTooltipMixin:OnShow()
-    -- log("DelveCompanionIconWithTextAndTooltip OnShow start")
+    -- Logger.Log("DelveCompanionIconWithTextAndTooltip OnShow start")
 
     if self.atlasTexture then
         SetFromAtlas(self)
@@ -124,18 +158,21 @@ function DelveCompanionIconWithLabelAndTooltipMixin:OnShow()
     end
 end
 
+---@param self IconWithLabelAndTooltip
 function DelveCompanionIconWithLabelAndTooltipMixin:OnHide()
-    -- log("DelveCompanionIconWithTextAndTooltip OnHide start")
+    -- Logger.Log("DelveCompanionIconWithTextAndTooltip OnHide start")
 end
 
+---@param self IconWithLabelAndTooltip
 function DelveCompanionIconWithLabelAndTooltipMixin:OnEnter()
-    GameTooltip:SetOwner(self, "ANCHOR_TOP")
-    local type, code = self.frameType, tonumber(self.frameCode)
-
-    if not code then
+    local type, code = self.frameType, self.frameCode
+    if not (type and code) then
         return
     end
 
+    GameTooltip:SetOwner(self, "ANCHOR_TOP")
+
+    local enums = DelveCompanion.Enums
     if type == enums.CodeType.Item then
         GameTooltip:SetItemByID(code)
     elseif type == enums.CodeType.Spell then
@@ -146,11 +183,21 @@ function DelveCompanionIconWithLabelAndTooltipMixin:OnEnter()
         -- GameTooltip:SetAchievementByID(code)
         GameTooltip:SetHyperlink(GetAchievementLink(code))
     else
-        log(lockit["ui-debug-unexpected-enum-element"], tostring(enums.CodeType), type)
+        Logger.Log(Lockit.DEBUG_UNEXPECTED_ENUM_ELEMENT, tostring(enums.CodeType), type)
     end
     GameTooltip:Show()
 end
 
+---@param self IconWithLabelAndTooltip
 function DelveCompanionIconWithLabelAndTooltipMixin:OnLeave()
     GameTooltip:Hide()
 end
+
+--#region IconWithLabelAndTooltipXml annotations
+
+---@class IconWithLabelAndTooltipXml : Frame
+---@field Icon Texture
+---@field CircleMask MaskTexture
+---@field Label FontString
+---@field ClickCatcher Button
+--#endregion

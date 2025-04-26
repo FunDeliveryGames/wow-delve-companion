@@ -57,7 +57,7 @@
                             <KeyValue key="saveType" value="account" type="string" />
                             <KeyValue key="saveVar" value="achievementWidgetsEnabled" type="string" />
                             <KeyValue key="defaultValue" value="true" type="boolean" />
-                            <KeyValue key="localeKey" value="ui-settings-ach-widgets" type="string" />
+                            <KeyValue key="localeKey" value="UI_SETTINGS_ACH_WIDGETS" type="string" />
                         </KeyValues>
                     </CheckButton>
                     <CheckButton parentKey="useTomTomCheckButton"
@@ -67,7 +67,7 @@
                             <KeyValue key="saveType" value="account" type="string" />
                             <KeyValue key="saveVar" value="useTomTomWaypoints" type="string" />
                             <KeyValue key="defaultValue" value="false" type="boolean" />
-                            <KeyValue key="localeKey" value="ui-settings-tomtom-description"
+                            <KeyValue key="localeKey" value="UI_SETTINGS_TOMTOM_DESCRIPTION"
                                 type="string" />
                         </KeyValues>
                     </CheckButton>
@@ -103,7 +103,7 @@
                             <KeyValue key="saveType" value="character" type="string" />
                             <KeyValue key="saveVar" value="keysCapTooltipEnabled" type="string" />
                             <KeyValue key="defaultValue" value="true" type="boolean" />
-                            <KeyValue key="localeKey" value="ui-settings-keys-cap" type="string" />
+                            <KeyValue key="localeKey" value="UI_SETTINGS_KEYS_CAP" type="string" />
                         </KeyValues>
                     </CheckButton>
                     <CheckButton parentKey="gvDetailsCheckButton"
@@ -113,7 +113,7 @@
                             <KeyValue key="saveType" value="character" type="string" />
                             <KeyValue key="saveVar" value="gvDetailsEnabled" type="string" />
                             <KeyValue key="defaultValue" value="true" type="boolean" />
-                            <KeyValue key="localeKey" value="ui-settings-gv-details" type="string" />
+                            <KeyValue key="localeKey" value="UI_SETTINGS_GV_DETAILS" type="string" />
                         </KeyValues>
                     </CheckButton>
                     <CheckButton parentKey="dashOverviewCheckButton"
@@ -123,7 +123,7 @@
                             <KeyValue key="saveType" value="character" type="string" />
                             <KeyValue key="saveVar" value="dashOverviewEnabled" type="string" />
                             <KeyValue key="defaultValue" value="true" type="boolean" />
-                            <KeyValue key="localeKey" value="ui-settings-dashboard-overview"
+                            <KeyValue key="localeKey" value="UI_SETTINGS_DASHBOARD_OVERVIEW"
                                 type="string" />
                         </KeyValues>
                     </CheckButton>

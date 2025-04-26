@@ -1,8 +1,21 @@
-# Script args
+<#
+.SYNOPSIS
+A script to update addon files in WoW AddOns folder.
+
+.DESCRIPTION
+The script copies all required files according to YAML configuration file.
+
+.PARAMETER yamlPath
+Path to YAML configuration file.
+
+.PARAMETER addonsLocation
+Path to WoW AddOns folder.
+
+.EXAMPLE
+.\pack_addon_mainline.ps1 -yamlPath ".\\.pkgmeta" -addonsLocation "C:\\Program Files\\World of Warcraft\\_retail_\\Interface\\AddOns"
+#>
 param (
-    # Path to YAML configuration file
     [string]$yamlPath,
-    # Path to WoW AddOns folder    
     [string]$addonsLocation
 )
 
@@ -16,7 +29,7 @@ if ([string]::IsNullOrEmpty($yamlPath)) {
 }
 
 # ======= READ & PARSE YAML =======
-# Use YAML file to make a list of ignored folders and files (so they are not needed in the addon folder)
+# Use YAML file to make a list of ignored folders and files
 $yamlContent = Get-Content $yamlPath
 
 $packageAs = ""
@@ -48,7 +61,6 @@ if ([string]::IsNullOrEmpty($packageAs)) {
     exit 1
 }
 
-# ======= ADD YAML CONFIG TO IGNORE =======
 # Ensure that the YAML configuration file itself is ignored during copying.
 $yamlFileName = Split-Path $yamlPath -Leaf
 $ignoreFiles += $yamlFileName
@@ -57,13 +69,11 @@ $ignoreFiles += $yamlFileName
 $sourceDir = Get-Location
 $targetDir = Join-Path $addonsLocation $packageAs
 
-# If target folder exists, remove it first
 if (Test-Path $targetDir) {
     Write-Output "Target folder '$targetDir' exists. Deleting..."
     Remove-Item $targetDir -Recurse -Force
 }
 
-# Create a new target folder
 Write-Output "Creating target folder '$targetDir'."
 New-Item -ItemType Directory -Path $targetDir | Out-Null
 
@@ -88,6 +98,5 @@ if ($ignoreFiles.Count -gt 0) {
     $xfParams = "/XF " + ($ignoreFiles -join " ")
 }
 
-# Execute the robocopy command
 $robocopyCmd = "robocopy `"$sourcePath`" `"$destinationPath`" /E $xdParams $xfParams"
 Invoke-Expression $robocopyCmd
