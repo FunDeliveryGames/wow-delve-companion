@@ -9,12 +9,12 @@ local addonName, AddonTbl = ...
 ---@field Variables Variables
 ---@field AddonSettings AddonSettings
 ---@field DelvesList DelvesList
+---@field DelvesDashboard DelvesDashboard
 local DelveCompanion = {}
 AddonTbl.DelveCompanion = DelveCompanion
 
 --- Init Delves runtime data.
 ---@param self DelveCompanion
----@return nil
 function DelveCompanion:InitDelvesData()
     ---@type DelveData[]
     local delvesData = {}
@@ -49,7 +49,6 @@ end
 
 --- Iterate through all Delves and update their runtime data.
 ---@param self DelveCompanion
----@return nil
 function DelveCompanion:UpdateDelvesData()
     -- Logger.Log("Start updating Delves data...")
     for _, delveData in ipairs(self.Variables.delvesData) do
@@ -70,7 +69,6 @@ end
 
 --- Cache number of [Restored Coffer Keys](https://www.wowhead.com/currency=3028/restored-coffer-key) player has got from Caches this week.
 ---@param self DelveCompanion
----@return nil
 function DelveCompanion:CacheKeysCount()
     local keysCollected = 0
     for _, questId in ipairs(self.Config.BOUNTIFUL_KEY_QUESTS_DATA) do
@@ -82,7 +80,7 @@ function DelveCompanion:CacheKeysCount()
     self.Variables.keysCollected = keysCollected
 end
 
---- Tries to retrieve `uiMapID` of the parent map with `Enum.UIMapType.Continent` for the given [uiMapID](https://warcraft.wiki.gg/wiki/UiMapID).
+--- Try to retrieve `uiMapID` of the parent map with `Enum.UIMapType.Continent` for the given [uiMapID](https://warcraft.wiki.gg/wiki/UiMapID).
 ---@param self DelveCompanion
 ---@param mapID number [uiMapID](https://warcraft.wiki.gg/wiki/UiMapID) for which the Continent is retrieved.
 ---@return number|nil # Retrieved `uiMapID` of the Continent or `nil` otherwise.
@@ -105,7 +103,6 @@ end
 
 --- Init [SavedVariables](https://warcraft.wiki.gg/wiki/TOC_format#SavedVariables) if they're not available (e.g. the 1st addon load).
 ---@param self DelveCompanion
----@return nil
 function DelveCompanion:InitAccountSave()
     --- Account Save Data
     ---@class (exact) DelveCompanionAccountData
@@ -119,7 +116,6 @@ end
 
 --- Init [SavedVariablesPerCharacter](https://warcraft.wiki.gg/wiki/TOC_format#SavedVariablesPerCharacter) if they're not available (e.g. the 1st addon load).
 ---@param self DelveCompanion
----@return nil
 function DelveCompanion:InitCharacterSave()
     --- Character Save Data
     ---@class (exact) DelveCompanionCharacterData
@@ -132,12 +128,3 @@ function DelveCompanion:InitCharacterSave()
         dashOverviewEnabled = true
     }
 end
-
---#region Shared annotations
-
---- Utility class representing map coordinates.
----@class MapCoord
----@field x number X-coordinate on the map [0.0–100.0].
----@field y number Y-coordinate on the map [0.0–100.0].
-
---#endregion

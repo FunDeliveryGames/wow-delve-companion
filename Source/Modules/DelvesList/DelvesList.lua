@@ -21,9 +21,9 @@ local EJ_TABS_COUNT = 6
 local function OnTabSet(_, EncounterJournal, tabID)
     if tabID == EJ_DELVES_TAB_BUTTON_ID then
         EJ_HideNonInstancePanels()
-        DelveCompanion.DelvesList.frame:Show()
+        DelveCompanion.DelvesList.Frame:Show()
     else
-        DelveCompanion.DelvesList.frame:Hide()
+        DelveCompanion.DelvesList.Frame:Hide()
     end
 end
 
@@ -48,9 +48,14 @@ end
 --- Initialize Delves list and a tab button for it.
 local function InitDelvesList()
     if not EncounterJournal then
-        Logger.Log("EncounterJournal is nil. Delves tab is not inited.")
+        Logger.Log("EncounterJournal is nil. Delves tab cannot be created.")
         return
     end
+
+    ---@class DelvesList
+    ---@field Frame DelvesListFrame
+    ---@field TabButton Button
+    local DelvesList = {}
 
     ---@type DelvesListFrame
     local delvesListFrame = CreateFrame("Frame", "$parent.DelvesListFrame", EncounterJournal,
@@ -59,16 +64,9 @@ local function InitDelvesList()
     local tabButton = CreateDelvesTabButton()
 
     DelveCompanion.DelvesList = {
-        frame = delvesListFrame,
-        button = tabButton
+        Frame = delvesListFrame,
+        TabButton = tabButton
     }
 end
 
 EventUtil.ContinueOnAddOnLoaded(DelveCompanion.Enums.DependencyAddonName.encounterJournal, InitDelvesList)
-
---#region DelvesList annotations
-
----@class DelvesList
----@field frame DelvesListFrame
----@field button Button
---#endregion

@@ -37,14 +37,4 @@ local function OnAddonLoaded()
 end
 
 EventRegistry:RegisterFrameEventAndCallback("PLAYER_LOGIN", OnPlayerLogin)
-EventUtil.ContinueOnAddOnLoaded(DelveCompanion.Enums.DependencyAddonName.delvesDashboardUI, function()
-    if DelvesDashboardFrame == nil then
-        Logger.Log("DelvesDashboardFrame is nil. Delves UI extension is not inited.")
-        return
-    end
-
-    if DelveCompanion.Variables.maxLevelReached then
-        DelveCompanion_DelvesDashExtension_Init()
-    end
-end)
 EventUtil.ContinueOnAddOnLoaded(addonName, OnAddonLoaded)

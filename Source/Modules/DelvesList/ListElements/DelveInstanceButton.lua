@@ -9,7 +9,7 @@ local Logger = DelveCompanion.Logger
 --- A button representing a Delve in the Delves list.
 ---@class (exact) DelveInstanceButton : DelveInstanceButtonXml, DelveTrackingButton
 ---@field data DelveData?
-DelveCompanion_DelveInstanceButtonMixin = {}
+DelveCompanion_DelveInstanceButtonMixin = CreateFromMixins(DelveCompanion_DelveTrackingButtonMixin)
 
 ---@param self DelveInstanceButton
 function DelveCompanion_DelveInstanceButtonMixin:Update()
@@ -66,8 +66,9 @@ function DelveCompanion_DelveInstanceButtonMixin:OnClick()
     end
 end
 
---#region DelveInstanceButtonXml annotations
+--#region XML Annotations
 
+--- DelveCompanionDelveInstanceButtonTemplate
 ---@class DelveInstanceButtonXml : Button
 ---@field DefaultBg Texture
 ---@field DelveArtBg Texture

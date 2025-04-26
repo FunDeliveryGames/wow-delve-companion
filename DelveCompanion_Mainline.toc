@@ -48,8 +48,7 @@ Source\Settings\Include.xml
 # Modules
 Source\Modules\TooltipExtension\Include.xml
 Source\Modules\DelvesList\Include.xml
-Source\Modules\delves_dash_extention\delves_dash_extention.xml
-Source\Modules\delves_dash_extention\delves_dash_extention.lua
+Source\Modules\DelvesDashboard\Include.xml
 
 # Addon init. Should be the last one
 Source\Bootstrap.lua

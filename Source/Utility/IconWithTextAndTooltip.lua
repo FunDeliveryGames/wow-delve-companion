@@ -8,9 +8,12 @@ local Logger = DelveCompanion.Logger
 ---@type Lockit
 local Lockit = DelveCompanion.Lockit
 
+--#region Constants
+
 local DEFAULT_LABEL_OFFSET_X = -5
 local DEFAULT_LABEL_OFFSET_Y = 0
 local DEFAULT_LABEL_ANCHOR = "LEFT"
+--#endregion
 
 ---@class (exact) IconWithLabelAndTooltip : IconWithLabelAndTooltipXml
 ---@field iconSizeX number
@@ -28,6 +31,9 @@ local DEFAULT_LABEL_ANCHOR = "LEFT"
 ---@field fontOverride string?
 DelveCompanionIconWithLabelAndTooltipMixin = {}
 
+--- Set `OnClick` function.
+---@param self IconWithLabelAndTooltip
+---@param func function
 function DelveCompanionIconWithLabelAndTooltipMixin:SetOnClick(func)
     local relKey = self.useMask and self.CircleMask or self
     self.ClickCatcher:SetAllPoints(relKey)
@@ -35,21 +41,25 @@ function DelveCompanionIconWithLabelAndTooltipMixin:SetOnClick(func)
     self.ClickCatcher:SetScript("OnClick", func)
 end
 
+---@param self IconWithLabelAndTooltip
+---@param text string|integer|number
 function DelveCompanionIconWithLabelAndTooltipMixin:SetLabelText(text)
     if text then
-        self.Label:SetText(text)
+        self.Label:SetText(tostring(text))
     end
 end
 
+---@param self IconWithLabelAndTooltip
 local function SetFromAtlas(self)
     if self.atlasTexture then
         self.Icon:SetAtlas(self.atlasTexture)
     end
 end
 
+---@param self IconWithLabelAndTooltip
 local function SetFromTexture(self)
     local texture = nil
-    local type, code = self.frameType, tonumber(self.frameCode)
+    local type, code = self.frameType, self.frameCode
 
     if not code then
         return
@@ -73,16 +83,20 @@ local function SetFromTexture(self)
     end
 end
 
+--- Set what kind of game entity this Frame displays. Used to display a proper tooltip.
+---@param self IconWithLabelAndTooltip
+---@param frameType string Game entity type from [CodeType](lua://CodeType).
+---@param frameCode number Corresponding in-game ID (e.g. `Item` ID).
 function DelveCompanionIconWithLabelAndTooltipMixin:SetFrameInfo(frameType, frameCode)
-    if frameType and FindInTable(DelveCompanion.Enums.CodeType, frameType) then
-        self.frameType = frameType
+    if not (frameType and FindInTable(DelveCompanion.Enums.CodeType, frameType) and frameCode) then
+        return
     end
 
-    if frameCode and tonumber(frameCode) then
-        self.frameCode = tonumber(frameCode)
-    end
+    self.frameType = frameType
+    self.frameCode = frameCode
 end
 
+---@param self IconWithLabelAndTooltip
 function DelveCompanionIconWithLabelAndTooltipMixin:OnLoad()
     -- Logger.Log("DelveCompanionIconWithTextAndTooltip OnLoad start")
     self.Icon:SetSize(self.iconSizeX, self.iconSizeY)
@@ -133,6 +147,7 @@ function DelveCompanionIconWithLabelAndTooltipMixin:OnLoad()
     end
 end
 
+---@param self IconWithLabelAndTooltip
 function DelveCompanionIconWithLabelAndTooltipMixin:OnShow()
     -- Logger.Log("DelveCompanionIconWithTextAndTooltip OnShow start")
 
@@ -143,34 +158,37 @@ function DelveCompanionIconWithLabelAndTooltipMixin:OnShow()
     end
 end
 
+---@param self IconWithLabelAndTooltip
 function DelveCompanionIconWithLabelAndTooltipMixin:OnHide()
     -- Logger.Log("DelveCompanionIconWithTextAndTooltip OnHide start")
 end
 
+---@param self IconWithLabelAndTooltip
 function DelveCompanionIconWithLabelAndTooltipMixin:OnEnter()
-    GameTooltip:SetOwner(self, "ANCHOR_TOP")
-    local type, code = self.frameType, tonumber(self.frameCode)
-
-    if not code then
+    local type, code = self.frameType, self.frameCode
+    if not (type and code) then
         return
     end
 
-    local Enums = DelveCompanion.Enums
-    if type == Enums.CodeType.Item then
+    GameTooltip:SetOwner(self, "ANCHOR_TOP")
+
+    local enums = DelveCompanion.Enums
+    if type == enums.CodeType.Item then
         GameTooltip:SetItemByID(code)
-    elseif type == Enums.CodeType.Spell then
+    elseif type == enums.CodeType.Spell then
         GameTooltip:SetSpellByID(code)
-    elseif type == Enums.CodeType.Currency then
+    elseif type == enums.CodeType.Currency then
         GameTooltip:SetCurrencyByID(code)
-    elseif type == Enums.CodeType.Achievement then
+    elseif type == enums.CodeType.Achievement then
         -- GameTooltip:SetAchievementByID(code)
         GameTooltip:SetHyperlink(GetAchievementLink(code))
     else
-        Logger.Log(Lockit.DEBUG_UNEXPECTED_ENUM_ELEMENT, tostring(Enums.CodeType), type)
+        Logger.Log(Lockit.DEBUG_UNEXPECTED_ENUM_ELEMENT, tostring(enums.CodeType), type)
     end
     GameTooltip:Show()
 end
 
+---@param self IconWithLabelAndTooltip
 function DelveCompanionIconWithLabelAndTooltipMixin:OnLeave()
     GameTooltip:Hide()
 end

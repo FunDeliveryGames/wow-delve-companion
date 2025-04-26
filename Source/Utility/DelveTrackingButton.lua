@@ -16,7 +16,7 @@ local TOM_TOM_WAYPOINT_DISTANCE_CLEAR = 10
 ---@class (exact) DelveTrackingButton
 DelveCompanion_DelveTrackingButtonMixin = {}
 
----@param self DelveInstanceButton
+---@param self DelveInstanceButton|OverviewBountifulButton
 function DelveCompanion_DelveTrackingButtonMixin:UpdateTooltip()
     ---@type DelveData
     local data = self.data
@@ -43,19 +43,19 @@ function DelveCompanion_DelveTrackingButtonMixin:UpdateTooltip()
     tooltip:Show()
 end
 
----@param self DelveInstanceButton
+---@param self DelveInstanceButton|OverviewBountifulButton
 function DelveCompanion_DelveTrackingButtonMixin:SetTracking()
     self.data.isTracking = true
     self.WaypointIcon:Show()
 end
 
----@param self DelveInstanceButton
+---@param self DelveInstanceButton|OverviewBountifulButton
 function DelveCompanion_DelveTrackingButtonMixin:ClearTracking()
     self.data.isTracking = false
     self.WaypointIcon:Hide()
 end
 
----@param self DelveInstanceButton
+---@param self DelveInstanceButton|OverviewBountifulButton
 ---@param delveData DelveData
 function DelveCompanion_DelveTrackingButtonMixin:SetTomTomWaypoint(delveData)
     local mapInfo = C_Map.GetMapInfo(delveData.config.uiMapID)
@@ -90,7 +90,7 @@ function DelveCompanion_DelveTrackingButtonMixin:SetTomTomWaypoint(delveData)
         options)
 end
 
----@param self DelveInstanceButton
+---@param self DelveInstanceButton|OverviewBountifulButton
 function DelveCompanion_DelveTrackingButtonMixin:ClearTomTomWaypoint()
     if not DelveCompanion.Variables.tomTomAvailable then
         return
@@ -101,7 +101,7 @@ function DelveCompanion_DelveTrackingButtonMixin:ClearTomTomWaypoint()
     self:ClearTracking()
 end
 
----@param self DelveInstanceButton
+---@param self DelveInstanceButton|OverviewBountifulButton
 function DelveCompanion_DelveTrackingButtonMixin:ToggleTracking()
     local delveData = self.data
 
@@ -126,7 +126,7 @@ function DelveCompanion_DelveTrackingButtonMixin:ToggleTracking()
     self:UpdateTooltip()
 end
 
----@param self DelveInstanceButton
+---@param self DelveInstanceButton|OverviewBountifulButton
 function DelveCompanion_DelveTrackingButtonMixin:CheckTomTomWaypoint()
     if not DelveCompanion.Variables.tomTomAvailable then
         return
@@ -140,7 +140,7 @@ function DelveCompanion_DelveTrackingButtonMixin:CheckTomTomWaypoint()
     end
 end
 
----@param self DelveInstanceButton
+---@param self DelveInstanceButton|OverviewBountifulButton
 function DelveCompanion_DelveTrackingButtonMixin:OnSuperTrackChanged()
     if C_SuperTrack.IsSuperTrackingAnything() then
         local type, typeID = C_SuperTrack.GetSuperTrackedMapPin()
