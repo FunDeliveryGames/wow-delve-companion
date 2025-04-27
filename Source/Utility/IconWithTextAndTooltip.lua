@@ -180,7 +180,6 @@ function DelveCompanionIconWithLabelAndTooltipMixin:OnEnter()
     elseif type == enums.CodeType.Currency then
         GameTooltip:SetCurrencyByID(code)
     elseif type == enums.CodeType.Achievement then
-        -- GameTooltip:SetAchievementByID(code)
         GameTooltip:SetHyperlink(GetAchievementLink(code))
     else
         Logger.Log(Lockit.DEBUG_UNEXPECTED_ENUM_ELEMENT, tostring(enums.CodeType), type)

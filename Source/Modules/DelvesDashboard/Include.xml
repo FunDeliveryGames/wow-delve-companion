@@ -4,6 +4,9 @@
 	<Include file="LootInfo\LootInfoFrame.xml" />
 	<Script file="LootInfo\LootInfoFrame.lua" />
 
+	<Include file="Companion\Companion.xml" />
+	<Script file="Companion\Companion.lua" />
+
 	<Include file="GreatVault\GreatVaultDetailsItem.xml" />
 	<Script file="GreatVault\GreatVaultDetailsItem.lua" />
 	<Include file="GreatVault\GreatVaultDetails.xml" />

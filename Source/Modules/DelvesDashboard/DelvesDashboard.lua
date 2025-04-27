@@ -44,12 +44,13 @@ local function CreateLootInfoButton(parent)
 end
 
 local function InitDelvesDashboard()
-    if not DelvesDashboardFrame then
-        Logger.Log("DelvesDashboardFrame is nil. Delves UI extension is not inited.")
+    if not DelveCompanion.Variables.maxLevelReached then
         return
     end
 
-    if not DelveCompanion.Variables.maxLevelReached then
+    local DelvesDashboardFrame = DelvesDashboardFrame
+    if not DelvesDashboardFrame then
+        Logger.Log("DelvesDashboardFrame is nil. Delves UI extension is not inited.")
         return
     end
 
@@ -71,6 +72,14 @@ local function InitDelvesDashboard()
         DelvesDashboardFrame:HookScript("OnHide", function()
             DelveCompanion.DelvesDashboard.LootInfo:Hide()
         end)
+    end
+
+    do
+        local compPanel = DelvesDashboardFrame.ButtonPanelLayoutFrame.CompanionConfigButtonPanel
+        compPanel.PanelDescription:Hide()
+
+        ---@type DashboardExpBar
+        local bar = CreateFrame("StatusBar", "$parent.CompExpBar", compPanel, "DelveCompanionDashboardExpBarTemplate")
     end
 
     if DelveCompanionCharacterData.gvDetailsEnabled then
