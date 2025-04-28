@@ -68,7 +68,7 @@ end
 
 --#region XML Annotations
 
---- DelveCompanionDelveInstanceButtonTemplate
+--- `DelveCompanionDelveInstanceButtonTemplate`
 ---@class DelveInstanceButtonXml : Button
 ---@field DefaultBg Texture
 ---@field DelveArtBg Texture

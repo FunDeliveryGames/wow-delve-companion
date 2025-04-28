@@ -129,7 +129,7 @@ end
 
 --#region XML Annotations
 
---- DelveCompanionOverviewGildedStashFrameTemplate
+--- `DelveCompanionOverviewGildedStashFrameTemplate`
 ---@class GildedStashFrameXml : Frame
 ---@field Name FontString
 ---@field ErrorLabel FontString

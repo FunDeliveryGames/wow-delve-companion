@@ -63,7 +63,7 @@ end
 
 --#region XML Annotations
 
---- DelveCompanionOverviewBountifulButtonTemplate
+--- `DelveCompanionOverviewBountifulButtonTemplate`
 ---@class OverviewBountifulButtonXml : Button
 ---@field layoutIndex number
 ---@field Background Texture

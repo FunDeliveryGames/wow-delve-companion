@@ -13,6 +13,7 @@ local DashboardCompanion = DelveCompanion.DelvesDashboard.Companion
 
 ---@type number
 local SLOT_SCALE_VERTICAL = 0.65
+---@type number
 local SLOT_SCALE_HORIZONTAL = 0.6
 --#endregion
 
@@ -142,7 +143,7 @@ end
 
 --#region XML Annotations
 
---- [CompanionConfigSlotTemplate](https://www.townlong-yak.com/framexml/live/Blizzard_DelvesCompanionConfiguration/Blizzard_DelvesCompanionConfiguration.xml#4)
+--- `CompanionConfigSlotTemplate` ([Blizzard template](https://www.townlong-yak.com/framexml/live/Blizzard_DelvesCompanionConfiguration/Blizzard_DelvesCompanionConfiguration.xml#4)).
 ---@class CompanionConfigSlotXml : Button
 ---@field type string
 ---@field Label FontString
@@ -150,7 +151,7 @@ end
 ---@field Texture Texture
 ---@field OptionsList Frame
 
---- DelveCompanionDashboardCompanionConfigWidgetTemplate
+--- `DelveCompanionDashboardCompanionConfigWidgetTemplate`
 ---@class CompanionConfigWidgetXml : Frame
 ---@field RoleSlot CompanionConfigSlotXml
 ---@field CombatSlot CompanionConfigSlotXml

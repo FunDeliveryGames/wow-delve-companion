@@ -9,7 +9,7 @@ local Logger = DelveCompanion.Logger
 local Config = DelveCompanion.Config
 
 --- Custom Great Vault frame in Delves UI.
----@class (exact) GVDetails : GVDetailsXml, WeeklyRewardMixin
+---@class (exact) GVDetailsFrame : GVDetailsXml, WeeklyRewardMixin
 ---@field shouldRefresh boolean Whether the frame has to update rewards progress.
 DelveCompanion_GreatVaultDetailsMixin = CreateFromMixins(WeeklyRewardMixin)
 
@@ -71,9 +71,10 @@ function DelveCompanion_GreatVaultDetailsMixin:Refresh()
     self.shouldRefresh = false
 end
 
----@param self GVDetails
+---@param self GVDetailsFrame
 function DelveCompanion_GreatVaultDetailsMixin:OnLoad()
     -- Logger.Log("GreatVaultDetails OnLoad start")
+
     for i = 1, self:GetMaxNumRewards(Config.ACTIVITY_TYPE), 1 do
         ---@type GVDetailsItem
         local gvItem = CreateFrame("Frame", nil, self.Rewards, "DelveCompanionGreatVaultItemTemplate")
@@ -85,24 +86,33 @@ function DelveCompanion_GreatVaultDetailsMixin:OnLoad()
     self.GVButton:SetTextToFit(_G["RAF_VIEW_ALL_REWARDS"])
 
     self.shouldRefresh = true
+
+    EventRegistry:RegisterFrameEventAndCallback("WEEKLY_REWARDS_UPDATE", function()
+        if self:IsShown() then
+            self:Refresh()
+        else
+            self.shouldRefresh = true
+        end
+    end)
 end
 
----@param self GVDetails
+---@param self GVDetailsFrame
 function DelveCompanion_GreatVaultDetailsMixin:OnShow()
     -- Logger.Log("GreatVaultDetails OnShow start")
+
     if self.shouldRefresh then
         self:Refresh()
     end
 end
 
----@param self GVDetails
+---@param self GVDetailsFrame
 function DelveCompanion_GreatVaultDetailsMixin:OnHide()
     --Logger.Log("GreatVaultDetails OnHide start")
 end
 
 --#region XML Annotations
 
---- DelveCompanionGreatVaultDetailsFrame
+--- `DelveCompanionGreatVaultDetailsFrame`
 ---@class GVDetailsXml : Frame
 ---@field LoadingLabel FontString
 ---@field GVButton MagicButton

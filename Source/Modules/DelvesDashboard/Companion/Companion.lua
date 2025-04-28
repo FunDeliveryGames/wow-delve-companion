@@ -9,11 +9,10 @@ local DelveCompanion = AddonTbl.DelveCompanion
 ---@field ExpBar DashboardExpBar
 ---@field ConfigWidget CompanionConfigWidget
 local DashboardCompanion = {}
-
 DelveCompanion.DelvesDashboard.Companion = DashboardCompanion
 
 --- Create and set all required elements.
----@param CompanionPanel CompanionConfigButtonPanel Companion section Frame in Delves UI.
+---@param CompanionPanel CompanionConfigButtonPanel Blizzard Companion section frame in Delves UI.
 function DashboardCompanion:Init(CompanionPanel)
     DashboardCompanion.ParentPanel = CompanionPanel
 
@@ -39,7 +38,7 @@ end
 
 --#region XML Annotations
 
---- CompanionConfigButtonPanel
+--- `CompanionConfigButtonPanel` ([Blizzard frame](https://www.townlong-yak.com/framexml/live/Blizzard_DelvesDashboardUI/Blizzard_DelvesDashboardUI.xml#324)).
 ---@class CompanionConfigButtonPanel : DelvesDashboardButtonPanelFrame
 ---@field layoutIndex number
 ---@field CompanionModelScene ModelScene

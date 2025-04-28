@@ -69,7 +69,7 @@ end
 
 --#region XML Annotations
 
---- DelveCompanionOverviewConsumablesFrameTemplate
+--- `DelveCompanionOverviewConsumablesFrameTemplate`
 ---@class OverviewConsumablesFrameXml : Frame
 ---@field Keys IconWithLabelAndTooltip
 ---@field Shards IconWithLabelAndTooltip

@@ -10,20 +10,20 @@
 
 --#region FrameXML annotations
 
---- [VerticalLayoutFrame](https://www.townlong-yak.com/framexml/live/Blizzard_SharedXML/LayoutFrame.xml#9)
+--- `VerticalLayoutFrame` ([Blizzard template](https://www.townlong-yak.com/framexml/live/Blizzard_SharedXML/LayoutFrame.xml#9)).
 ---@class VerticalLayoutFrame : Frame, LayoutMixin, VerticalLayoutMixin
 
---- [HorizontalLayoutFrame](https://www.townlong-yak.com/framexml/live/Blizzard_SharedXML/LayoutFrame.xml#85)
+--- `HorizontalLayoutFrame` ([Blizzard template](https://www.townlong-yak.com/framexml/live/Blizzard_SharedXML/LayoutFrame.xml#85)).
 ---@class HorizontalLayoutFrame : Frame, LayoutMixin, HorizontalLayoutMixin
 ---@field fixedHeight number
 
---- [MagicButtonTemplate](https://www.townlong-yak.com/framexml/live/Blizzard_SharedXML/SharedUIPanelTemplates.xml#1196)
+--- `MagicButtonTemplate` ([Blizzard template](https://www.townlong-yak.com/framexml/live/Blizzard_SharedXML/SharedUIPanelTemplates.xml#1196)).
 ---@class MagicButton : Button, UIButtonFitToTextBehaviorMixin
 ---@field fitTextCanWidthDecrease boolean Whether the button width can decrease depending on the text width.
 ---@field fitTextWidthPadding number Extra padding around the text.
 ---@field Text FontString Button text.
 
---- [DelvesDashboardButtonPanelFrame](https://www.townlong-yak.com/framexml/live/Blizzard_DelvesDashboardUI/Blizzard_DelvesDashboardUI.xml#18)
+--- `DelvesDashboardButtonPanelFrame` ([Blizzard template](https://www.townlong-yak.com/framexml/live/Blizzard_DelvesDashboardUI/Blizzard_DelvesDashboardUI.xml#18)).
 ---@class DelvesDashboardButtonPanelFrame : Frame
 ---@field isCompanionButtonPanelFrame boolean If true, this button panel frame will use a highlighted background
 ---@field ButtonPanelBackground Texture
@@ -33,7 +33,7 @@
 
 --#region Mixin annotations
 
---- [BaseLayoutMixin](https://www.townlong-yak.com/framexml/live/Blizzard_SharedXML/LayoutFrame.lua#10)
+--- `BaseLayoutMixin` ([Blizzard object](https://www.townlong-yak.com/framexml/live/Blizzard_SharedXML/LayoutFrame.lua#10)).
 ---@class BaseLayoutMixin
 local BaseLayoutMixin = {}
 
@@ -41,22 +41,22 @@ local BaseLayoutMixin = {}
 ---@return Frame[] # List of children. Note: `Frame` here may not match the exact type of the objects.
 function BaseLayoutMixin:GetLayoutChildren() end
 
---- [LayoutMixin](https://www.townlong-yak.com/framexml/live/Blizzard_SharedXML/LayoutFrame.lua#197)
+--- `LayoutMixin` ([Blizzard object](https://www.townlong-yak.com/framexml/live/Blizzard_SharedXML/LayoutFrame.lua#197)).
 ---@class LayoutMixin : BaseLayoutMixin
 local LayoutMixin = {}
 
 --- Set proper layout for all children considering Layout parameters (paddings, offsets, etc.).
 function LayoutMixin:Layout() end
 
---- [VerticalLayoutMixin](https://www.townlong-yak.com/framexml/live/Blizzard_SharedXML/LayoutFrame.lua#264)
+--- `VerticalLayoutMixin` ([Blizzard object](https://www.townlong-yak.com/framexml/live/Blizzard_SharedXML/LayoutFrame.lua#264)).
 ---@class VerticalLayoutMixin
 local VerticalLayoutMixin = {}
 
---- [HorizontalLayoutMixin](https://www.townlong-yak.com/framexml/live/Blizzard_SharedXML/LayoutFrame.lua#361)
+--- `HorizontalLayoutMixin` ([Blizzard object](https://www.townlong-yak.com/framexml/live/Blizzard_SharedXML/LayoutFrame.lua#361)).
 ---@class HorizontalLayoutMixin
 local HorizontalLayoutMixin = {}
 
---- [WeeklyRewardMixin](https://www.townlong-yak.com/framexml/live/Blizzard_WeeklyRewardsUtil/Blizzard_WeeklyRewardsUtil.lua#100).
+--- `WeeklyRewardMixin` ([Blizzard object](https://www.townlong-yak.com/framexml/live/Blizzard_WeeklyRewardsUtil/Blizzard_WeeklyRewardsUtil.lua#100)).
 ---@class WeeklyRewardMixin
 local WeeklyRewardMixin = {}
 
@@ -75,7 +75,7 @@ function WeeklyRewardMixin:GetMaxNumRewards(activityType) end
 ---@return integer # Number of unlocked rewards.
 function WeeklyRewardMixin:GetNumUnlockedRewards(activityType) end
 
---- [UIButtonFitToTextBehaviorMixin](https://www.townlong-yak.com/framexml/11.1.0/Blizzard_SharedXML/SecureUIPanelTemplates.lua#210).
+--- `UIButtonFitToTextBehaviorMixin` ([Blizzard object](https://www.townlong-yak.com/framexml/live/Blizzard_SharedXML/SecureUIPanelTemplates.lua#210)).
 ---@class UIButtonFitToTextBehaviorMixin
 local UIButtonFitToTextBehaviorMixin = {}
 

@@ -51,6 +51,7 @@ end
 ---@param self DelveCompanion
 function DelveCompanion:UpdateDelvesData()
     -- Logger.Log("Start updating Delves data...")
+
     for _, delveData in ipairs(self.Variables.delvesData) do
         local delveConfig = delveData.config
         local parentMapID = C_Map.GetMapInfo(delveConfig.uiMapID).parentMapID
@@ -64,6 +65,7 @@ function DelveCompanion:UpdateDelvesData()
             delveData.isBountiful = false
         end
     end
+
     -- Logger.Log("Finished updating Delves data")
 end
 
@@ -83,7 +85,7 @@ end
 --- Try to retrieve `uiMapID` of the parent map with `Enum.UIMapType.Continent` for the given [uiMapID](https://warcraft.wiki.gg/wiki/UiMapID).
 ---@param self DelveCompanion
 ---@param mapID number [uiMapID](https://warcraft.wiki.gg/wiki/UiMapID) for which the Continent is retrieved.
----@return number|nil # Retrieved `uiMapID` of the Continent or `nil` otherwise.
+---@return number|nil # Retrieved `uiMapID` of the Continent, or `nil` otherwise.
 function DelveCompanion:GetContinentMapIDForMap(mapID)
     if not mapID then
         return nil

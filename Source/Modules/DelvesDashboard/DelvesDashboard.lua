@@ -12,7 +12,7 @@ local Lockit = DelveCompanion.Lockit
 
 ---@class (exact) DelvesDashboard
 ---@field LootInfo LootInfoFrame
----@field GVDetails GVDetails
+---@field GVDetails GVDetailsFrame
 ---@field Overview DashOverview
 ---@field Companion DashboardCompanion
 local DelvesDashboard = {}
@@ -83,19 +83,12 @@ local function InitDelvesDashboard()
     if DelveCompanionCharacterData.gvDetailsEnabled then
         local gvPanel = DelvesDashboardFrame.ButtonPanelLayoutFrame.GreatVaultButtonPanel
 
-        ---@type GVDetails
+        ---@type GVDetailsFrame
         local gvDetailsFrame = CreateFrame("Frame",
             "$parent.CustomDetails", gvPanel,
             "DelveCompanionGreatVaultDetailsFrame")
-        DelvesDashboard.GVDetails = gvDetailsFrame
 
-        EventRegistry:RegisterFrameEventAndCallback("WEEKLY_REWARDS_UPDATE", function()
-            if DelvesDashboard.GVDetails:IsShown() then
-                DelvesDashboard.GVDetails:Refresh()
-            else
-                DelvesDashboard.GVDetails.shouldRefresh = true
-            end
-        end)
+        DelvesDashboard.GVDetails = gvDetailsFrame
     end
 
     if DelveCompanionCharacterData.dashOverviewEnabled then

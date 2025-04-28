@@ -8,7 +8,7 @@ local DelveCompanion = AddonTbl.DelveCompanion
 
 --#region XML Annotations
 
---- DelveCompanionDelveMapHeaderTemplate
+--- `DelveCompanionDelveMapHeaderTemplate`
 ---@class DelvesMapHeaderXml : Frame
 ---@field Background Texture
 ---@field MapName FontString Localized name of the map
