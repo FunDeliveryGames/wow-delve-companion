@@ -10,6 +10,14 @@ local Config = DelveCompanion.Config
 ---@type Lockit
 local Lockit = DelveCompanion.Lockit
 
+---@class (exact) DelvesDashboard
+---@field LootInfo LootInfoFrame
+---@field GVDetails GVDetails
+---@field Overview DashOverview
+---@field Companion DashboardCompanion
+local DelvesDashboard = {}
+DelveCompanion.DelvesDashboard = DelvesDashboard
+
 --- Add a button to open Delves' Loot info.
 ---@param parent any
 local function CreateLootInfoButton(parent)
@@ -23,11 +31,11 @@ local function CreateLootInfoButton(parent)
 
     button:HookScript("OnClick", function()
         GameTooltip:Hide()
-        DelveCompanion.DelvesDashboard.LootInfo:Show()
+        DelvesDashboard.LootInfo:Show()
     end)
 
     button:HookScript("OnEnter", function()
-        if DelveCompanion.DelvesDashboard.LootInfo:IsShown() then
+        if DelvesDashboard.LootInfo:IsShown() then
             return
         end
 
@@ -54,13 +62,6 @@ local function InitDelvesDashboard()
         return
     end
 
-    ---@class (exact) DelvesDashboard
-    ---@field LootInfo LootInfoFrame
-    ---@field GVDetails GVDetails
-    ---@field Overview DashOverview
-    local DelvesDashboard = {}
-    DelveCompanion.DelvesDashboard = DelvesDashboard
-
     do
         ---@type LootInfoFrame
         local lootInfoFrame = CreateFrame("Frame",
@@ -70,16 +71,13 @@ local function InitDelvesDashboard()
 
         CreateLootInfoButton(DelvesDashboardFrame)
         DelvesDashboardFrame:HookScript("OnHide", function()
-            DelveCompanion.DelvesDashboard.LootInfo:Hide()
+            DelvesDashboard.LootInfo:Hide()
         end)
     end
 
     do
         local compPanel = DelvesDashboardFrame.ButtonPanelLayoutFrame.CompanionConfigButtonPanel
-        compPanel.PanelDescription:Hide()
-
-        ---@type DashboardExpBar
-        local bar = CreateFrame("StatusBar", "$parent.CompExpBar", compPanel, "DelveCompanionDashboardExpBarTemplate")
+        DelvesDashboard.Companion:Init(compPanel)
     end
 
     if DelveCompanionCharacterData.gvDetailsEnabled then
@@ -92,10 +90,10 @@ local function InitDelvesDashboard()
         DelvesDashboard.GVDetails = gvDetailsFrame
 
         EventRegistry:RegisterFrameEventAndCallback("WEEKLY_REWARDS_UPDATE", function()
-            if DelveCompanion.DelvesDashboard.GVDetails:IsShown() then
-                DelveCompanion.DelvesDashboard.GVDetails:Refresh()
+            if DelvesDashboard.GVDetails:IsShown() then
+                DelvesDashboard.GVDetails:Refresh()
             else
-                DelveCompanion.DelvesDashboard.GVDetails.shouldRefresh = true
+                DelvesDashboard.GVDetails.shouldRefresh = true
             end
         end)
     end
@@ -106,8 +104,8 @@ local function InitDelvesDashboard()
         DelvesDashboard.Overview = dashOverview
 
         DelvesDashboardFrame.ButtonPanelLayoutFrame.spacing = -20
-        DelvesDashboardFrame.ButtonPanelLayoutFrame:Layout()
     end
+    DelvesDashboardFrame.ButtonPanelLayoutFrame:Layout()
 end
 
 EventUtil.ContinueOnAddOnLoaded(DelveCompanion.Enums.DependencyAddonName.delvesDashboardUI, InitDelvesDashboard)

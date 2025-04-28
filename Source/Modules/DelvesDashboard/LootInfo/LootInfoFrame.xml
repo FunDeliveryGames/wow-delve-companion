@@ -27,7 +27,7 @@
         </Layers>
     </Frame>
 
-    <Button name="DelveCompanionLootInfoButtonTemplate" inherits="UIPanelButtonNoTooltipTemplate"
+    <Button name="DelveCompanionLootInfoButtonTemplate" inherits="MagicButtonTemplate"
         virtual="true" frameLevel="20">
         <Size x="50" y="20" />
         <KeyValues>

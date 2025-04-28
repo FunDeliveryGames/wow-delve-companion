@@ -22,6 +22,13 @@
 ---@field fitTextCanWidthDecrease boolean Whether the button width can decrease depending on the text width.
 ---@field fitTextWidthPadding number Extra padding around the text.
 ---@field Text FontString Button text.
+
+--- [DelvesDashboardButtonPanelFrame](https://www.townlong-yak.com/framexml/live/Blizzard_DelvesDashboardUI/Blizzard_DelvesDashboardUI.xml#18)
+---@class DelvesDashboardButtonPanelFrame : Frame
+---@field isCompanionButtonPanelFrame boolean If true, this button panel frame will use a highlighted background
+---@field ButtonPanelBackground Texture
+---@field PanelTitle FontString
+---@field PanelDescription FontString
 --#endregion
 
 --#region Mixin annotations
