@@ -19,7 +19,7 @@ function DelveCompanion_DelveInstanceButtonMixin:Update()
         self.BountifulIcon:Hide()
     end
 
-    if DelveCompanionAccountData.useTomTomWaypoints then
+    if DelveCompanionAccountData.trackingType == DelveCompanion.Enums.WaypointTrackingType.tomtom then
         self:CheckTomTomWaypoint()
     else
         self:OnSuperTrackChanged()

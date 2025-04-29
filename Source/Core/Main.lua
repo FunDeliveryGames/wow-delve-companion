@@ -106,27 +106,33 @@ end
 --- Init [SavedVariables](https://warcraft.wiki.gg/wiki/TOC_format#SavedVariables) if they're not available (e.g. the 1st addon load).
 ---@param self DelveCompanion
 function DelveCompanion:InitAccountSave()
-    --- Account Save Data
-    ---@class (exact) DelveCompanionAccountData
-    ---@field achievementWidgetsEnabled boolean
-    ---@field useTomTomWaypoints boolean
-    DelveCompanionAccountData = {
-        achievementWidgetsEnabled = true,
-        useTomTomWaypoints = false
-    }
+    -- DelveCompanion.Logger.Log("Init AccountSave start...")
+
+    if not DelveCompanionAccountData then
+        ---@type DelveCompanionAccountData
+        DelveCompanionAccountData = CopyTable(DelveCompanion.Config.DEFAULT_ACCOUNT_DATA)
+    else
+        for key, value in pairs(DelveCompanion.Config.DEFAULT_ACCOUNT_DATA) do
+            if DelveCompanionAccountData[key] == nil then
+                DelveCompanionAccountData[key] = value
+            end
+        end
+    end
 end
 
 --- Init [SavedVariablesPerCharacter](https://warcraft.wiki.gg/wiki/TOC_format#SavedVariablesPerCharacter) if they're not available (e.g. the 1st addon load).
 ---@param self DelveCompanion
 function DelveCompanion:InitCharacterSave()
-    --- Character Save Data
-    ---@class (exact) DelveCompanionCharacterData
-    ---@field gvDetailsEnabled boolean
-    ---@field keysCapTooltipEnabled boolean
-    ---@field dashOverviewEnabled boolean
-    DelveCompanionCharacterData = {
-        gvDetailsEnabled = true,
-        keysCapTooltipEnabled = true,
-        dashOverviewEnabled = true
-    }
+    -- DelveCompanion.Logger.Log("Init CharacterSave start...")
+
+    if not DelveCompanionCharacterData then
+        ---@type DelveCompanionCharacterData
+        DelveCompanionCharacterData = CopyTable(DelveCompanion.Config.DEFAULT_CHARACTER_DATA)
+    else
+        for key, value in pairs(DelveCompanion.Config.DEFAULT_CHARACTER_DATA) do
+            if DelveCompanionCharacterData[key] == nil then
+                DelveCompanionCharacterData[key] = value
+            end
+        end
+    end
 end

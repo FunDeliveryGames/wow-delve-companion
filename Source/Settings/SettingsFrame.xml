@@ -1,9 +1,8 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://www.blizzard.com/wow/ui/ https://raw.githubusercontent.com/Gethe/wow-ui-source/live/Interface/AddOns/Blizzard_SharedXML/UI.xsd">
-    <!-- Settings frame -->
     <Frame name="DelveCompanionSettingsFrame" mixin="DelveCompanionSettingsFrameMixin"
-        virtual="true">
+        virtual="true" hidden="true">
         <Frames>
             <Frame parentKey="TitlePanel">
                 <Anchors>
@@ -28,121 +27,7 @@
                 </Layers>
             </Frame>
 
-            <Frame parentKey="AccountTogglesContainer" inherits="VerticalLayoutFrame">
-                <KeyValues>
-                    <KeyValue key="maximumWidth" value="400" type="number" />
-                    <KeyValue key="expand" value="true" type="boolean" />
-                    <KeyValue key="spacing" value="5" type="number" />
-                    <KeyValue key="topPadding" value="20" type="number" />
-                </KeyValues>
-                <Anchors>
-                    <Anchor point="TOPLEFT" relativeKey="$parent.TitlePanel"
-                        relativePoint="BOTTOMLEFT" />
-                </Anchors>
-                <Layers>
-                    <Layer level="OVERLAY">
-                        <FontString parentKey="Title" inherits="GameFontNormal"
-                            justifyH="CENTER" text="ACCOUNT_VARS">
-                            <Anchors>
-                                <Anchor point="TOPLEFT" />
-                            </Anchors>
-                        </FontString>
-                    </Layer>
-                </Layers>
-                <Frames>
-                    <CheckButton parentKey="achievementWidgetsCheckButton"
-                        inherits="DelveCompanionSettingsCheckButtonTemplate">
-                        <KeyValues>
-                            <KeyValue key="layoutIndex" value="1" type="number" />
-                            <KeyValue key="saveType" value="account" type="string" />
-                            <KeyValue key="saveVar" value="achievementWidgetsEnabled" type="string" />
-                            <KeyValue key="defaultValue" value="true" type="boolean" />
-                            <KeyValue key="localeKey" value="UI_SETTINGS_ACH_WIDGETS" type="string" />
-                        </KeyValues>
-                    </CheckButton>
-                    <CheckButton parentKey="useTomTomCheckButton"
-                        inherits="DelveCompanionSettingsCheckButtonTemplate">
-                        <KeyValues>
-                            <KeyValue key="layoutIndex" value="2" type="number" />
-                            <KeyValue key="saveType" value="account" type="string" />
-                            <KeyValue key="saveVar" value="useTomTomWaypoints" type="string" />
-                            <KeyValue key="defaultValue" value="false" type="boolean" />
-                            <KeyValue key="localeKey" value="UI_SETTINGS_TOMTOM_DESCRIPTION"
-                                type="string" />
-                        </KeyValues>
-                    </CheckButton>
-                </Frames>
-            </Frame>
-
-            <Frame parentKey="CharacterTogglesContainer" inherits="VerticalLayoutFrame">
-                <KeyValues>
-                    <KeyValue key="maximumWidth" value="600" type="number" />
-                    <KeyValue key="expand" value="true" type="boolean" />
-                    <KeyValue key="spacing" value="5" type="number" />
-                    <KeyValue key="topPadding" value="20" type="number" />
-                </KeyValues>
-                <Anchors>
-                    <Anchor point="TOPLEFT" relativeKey="$parent.AccountTogglesContainer"
-                        relativePoint="BOTTOMLEFT" y="-20" />
-                </Anchors>
-                <Layers>
-                    <Layer level="OVERLAY">
-                        <FontString parentKey="Title" inherits="GameFontNormal"
-                            justifyH="CENTER" text="CHAR_VARS">
-                            <Anchors>
-                                <Anchor point="TOPLEFT" />
-                            </Anchors>
-                        </FontString>
-                    </Layer>
-                </Layers>
-                <Frames>
-                    <CheckButton parentKey="keysCapTooltipCheckButton"
-                        inherits="DelveCompanionSettingsCheckButtonTemplate">
-                        <KeyValues>
-                            <KeyValue key="layoutIndex" value="1" type="number" />
-                            <KeyValue key="saveType" value="character" type="string" />
-                            <KeyValue key="saveVar" value="keysCapTooltipEnabled" type="string" />
-                            <KeyValue key="defaultValue" value="true" type="boolean" />
-                            <KeyValue key="localeKey" value="UI_SETTINGS_KEYS_CAP" type="string" />
-                        </KeyValues>
-                    </CheckButton>
-                    <CheckButton parentKey="gvDetailsCheckButton"
-                        inherits="DelveCompanionSettingsCheckButtonTemplate">
-                        <KeyValues>
-                            <KeyValue key="layoutIndex" value="2" type="number" />
-                            <KeyValue key="saveType" value="character" type="string" />
-                            <KeyValue key="saveVar" value="gvDetailsEnabled" type="string" />
-                            <KeyValue key="defaultValue" value="true" type="boolean" />
-                            <KeyValue key="localeKey" value="UI_SETTINGS_GV_DETAILS" type="string" />
-                        </KeyValues>
-                    </CheckButton>
-                    <CheckButton parentKey="dashOverviewCheckButton"
-                        inherits="DelveCompanionSettingsCheckButtonTemplate">
-                        <KeyValues>
-                            <KeyValue key="layoutIndex" value="3" type="number" />
-                            <KeyValue key="saveType" value="character" type="string" />
-                            <KeyValue key="saveVar" value="dashOverviewEnabled" type="string" />
-                            <KeyValue key="defaultValue" value="true" type="boolean" />
-                            <KeyValue key="localeKey" value="UI_SETTINGS_DASHBOARD_OVERVIEW"
-                                type="string" />
-                        </KeyValues>
-                    </CheckButton>
-                </Frames>
-            </Frame>
-
-            <Button parentKey="ReloadButton" text="RELOAD" inherits="MagicButtonTemplate">
-                <Size x="250" y="30" />
-                <Anchors>
-                    <Anchor point="TOPLEFT" relativeKey="$parent.CharacterTogglesContainer"
-                        relativePoint="BOTTOMLEFT" y="-15" />
-                </Anchors>
-                <Scripts>
-                    <OnClick>
-                        C_UI.Reload()
-                    </OnClick>
-                </Scripts>
-            </Button>
-
+            <!-- 
             <Frame parentKey="LocalizationFrame" inherits="VerticalLayoutFrame">
                 <KeyValues>
                     <KeyValue key="maximumWidth" value="1000" type="number" />
@@ -239,6 +124,7 @@
                     </Frame>
                 </Frames>
             </Frame>
+             -->
         </Frames>
         <Scripts>
             <OnLoad method="OnLoad" />

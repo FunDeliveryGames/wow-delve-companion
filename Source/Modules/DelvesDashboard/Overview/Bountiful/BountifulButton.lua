@@ -32,7 +32,7 @@ function DelveCompanion_OverviewBountifulButtonMixin:OnShow()
 
     self:RegisterEvent("SUPER_TRACKING_CHANGED")
 
-    if DelveCompanionAccountData.useTomTomWaypoints then
+    if DelveCompanion.Variables.tomTomAvailable and DelveCompanionAccountData.trackingType == DelveCompanion.Enums.WaypointTrackingType.tomtom then
         self:CheckTomTomWaypoint()
     else
         self:OnSuperTrackChanged()
