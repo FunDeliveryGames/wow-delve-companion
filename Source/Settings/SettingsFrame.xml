@@ -11,8 +11,8 @@
                 </Anchors>
                 <Layers>
                     <Layer level="OVERLAY">
-                        <FontString parentKey="Title" inherits="GameFontNormalHuge2"
-                            justifyH="CENTER" text="TITLE">
+                        <FontString parentKey="Text" inherits="GameFontNormalHuge2"
+                            justifyH="CENTER" text="ADDON">
                             <Anchors>
                                 <Anchor point="TOP" />
                             </Anchors>
@@ -27,7 +27,6 @@
                 </Layers>
             </Frame>
 
-            <!-- 
             <Frame parentKey="LocalizationFrame" inherits="VerticalLayoutFrame">
                 <KeyValues>
                     <KeyValue key="maximumWidth" value="1000" type="number" />
@@ -124,7 +123,7 @@
                     </Frame>
                 </Frames>
             </Frame>
-             -->
+
         </Frames>
         <Scripts>
             <OnLoad method="OnLoad" />

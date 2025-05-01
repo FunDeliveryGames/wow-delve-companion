@@ -18,12 +18,12 @@ function DelveCompanionSettingsFrameMixin:OnLoad()
     -- Logger.Log("SettingsFrame OnLoad start...")
 
     self:SetAllPoints()
-    self.TitlePanel.Title:SetText(Lockit.UI_ADDON_NAME)
+    self.TitlePanel.Text:SetText(Lockit.UI_ADDON_NAME)
     self.TitlePanel.Version:SetText(C_AddOns.GetAddOnMetadata(addonName, "Version"))
 
-    -- -- Localization section
-    -- self.LocalizationFrame.Title:SetText(Lockit.UI_SETTINGS_TRANSLATION_TITLE)
-    -- self.LocalizationFrame:Layout()
+    -- Localization section
+    self.LocalizationFrame.Title:SetText(Lockit.UI_SETTINGS_TRANSLATION_TITLE)
+    self.LocalizationFrame:Layout()
 end
 
 function DelveCompanionSettingsFrameMixin:OnShow()
