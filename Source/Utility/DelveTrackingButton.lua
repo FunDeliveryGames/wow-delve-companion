@@ -109,7 +109,7 @@ function DelveCompanion_DelveTrackingButtonMixin:ToggleTracking()
         return
     end
 
-    if DelveCompanion.Variables.tomTomAvailable and DelveCompanionAccountData.useTomTomWaypoints then
+    if DelveCompanion.Variables.tomTomAvailable and DelveCompanionAccountData.trackingType == DelveCompanion.Enums.WaypointTrackingType.tomtom then
         if delveData.isTracking then
             self:ClearTomTomWaypoint()
         else

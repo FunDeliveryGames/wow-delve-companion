@@ -32,7 +32,6 @@ function DelveCompanion_GreatVaultDetailsMixin:SetStateDefault()
 end
 
 function DelveCompanion_GreatVaultDetailsMixin:SetStateCustom()
-    -- Hide the default Great Vault elements
     self:GetParent().PanelDescription:Hide()
     self:GetParent().GreatVaultButton:Hide()
 
@@ -47,7 +46,7 @@ function DelveCompanion_GreatVaultDetailsMixin:CanDisplayCustomState()
 end
 
 function DelveCompanion_GreatVaultDetailsMixin:Refresh()
-    if self:CanDisplayCustomState() then
+    if DelveCompanionCharacterData.gvDetailsEnabled and self:CanDisplayCustomState() then
         local activitiesInfo = C_WeeklyRewards.GetActivities(Config.ACTIVITY_TYPE)
         if not activitiesInfo then
             Logger.Log("Cannot get Activity info")

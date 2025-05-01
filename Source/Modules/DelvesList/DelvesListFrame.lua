@@ -147,7 +147,7 @@ function DelveCompanion_DelvesListFrameMixin:InitDelvesList()
                 instanceButton:SetPoint("TOPLEFT", header, "BOTTOMLEFT", anchorX,
                     anchorY)
 
-                if DelveCompanionAccountData.achievementWidgetsEnabled and delveConfig.achievements then
+                if delveConfig.achievements then
                     ---@type DelvesProgressWidget
                     local progressWidget = self:CreateDelveProgressWidget(self.DelvesListScroll.Content,
                         delveConfig)

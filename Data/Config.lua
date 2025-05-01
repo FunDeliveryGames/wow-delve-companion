@@ -8,6 +8,33 @@ local DelveCompanion = AddonTbl.DelveCompanion
 local Config = {}
 DelveCompanion.Config = Config
 
+--#region Save Data
+
+--- Account Save Data scheme
+---@class (exact) DelveCompanionAccountData
+---@field delveProgressWidgetsEnabled boolean
+---@field trackingType WaypointTrackingType
+Config.DEFAULT_ACCOUNT_DATA = {
+    delveProgressWidgetsEnabled = true,
+    trackingType = DelveCompanion.Enums.WaypointTrackingType.superTrack
+}
+
+--- Character Save Data
+---@class (exact) DelveCompanionCharacterData
+---@field gvDetailsEnabled boolean
+---@field displayCompanionConfig boolean
+---@field companionConfigLayout CompanionWidgetLayout
+---@field keysCapTooltipEnabled boolean
+---@field dashOverviewEnabled boolean
+Config.DEFAULT_CHARACTER_DATA = {
+    gvDetailsEnabled = true,
+    displayCompanionConfig = true,
+    companionConfigLayout = 1,
+    keysCapTooltipEnabled = true,
+    dashOverviewEnabled = true
+}
+--#endregion
+
 ---@type integer Player's maximum level in the current expansion.
 Config.EXPANSION_MAX_LEVEL = 80
 

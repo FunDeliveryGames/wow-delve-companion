@@ -65,6 +65,10 @@ end
 ---@param tooltipDataHandler any [TooltipDataHandlerMixin](https://www.townlong-yak.com/framexml/live/Blizzard_SharedXMLGame/TooltipDataHandler.lua#189).
 ---@param ... any
 local function TooltipPostCallCurrency(tooltipDataHandler, ...)
+    if not DelveCompanionCharacterData.keysCapTooltipEnabled then
+        return
+    end
+
     local tooltipId = tooltipDataHandler:GetPrimaryTooltipData().id
     if tooltipId == Config.BOUNTIFUL_KEY_CURRENCY_CODE then
         local lineToMatch = format(_G["CURRENCY_TOTAL"], "", "%s*(.+)")
@@ -81,6 +85,10 @@ end
 ---@param tooltipDataHandler any [TooltipDataHandlerMixin](https://www.townlong-yak.com/framexml/live/Blizzard_SharedXMLGame/TooltipDataHandler.lua#189).
 ---@param ... any
 local function TooltipPostCallItem(tooltipDataHandler, ...)
+    if not DelveCompanionCharacterData.keysCapTooltipEnabled then
+        return
+    end
+
     local tooltipId = tooltipDataHandler:GetPrimaryTooltipData().id
     if tooltipId == Config.BOUNTY_MAP_ITEM_CODE then
         local lineToMatch = _G["ITEM_UNIQUE"]
@@ -97,10 +105,6 @@ local function TooltipPostCallItem(tooltipDataHandler, ...)
 end
 
 function DelveCompanion_TooltipExtension_Init()
-    if not DelveCompanionCharacterData.keysCapTooltipEnabled then
-        return
-    end
-
     TooltipDataProcessor.AddTooltipPostCall(Enum.TooltipDataType.Currency, TooltipPostCallCurrency)
     TooltipDataProcessor.AddTooltipPostCall(Enum.TooltipDataType.Item, TooltipPostCallItem)
 

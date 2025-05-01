@@ -19,6 +19,8 @@ local SLOT_SCALE_HORIZONTAL = 0.6
 
 --- A short-cut widget to display and change Companion's configuration.
 ---@class (exact) CompanionConfigWidget : CompanionConfigWidgetXml
+---@field defaultConfigButton Button
+---@field customConfigButton Button?
 DelveCompanion_DashboardCompanionConfigWidgetMixin = {}
 
 --- Create an adjustable pin.
@@ -38,6 +40,9 @@ end
 --- Prepare slot parameters. Only layout-independent setup.
 ---@param slot CompanionConfigSlotXml
 local function InitSlot(slot)
+    slot.Label:SetWidth(160)
+    slot.Value:SetWidth(160)
+
     slot.OptionsList:SetFrameStrata("HIGH")
 
     ---@type Texture
@@ -53,14 +58,17 @@ end
 ---@param anchorPoint string
 local function SetSlotHorizontal(slot, anchorPoint)
     slot:SetScale(SLOT_SCALE_HORIZONTAL)
+    slot:ClearAllPoints()
     slot:SetPoint(anchorPoint)
 
     slot.Label:Hide()
     slot.Value:Hide()
 
+    slot.OptionsList:ClearAllPoints()
     slot.OptionsList:SetPoint("TOPLEFT", slot, "BOTTOMLEFT", 0, -10)
     slot.OptionsList:SetScale(1.8)
 
+    slot.OptionsList.Pin:ClearAllPoints()
     slot.OptionsList.Pin:SetPoint("TOP", -73, 37)
 end
 
@@ -71,23 +79,30 @@ function DelveCompanion_DashboardCompanionConfigWidgetMixin:SetHorizontalLayout(
     DashboardCompanion.ParentPanel.isCompanionButtonPanelFrame = true
 
     self:SetSize(130, 40)
+    self:ClearAllPoints()
     self:SetPoint("BOTTOMLEFT", DashboardCompanion.ParentPanel, "BOTTOMLEFT", 24, 23)
 
-    local defConfigButton = DashboardCompanion.ParentPanel.CompanionConfigButton
-    defConfigButton:Hide()
+    self.defaultConfigButton:Hide()
 
-    local customConfigButton = CreateFrame("Button", "$parent.CustomConfigButton", DashboardCompanion.ParentPanel,
-        "DelveCompanionDashboardCompanionConfigButtonTemplate")
-    customConfigButton:SetPoint("LEFT", self, "RIGHT", 5, 0)
-    customConfigButton:SetScript("OnEnter", function(button)
-        GameTooltip:SetOwner(button, "ANCHOR_TOP")
-        if button.disabled then
-            GameTooltip_AddErrorLine(GameTooltip, _G["DELVES_COMPANION_NOT_ENABLED_TOOLTIP"], true)
-        else
-            GameTooltip_AddNormalLine(GameTooltip, _G["DELVES_CONFIGURE_BUTTON"], true)
-        end
-        GameTooltip:Show()
-    end)
+    if self.customConfigButton then
+        self.customConfigButton:Show()
+    else
+        local customConfigButton = CreateFrame("Button", "$parent.CustomConfigButton", DashboardCompanion.ParentPanel,
+            "DelveCompanionDashboardCompanionConfigButtonTemplate")
+        customConfigButton:SetPoint("LEFT", self, "RIGHT", 5, 0)
+        customConfigButton:SetScript("OnEnter", function(button)
+            GameTooltip:SetOwner(button, "ANCHOR_TOP")
+            if button.disabled then
+                GameTooltip_AddErrorLine(GameTooltip, _G["DELVES_COMPANION_NOT_ENABLED_TOOLTIP"], true)
+            else
+                GameTooltip_AddNormalLine(GameTooltip, _G["DELVES_CONFIGURE_BUTTON"], true)
+            end
+            GameTooltip:Show()
+        end)
+
+        self.customConfigButton = customConfigButton
+    end
+
 
     SetSlotHorizontal(self.RoleSlot, "LEFT")
     SetSlotHorizontal(self.CombatSlot, "CENTER")
@@ -99,14 +114,17 @@ end
 ---@param anchorPoint string
 local function SetSlotVertical(slot, anchorPoint)
     slot:SetScale(SLOT_SCALE_VERTICAL)
+    slot:ClearAllPoints()
     slot:SetPoint(anchorPoint)
 
-    slot.Label:SetWidth(160)
-    slot.Value:SetWidth(160)
+    slot.Label:Show()
+    slot.Value:Show()
 
+    slot.OptionsList:ClearAllPoints()
     slot.OptionsList:SetPoint("TOP", slot, "BOTTOM", 60, -8)
     slot.OptionsList:SetScale(1.5)
 
+    slot.OptionsList.Pin:ClearAllPoints()
     slot.OptionsList.Pin:SetPoint("TOP", -60, 37)
 end
 
@@ -117,7 +135,13 @@ function DelveCompanion_DashboardCompanionConfigWidgetMixin:SetVerticalLayout()
     DashboardCompanion.ParentPanel.isCompanionButtonPanelFrame = false
 
     self:SetSize(170, 145)
+    self:ClearAllPoints()
     self:SetPoint("TOP", DashboardCompanion.ExpBar, "BOTTOM", 0, -5)
+
+    self.defaultConfigButton:Show()
+    if self.customConfigButton then
+        self.customConfigButton:Hide()
+    end
 
     SetSlotVertical(self.RoleSlot, "TOPLEFT")
     SetSlotVertical(self.CombatSlot, "LEFT")
@@ -125,20 +149,56 @@ function DelveCompanion_DashboardCompanionConfigWidgetMixin:SetVerticalLayout()
 end
 
 ---@param self CompanionConfigWidget
+function DelveCompanion_DashboardCompanionConfigWidgetMixin:SelectLayout()
+    ---@type CompanionWidgetLayout
+    local layoutType = DelveCompanionCharacterData.companionConfigLayout
+
+    if layoutType == DelveCompanion.Enums.CompanionWidgetLayout.vertical then
+        self:SetVerticalLayout()
+    elseif layoutType == DelveCompanion.Enums.CompanionWidgetLayout.horizontal then
+        self:SetHorizontalLayout()
+    end
+end
+
+--- Display the `Default` layout.
+---@param self CompanionConfigWidget
+function DelveCompanion_DashboardCompanionConfigWidgetMixin:SetDefaultLayout()
+    DashboardCompanion.ParentPanel.CompanionModelScene:Show()
+    DashboardCompanion.ParentPanel.isCompanionButtonPanelFrame = true
+
+    self.defaultConfigButton:Show()
+    if self.customConfigButton then
+        self.customConfigButton:Hide()
+    end
+end
+
+---@param self CompanionConfigWidget
+function DelveCompanion_DashboardCompanionConfigWidgetMixin:Refresh(isCustom)
+    if isCustom then
+        self:SelectLayout()
+        self:Show()
+    else
+        self:SetDefaultLayout()
+        self:Hide()
+    end
+end
+
+---@param self CompanionConfigWidget
 function DelveCompanion_DashboardCompanionConfigWidgetMixin:OnLoad()
     -- Logger.Log("CompanionConfigWidget OnLoad start")
+
+    self.defaultConfigButton = DashboardCompanion.ParentPanel.CompanionConfigButton
 
     InitSlot(self.RoleSlot)
     InitSlot(self.CombatSlot)
     InitSlot(self.UtilitySlot)
+
+    self:Refresh(DelveCompanionCharacterData.displayCompanionConfig)
 end
 
 ---@param self CompanionConfigWidget
 function DelveCompanion_DashboardCompanionConfigWidgetMixin:OnShow()
     -- Logger.Log("CompanionConfigWidget OnShow start")
-
-    -- self:SetVerticalLayout()
-    self:SetHorizontalLayout()
 end
 
 --#region XML Annotations

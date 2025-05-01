@@ -10,8 +10,29 @@ local Logger = DelveCompanion.Logger
 ---@class (exact) DelvesProgressWidget : DelvesProgressWidgetXml
 DelveCompanion_DelveProgressWidgetMixin = {}
 
---#region DelvesProgressWidgetXml annotations
+function DelveCompanion_DelveProgressWidgetMixin:ToggleShown(isShown)
+    if isShown then
+        self:Show()
+    else
+        self:Hide()
+    end
+end
 
+function DelveCompanion_DelveProgressWidgetMixin:OnLoad()
+    EventRegistry:RegisterCallback(DelveCompanion.Enums.Events.ON_SETTING_CHANGED, function(_, changedVarKey, newValue)
+        if not changedVarKey == "delveProgressWidgetsEnabled" then
+            return
+        end
+
+        self:ToggleShown(newValue)
+    end, self)
+
+    self:ToggleShown(DelveCompanionAccountData.delveProgressWidgetsEnabled)
+end
+
+--#region Xml annotations
+
+--- `DelveCompanionDelveProgressWidgetTemplate`
 ---@class DelvesProgressWidgetXml : Frame
 ---@field Story IconWithLabelAndTooltip
 ---@field Chest IconWithLabelAndTooltip

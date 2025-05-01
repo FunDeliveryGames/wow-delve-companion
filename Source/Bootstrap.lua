@@ -19,13 +19,8 @@ end
 local function OnAddonLoaded()
     -- Logger.Log("OnAddonLoaded start...")
 
-    if not DelveCompanionAccountData then
-        DelveCompanion:InitAccountSave()
-    end
-
-    if not DelveCompanionCharacterData then
-        DelveCompanion:InitCharacterSave()
-    end
+    DelveCompanion:InitAccountSave()
+    DelveCompanion:InitCharacterSave()
 
     DelveCompanion:InitDelvesData()
 

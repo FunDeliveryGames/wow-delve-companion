@@ -1,6 +1,4 @@
-if GetLocale() ~= "zhTW" then
-    return
-end
+if GetLocale() ~= "zhTW" then return end
 
 local _, AddonTbl = ...
 
@@ -11,11 +9,12 @@ local DelveCompanion = AddonTbl.DelveCompanion
 local Logger = DelveCompanion.Logger
 ---@type Lockit
 local Lockit = DelveCompanion.Lockit
---====================== NO ADDON DATA BELOW, ONLY LOCKIT ===================================================
+-- ====================== NO ADDON DATA BELOW, ONLY LOCKIT ===================================================
 
 -- Common
 
 Lockit.UI_COMMON_BOUNTIFUL_DELVE_TITLE = "豐碩探究"
+Lockit.UI_COMMON_MISSING_ADDON_TITLE = "缺少必需的插件：%s" -- %s: name of the missing AddOn, e.g. DelveCompanion
 
 -- Delves List
 
@@ -38,16 +37,39 @@ Lockit.UI_LOOT_INFO_DESCRIPTION = "完成探究可獲得戰利品："
 
 Lockit.UI_BOUNTIFUL_KEYS_COUNT_CACHES_PREFIX = "寶箱裡獲取的鑰匙數量"
 
+-- Compartment
+
+Lockit.UI_COMPARTMENT_DESCRIPTION_LEFT_CLICK = "Left Click to open information window."
+Lockit.UI_COMPARTMENT_DESCRIPTION_RIGHT_CLICK = "Right Click to change options."
+
 -- Settings
 
-Lockit.UI_SETTINGS_MISSING_ADDON_TITLE = "缺少必需的插件：%s" -- %s: name of the missing AddOn, e.g. DelveCompanion
-
 Lockit.UI_SETTINGS_SECTION_TITLE_ACCOUNT = "帳號設置"
-Lockit.UI_SETTINGS_ACH_WIDGETS = "冒險指南-探究：顯示探究成就進度（劇情和探索）。"
-Lockit.UI_SETTINGS_TOMTOM_DESCRIPTION = "路徑點風格：使用 TomTom 路徑點替代暴雪導航點。"
+Lockit.UI_SETTING_DELVE_PROGRESS_WIDGETS_NAME = "Delve's Progress Info"
+Lockit.UI_SETTING_DELVE_PROGRESS_WIDGETS_TOOLTIP = "冒險指南-探究：顯示探究成就進度（劇情和探索）。"
+Lockit.UI_SETTING_WAYPOINT_TRACKING_TYPE_NAME = "Waypoint Tracking Type"
+Lockit.UI_SETTING_WAYPOINT_TRACKING_TYPE_TOOLTIP_START = "Select which type of Waypoints are used for navigation.\n\nPossible options:"
+Lockit.UI_SETTING_WAYPOINT_TRACKING_TYPE_TOOLTIP_BLIZZARD = "- Blizzard's Map Pin (the defulat in-game navigation)"
+Lockit.UI_SETTING_WAYPOINT_TRACKING_TYPE_TOOLTIP_TOMTOM = "- TomTom Waypoints"
+Lockit.UI_SETTING_WAYPOINT_TRACKING_TYPE_TOOLTIP_TOMTOM_UNAVAILABLE_FORMAT = "%s (%s)."
+Lockit.UI_SETTING_WAYPOINT_TRACKING_TYPE_TOOLTIP_FORMAT = "%s\n%s\n%s"
+Lockit.UI_SETTING_WAYPOINT_TRACKING_OPTION_BLIZZARD_NAME = "Blizzard"
+Lockit.UI_SETTING_WAYPOINT_TRACKING_OPTION_BLIZZARD_DESCRIPTION = "Use the Blizzard's Map Pin."
+Lockit.UI_SETTING_WAYPOINT_TRACKING_OPTION_TOMTOM_NAME = "TomTom"
+Lockit.UI_SETTING_WAYPOINT_TRACKING_OPTION_TOMTOM_DESCRIPTION = "Use TomTom Waypoints."
 
 Lockit.UI_SETTINGS_SECTION_TITLE_CHARACTER = "角色設置"
-Lockit.UI_SETTINGS_GV_DETAILS = "探究：顯示詳細的寶庫獎勵。"
-Lockit.UI_SETTINGS_DASHBOARD_OVERVIEW = "探究：顯示探究的其他概要（鍍金儲物箱，豐碩探究）。"
-Lockit.UI_SETTINGS_KEYS_CAP = "鼠標提示：顯示每週寶箱獲取的鑰匙數量。"
+Lockit.UI_SETTING_TOOLTIP_EXTENSTION_NAME = "Extra Info in Tooltips"
+Lockit.UI_SETTING_TOOLTIP_EXTENSTION_TOOLTIP = "Display additional information in tooltips (E.g. number of |cnITEM_EPIC_COLOR:Restored Coffer Keys|r received this week)."
+Lockit.UI_SETTING_COMPANION_CONFIG_NAME = "Companion Config Widget"
+Lockit.UI_SETTING_COMPANION_CONFIG_TOOLTIP = "Delves UI: Enable a widget which displays the current specialization and abilities of the Companion.\nIt can be used to modify the configuration directly from the Delves UI."
+Lockit.UI_SETTING_COMPANION_CONFIG_OPTION_HORIZONTAL_NAME = "Horizontal layout"
+Lockit.UI_SETTING_COMPANION_CONFIG_OPTION_HORIZONTAL_DESCRIPTION = "A compact layout with the buttons arranged horizontally. The Companion model is kept intact."
+Lockit.UI_SETTING_COMPANION_CONFIG_OPTION_VERTICAL_NAME = "Vertical layout"
+Lockit.UI_SETTING_COMPANION_CONFIG_OPTION_VERTICAL_DESCRIPTION = "A more detailed layout with the buttons arranged vertically. The Companion model is hidden."
+Lockit.UI_SETTING_GV_DETAILS_NAME = "Custom Great Vault"
+Lockit.UI_SETTING_GV_DETAILS_TOOLTIP = "Delves UI: Display Great Vault rewards and progress (relevant for Delves) directly in the Delves UI."
+Lockit.UI_SETTING_DASHBOARD_OVERVIEW_NAME = "Delves Overview Section"
+Lockit.UI_SETTING_DASHBOARD_OVERVIEW_TOOLTIP = "Delves UI: Display an additional Overview section. It contains information about Gilded Stash, available Bountiful Delves, and Delve-related currencies and items."
+
 Lockit.UI_SETTINGS_TRANSLATION_TITLE = "特別鳴謝翻譯者："

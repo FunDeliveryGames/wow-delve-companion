@@ -10,7 +10,16 @@ local Config = DelveCompanion.Config
 ---@type Lockit
 local Lockit = DelveCompanion.Lockit
 
+--#region Constants
+
+---@type number
+local DASHBOARD_PANELS_DEFAULT_SPACING = 5
+---@type number
+local DASHBOARD_PANELS_CUSTOM_SPACING = -20
+--#endregion
+
 ---@class (exact) DelvesDashboard
+---@field ButtonPanelFrame Frame
 ---@field LootInfo LootInfoFrame
 ---@field GVDetails GVDetailsFrame
 ---@field Overview DashOverview
@@ -51,6 +60,27 @@ local function CreateLootInfoButton(parent)
     end)
 end
 
+local function UpdateButtonPanelSpacing()
+    if DelveCompanionCharacterData.dashOverviewEnabled then
+        DelvesDashboard.ButtonPanelFrame.spacing = DASHBOARD_PANELS_CUSTOM_SPACING
+    else
+        DelvesDashboard.ButtonPanelFrame.spacing = DASHBOARD_PANELS_DEFAULT_SPACING
+    end
+
+    DelvesDashboard.ButtonPanelFrame:Layout()
+end
+
+local function OnSettingChanged(_, changedVarKey, newValue)
+    if changedVarKey == "displayCompanionConfig" or changedVarKey == "companionConfigLayout" then
+        DelvesDashboard.Companion.ConfigWidget:Refresh(newValue)
+    elseif changedVarKey == "gvDetailsEnabled" then
+        DelvesDashboard.GVDetails.shouldRefresh = true
+    elseif changedVarKey == "dashOverviewEnabled" then
+        DelvesDashboard.Overview:ToggleShown(newValue)
+        UpdateButtonPanelSpacing()
+    end
+end
+
 local function InitDelvesDashboard()
     if not DelveCompanion.Variables.maxLevelReached then
         return
@@ -69,6 +99,7 @@ local function InitDelvesDashboard()
             "DelveCompanionLootInfoFrameTemplate")
         DelvesDashboard.LootInfo = lootInfoFrame
 
+
         CreateLootInfoButton(DelvesDashboardFrame)
         DelvesDashboardFrame:HookScript("OnHide", function()
             DelvesDashboard.LootInfo:Hide()
@@ -80,7 +111,7 @@ local function InitDelvesDashboard()
         DelvesDashboard.Companion:Init(compPanel)
     end
 
-    if DelveCompanionCharacterData.gvDetailsEnabled then
+    do
         local gvPanel = DelvesDashboardFrame.ButtonPanelLayoutFrame.GreatVaultButtonPanel
 
         ---@type GVDetailsFrame
@@ -91,14 +122,18 @@ local function InitDelvesDashboard()
         DelvesDashboard.GVDetails = gvDetailsFrame
     end
 
-    if DelveCompanionCharacterData.dashOverviewEnabled then
+    do
+        ---@type DashOverview
         local dashOverview = CreateFrame("Frame", "$parentDashboardOverview",
             DelvesDashboardFrame.ButtonPanelLayoutFrame, "DelveCompanionDashboardOverviewFrame")
-        DelvesDashboard.Overview = dashOverview
 
-        DelvesDashboardFrame.ButtonPanelLayoutFrame.spacing = -20
+        DelvesDashboard.Overview = dashOverview
     end
-    DelvesDashboardFrame.ButtonPanelLayoutFrame:Layout()
+
+    DelvesDashboard.ButtonPanelFrame = DelvesDashboardFrame.ButtonPanelLayoutFrame
+    UpdateButtonPanelSpacing()
+
+    EventRegistry:RegisterCallback(DelveCompanion.Enums.Events.ON_SETTING_CHANGED, OnSettingChanged, DelvesDashboard)
 end
 
 EventUtil.ContinueOnAddOnLoaded(DelveCompanion.Enums.DependencyAddonName.delvesDashboardUI, InitDelvesDashboard)
