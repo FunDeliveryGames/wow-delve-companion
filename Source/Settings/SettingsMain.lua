@@ -9,6 +9,8 @@ local Logger = DelveCompanion.Logger
 local Lockit = DelveCompanion.Lockit
 ---@type Config
 local Config = DelveCompanion.Config
+---@type Enums
+local Enums = DelveCompanion.Enums
 
 --#region Constants
 
@@ -19,14 +21,50 @@ local ADDON_SETTING_PREFIX = tostring(addonName) .. "_"
 --- Class for managing addon settings.
 ---@class (exact) AddonSettings
 ---@field mainCategory table
+---@field settingsCategory table
 local AddonSettings = {}
 DelveCompanion.AddonSettings = AddonSettings
 
+--- Used in `TOC` file for [AddonCompartmentFuncOnEnter](https://warcraft.wiki.gg/wiki/TOC_format#AddonCompartmentFuncOnEnter).
+---@param addonName string
+---@param menuButtonFrame table
+function DelveCompanionCompartmentOnEnter(addonName, menuButtonFrame)
+    local tooltip = GameTooltip
+
+    tooltip:SetOwner(menuButtonFrame, "ANCHOR_NONE")
+    tooltip:SetPoint("TOPRIGHT", menuButtonFrame, "TOPLEFT")
+    GameTooltip_SetTitle(tooltip, Lockit.UI_ADDON_NAME, nil, true)
+    GameTooltip_AddBlankLineToTooltip(tooltip)
+    GameTooltip_AddNormalLine(tooltip, Lockit.UI_COMPARTMENT_DESCRIPTION_LEFT_CLICK, true)
+    GameTooltip_AddNormalLine(tooltip, Lockit.UI_COMPARTMENT_DESCRIPTION_RIGHT_CLICK, true)
+
+    tooltip:Show()
+end
+
+--- Used in `TOC` file for [AddonCompartmentFuncOnLeave](https://warcraft.wiki.gg/wiki/TOC_format#AddonCompartmentFuncOnLeave).
+---@param addonName string
+---@param menuButtonFrame table
+function DelveCompanionCompartmentOnLeave(addonName, menuButtonFrame)
+    GameTooltip:Hide()
+end
+
 --- Global function to open addon settings. Used in `TOC` file for [AddonCompartmentFunc](https://warcraft.wiki.gg/wiki/TOC_format#AddonCompartmentFunc).
-function DelveCompanionShowSettings()
-    if Settings and Settings.OpenToCategory then
-        Settings.OpenToCategory(AddonSettings.mainCategory:GetID())
+---@param addonName string
+---@param buttonName string
+function DelveCompanionCompartmentOnClick(addonName, buttonName)
+    if not (Settings and Settings.OpenToCategory) then
+        return
     end
+
+    local id = ""
+
+    if buttonName == Enums.ButtonAlias.leftClick then
+        id = AddonSettings.mainCategory:GetID()
+    elseif buttonName == Enums.ButtonAlias.rightClick then
+        id = AddonSettings.settingsCategory:GetID()
+    end
+
+    Settings.OpenToCategory(id)
 end
 
 --- This callback will be invoked whenever a setting is modified.
@@ -44,10 +82,10 @@ end
 ---@param defaultValue any
 ---@param displayText string
 ---@param onChangedCallback function
----@return unknown?
+---@return unknown|nil
 local function RegisterSetting(category, varKey, varTbl, defaultValue, displayText, onChangedCallback)
     if varTbl[varKey] == nil then
-        Logger.Log("Save table `%s` contains unknown key: %s!", varTbl, varKey)
+        Logger.Log(Lockit.DEBUG_SAVED_VARIABLE_CONFLICT, varTbl, varKey)
         return nil
     end
 
@@ -71,13 +109,13 @@ local function PrepareAccountSettings(category, layout)
     layout:AddInitializer(CreateSettingsListSectionHeaderInitializer(Lockit.UI_SETTINGS_SECTION_TITLE_ACCOUNT))
 
     do
-        local savedVarKey = "achievementWidgetsEnabled"
+        local savedVarKey = "delveProgressWidgetsEnabled"
 
         local setting = RegisterSetting(category, savedVarKey, savedVarTbl,
-            Config.DEFAULT_ACCOUNT_DATA.achievementWidgetsEnabled,
-            Lockit.UI_SETTINGS_ACH_WIDGETS, OnSettingChanged)
+            Config.DEFAULT_ACCOUNT_DATA.delveProgressWidgetsEnabled,
+            Lockit.UI_SETTING_DELVE_PROGRESS_WIDGETS_NAME, OnSettingChanged)
 
-        local tooltip = Lockit.UI_SETTINGS_ACH_WIDGETS
+        local tooltip = Lockit.UI_SETTING_DELVE_PROGRESS_WIDGETS_TOOLTIP
         Settings.CreateCheckbox(category, setting, tooltip)
     end
 
@@ -86,20 +124,45 @@ local function PrepareAccountSettings(category, layout)
 
         local setting = RegisterSetting(category, savedVarKey, savedVarTbl,
             Config.DEFAULT_ACCOUNT_DATA.trackingType,
-            Lockit.UI_SETTINGS_TOMTOM_DESCRIPTION, OnSettingChanged)
+            Lockit.UI_SETTING_WAYPOINT_TRACKING_TYPE_NAME, OnSettingChanged)
 
-        local function GetOptions()
+        local function GetDropdownOptions()
             local container = Settings.CreateControlTextContainer()
-            container:Add(DelveCompanion.Enums.WaypointTrackingType.superTrack, "Blizzard Map Pin",
-                "Blizzard Super Track")
+            container:Add(DelveCompanion.Enums.WaypointTrackingType.superTrack,
+                Lockit.UI_SETTING_WAYPOINT_TRACKING_OPTION_BLIZZARD_NAME,
+                Lockit.UI_SETTING_WAYPOINT_TRACKING_OPTION_BLIZZARD_DESCRIPTION)
             if DelveCompanion.Variables.tomTomAvailable then
-                container:Add(DelveCompanion.Enums.WaypointTrackingType.tomtom, "TomTom", "TomTom waypoints")
+                container:Add(DelveCompanion.Enums.WaypointTrackingType.tomtom,
+                    Lockit.UI_SETTING_WAYPOINT_TRACKING_OPTION_TOMTOM_NAME,
+                    Lockit.UI_SETTING_WAYPOINT_TRACKING_OPTION_TOMTOM_DESCRIPTION)
             end
             return container:GetData()
         end
-        local tooltip = Lockit.UI_SETTINGS_TOMTOM_DESCRIPTION
 
-        Settings.CreateDropdown(category, setting, GetOptions, tooltip)
+        local function tooltip()
+            local tooltipLineStart = _G["NORMAL_FONT_COLOR"]:WrapTextInColorCode(
+                Lockit.UI_SETTING_WAYPOINT_TRACKING_TYPE_TOOLTIP_START)
+            local tooltipLineBlizzard = _G["NORMAL_FONT_COLOR"]:WrapTextInColorCode(
+                Lockit.UI_SETTING_WAYPOINT_TRACKING_TYPE_TOOLTIP_BLIZZARD)
+            local tooltipLineTomTom = Lockit.UI_SETTING_WAYPOINT_TRACKING_TYPE_TOOLTIP_TOMTOM
+
+            if DelveCompanion.Variables.tomTomAvailable then
+                tooltipLineTomTom = _G["NORMAL_FONT_COLOR"]:WrapTextInColorCode(tooltipLineTomTom)
+            else
+                local unavailableLine = format(Lockit.UI_COMMON_MISSING_ADDON_TITLE, Enums.DependencyAddonName.tomtom)
+                tooltipLineTomTom = format(
+                    Lockit.UI_SETTING_WAYPOINT_TRACKING_TYPE_TOOLTIP_TOMTOM_UNAVAILABLE_FORMAT,
+                    _G["DISABLED_FONT_COLOR"]:WrapTextInColorCode(tooltipLineTomTom),
+                    _G["WARNING_FONT_COLOR"]:WrapTextInColorCode(unavailableLine))
+            end
+
+            return format(Lockit.UI_SETTING_WAYPOINT_TRACKING_TYPE_TOOLTIP_FORMAT,
+                tooltipLineStart,
+                tooltipLineBlizzard,
+                tooltipLineTomTom)
+        end
+
+        Settings.CreateDropdown(category, setting, GetDropdownOptions, tooltip)
     end
 end
 
@@ -118,9 +181,9 @@ local function PrepareCharacterSettings(category, layout)
 
         local setting = RegisterSetting(category, savedVarKey, savedVarTbl,
             Config.DEFAULT_CHARACTER_DATA.keysCapTooltipEnabled,
-            Lockit.UI_SETTINGS_KEYS_CAP, OnSettingChanged)
+            Lockit.UI_SETTING_TOOLTIP_EXTENSTION_NAME, OnSettingChanged)
 
-        local tooltip = Lockit.UI_SETTINGS_KEYS_CAP
+        local tooltip = Lockit.UI_SETTING_TOOLTIP_EXTENSTION_TOOLTIP
         Settings.CreateCheckbox(category, setting, tooltip)
     end
 
@@ -128,31 +191,33 @@ local function PrepareCharacterSettings(category, layout)
         local controlSavedVarKey = "displayCompanionConfig"
         local dropdownSavedVarKey = "companionConfigLayout"
 
+        local settingName = Lockit.UI_SETTING_COMPANION_CONFIG_NAME
+
         local controlSetting = RegisterSetting(category, controlSavedVarKey, savedVarTbl,
             Config.DEFAULT_CHARACTER_DATA.displayCompanionConfig,
-            Lockit.UI_SETTINGS_COMPANION_LAYOUT, OnSettingChanged)
+            settingName, OnSettingChanged)
 
         local dropdownSetting = RegisterSetting(category, dropdownSavedVarKey, savedVarTbl,
             Config.DEFAULT_CHARACTER_DATA.companionConfigLayout,
-            Lockit.UI_SETTINGS_COMPANION_LAYOUT, OnSettingChanged)
+            settingName, OnSettingChanged)
 
         local function GetOptions()
             local container = Settings.CreateControlTextContainer()
             container:Add(DelveCompanion.Enums.CompanionWidgetLayout.horizontal,
-                "Horizontal",
-                "Horizontal Companion layout")
+                Lockit.UI_SETTING_COMPANION_CONFIG_OPTION_HORIZONTAL_NAME,
+                Lockit.UI_SETTING_COMPANION_CONFIG_OPTION_HORIZONTAL_DESCRIPTION)
             container:Add(DelveCompanion.Enums.CompanionWidgetLayout.vertical,
-                "Vertical",
-                "Vertical Companion layout")
+                Lockit.UI_SETTING_COMPANION_CONFIG_OPTION_VERTICAL_NAME,
+                Lockit.UI_SETTING_COMPANION_CONFIG_OPTION_VERTICAL_DESCRIPTION)
 
             return container:GetData()
         end
-        local controlTooltip = Lockit.UI_SETTINGS_COMPANION_LAYOUT
-        local dropdownTooltip = Lockit.UI_SETTINGS_COMPANION_LAYOUT
+        local controlTooltip = Lockit.UI_SETTING_COMPANION_CONFIG_TOOLTIP
+        local dropdownTooltip = Lockit.UI_SETTING_COMPANION_CONFIG_TOOLTIP
 
         local initializer = CreateSettingsCheckboxDropdownInitializer(
-            controlSetting, controlTooltip, controlTooltip,
-            dropdownSetting, GetOptions, dropdownTooltip, dropdownTooltip)
+            controlSetting, settingName, controlTooltip,
+            dropdownSetting, GetOptions, settingName, dropdownTooltip)
         layout:AddInitializer(initializer)
     end
 
@@ -161,9 +226,9 @@ local function PrepareCharacterSettings(category, layout)
 
         local setting = RegisterSetting(category, savedVarKey, savedVarTbl,
             Config.DEFAULT_CHARACTER_DATA.gvDetailsEnabled,
-            Lockit.UI_SETTINGS_GV_DETAILS, OnSettingChanged)
+            Lockit.UI_SETTING_GV_DETAILS_NAME, OnSettingChanged)
 
-        local tooltip = Lockit.UI_SETTINGS_GV_DETAILS
+        local tooltip = Lockit.UI_SETTING_GV_DETAILS_TOOLTIP
         Settings.CreateCheckbox(category, setting, tooltip)
     end
 
@@ -172,9 +237,9 @@ local function PrepareCharacterSettings(category, layout)
 
         local setting = RegisterSetting(category, savedVarKey, savedVarTbl,
             Config.DEFAULT_CHARACTER_DATA.dashOverviewEnabled,
-            Lockit.UI_SETTINGS_DASHBOARD_OVERVIEW, OnSettingChanged)
+            Lockit.UI_SETTING_DASHBOARD_OVERVIEW_NAME, OnSettingChanged)
 
-        local tooltip = Lockit.UI_SETTINGS_DASHBOARD_OVERVIEW
+        local tooltip = Lockit.UI_SETTING_DASHBOARD_OVERVIEW_TOOLTIP
         Settings.CreateCheckbox(category, setting, tooltip)
     end
 end
@@ -191,6 +256,7 @@ function AddonSettings:Init()
 
     do
         local category, layout = Settings.RegisterVerticalLayoutSubcategory(AddonSettings.mainCategory, _G["OPTIONS"])
+        AddonSettings.settingsCategory = category
 
         PrepareAccountSettings(category, layout)
         PrepareCharacterSettings(category, layout)

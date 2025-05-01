@@ -12,10 +12,10 @@ DelveCompanion.Config = Config
 
 --- Account Save Data scheme
 ---@class (exact) DelveCompanionAccountData
----@field achievementWidgetsEnabled boolean
+---@field delveProgressWidgetsEnabled boolean
 ---@field trackingType WaypointTrackingType
 Config.DEFAULT_ACCOUNT_DATA = {
-    achievementWidgetsEnabled = true,
+    delveProgressWidgetsEnabled = true,
     trackingType = DelveCompanion.Enums.WaypointTrackingType.superTrack
 }
 

@@ -24,12 +24,19 @@ setmetatable(CodeType, {
 ---@field delvesDashboardUI string `Blizzard_DelvesDashboardUI`
 ---@field encounterJournal string `Blizzard_EncounterJournal`
 ---@field rio string `RaiderIO`
+---@field tomtom string `TomTom`
 local DependencyAddonName = {
     delvesDashboardUI = "Blizzard_DelvesDashboardUI",
     encounterJournal = "Blizzard_EncounterJournal",
-    rio = "RaiderIO"
+    rio = "RaiderIO",
+    tomtom = "TomTom"
 }
 
+---@class ButtonAlias
+local ButtonAlias = {
+    leftClick = "LeftButton",
+    rightClick = "RightButton"
+}
 
 ---@class WaypointTrackingType
 local WaypointTrackingType = {
@@ -56,11 +63,13 @@ local Events = {
 ---@field DependencyAddonName DependencyAddonName Table of Blizzard AddOns which are loaded on demand. Used to initialize addon modules.
 ---@field WaypointTrackingType WaypointTrackingType
 ---@field CompanionWidgetLayout CompanionWidgetLayout
+---@field ButtonAlias ButtonAlias
 local Enums = {
     CodeType = CodeType,
     DependencyAddonName = DependencyAddonName,
     WaypointTrackingType = WaypointTrackingType,
     Events = Events,
-    CompanionWidgetLayout = CompanionWidgetLayout
+    CompanionWidgetLayout = CompanionWidgetLayout,
+    ButtonAlias = ButtonAlias
 }
 DelveCompanion.Enums = Enums

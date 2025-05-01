@@ -20,14 +20,14 @@ end
 
 function DelveCompanion_DelveProgressWidgetMixin:OnLoad()
     EventRegistry:RegisterCallback(DelveCompanion.Enums.Events.ON_SETTING_CHANGED, function(_, changedVarKey, newValue)
-        if not changedVarKey == "achievementWidgetsEnabled" then
+        if not changedVarKey == "delveProgressWidgetsEnabled" then
             return
         end
 
         self:ToggleShown(newValue)
     end, self)
 
-    self:ToggleShown(DelveCompanionAccountData.achievementWidgetsEnabled)
+    self:ToggleShown(DelveCompanionAccountData.delveProgressWidgetsEnabled)
 end
 
 --#region Xml annotations
