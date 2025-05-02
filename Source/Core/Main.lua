@@ -24,8 +24,8 @@ function DelveCompanion:InitDelvesData()
 
         --- Shared table containing runtime Delve data.
         ---@class (exact) DelveData
-        ---@field config DelveConfig [DelveConfig](lua://DelveConfig) table associated with this Delve.
-        ---@field poiID number? Current [areaPoiID](https://wago.tools/db2/areapoi) of this Delve.
+        ---@field config DelveConfig [DelveConfig](lua://DelveConfig) table associated with the Delve.
+        ---@field poiID number? Current [areaPoiID](https://wago.tools/db2/areapoi) of the Delve.
         ---@field tomtom any? Reference to TomTom waypoint set for the Delve. `nil` if not set.
         ---@field delveName string Localized name of the Delve.
         ---@field parentMapName string Localized name of the map this Delve located in.
@@ -103,7 +103,7 @@ function DelveCompanion:GetContinentMapIDForMap(mapID)
     return nil
 end
 
---- Init [SavedVariables](https://warcraft.wiki.gg/wiki/TOC_format#SavedVariables) if they're not available (e.g. the 1st addon load).
+--- Init [SavedVariables](https://warcraft.wiki.gg/wiki/TOC_format#SavedVariables). The [default config](lua://DelveCompanionAccountData) is used to either init them (e.g. the 1st addon load) or populate with missing fields (e.g. after addon update).
 ---@param self DelveCompanion
 function DelveCompanion:InitAccountSave()
     -- DelveCompanion.Logger.Log("Init AccountSave start...")
@@ -117,10 +117,14 @@ function DelveCompanion:InitAccountSave()
                 DelveCompanionAccountData[key] = value
             end
         end
+
+        if not DelveCompanion.Variables.tomTomAvailable then
+            DelveCompanionAccountData.trackingType = DelveCompanion.Enums.WaypointTrackingType.superTrack
+        end
     end
 end
 
---- Init [SavedVariablesPerCharacter](https://warcraft.wiki.gg/wiki/TOC_format#SavedVariablesPerCharacter) if they're not available (e.g. the 1st addon load).
+--- Init [SavedVariablesPerCharacter](https://warcraft.wiki.gg/wiki/TOC_format#SavedVariablesPerCharacter). The [default config](lua://DelveCompanionCharacterData) is used to either init them (e.g. the 1st addon load) or populate with missing fields (e.g. after addon update).
 ---@param self DelveCompanion
 function DelveCompanion:InitCharacterSave()
     -- DelveCompanion.Logger.Log("Init CharacterSave start...")

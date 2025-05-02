@@ -13,23 +13,23 @@ local function OnPlayerLogin()
 
     DelveCompanion.AddonSettings:Init()
 
+    DelveCompanion.Variables.maxLevelReached = UnitLevel("player") == DelveCompanion.Config.EXPANSION_MAX_LEVEL
+    if DelveCompanion.Variables.maxLevelReached then
+        DelveCompanion_TooltipExtension_Init()
+    end
+
     -- Logger.Log("OnPlayerLogin finish")
 end
 
 local function OnAddonLoaded()
     -- Logger.Log("OnAddonLoaded start...")
 
+    DelveCompanion.Variables.tomTomAvailable = TomTom ~= nil
+
     DelveCompanion:InitAccountSave()
     DelveCompanion:InitCharacterSave()
 
     DelveCompanion:InitDelvesData()
-
-    DelveCompanion.Variables.maxLevelReached = UnitLevel("player") == DelveCompanion.Config.EXPANSION_MAX_LEVEL
-    DelveCompanion.Variables.tomTomAvailable = TomTom ~= nil
-
-    if DelveCompanion.Variables.maxLevelReached then
-        DelveCompanion_TooltipExtension_Init()
-    end
 
     -- Logger.Log("OnAddonLoaded finish")
 end

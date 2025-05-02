@@ -103,6 +103,7 @@ end
 
 ---@param self DelveInstanceButton|OverviewBountifulButton
 function DelveCompanion_DelveTrackingButtonMixin:ToggleTracking()
+    ---@type DelveData
     local delveData = self.data
 
     if not delveData then
