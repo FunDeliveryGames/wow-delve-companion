@@ -15,17 +15,50 @@ DelveCompanion_OverviewConsumablesFrameMixin = {}
 --- Update consumables with the actual player's state.
 ---@param self OverviewConsumablesFrame
 function DelveCompanion_OverviewConsumablesFrameMixin:UpdateConsumables()
-    self.Keys:SetLabelText(C_CurrencyInfo.GetCurrencyInfo(Config.BOUNTIFUL_KEY_CURRENCY_CODE).quantity)
+    -- Restored Coffer Keys
+    do
+        local keysCount = C_CurrencyInfo.GetCurrencyInfo(Config.BOUNTIFUL_KEY_CURRENCY_CODE).quantity
+        self.Keys:SetLabelText(keysCount)
 
-    self.BountyMap:SetLabelText(C_Item.GetItemCount(Config.BOUNTY_MAP_ITEM_CODE))
-    self.Echoes:SetLabelText(C_Item.GetItemCount(Config.ECHO_ITEM_CODE))
-
-    local shardsCount = C_Item.GetItemCount(Config.KEY_SHARD_ITEM_CODE)
-    local shardsLine = tostring(shardsCount)
-    if shardsCount >= Config.SHARDS_FOR_KEY then
-        shardsLine = _G["GREEN_FONT_COLOR"]:WrapTextInColorCode(shardsLine)
+        self.Keys.Icon:SetDesaturated(keysCount == 0 and
+            DelveCompanion.Variables.keysCollected >= Config.BOUNTIFUL_KEY_MAX_PER_WEEK)
     end
-    self.Shards:SetLabelText(shardsLine)
+
+    -- Delver's Bounty
+    do
+        local mapsCount = C_Item.GetItemCount(Config.BOUNTY_MAP_ITEM_CODE)
+        local mapsLine = tostring(mapsCount)
+
+        if mapsCount >= Config.BOUNTY_MAP_MAX_PER_WEEK then
+            mapsLine = _G["GREEN_FONT_COLOR"]:WrapTextInColorCode(mapsLine)
+        elseif C_QuestLog.IsQuestFlaggedCompleted(Config.BOUNTY_MAP_QUEST) then
+            self.BountyMap.Icon:SetDesaturated(true)
+        else
+            self.BountyMap.Icon:SetDesaturated(false)
+        end
+        self.BountyMap:SetLabelText(mapsLine)
+    end
+
+    -- Coffer Key Shards
+    do
+        local shardsCount = C_Item.GetItemCount(Config.KEY_SHARD_ITEM_CODE)
+        local shardsLine = tostring(shardsCount)
+        if shardsCount >= Config.SHARDS_FOR_KEY then
+            shardsLine = _G["GREEN_FONT_COLOR"]:WrapTextInColorCode(shardsLine)
+            self.Shards.Icon:SetDesaturated(false)
+        else
+            self.Shards.Icon:SetDesaturated(true)
+        end
+        self.Shards:SetLabelText(shardsLine)
+    end
+
+    -- Radiant Echo
+    do
+        local echoCount = C_Item.GetItemCount(Config.ECHO_ITEM_CODE)
+
+        self.Echoes.Icon:SetDesaturated(echoCount == 0)
+        self.Echoes:SetLabelText(echoCount)
+    end
 end
 
 ---@param self OverviewConsumablesFrame
