@@ -72,6 +72,8 @@ local function OnSettingChanged(setting, value)
     -- Logger.Log("OnChanged registered...")
 
     local variableName = gsub(setting:GetVariable(), ADDON_SETTING_PREFIX, "")
+
+    -- Logger.Log("Firing changed var `%s` with value: %s", variableName, tostring(value))
     EventRegistry:TriggerEvent(DelveCompanion.Enums.Events.ON_SETTING_CHANGED, variableName, value)
 end
 
@@ -181,9 +183,9 @@ local function PrepareCharacterSettings(category, layout)
 
         local setting = RegisterSetting(category, savedVarKey, savedVarTbl,
             Config.DEFAULT_CHARACTER_DATA.keysCapTooltipEnabled,
-            Lockit.UI_SETTING_TOOLTIP_EXTENSTION_NAME, OnSettingChanged)
+            Lockit.UI_SETTING_TOOLTIP_EXTENSION_NAME, OnSettingChanged)
 
-        local tooltip = Lockit.UI_SETTING_TOOLTIP_EXTENSTION_TOOLTIP
+        local tooltip = Lockit.UI_SETTING_TOOLTIP_EXTENSION_TOOLTIP
         Settings.CreateCheckbox(category, setting, tooltip)
     end
 
