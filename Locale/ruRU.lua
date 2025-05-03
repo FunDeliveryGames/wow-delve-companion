@@ -25,7 +25,7 @@ Lockit.UI_DELVE_INSTANCE_BUTTON_TOOLTIP_CURRENT_INSTRUCTION = "<Shift + ЛКМ, 
 -- Интерфейс вылазок
 
 Lockit.UI_GILDED_STASH_CANNOT_RETRIEVE_DATA = "Посетите Каз Алгар, чтобы увидеть прогресс"
-Lockit.UI_GILDED_STASH_BOUNTIFUL_NOTE = "Появляется только на |cnNORMAL_FONT_COLOR:11-ом Уровне|r Многообещающих Вылазок|A:delves-bountiful:16:16|a."
+Lockit.UI_GILDED_STASH_BOUNTIFUL_NOTE = "Появляется только на |cnNORMAL_FONT_COLOR:11-м Уровне|r Многообещающих Вылазок|A:delves-bountiful:16:16|a."
 Lockit.UI_NO_ACTIVE_BOUNTIFUL = "Нет активных вылазок"
 Lockit.UI_LOOT_INFO_BUTTON_TOOLTIP_INSTRUCTION = "<Нажмите, чтобы отобразить информацию о добыче Вылазок>"
 
@@ -37,39 +37,39 @@ Lockit.UI_LOOT_INFO_DESCRIPTION = "Завершите вылазку, чтобы
 
 Lockit.UI_BOUNTIFUL_KEYS_COUNT_CACHES_PREFIX = "Ключей из тайников"
 
--- Compartment
+-- Отделение для аддонов
 
-Lockit.UI_COMPARTMENT_DESCRIPTION_LEFT_CLICK = "Left Click to open information window."
-Lockit.UI_COMPARTMENT_DESCRIPTION_RIGHT_CLICK = "Right Click to change options."
+Lockit.UI_COMPARTMENT_DESCRIPTION_LEFT_CLICK = "ЛКМ - открыть информационное окно."
+Lockit.UI_COMPARTMENT_DESCRIPTION_RIGHT_CLICK = "ПКМ - изменить параметры."
 
 -- Настройки
 
 Lockit.UI_SETTINGS_SECTION_TITLE_ACCOUNT = "Параметры аккаунта"
-Lockit.UI_SETTING_DELVE_PROGRESS_WIDGETS_NAME = "Delve's Progress Info"
+Lockit.UI_SETTING_DELVE_PROGRESS_WIDGETS_NAME = "Информация о прогрессе Вылазок"
 Lockit.UI_SETTING_DELVE_PROGRESS_WIDGETS_TOOLTIP = "Список вылазок: Отображать прогресс достижений (истории и сундуки)."
-Lockit.UI_SETTING_WAYPOINT_TRACKING_TYPE_NAME = "Waypoint Tracking Type"
-Lockit.UI_SETTING_WAYPOINT_TRACKING_TYPE_TOOLTIP_START = "Select which type of Waypoints are used for navigation.\n\nPossible options:"
-Lockit.UI_SETTING_WAYPOINT_TRACKING_TYPE_TOOLTIP_BLIZZARD = "- Blizzard's Map Pin (the defulat in-game navigation)"
-Lockit.UI_SETTING_WAYPOINT_TRACKING_TYPE_TOOLTIP_TOMTOM = "- TomTom Waypoints"
+Lockit.UI_SETTING_WAYPOINT_TRACKING_TYPE_NAME = "Тип отслеживания точки маршрута"
+Lockit.UI_SETTING_WAYPOINT_TRACKING_TYPE_TOOLTIP_START = "Выберите, какой тип путевых точек используется для навигации.\n\nВозможные варианты:"
+Lockit.UI_SETTING_WAYPOINT_TRACKING_TYPE_TOOLTIP_BLIZZARD = "- Значок карты Blizzard (стандартная внутриигровая навигация)"
+Lockit.UI_SETTING_WAYPOINT_TRACKING_TYPE_TOOLTIP_TOMTOM = "- Точки маршрута TomTom"
 Lockit.UI_SETTING_WAYPOINT_TRACKING_TYPE_TOOLTIP_TOMTOM_UNAVAILABLE_FORMAT = "%s (%s)."
 Lockit.UI_SETTING_WAYPOINT_TRACKING_TYPE_TOOLTIP_FORMAT = "%s\n%s\n%s"
 Lockit.UI_SETTING_WAYPOINT_TRACKING_OPTION_BLIZZARD_NAME = "Blizzard"
-Lockit.UI_SETTING_WAYPOINT_TRACKING_OPTION_BLIZZARD_DESCRIPTION = "Use the Blizzard's Map Pin."
+Lockit.UI_SETTING_WAYPOINT_TRACKING_OPTION_BLIZZARD_DESCRIPTION = "Использовать значок карты Blizzard."
 Lockit.UI_SETTING_WAYPOINT_TRACKING_OPTION_TOMTOM_NAME = "TomTom"
-Lockit.UI_SETTING_WAYPOINT_TRACKING_OPTION_TOMTOM_DESCRIPTION = "Use TomTom Waypoints."
+Lockit.UI_SETTING_WAYPOINT_TRACKING_OPTION_TOMTOM_DESCRIPTION = "Использовать путевые точки TomTom."
 
 Lockit.UI_SETTINGS_SECTION_TITLE_CHARACTER = "Параметры персонажа"
-Lockit.UI_SETTING_TOOLTIP_EXTENSION_NAME = "Extra Info in Tooltips"
-Lockit.UI_SETTING_TOOLTIP_EXTENSION_TOOLTIP = "Display additional information in tooltips (E.g. number of |cnITEM_EPIC_COLOR:Restored Coffer Keys|r received this week)."
-Lockit.UI_SETTING_COMPANION_CONFIG_NAME = "Companion Config Widget"
-Lockit.UI_SETTING_COMPANION_CONFIG_TOOLTIP = "Delves UI: Enable a widget which displays the current specialization and abilities of the Companion.\nIt can be used to modify the configuration directly from the Delves UI."
-Lockit.UI_SETTING_COMPANION_CONFIG_OPTION_HORIZONTAL_NAME = "Horizontal layout"
-Lockit.UI_SETTING_COMPANION_CONFIG_OPTION_HORIZONTAL_DESCRIPTION = "A compact layout with the buttons arranged horizontally. The Companion model is kept intact."
-Lockit.UI_SETTING_COMPANION_CONFIG_OPTION_VERTICAL_NAME = "Vertical layout"
-Lockit.UI_SETTING_COMPANION_CONFIG_OPTION_VERTICAL_DESCRIPTION = "A more detailed layout with the buttons arranged vertically. The Companion model is hidden."
-Lockit.UI_SETTING_GV_DETAILS_NAME = "Custom Great Vault"
-Lockit.UI_SETTING_GV_DETAILS_TOOLTIP = "Delves UI: Display Great Vault rewards and progress (relevant for Delves) directly in the Delves UI."
-Lockit.UI_SETTING_DASHBOARD_OVERVIEW_NAME = "Delves Overview Section"
-Lockit.UI_SETTING_DASHBOARD_OVERVIEW_TOOLTIP = "Delves UI: Display an additional Overview section. It contains information about Gilded Stash, available Bountiful Delves, and Delve-related currencies and items."
+Lockit.UI_SETTING_TOOLTIP_EXTENSION_NAME = "Дополнительная информация в подсказках"
+Lockit.UI_SETTING_TOOLTIP_EXTENSION_TOOLTIP = "Отображение дополнительной информации во всплывающих подсказках (например, количество |cnITEM_EPIC_COLOR:Отреставрированных ключей от сундука|r, полученных на этой неделе)."
+Lockit.UI_SETTING_COMPANION_CONFIG_NAME = "Виджет настройки Компаньона"
+Lockit.UI_SETTING_COMPANION_CONFIG_TOOLTIP = "Пользовательский интерфейс Вылазок: Включить виджет, отображающий текущую специализацию и способности Компаньона.\nЕго можно использовать для изменения конфигурации непосредственно из пользовательского интерфейса Вылазок."
+Lockit.UI_SETTING_COMPANION_CONFIG_OPTION_HORIZONTAL_NAME = "Горизонтальная расположение"
+Lockit.UI_SETTING_COMPANION_CONFIG_OPTION_HORIZONTAL_DESCRIPTION = "Компактный макет с горизонтальным расположением кнопок. Модель Компаньона осталась нетронутой."
+Lockit.UI_SETTING_COMPANION_CONFIG_OPTION_VERTICAL_NAME = "Вертикальное расположение"
+Lockit.UI_SETTING_COMPANION_CONFIG_OPTION_VERTICAL_DESCRIPTION = "Более подробный макет с вертикальным расположением кнопок. Модель Компаньона скрыта."
+Lockit.UI_SETTING_GV_DETAILS_NAME = "Индивидуальное Великое Хранилище"
+Lockit.UI_SETTING_GV_DETAILS_TOOLTIP = "Пользовательский интерфейс Вылазок: Отображение наград и прогресса Великого Хранилища (актуально для Вылазок) непосредственно в пользовательском интерфейсе Вылазок."
+Lockit.UI_SETTING_DASHBOARD_OVERVIEW_NAME = "Раздел Вылазок"
+Lockit.UI_SETTING_DASHBOARD_OVERVIEW_TOOLTIP = "Пользовательский интерфейс Вылазок: Отображение дополнительного раздела «Обзор». Он содержит информацию о Позолоченных тайниках, доступных Многообещающих вылазок и валютах и ​​предметах, связанных с Вылазками."
 
 Lockit.UI_SETTINGS_TRANSLATION_TITLE = "Особая благодарность за помощь с переводом:"
