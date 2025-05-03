@@ -26,12 +26,12 @@ Lockit.UI_DELVE_INSTANCE_BUTTON_TOOLTIP_CURRENT_INSTRUCTION = "<Shift + ЛКМ, 
 
 Lockit.UI_GILDED_STASH_CANNOT_RETRIEVE_DATA = "Посетите Каз Алгар, чтобы увидеть прогресс"
 Lockit.UI_GILDED_STASH_BOUNTIFUL_NOTE = "Появляется только на |cnNORMAL_FONT_COLOR:11-м Уровне|r Многообещающих Вылазок|A:delves-bountiful:16:16|a."
-Lockit.UI_NO_ACTIVE_BOUNTIFUL = "Нет активных вылазок"
+Lockit.UI_NO_ACTIVE_BOUNTIFUL = "Нет активных Вылазок"
 Lockit.UI_LOOT_INFO_BUTTON_TOOLTIP_INSTRUCTION = "<Нажмите, чтобы отобразить информацию о добыче Вылазок>"
 
 -- Информация о добыче
 
-Lockit.UI_LOOT_INFO_DESCRIPTION = "Завершите вылазку, чтобы получить:"
+Lockit.UI_LOOT_INFO_DESCRIPTION = "Завершите Вылазку, чтобы получить:"
 
 -- Информация о ключах
 
@@ -39,8 +39,8 @@ Lockit.UI_BOUNTIFUL_KEYS_COUNT_CACHES_PREFIX = "Ключей из тайнико
 
 -- Отделение для аддонов
 
-Lockit.UI_COMPARTMENT_DESCRIPTION_LEFT_CLICK = "ЛКМ - открыть информационное окно."
-Lockit.UI_COMPARTMENT_DESCRIPTION_RIGHT_CLICK = "ПКМ - изменить параметры."
+Lockit.UI_COMPARTMENT_DESCRIPTION_LEFT_CLICK = "|cnGREEN_FONT_COLOR:ЛКМ - открыть информационное окно."
+Lockit.UI_COMPARTMENT_DESCRIPTION_RIGHT_CLICK = "|cnGREEN_FONT_COLOR:ПКМ - изменить параметры."
 
 -- Настройки
 
@@ -73,3 +73,12 @@ Lockit.UI_SETTING_DASHBOARD_OVERVIEW_NAME = "Раздел Вылазок"
 Lockit.UI_SETTING_DASHBOARD_OVERVIEW_TOOLTIP = "Пользовательский интерфейс Вылазок: Отображение дополнительного раздела «Обзор». Он содержит информацию о Позолоченных тайниках, доступных Многообещающих вылазок и валютах и ​​предметах, связанных с Вылазками."
 
 Lockit.UI_SETTINGS_TRANSLATION_TITLE = "Особая благодарность за помощь с переводом:"
+
+-- Общее
+
+Lockit.UI_ADDON_NAME = "Delve Companion"
+
+-- Отладка
+
+Lockit.DEBUG_UNEXPECTED_ENUM_ELEMENT = "Перечисление `%s` не содержит элемент: %s."
+Lockit.DEBUG_SAVED_VARIABLE_CONFLICT = "Таблица сохранения `%s` не содержит ключа: %s!"
