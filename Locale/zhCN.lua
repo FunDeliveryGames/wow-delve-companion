@@ -37,40 +37,39 @@ Lockit.UI_LOOT_INFO_DESCRIPTION = "完成地下堡获取战利品："
 
 Lockit.UI_BOUNTIFUL_KEYS_COUNT_CACHES_PREFIX = "宝箱里获取的钥匙数量"
 
--- Compartment
+-- Compartment (these are shown hovering over the addon in the corresponding dropdown menu)
 
-Lockit.UI_COMPARTMENT_DESCRIPTION_LEFT_CLICK = "Left Click to open information window."
-Lockit.UI_COMPARTMENT_DESCRIPTION_RIGHT_CLICK = "Right Click to change options."
+Lockit.UI_COMPARTMENT_DESCRIPTION_LEFT_CLICK = "|cnGREEN_FONT_COLOR:Left Click|r to show information window."
+Lockit.UI_COMPARTMENT_DESCRIPTION_RIGHT_CLICK = "|cnGREEN_FONT_COLOR:Right Click|r to access Addon Options."
 
 -- Settings
 
 Lockit.UI_SETTINGS_SECTION_TITLE_ACCOUNT = "账号设置"
 Lockit.UI_SETTING_DELVE_PROGRESS_WIDGETS_NAME = "Delve's Progress Info"
 Lockit.UI_SETTING_DELVE_PROGRESS_WIDGETS_TOOLTIP = "冒险指南-地下堡：显示地下堡成就进度（故事和探索）。"
-Lockit.UI_SETTING_DELVE_PROGRESS_WIDGETS_TOOLTIP = "Delves list: Display progress of achievements for each Delve (Stories and Chests)."
 Lockit.UI_SETTING_WAYPOINT_TRACKING_TYPE_NAME = "Waypoint Tracking Type"
 Lockit.UI_SETTING_WAYPOINT_TRACKING_TYPE_TOOLTIP_START = "Select which type of Waypoints are used for navigation.\n\nPossible options:"
-Lockit.UI_SETTING_WAYPOINT_TRACKING_TYPE_TOOLTIP_BLIZZARD = "- Blizzard's Map Pin (the defulat in-game navigation)"
-Lockit.UI_SETTING_WAYPOINT_TRACKING_TYPE_TOOLTIP_TOMTOM = "- TomTom Waypoints"
+Lockit.UI_SETTING_WAYPOINT_TRACKING_TYPE_TOOLTIP_BLIZZARD = "- Blizzard's Map Pin (the default in-game navigation)."
+Lockit.UI_SETTING_WAYPOINT_TRACKING_TYPE_TOOLTIP_TOMTOM = "- TomTom Waypoints."
 Lockit.UI_SETTING_WAYPOINT_TRACKING_TYPE_TOOLTIP_TOMTOM_UNAVAILABLE_FORMAT = "%s (%s)."
 Lockit.UI_SETTING_WAYPOINT_TRACKING_TYPE_TOOLTIP_FORMAT = "%s\n%s\n%s"
 Lockit.UI_SETTING_WAYPOINT_TRACKING_OPTION_BLIZZARD_NAME = "Blizzard"
-Lockit.UI_SETTING_WAYPOINT_TRACKING_OPTION_BLIZZARD_DESCRIPTION = "Use the Blizzard's Map Pin."
+Lockit.UI_SETTING_WAYPOINT_TRACKING_OPTION_BLIZZARD_DESCRIPTION = "Use Blizzard's Map Pin."
 Lockit.UI_SETTING_WAYPOINT_TRACKING_OPTION_TOMTOM_NAME = "TomTom"
 Lockit.UI_SETTING_WAYPOINT_TRACKING_OPTION_TOMTOM_DESCRIPTION = "Use TomTom Waypoints."
 
 Lockit.UI_SETTINGS_SECTION_TITLE_CHARACTER = "角色设置"
 Lockit.UI_SETTING_TOOLTIP_EXTENSION_NAME = "Extra Info in Tooltips"
-Lockit.UI_SETTING_TOOLTIP_EXTENSION_TOOLTIP = "Display additional information in tooltips (E.g. number of |cnITEM_EPIC_COLOR:Restored Coffer Keys|r received this week)."
-Lockit.UI_SETTING_COMPANION_CONFIG_NAME = "Companion Config Widget"
-Lockit.UI_SETTING_COMPANION_CONFIG_TOOLTIP = "Delves UI: Enable a widget which displays the current specialization and abilities of the Companion.\nIt can be used to modify the configuration directly from the Delves UI."
-Lockit.UI_SETTING_COMPANION_CONFIG_OPTION_HORIZONTAL_NAME = "Horizontal layout"
-Lockit.UI_SETTING_COMPANION_CONFIG_OPTION_HORIZONTAL_DESCRIPTION = "A compact layout with the buttons arranged horizontally. The Companion model is kept intact."
-Lockit.UI_SETTING_COMPANION_CONFIG_OPTION_VERTICAL_NAME = "Vertical layout"
+Lockit.UI_SETTING_TOOLTIP_EXTENSION_TOOLTIP = "Display additional information in tooltips (e.g., the number of |cnITEM_EPIC_COLOR:Restored Coffer Keys|r received this week)."
+Lockit.UI_SETTING_COMPANION_CONFIG_NAME = "Companion Configuration Widget"
+Lockit.UI_SETTING_COMPANION_CONFIG_TOOLTIP = "Delves UI: Enable a widget that displays the Companion's current specialization and abilities.\nIt can be used to modify the configuration directly from the Delves UI.\nNote: layout type doesn't affect the functionality, only visual arrangement."
+Lockit.UI_SETTING_COMPANION_CONFIG_OPTION_HORIZONTAL_NAME = "Horizontal Layout"
+Lockit.UI_SETTING_COMPANION_CONFIG_OPTION_HORIZONTAL_DESCRIPTION = "A compact layout with the buttons arranged horizontally. The Companion model is shown."
+Lockit.UI_SETTING_COMPANION_CONFIG_OPTION_VERTICAL_NAME = "Vertical Layout"
 Lockit.UI_SETTING_COMPANION_CONFIG_OPTION_VERTICAL_DESCRIPTION = "A more detailed layout with the buttons arranged vertically. The Companion model is hidden."
 Lockit.UI_SETTING_GV_DETAILS_NAME = "Custom Great Vault"
 Lockit.UI_SETTING_GV_DETAILS_TOOLTIP = "Delves UI: Display Great Vault rewards and progress (relevant for Delves) directly in the Delves UI."
 Lockit.UI_SETTING_DASHBOARD_OVERVIEW_NAME = "Delves Overview Section"
-Lockit.UI_SETTING_DASHBOARD_OVERVIEW_TOOLTIP = "Delves UI: Display an additional Overview section. It contains information about Gilded Stash, available Bountiful Delves, and Delve-related currencies and items."
+Lockit.UI_SETTING_DASHBOARD_OVERVIEW_TOOLTIP = "Delves UI: Display an additional Overview section. It contains information about Gilded Stash, available Bountiful Delves, and Delve-related consumables."
 
 Lockit.UI_SETTINGS_TRANSLATION_TITLE = "特别鸣谢翻译贡献者："

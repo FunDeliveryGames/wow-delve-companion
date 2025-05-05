@@ -34,7 +34,7 @@ DelveCompanion.Lockit = Lockit
 ]]
 -- #endregion
 
--- #region DEFUALT LOCKIT (enUS)
+-- #region DEFAULT LOCKIT (enUS)
 
 -- Common
 
@@ -62,7 +62,7 @@ Lockit.UI_LOOT_INFO_DESCRIPTION = "Complete a delve to get:"
 
 Lockit.UI_BOUNTIFUL_KEYS_COUNT_CACHES_PREFIX = "Keys from caches"
 
--- Compartment
+-- Compartment (these are shown hovering over the addon in the corresponding dropdown menu)
 
 Lockit.UI_COMPARTMENT_DESCRIPTION_LEFT_CLICK = "|cnGREEN_FONT_COLOR:Left Click|r to show information window."
 Lockit.UI_COMPARTMENT_DESCRIPTION_RIGHT_CLICK = "|cnGREEN_FONT_COLOR:Right Click|r to access Addon Options."
