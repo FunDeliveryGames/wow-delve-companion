@@ -73,12 +73,3 @@ Lockit.UI_SETTING_DASHBOARD_OVERVIEW_NAME = "Раздел Вылазок"
 Lockit.UI_SETTING_DASHBOARD_OVERVIEW_TOOLTIP = "Интерфейс Вылазок: Отображение дополнительного раздела «Обзор». Он содержит информацию о Позолоченных тайниках, доступных Многообещающих вылазок и валютах и ​​предметах, связанных с Вылазками."
 
 Lockit.UI_SETTINGS_TRANSLATION_TITLE = "Особая благодарность за помощь с переводом:"
-
--- Общее
-
-Lockit.UI_ADDON_NAME = "Delve Companion"
-
--- Отладка
-
-Lockit.DEBUG_UNEXPECTED_ENUM_ELEMENT = "Перечисление `%s` не содержит элемент: %s."
-Lockit.DEBUG_SAVED_VARIABLE_CONFLICT = "Таблица сохранения `%s` не содержит ключа: %s!"

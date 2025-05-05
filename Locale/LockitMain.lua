@@ -34,7 +34,7 @@ DelveCompanion.Lockit = Lockit
 ]]
 -- #endregion
 
--- #region DEFUALT LOCKIT (enUS)
+-- #region DEFAULT LOCKIT (enUS)
 
 -- Common
 
