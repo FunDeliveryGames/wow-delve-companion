@@ -29,7 +29,12 @@ function DelveCompanion_DelveTrackingButtonMixin:UpdateTooltip()
     tooltip:SetOwner(self, "ANCHOR_TOP")
     tooltip:ClearLines()
 
-    GameTooltip_AddNormalLine(tooltip, data.delveName, true)
+    if data.isBountiful then
+        GameTooltip_AddColoredDoubleLine(tooltip, data.delveName, "|A:delves-bountiful:24:24|a",
+            _G["NORMAL_FONT_COLOR"], _G["NORMAL_FONT_COLOR"], true)
+    else
+        GameTooltip_AddNormalLine(tooltip, data.delveName, true)
+    end
     GameTooltip_AddHighlightLine(tooltip, data.parentMapName, true)
     GameTooltip_AddBlankLineToTooltip(tooltip)
 

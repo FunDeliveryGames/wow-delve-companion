@@ -42,7 +42,7 @@
 		</Layers>
 		<Frames>
 			<Frame parentKey="KeysWidget"
-				inherits="DelveCompanionIconWithLabelAndTooltipTemplate">
+				inherits="DelveCompanionCustomActionWidgetTemplate">
 				<Size x="40" y="26" />
 				<KeyValues>
 					<KeyValue key="iconSizeX" value="28" type="number" />
@@ -52,6 +52,7 @@
 					<KeyValue key="frameCode" value="300" type="number" />
 					<KeyValue key="fontOverride" value="GameFontHighlightLarge"
 						type="string" />
+					<KeyValue key="tooltipAnchor" value="ANCHOR_RIGHT" type="string" />
 				</KeyValues>
 				<Anchors>
 					<Anchor point="LEFT" relativeKey="$parent.Title"
@@ -60,7 +61,7 @@
 			</Frame>
 
 			<Frame parentKey="AffixWidget"
-				inherits="DelveCompanionIconWithLabelAndTooltipTemplate">
+				inherits="DelveCompanionCustomActionWidgetTemplate">
 				<Size x="40" y="26" />
 				<KeyValues>
 					<KeyValue key="iconSizeX" value="50" type="number" />
@@ -72,6 +73,7 @@
 					<KeyValue key="labelOffsetX" value="-3" type="number" />
 					<KeyValue key="frameType" value="spell" type="string" />
 					<KeyValue key="frameCode" value="300" type="number" />
+					<KeyValue key="tooltipAnchor" value="ANCHOR_RIGHT" type="string" />
 				</KeyValues>
 				<Anchors>
 					<Anchor point="TOPRIGHT" relativePoint="TOPRIGHT" x="-25" y="-10" />

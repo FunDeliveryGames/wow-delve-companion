@@ -5,8 +5,8 @@
     Generic template to display an icon with a tooltip and text
     frameType is a value of `Enums.CodeType`
     -->
-    <Frame name="DelveCompanionIconWithLabelAndTooltipTemplate"
-        mixin="DelveCompanionIconWithLabelAndTooltipMixin" virtual="true">
+    <Frame name="DelveCompanionCustomActionWidgetTemplate"
+        mixin="DelveCompanionCustomActionWidgetMixin" virtual="true">
         <KeyValues>
             <KeyValue key="iconSizeX" value="24" type="number" />
             <KeyValue key="iconSizeY" value="24" type="number" />
@@ -53,6 +53,10 @@
         <Frames>
             <Button parentKey="ClickCatcher" registerForClicks="LeftButtonUp"
                 propagateMouseInput="Motion">
+            </Button>
+            <Button parentKey="InsecureAction" inherits="InsecureActionButtonTemplate"
+                propagateMouseInput="Motion"
+                registerForClicks="LeftButtonUp, LeftButtonDown">
             </Button>
         </Frames>
         <Scripts>

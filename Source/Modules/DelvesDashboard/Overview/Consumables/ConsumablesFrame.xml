@@ -6,25 +6,27 @@
         <Size x="110" y="40" />
         <Frames>
             <Frame parentKey="Keys"
-                inherits="DelveCompanionIconWithLabelAndTooltipTemplate">
+                inherits="DelveCompanionCustomActionWidgetTemplate">
                 <Size x="40" y="26" />
                 <KeyValues>
                     <KeyValue key="iconSizeX" value="26" type="number" />
                     <KeyValue key="iconSizeY" value="26" type="number" />
                     <KeyValue key="frameType" value="currency" type="string" />
+                    <KeyValue key="tooltipAnchor" value="ANCHOR_RIGHT" type="string" />
                 </KeyValues>
                 <Anchors>
                     <Anchor point="LEFT" x="18" />
                 </Anchors>
             </Frame>
             <Frame parentKey="Shards"
-                inherits="DelveCompanionIconWithLabelAndTooltipTemplate">
+                inherits="DelveCompanionCustomActionWidgetTemplate">
                 <Size x="40" y="26" />
                 <KeyValues>
                     <KeyValue key="iconSizeX" value="26" type="number" />
                     <KeyValue key="iconSizeY" value="26" type="number" />
                     <KeyValue key="frameType" value="item" type="string" />
                     <KeyValue key="useAutoScaling" value="true" type="boolean" />
+                    <KeyValue key="tooltipAnchor" value="ANCHOR_RIGHT" type="string" />
                 </KeyValues>
                 <Anchors>
                     <Anchor point="TOP" relativeKey="$parent.Keys"
@@ -32,24 +34,26 @@
                 </Anchors>
             </Frame>
             <Frame parentKey="BountyMap"
-                inherits="DelveCompanionIconWithLabelAndTooltipTemplate">
+                inherits="DelveCompanionCustomActionWidgetTemplate">
                 <Size x="40" y="26" />
                 <KeyValues>
                     <KeyValue key="iconSizeX" value="26" type="number" />
                     <KeyValue key="iconSizeY" value="26" type="number" />
                     <KeyValue key="frameType" value="item" type="string" />
+                    <KeyValue key="tooltipAnchor" value="ANCHOR_RIGHT" type="string" />
                 </KeyValues>
                 <Anchors>
                     <Anchor point="RIGHT" />
                 </Anchors>
             </Frame>
             <Frame parentKey="Echoes"
-                inherits="DelveCompanionIconWithLabelAndTooltipTemplate">
+                inherits="DelveCompanionCustomActionWidgetTemplate">
                 <Size x="40" y="26" />
                 <KeyValues>
                     <KeyValue key="iconSizeX" value="26" type="number" />
                     <KeyValue key="iconSizeY" value="26" type="number" />
                     <KeyValue key="frameType" value="item" type="string" />
+                    <KeyValue key="tooltipAnchor" value="ANCHOR_RIGHT" type="string" />
                 </KeyValues>
                 <Anchors>
                     <Anchor point="TOP" relativeKey="$parent.BountyMap"
