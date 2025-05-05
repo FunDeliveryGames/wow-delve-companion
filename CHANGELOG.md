@@ -1,5 +1,8 @@
 # Change Log
 
+## [0.6.1] - 05 May 2025
+- **Localization**: Update `Traditional Chinese` and `Russian` translations.
+
 ## [0.6] - 03 May 2025
 - **Delves UI**: Introduce Companion's `Configuration Widget`. It allows to check and adjust Companion's specialization and abilities without opening an extra window.
     - The widget has 2 layouts: `Horizontal` and `Vertical`. Refer to the addon settings to switch between them.

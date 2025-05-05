@@ -1,5 +1,9 @@
-**Version \[0.6\]** has arrived! This update brings:
+**A new update** has arrived!
 
+**Version <u>0.6.1</u>**:
+*   **Localization**: Update `Traditional Chinese` and `Russian` translations.
+
+**Version <u>0.6</u>**:
 *   **Delves UI**: Introduce Companion's `Configuration Widget`. It allows to check and adjust Companion's specialization and abilities without opening an extra window.
     *   The widget has 2 layouts: `Horizontal` and `Vertical`. Refer to the addon settings to switch between them.
     *   The widget can also be hidden at all from the settings.
