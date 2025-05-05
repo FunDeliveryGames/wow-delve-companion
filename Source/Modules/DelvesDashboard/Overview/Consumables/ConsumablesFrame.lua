@@ -32,8 +32,10 @@ function DelveCompanion_OverviewConsumablesFrameMixin:UpdateConsumables()
         if mapsCount >= Config.BOUNTY_MAP_MAX_PER_WEEK then
             mapsLine = _G["GREEN_FONT_COLOR"]:WrapTextInColorCode(mapsLine)
         elseif C_QuestLog.IsQuestFlaggedCompleted(Config.BOUNTY_MAP_QUEST) then
+            mapsLine = _G["DISABLED_FONT_COLOR"]:WrapTextInColorCode(mapsLine)
             self.BountyMap.Icon:SetDesaturated(true)
         else
+            mapsLine = _G["HIGHLIGHT_FONT_COLOR"]:WrapTextInColorCode(mapsLine)
             self.BountyMap.Icon:SetDesaturated(false)
         end
         self.BountyMap:SetLabelText(mapsLine)
@@ -47,6 +49,7 @@ function DelveCompanion_OverviewConsumablesFrameMixin:UpdateConsumables()
             shardsLine = _G["GREEN_FONT_COLOR"]:WrapTextInColorCode(shardsLine)
             self.Shards.Icon:SetDesaturated(false)
         else
+            shardsLine = _G["HIGHLIGHT_FONT_COLOR"]:WrapTextInColorCode(shardsLine)
             self.Shards.Icon:SetDesaturated(true)
         end
         self.Shards:SetLabelText(shardsLine)
@@ -67,8 +70,17 @@ function DelveCompanion_OverviewConsumablesFrameMixin:OnLoad()
 
     local enums = DelveCompanion.Enums
     self.Keys:SetFrameInfo(enums.CodeType.Currency, Config.BOUNTIFUL_KEY_CURRENCY_CODE)
-    self.Shards:SetFrameInfo(enums.CodeType.Item, Config.KEY_SHARD_ITEM_CODE)
-    self.BountyMap:SetFrameInfo(enums.CodeType.Item, Config.BOUNTY_MAP_ITEM_CODE)
+    do
+        self.Shards:SetFrameInfo(enums.CodeType.Item, Config.KEY_SHARD_ITEM_CODE)
+        local macroText = string.format("/use item:%s", Config.KEY_SHARD_ITEM_CODE)
+        self.Shards:SetInsecureAction({ type1 = "macro", macrotext = macroText })
+    end
+
+    do
+        self.BountyMap:SetFrameInfo(enums.CodeType.Item, Config.BOUNTY_MAP_ITEM_CODE)
+        local macroText = string.format("/use item:%s", Config.BOUNTY_MAP_ITEM_CODE)
+        self.BountyMap:SetInsecureAction({ type1 = "macro", macrotext = macroText })
+    end
     self.Echoes:SetFrameInfo(enums.CodeType.Item, Config.ECHO_ITEM_CODE)
 end
 
@@ -104,9 +116,9 @@ end
 
 --- `DelveCompanionOverviewConsumablesFrameTemplate`
 ---@class OverviewConsumablesFrameXml : Frame
----@field Keys IconWithLabelAndTooltip
----@field Shards IconWithLabelAndTooltip
----@field BountyMap IconWithLabelAndTooltip
----@field Echoes IconWithLabelAndTooltip
+---@field Keys CustomActionWidget
+---@field Shards CustomActionWidget
+---@field BountyMap CustomActionWidget
+---@field Echoes CustomActionWidget
 
 --#endregion

@@ -21,7 +21,7 @@ local DELVES_LIST_VIEW_BUTTONS_PADDING = 5
 DelveCompanion_DelvesListFrameMixin = {}
 
 ---@param self DelvesListFrame
----@param parent any
+---@param parent Frame
 ---@param mapName string
 ---@return DelvesMapHeader
 function DelveCompanion_DelvesListFrameMixin:CreateMapHeader(parent, mapName)
@@ -33,7 +33,7 @@ function DelveCompanion_DelvesListFrameMixin:CreateMapHeader(parent, mapName)
 end
 
 ---@param self DelvesListFrame
----@param parent any
+---@param parent Frame
 ---@param config DelveConfig
 ---@return DelvesProgressWidget
 function DelveCompanion_DelvesListFrameMixin:CreateDelveProgressWidget(parent, config)
@@ -84,7 +84,7 @@ function DelveCompanion_DelvesListFrameMixin:CreateDelveProgressWidget(parent, c
 end
 
 ---@param self DelvesListFrame
----@param parent any
+---@param parent Frame
 ---@param delveData any
 ---@return DelveInstanceButton
 function DelveCompanion_DelvesListFrameMixin:CreateDelveInstanceButton(parent, delveData)
@@ -222,8 +222,8 @@ end
 
 ---@class DelvesListXml : Frame
 ---@field Title FontString
----@field KeysWidget IconWithLabelAndTooltip
----@field AffixWidget IconWithLabelAndTooltip
+---@field KeysWidget CustomActionWidget
+---@field AffixWidget CustomActionWidget
 ---@field AffixWidget.Ring Texture
 ---@field DelvesListScroll DelvesListScroll
 --#endregion

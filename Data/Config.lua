@@ -61,29 +61,33 @@ Config.BOUNTIFUL_KEY_QUESTS_DATA = {
     [3] = 84738,
     [4] = 84739
 }
----@type table<integer, number> Indexed table of Caches containing [Restored Coffer Keys](https://www.wowhead.com/currency=3028/restored-coffer-key) (e.g. [Pinnacle Cache](https://www.wowhead.com/item=239118/pinnacle-cache)).
+---@type table<integer, number> Indexed table of Caches containing [Restored Coffer Keys](https://www.wowhead.com/currency=3028/restored-coffer-key) (e.g. [Pinnacle Cache](https://www.wowhead.com/item=239118/pinnacle-cache)).<br>
+--- Index scheme: `XXYYZZ`, e.g. 110107 (`XX`: expansion major version; `YY`: season number inside the expansion; `ZZ`: consecutive numbering of Caches).<br>
+--- Non-season sources index scheme: `99NNN`, e.g. 99001 (`NNN`: consecutive numbering).
 Config.BOUNTIFUL_KEY_SOURCE_CACHES_DATA = {
     -- TWW Season 1
-    [1]  = 226263,
-    [2]  = 226273,
-    [3]  = 226264,
-    [4]  = 224784,
-    [5]  = 225571,
-    [6]  = 225572,
-    [7]  = 225573,
-    [8]  = 228361,
+    [110101] = 226263,
+    [110102] = 226273,
+    [110103] = 226264,
+    [110104] = 224784,
+    [110105] = 225571,
+    [110106] = 225572,
+    [110107] = 225573,
+    [110108] = 228361,
     -- TWW Season 2
-    [9]  = 239128,
-    [10] = 239121,
-    [11] = 239126,
-    [12] = 239118,
-    [13] = 239125,
-    [14] = 239122,
-    [15] = 239124,
-    [16] = 238208,
-    [17] = 235639,
-    [18] = 235610,
-    [19] = 239120
+    [110201] = 239128,
+    [110202] = 239121,
+    [110203] = 239126,
+    [110204] = 239118,
+    [110205] = 239125,
+    [110206] = 239122,
+    [110207] = 239124,
+    [110208] = 238208,
+    [110209] = 235639,
+    [110210] = 235610,
+    [110211] = 239120,
+    -- Others
+    [99001]  = 233014
 }
 --#endregion
 
@@ -126,6 +130,7 @@ Config.KHAZ_ALGAR_MAP_ID = 2274
 
 ---@type table<integer, number> Indexed table of [uiMapIDs](https://warcraft.wiki.gg/wiki/UiMapID) which contain Delves.
 Config.MAPS_WITH_DELVES = {
+    -- Khaz Algar
     [1] = 2248,
     [2] = 2214,
     [3] = 2215,

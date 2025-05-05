@@ -27,7 +27,7 @@
                     <Anchor point="BOTTOM" x="0" y="27" />
                 </Anchors>
                 <Scripts>
-                    <OnEnter>
+                    <!-- <OnEnter>
                         GameTooltip:SetOwner(self, "ANCHOR_TOP")
                         GameTooltip:AddLine(_G["WEEKLY_REWARDS_CLICK_TO_PREVIEW_INSTRUCTIONS"], 1,
                         1, 1)
@@ -35,7 +35,7 @@
                     </OnEnter>
                     <OnLeave>
                         GameTooltip:Hide()
-                    </OnLeave>
+                    </OnLeave> -->
                     <OnClick>
                         WeeklyRewards_ShowUI()
                     </OnClick>
