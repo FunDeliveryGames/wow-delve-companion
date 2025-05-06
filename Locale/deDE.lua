@@ -14,7 +14,7 @@ local Lockit = DelveCompanion.Lockit
 -- Common
 
 Lockit.UI_COMMON_BOUNTIFUL_DELVE_TITLE = "Großzügige Tiefe"
-Lockit.UI_COMMON_MISSING_ADDON_TITLE = "Erforderliches AddOn fehlt: %s" -- %s: Name des fehlenden AddOns, z.B. DelveCompanion
+Lockit.UI_COMMON_MISSING_ADDON_TITLE = "Erforderliches AddOn fehlt: %s" -- %s: name of the missing AddOn, e.g. DelveCompanion
 
 -- Delves List
 
