@@ -26,8 +26,8 @@ Lockit.UI_DELVE_INSTANCE_BUTTON_TOOLTIP_CURRENT_INSTRUCTION = "<Shift + Linkskli
 
 Lockit.UI_GILDED_STASH_CANNOT_RETRIEVE_DATA = "Besuche die Gebiete von Khaz Algar, um den Fortschritt zu sehen."
 Lockit.UI_GILDED_STASH_BOUNTIFUL_NOTE = "Erscheint nur in großzügigen Tiefen der |cnNORM...NT_COLOR:Stufe 11|r |A:delves-bountiful:16:16|a."
-Lockit.UI_NO_ACTIVE_BOUNTIFUL = "Keine aktiven Brüche"
-Lockit.UI_LOOT_INFO_BUTTON_TOOLTIP_INSTRUCTION = "<Klicken, um Beute-Infos der Tiefen anzuzeigen>"
+Lockit.UI_NO_ACTIVE_BOUNTIFUL = "Keine aktiven Tiefen."
+Lockit.UI_LOOT_INFO_BUTTON_TOOLTIP_INSTRUCTION = "<Klicken, um Beute Informationen der Tiefen anzuzeigen>"
 
 -- Loot Info
 
@@ -45,24 +45,24 @@ Lockit.UI_COMPARTMENT_DESCRIPTION_RIGHT_CLICK = "|cnGREEN_FONT_COLOR:Rechtsklick
 -- Settings
 
 Lockit.UI_SETTINGS_SECTION_TITLE_ACCOUNT = "Account"
-Lockit.UI_SETTING_DELVE_PROGRESS_WIDGETS_NAME = "Tiefen Fortschrittsinfo"
+Lockit.UI_SETTING_DELVE_PROGRESS_WIDGETS_NAME = "Tiefen Fortschrittsinformationen"
 Lockit.UI_SETTING_DELVE_PROGRESS_WIDGETS_TOOLTIP = "Tiefen-Liste: Zeige den Fortschritt von Erfolgen für jede Tiefe (Geschichten und Truhen) an."
 Lockit.UI_SETTING_WAYPOINT_TRACKING_TYPE_NAME = "Art der Wegpunktverfolgung"
-Lockit.UI_SETTING_WAYPOINT_TRACKING_TYPE_TOOLTIP_START = "Wähle aus, welche Art von Wegpunkten für die Navigation verwendet wird.\n\nMögliche Optionen:"
-Lockit.UI_SETTING_WAYPOINT_TRACKING_TYPE_TOOLTIP_BLIZZARD = "- Blizzards Kartenpin (die Standard-Navigation im Spiel)"
-Lockit.UI_SETTING_WAYPOINT_TRACKING_TYPE_TOOLTIP_TOMTOM = "- TomTom Wegpunkte"
+Lockit.UI_SETTING_WAYPOINT_TRACKING_TYPE_TOOLTIP_START = "Wähle aus, welche Art von Wegpunkten für die Navigation verwendet werden soll.\n\nMögliche Optionen:"
+Lockit.UI_SETTING_WAYPOINT_TRACKING_TYPE_TOOLTIP_BLIZZARD = "- Blizzards-Kartenpin (die Standard-Navigation im Spiel)"
+Lockit.UI_SETTING_WAYPOINT_TRACKING_TYPE_TOOLTIP_TOMTOM = "- TomTom-Wegpunkte"
 Lockit.UI_SETTING_WAYPOINT_TRACKING_TYPE_TOOLTIP_TOMTOM_UNAVAILABLE_FORMAT = "%s (%s)."
 Lockit.UI_SETTING_WAYPOINT_TRACKING_TYPE_TOOLTIP_FORMAT = "%s\n%s\n%s"
 Lockit.UI_SETTING_WAYPOINT_TRACKING_OPTION_BLIZZARD_NAME = "Blizzard"
-Lockit.UI_SETTING_WAYPOINT_TRACKING_OPTION_BLIZZARD_DESCRIPTION = "verwende Blizzards Kartenpin"
+Lockit.UI_SETTING_WAYPOINT_TRACKING_OPTION_BLIZZARD_DESCRIPTION = "verwende Blizzards-Kartenpin"
 Lockit.UI_SETTING_WAYPOINT_TRACKING_OPTION_TOMTOM_NAME = "TomTom"
-Lockit.UI_SETTING_WAYPOINT_TRACKING_OPTION_TOMTOM_DESCRIPTION = "verwende TomTom Wegpunkte"
+Lockit.UI_SETTING_WAYPOINT_TRACKING_OPTION_TOMTOM_DESCRIPTION = "verwende TomTom-Wegpunkte"
 
 Lockit.UI_SETTINGS_SECTION_TITLE_CHARACTER = "Charakter"
 Lockit.UI_SETTING_TOOLTIP_EXTENSION_NAME = "zusätzliche Informationen in Tooltips"
 Lockit.UI_SETTING_TOOLTIP_EXTENSION_TOOLTIP = "Zeigt zusätzliche Informationen in den Tooltips an (z.B. die Anzahl der |cnITEM_EPIC_COLOR:restaurierten Kastenschlüssel|r, die diese Woche erhalten wurden).“
 Lockit.UI_SETTING_COMPANION_CONFIG_NAME = "Begleiter-Konfigurations-Widget"
-Lockit.UI_SETTING_COMPANION_CONFIG_TOOLTIP = "Tiefen UI: Aktiviert die Konfiguration der Begleiter-Anzeige (der Typ beeinflusst nur das Layout, nicht die Funktion)."
+Lockit.UI_SETTING_COMPANION_CONFIG_TOOLTIP = "Tiefen UI: Aktiviert die Konfiguration der Begleiter-Spezialisierung und Fähigkeiten.\nHinweis: Der Layout-Typ hat keinen Einfluss auf die Funktionalität, nur auf die visuelle Anordnung."
 Lockit.UI_SETTING_COMPANION_CONFIG_OPTION_HORIZONTAL_NAME = "Horizontales Layout"
 Lockit.UI_SETTING_COMPANION_CONFIG_OPTION_HORIZONTAL_DESCRIPTION = "Die Schaltflächen werden horizontal angeordnet. Das Begleiter-Modell wird angezeigt."
 Lockit.UI_SETTING_COMPANION_CONFIG_OPTION_VERTICAL_NAME = "Vertikales Layout"
