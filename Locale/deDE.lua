@@ -1,4 +1,4 @@
-if GetLocale() ~= "ruRU" then return end
+if GetLocale() ~= "deDE" then return end
 
 local _, AddonTbl = ...
 
