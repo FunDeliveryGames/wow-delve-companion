@@ -32,34 +32,6 @@ local DependencyAddonName = {
     tomtom = "TomTom"
 }
 
----@class Link
----@field name string
----@field url string
-
----@class Links
----@field CurseForge Link
----@field Wago Link
----@field WoWInt Link
----@field GitHub Link
-local Links = {
-    CurseForge = {
-        name = "CurseForge",
-        url = "https://www.curseforge.com/wow/addons/delve-companion"
-    },
-    Wago = {
-        name = "Wago.io",
-        url = "https://addons.wago.io/addons/delve-companion"
-    },
-    WoWInt = {
-        name = "WoW Interface",
-        url = "https://www.wowinterface.com/downloads/fileinfo.php?id=26915#info"
-    },
-    GitHub = {
-        name = "GitHub",
-        url = "https://github.com/FunDeliveryGames/wow-delve-companion"
-    }
-}
-
 ---@class ButtonAlias
 local ButtonAlias = {
     leftClick = "LeftButton",
@@ -92,14 +64,12 @@ local Events = {
 ---@field WaypointTrackingType WaypointTrackingType
 ---@field CompanionWidgetLayout CompanionWidgetLayout
 ---@field ButtonAlias ButtonAlias
----@field Links Links
 local Enums = {
     CodeType = CodeType,
     DependencyAddonName = DependencyAddonName,
     WaypointTrackingType = WaypointTrackingType,
     Events = Events,
     CompanionWidgetLayout = CompanionWidgetLayout,
-    ButtonAlias = ButtonAlias,
-    Links = Links
+    ButtonAlias = ButtonAlias
 }
 DelveCompanion.Enums = Enums
