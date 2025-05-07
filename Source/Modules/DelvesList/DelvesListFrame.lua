@@ -215,11 +215,12 @@ function DelveCompanion_DelvesListFrameMixin:OnHide()
     self:UnregisterEvent("CURRENCY_DISPLAY_UPDATE")
 end
 
---#region DelvesListXml annotations
+--#region Xml annotations
 
 ---@class DelvesListScroll : ScrollFrame
 ---@field Content Frame
 
+--- `DelveCompanionDelvesListFrameTemplate`
 ---@class DelvesListXml : Frame
 ---@field Title FontString
 ---@field KeysWidget CustomActionWidget
