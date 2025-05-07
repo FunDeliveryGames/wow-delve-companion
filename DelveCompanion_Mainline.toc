@@ -5,7 +5,7 @@
 ## IconTexture: interface/icons/ui_delves
 ## Title: Delve Companion
 ## Notes: One-stop addon to make Delves experience even better!
-## Notes: Addon um deine Tiefen-Erfahrung noch besser zu machen!
+## Notes-deDE: Addon um deine Tiefen-Erfahrung noch besser zu machen!
 ## Notes-ruRU: Универсальный аддон, который сделает игру в Вылазках еще лучше!
 ## Category-enUS: Delves
 ## Category-deDE: Tiefen
