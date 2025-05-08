@@ -8,11 +8,13 @@ local DelveCompanion = AddonTbl.DelveCompanion
 ---@field Spell string Alias for `spell`.
 ---@field Currency string Alias for `currency`.
 ---@field Achievement string Alias for `achievement`.
+---@field Toy string Alias for `toy`.
 local CodeType = {
     Item = "item",
     Spell = "spell",
     Currency = "currency",
-    Achievement = "achievement"
+    Achievement = "achievement",
+    Toy = "toy"
 }
 setmetatable(CodeType, {
     __tostring = function()

@@ -177,12 +177,14 @@ end
 
 ---@param self DelvesListFrame
 function DelveCompanion_DelvesListFrameMixin:OnLoad()
-    --Logger.Log("DelvesList OnLoad start")
+    -- Logger.Log("DelvesList OnLoad start")
+
     self.Title:SetText(_G["DELVES_LABEL"])
+
     self.KeysWidget:SetFrameInfo(DelveCompanion.Enums.CodeType.Currency, Config.BOUNTIFUL_KEY_CURRENCY_CODE)
 
-    self.AffixWidget:SetFrameInfo(DelveCompanion.Enums.CodeType.Spell, Config.NEMESIS_AFFIX_SPELL_CODE)
     self.AffixWidget:SetLabelText(_G["MODIFIERS_COLON"])
+    self.AffixWidget:SetFrameInfo(DelveCompanion.Enums.CodeType.Spell, Config.NEMESIS_AFFIX_SPELL_CODE)
 
     self:InitDelvesList()
 end
@@ -195,6 +197,7 @@ end
 ---@param self DelvesListFrame
 function DelveCompanion_DelvesListFrameMixin:OnShow()
     -- Logger.Log("DelvesList OnShow start")
+
     DelveCompanion:UpdateDelvesData()
 
     for _, instanceButton in ipairs(self.instanceButtons) do
@@ -224,6 +227,7 @@ end
 ---@class DelvesListXml : Frame
 ---@field Title FontString
 ---@field KeysWidget CustomActionWidget
+---@field DelveOBotWidget DelveOBotWidget
 ---@field AffixWidget CustomActionWidget
 ---@field AffixWidget.Ring Texture
 ---@field DelvesListScroll DelvesListScroll

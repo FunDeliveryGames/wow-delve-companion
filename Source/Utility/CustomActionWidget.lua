@@ -35,12 +35,12 @@ local DEFAULT_TOOLTIP_ANCHOR = "ANCHOR_TOP"
 ---@field labelOffsetX number?
 ---@field labelOffsetY number?
 ---@field fontOverride string?
-DelveCompanionCustomActionWidgetMixin = {}
+DelveCompanion_CustomActionWidgetMixin = {}
 
 --- Set `OnClick` script.
 ---@param self CustomActionWidget
 ---@param func function
-function DelveCompanionCustomActionWidgetMixin:SetOnClick(func)
+function DelveCompanion_CustomActionWidgetMixin:SetOnClick(func)
     if func == nil then
         return
     end
@@ -57,7 +57,7 @@ end
 --- Set InsecureAction button attributes.
 ---@param self CustomActionWidget
 ---@param attributes { [string]: string }
-function DelveCompanionCustomActionWidgetMixin:SetInsecureAction(attributes)
+function DelveCompanion_CustomActionWidgetMixin:SetInsecureAction(attributes)
     local relKey = self.useMask and self.CircleMask or self
     self.InsecureAction:SetAllPoints(relKey)
     self.InsecureAction:SetSize(relKey:GetSize())
@@ -72,7 +72,7 @@ end
 
 ---@param self CustomActionWidget
 ---@param text string|integer|number
-function DelveCompanionCustomActionWidgetMixin:SetLabelText(text)
+function DelveCompanion_CustomActionWidgetMixin:SetLabelText(text)
     if text then
         self.Label:SetText(tostring(text))
     end
@@ -94,6 +94,7 @@ local function SetFromTexture(self)
         return
     end
 
+    local canSet = true
     local enums = DelveCompanion.Enums
     if type == enums.CodeType.Item then
         texture = C_Item.GetItemIconByID(code)
@@ -103,11 +104,18 @@ local function SetFromTexture(self)
         texture = C_CurrencyInfo.GetCurrencyInfo(code).iconFileID
     elseif type == enums.CodeType.Achievement then
         texture = select(10, GetAchievementInfo(code))
+    elseif type == enums.CodeType.Toy then
+        canSet = false
+        local toy = Item:CreateFromItemID(code)
+        toy:ContinueOnItemLoad(function()
+            self.Icon:SetTexture(select(3, C_ToyBox.GetToyInfo(code)))
+        end)
+        -- texture = select(3, C_ToyBox.GetToyInfo(code))
     else
         Logger.Log(Lockit.DEBUG_UNEXPECTED_ENUM_ELEMENT, tostring(enums.CodeType), type)
     end
 
-    if texture then
+    if texture and canSet then
         self.Icon:SetTexture(texture)
     end
 end
@@ -115,8 +123,8 @@ end
 --- Set what kind of game entity this Frame displays. Used to display a proper tooltip.
 ---@param self CustomActionWidget
 ---@param frameType string Game entity type from [CodeType](lua://CodeType).
----@param frameCode number Corresponding in-game ID (e.g. `Item` ID).
-function DelveCompanionCustomActionWidgetMixin:SetFrameInfo(frameType, frameCode)
+---@param frameCode number Corresponding in-game ID (e.g., `Item` ID).
+function DelveCompanion_CustomActionWidgetMixin:SetFrameInfo(frameType, frameCode)
     if not (frameType and FindInTable(DelveCompanion.Enums.CodeType, frameType) and frameCode) then
         return
     end
@@ -126,8 +134,26 @@ function DelveCompanionCustomActionWidgetMixin:SetFrameInfo(frameType, frameCode
 end
 
 ---@param self CustomActionWidget
-function DelveCompanionCustomActionWidgetMixin:OnLoad()
-    -- Logger.Log("DelveCompanionIconWithTextAndTooltip OnLoad start")
+function DelveCompanion_CustomActionWidgetMixin:UpdateCooldown()
+    local cooldown = self.Cooldown
+
+    local start, duration, enable = C_Item.GetItemCooldown(self.frameCode)
+    if (cooldown and start and duration) then
+        if (enable) then
+            cooldown:Hide()
+        else
+            cooldown:Show()
+        end
+        cooldown:SetCooldown(start, duration)
+    else
+        cooldown:Hide()
+    end
+end
+
+---@param self CustomActionWidget
+function DelveCompanion_CustomActionWidgetMixin:OnLoad()
+    -- Logger.Log("DelveCompanionIconWithTextAndTooltip `%s` OnLoad start", self:GetDebugName())
+
     self.Icon:SetSize(self.iconSizeX, self.iconSizeY)
 
     if not self.displayLabel then
@@ -147,6 +173,10 @@ function DelveCompanionCustomActionWidgetMixin:OnLoad()
         self.CircleMask:SetPoint("BOTTOMRIGHT", self, "CENTER", -self.maskSizeOffset, self.maskSizeOffset)
         self.CircleMask:Show()
         self.Icon:AddMaskTexture(self.CircleMask)
+
+        self.Cooldown:ClearAllPoints()
+        self.Cooldown:SetPoint("TOPLEFT", self.CircleMask)
+        self.Cooldown:SetPoint("BOTTOMRIGHT", self.CircleMask)
     end
 
     ---@type FramePoint
@@ -178,10 +208,12 @@ function DelveCompanionCustomActionWidgetMixin:OnLoad()
 
     self.ClickCatcher:SetEnabled(false)
     self.InsecureAction:SetEnabled(false)
+
+    -- Logger.Log("DelveCompanionIconWithTextAndTooltip OnLoad finish")
 end
 
 ---@param self CustomActionWidget
-function DelveCompanionCustomActionWidgetMixin:OnShow()
+function DelveCompanion_CustomActionWidgetMixin:OnShow()
     -- Logger.Log("DelveCompanionIconWithTextAndTooltip OnShow start")
 
     if self.atlasTexture then
@@ -189,15 +221,17 @@ function DelveCompanionCustomActionWidgetMixin:OnShow()
     else
         SetFromTexture(self)
     end
+
+    self:UpdateCooldown()
 end
 
 ---@param self CustomActionWidget
-function DelveCompanionCustomActionWidgetMixin:OnHide()
+function DelveCompanion_CustomActionWidgetMixin:OnHide()
     -- Logger.Log("DelveCompanionIconWithTextAndTooltip OnHide start")
 end
 
 ---@param self CustomActionWidget
-function DelveCompanionCustomActionWidgetMixin:OnEnter()
+function DelveCompanion_CustomActionWidgetMixin:OnEnter()
     local type, code = self.frameType, self.frameCode
     if not (type and code) then
         return
@@ -215,6 +249,8 @@ function DelveCompanionCustomActionWidgetMixin:OnEnter()
         tooltip:SetCurrencyByID(code)
     elseif type == enums.CodeType.Achievement then
         tooltip:SetHyperlink(GetAchievementLink(code))
+    elseif type == enums.CodeType.Toy then
+        tooltip:SetToyByItemID(code)
     else
         Logger.Log(Lockit.DEBUG_UNEXPECTED_ENUM_ELEMENT, tostring(enums.CodeType), type)
     end
@@ -223,16 +259,18 @@ function DelveCompanionCustomActionWidgetMixin:OnEnter()
 end
 
 ---@param self CustomActionWidget
-function DelveCompanionCustomActionWidgetMixin:OnLeave()
+function DelveCompanion_CustomActionWidgetMixin:OnLeave()
     GameTooltip:Hide()
 end
 
---#region CustomActionWidgetXml annotations
+--#region Xml annotations
 
+--- `DelveCompanionCustomActionWidgetTemplate`
 ---@class CustomActionWidgetXml : Frame
 ---@field Icon Texture
 ---@field CircleMask MaskTexture
 ---@field Label FontString
 ---@field ClickCatcher Button
 ---@field InsecureAction Button
+---@field Cooldown Cooldown
 --#endregion
