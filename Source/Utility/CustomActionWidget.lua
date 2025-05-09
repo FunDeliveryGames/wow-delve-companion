@@ -269,6 +269,7 @@ end
 ---@class CustomActionWidgetXml : Frame
 ---@field Icon Texture
 ---@field CircleMask MaskTexture
+---@field BlockedOverlay Texture
 ---@field Label FontString
 ---@field ClickCatcher Button
 ---@field InsecureAction Button

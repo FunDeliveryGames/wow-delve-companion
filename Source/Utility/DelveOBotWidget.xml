@@ -5,7 +5,7 @@
         inherits="DelveCompanionCustomActionWidgetTemplate"
         mixin="DelveCompanion_DelveOBotWidgetMixin" virtual="true">
         <Layers>
-            <Layer level="OVERLAY" textureSubLevel="2">
+            <Layer level="OVERLAY" textureSubLevel="5">
                 <Texture parentKey="SlotFrameCollected"
                     atlas="collections-itemborder-collected">
                     <Anchors>

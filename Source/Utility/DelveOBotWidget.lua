@@ -9,6 +9,11 @@ local Logger = DelveCompanion.Logger
 ---@class DelveOBotWidget : DelveOBotWidgetXml
 DelveCompanion_DelveOBotWidgetMixin = {}
 
+local widgetEvents = {
+    "NEW_TOY_ADDED",
+    "SPELL_UPDATE_COOLDOWN"
+}
+
 function DelveCompanion_DelveOBotWidgetMixin:UpdateState()
     if PlayerHasToy(self.frameCode) then
         self.SlotFrameCollected:Show()
@@ -50,14 +55,14 @@ function DelveCompanion_DelveOBotWidgetMixin:OnShow()
     -- Logger.Log("DelveOBotWidget OnShow start")
 
     DelveCompanion_CustomActionWidgetMixin.OnShow(self)
+    self.BlockedOverlay:SetShown(IsIndoors())
     self:UpdateState()
 end
 
 function DelveCompanion_DelveOBotWidgetMixin:OnHide()
     -- Logger.Log("DelveOBotWidget OnShow start")
 
-    self:UnregisterEvent("NEW_TOY_ADDED")
-    self:UnregisterEvent("SPELL_UPDATE_COOLDOWN")
+    FrameUtil.UnregisterFrameForEvents(self, widgetEvents)
     DelveCompanion_CustomActionWidgetMixin.OnHide(self)
 end
 

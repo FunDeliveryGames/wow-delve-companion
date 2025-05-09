@@ -32,7 +32,7 @@
                     </Anchors>
                 </Texture>
             </Layer>
-            <Layer level="OVERLAY">
+            <Layer level="OVERLAY" textureSubLevel="0">
                 <MaskTexture parentKey="CircleMask"
                     file="Interface\CharacterFrame\TempPortraitAlphaMask"
                     hWrapMode="CLAMPTOBLACKADDITIVE" vWrapMode="CLAMPTOBLACKADDITIVE" hidden="true">
@@ -48,6 +48,11 @@
                             relativePoint="LEFT" x="-5" y="0" />
                     </Anchors>
                 </FontString>
+            </Layer>
+            <Layer level="OVERLAY" textureSubLevel="1">
+                <Texture parentKey="BlockedOverlay" hidden="true">
+                    <Color r="0" g="0" b="0" a="0.7" />
+                </Texture>
             </Layer>
         </Layers>
         <Frames>
