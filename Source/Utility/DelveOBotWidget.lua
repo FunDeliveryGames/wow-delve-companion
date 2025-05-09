@@ -16,12 +16,10 @@ local widgetEvents = {
 
 function DelveCompanion_DelveOBotWidgetMixin:UpdateState()
     if PlayerHasToy(self.frameCode) then
-        self.SlotFrameCollected:Show()
-        self.SlotFrameUncollected:Hide()
+        self.CollectedBorder:Show()
         self.Icon:SetDesaturated(false)
     else
-        self.SlotFrameCollected:Hide()
-        self.SlotFrameUncollected:Show()
+        self.CollectedBorder:Hide()
         self.Icon:SetDesaturated(true)
 
         self:RegisterEvent("NEW_TOY_ADDED")
@@ -47,8 +45,7 @@ function DelveCompanion_DelveOBotWidgetMixin:OnLoad()
     local macroText = string.format("/use item:%s", self.frameCode)
     self:SetInsecureAction({ type1 = "macro", macrotext = macroText })
 
-    self.SlotFrameCollected:SetSize(self:GetSize())
-    self.SlotFrameUncollected:SetSize(self:GetSize())
+    -- self.SlotFrame:SetSize(self:GetSize())
 end
 
 function DelveCompanion_DelveOBotWidgetMixin:OnShow()
@@ -70,6 +67,5 @@ end
 
 --- `DelvelCompanionDelveOBotWidgetTemplate`
 ---@class DelveOBotWidgetXml : CustomActionWidget
----@field SlotFrameCollected Texture
----@field SlotFrameUncollected Texture
+---@field CollectedBorder Texture
 --#endregion

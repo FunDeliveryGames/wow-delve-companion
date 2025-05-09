@@ -6,17 +6,11 @@
         mixin="DelveCompanion_DelveOBotWidgetMixin" virtual="true">
         <Layers>
             <Layer level="OVERLAY" textureSubLevel="5">
-                <Texture parentKey="SlotFrameCollected"
+                <Texture parentKey="CollectedBorder"
                     atlas="collections-itemborder-collected">
                     <Anchors>
-                        <Anchor point="CENTER" x="0" />
-                    </Anchors>
-                </Texture>
-                <Texture parentKey="SlotFrameUncollected"
-                    atlas="collections-itemborder-uncollected" hidden="true"
-                    useAtlasSize="false">
-                    <Anchors>
-                        <Anchor point="CENTER" x="0" y="2" />
+                        <Anchor point="TOPLEFT" x="-1" y="1" />
+                        <Anchor point="BOTTOMRIGHT" x="1" y="-2" />
                     </Anchors>
                 </Texture>
             </Layer>

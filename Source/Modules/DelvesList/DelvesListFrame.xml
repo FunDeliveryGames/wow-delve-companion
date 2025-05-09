@@ -73,7 +73,7 @@
 				</KeyValues>
 				<Anchors>
 					<Anchor point="LEFT" relativeKey="$parent.KeysWidget"
-						relativePoint="RIGHT" x="25" y="2" />
+						relativePoint="RIGHT" x="25" y="1" />
 				</Anchors>
 			</Frame>
 

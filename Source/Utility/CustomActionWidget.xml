@@ -51,6 +51,10 @@
             </Layer>
             <Layer level="OVERLAY" textureSubLevel="1">
                 <Texture parentKey="BlockedOverlay" hidden="true">
+                    <Anchors>
+                        <Anchor point="TOPLEFT" relativeKey="$parent.Icon" />
+                        <Anchor point="BOTTOMRIGHT" relativeKey="$parent.Icon" />
+                    </Anchors>
                     <Color r="0" g="0" b="0" a="0.7" />
                 </Texture>
             </Layer>

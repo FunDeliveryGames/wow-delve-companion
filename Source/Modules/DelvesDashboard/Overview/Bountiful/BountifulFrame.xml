@@ -41,7 +41,7 @@
                 </KeyValues>
                 <Anchors>
                     <Anchor point="LEFT" relativeKey="$parent.Title"
-                        relativePoint="RIGHT" x="4" y="0" />
+                        relativePoint="RIGHT" x="4" y="-1" />
                 </Anchors>
             </Frame>
 

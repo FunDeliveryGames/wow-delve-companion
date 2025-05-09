@@ -177,6 +177,10 @@ function DelveCompanion_CustomActionWidgetMixin:OnLoad()
         self.Cooldown:ClearAllPoints()
         self.Cooldown:SetPoint("TOPLEFT", self.CircleMask)
         self.Cooldown:SetPoint("BOTTOMRIGHT", self.CircleMask)
+
+        self.BlockedOverlay:ClearAllPoints()
+        self.BlockedOverlay:SetPoint("TOPLEFT", self.CircleMask)
+        self.BlockedOverlay:SetPoint("BOTTOMRIGHT", self.CircleMask)
     end
 
     ---@type FramePoint
