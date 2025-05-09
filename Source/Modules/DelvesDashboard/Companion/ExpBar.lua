@@ -40,7 +40,7 @@ end
 function DelveCompanion_DashboardExpBarMixin:OnLoad()
     -- Logger.Log("DashboardExpBar OnLoad start")
 
-    self:SetPoint("TOP", DashboardCompanion.ParentPanel.PanelTitle, "BOTTOM")
+    self:SetPoint("TOP", DashboardCompanion.ParentFrame.PanelTitle, "BOTTOM")
 
     self.factionID = C_DelvesUI.GetFactionForCompanion()
     self:SetStatusBarColor(_G["FACTION_GREEN_COLOR"]:GetRGB())
@@ -101,7 +101,7 @@ function DelveCompanion_DashboardExpBarMixin:OnEnter()
     end
 
     tooltip:Show()
-    DashboardCompanion.ParentPanel.PanelTitle:Hide()
+    DashboardCompanion.ParentFrame.PanelTitle:Hide()
 end
 
 ---@param self DashboardExpBar
@@ -109,7 +109,7 @@ function DelveCompanion_DashboardExpBarMixin:OnLeave()
     -- Logger.Log("DashboardExpBar OnLeave start")
 
     GameTooltip:Hide()
-    DashboardCompanion.ParentPanel.PanelTitle:Show()
+    DashboardCompanion.ParentFrame.PanelTitle:Show()
 end
 
 --#region XML Annotations

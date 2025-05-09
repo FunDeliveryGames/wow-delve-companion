@@ -5,8 +5,8 @@
     Generic template to display an icon with a tooltip and text
     frameType is a value of `Enums.CodeType`
     -->
-    <Frame name="DelveCompanionIconWithLabelAndTooltipTemplate"
-        mixin="DelveCompanionIconWithLabelAndTooltipMixin" virtual="true">
+    <Frame name="DelveCompanionCustomActionWidgetTemplate"
+        mixin="DelveCompanion_CustomActionWidgetMixin" virtual="true">
         <KeyValues>
             <KeyValue key="iconSizeX" value="24" type="number" />
             <KeyValue key="iconSizeY" value="24" type="number" />
@@ -32,7 +32,7 @@
                     </Anchors>
                 </Texture>
             </Layer>
-            <Layer level="OVERLAY">
+            <Layer level="OVERLAY" textureSubLevel="0">
                 <MaskTexture parentKey="CircleMask"
                     file="Interface\CharacterFrame\TempPortraitAlphaMask"
                     hWrapMode="CLAMPTOBLACKADDITIVE" vWrapMode="CLAMPTOBLACKADDITIVE" hidden="true">
@@ -49,10 +49,34 @@
                     </Anchors>
                 </FontString>
             </Layer>
+            <Layer level="OVERLAY" textureSubLevel="1">
+                <Texture parentKey="BlockedOverlay" hidden="true">
+                    <Anchors>
+                        <Anchor point="TOPLEFT" relativeKey="$parent.Icon" />
+                        <Anchor point="BOTTOMRIGHT" relativeKey="$parent.Icon" />
+                    </Anchors>
+                    <Color r="0" g="0" b="0" a="0.7" />
+                </Texture>
+            </Layer>
         </Layers>
         <Frames>
+            <Cooldown parentKey="Cooldown" inherits="CooldownFrameTemplate" hidden="true">
+                <Anchors>
+                    <Anchor point="TOPLEFT" relativeKey="$parent.Icon" />
+                    <Anchor point="BOTTOMRIGHT" relativeKey="$parent.Icon" />
+                </Anchors>
+                <SwipeTexture file="Interface\Cooldown\cooldown2" />
+                <EdgeTexture file="Interface\Cooldown\edge" />
+                <BlingTexture file="Interface\Cooldown\star4">
+                    <Color r="0.3" g="0.6" b="1" a="0.8" />
+                </BlingTexture>
+            </Cooldown>
             <Button parentKey="ClickCatcher" registerForClicks="LeftButtonUp"
                 propagateMouseInput="Motion">
+            </Button>
+            <Button parentKey="InsecureAction" inherits="InsecureActionButtonTemplate"
+                propagateMouseInput="Motion"
+                registerForClicks="LeftButtonUp, LeftButtonDown">
             </Button>
         </Frames>
         <Scripts>

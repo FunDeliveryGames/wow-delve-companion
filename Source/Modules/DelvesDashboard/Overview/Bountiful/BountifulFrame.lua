@@ -22,6 +22,8 @@ function DelveCompanion_OverviewBountifulFrameMixin:OnLoad()
     self.ActiveDelves.NoBountifulLabel:SetText(Lockit.UI_NO_ACTIVE_BOUNTIFUL)
     self.bountifulButtonsPool = CreateFramePool("BUTTON", self.ActiveDelves.Container,
         "DelveCompanionOverviewBountifulButtonTemplate")
+
+        self.DelveOBotWidget.Cooldown:SetCountdownFont("GameFontHighlightSmall")
 end
 
 ---@param self OverviewBountifulFrame
@@ -73,6 +75,7 @@ end
 ---@class OverviewBountifulFrameXml : Frame
 ---@field Divider Texture
 ---@field Title FontString
+---@field DelveOBotWidget DelveOBotWidget
 ---@field ActiveDelves OverviewBountifulFrameActiveDelvesXml
 
 --#endregion

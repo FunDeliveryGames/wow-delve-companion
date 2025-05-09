@@ -250,7 +250,7 @@ function AddonSettings:Init()
     -- Logger.Log("Start initing Settings...")
 
     do
-        local settingsFrame = CreateFrame("Frame", "$parent.DelveCompanionSettings", nil, "DelveCompanionSettingsFrame")
+        local settingsFrame = CreateFrame("Frame", "$parent.DelveCompanionSettings", nil, "DelveCompanionSettingsFrameTemplate")
         local category, _ = Settings.RegisterCanvasLayoutCategory(settingsFrame, Lockit.UI_ADDON_NAME)
         Settings.RegisterAddOnCategory(category)
         AddonSettings.mainCategory = category

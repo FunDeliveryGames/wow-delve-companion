@@ -35,6 +35,6 @@ end
 
 --- `DelveCompanionDelveProgressWidgetTemplate`
 ---@class DelvesProgressWidgetXml : Frame
----@field Story IconWithLabelAndTooltip
----@field Chest IconWithLabelAndTooltip
+---@field Story CustomActionWidget
+---@field Chest CustomActionWidget
 --#endregion

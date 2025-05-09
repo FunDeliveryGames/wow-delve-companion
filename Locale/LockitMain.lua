@@ -39,13 +39,13 @@ DelveCompanion.Lockit = Lockit
 -- Common
 
 Lockit.UI_COMMON_BOUNTIFUL_DELVE_TITLE = "Bountiful Delve"
-Lockit.UI_COMMON_MISSING_ADDON_TITLE = "Required AddOn is missing: %s" -- %s: name of the missing AddOn, e.g. DelveCompanion
+Lockit.UI_COMMON_MISSING_ADDON_TITLE = "Required AddOn is missing: %s" -- `%s`: name of the missing AddOn, e.g. DelveCompanion
 
 -- Delves List
 
-Lockit.UI_DELVE_INSTANCE_BUTTON_TOOLTIP_CLICK_INSTRUCTION = "<Shift + Left Click to set waypoint to the delve>"
+Lockit.UI_DELVE_INSTANCE_BUTTON_TOOLTIP_CLICK_INSTRUCTION = "<Shift click to set waypoint to the delve>"
 Lockit.UI_DELVE_INSTANCE_BUTTON_TOOLTIP_CURRENT_TEXT = "Waypoint set."
-Lockit.UI_DELVE_INSTANCE_BUTTON_TOOLTIP_CURRENT_INSTRUCTION = "<Shift + Left Click to clear the waypoint>"
+Lockit.UI_DELVE_INSTANCE_BUTTON_TOOLTIP_CURRENT_INSTRUCTION = "<Shift click to clear the waypoint>"
 
 -- Delves UI
 
@@ -71,9 +71,9 @@ Lockit.UI_COMPARTMENT_DESCRIPTION_RIGHT_CLICK = "|cnGREEN_FONT_COLOR:Right Click
 
 Lockit.UI_SETTINGS_SECTION_TITLE_ACCOUNT = "Account-Wide"
 Lockit.UI_SETTING_DELVE_PROGRESS_WIDGETS_NAME = "Delve's Progress Info"
-Lockit.UI_SETTING_DELVE_PROGRESS_WIDGETS_TOOLTIP = "Delves list: Display achievement progress for each Delve (Stories and Chests)."
+Lockit.UI_SETTING_DELVE_PROGRESS_WIDGETS_TOOLTIP = "Delves list: Display achievements progress for each Delve (Stories and Chests)."
 Lockit.UI_SETTING_WAYPOINT_TRACKING_TYPE_NAME = "Waypoint Tracking Type"
-Lockit.UI_SETTING_WAYPOINT_TRACKING_TYPE_TOOLTIP_START = "Select which type of Waypoints are used for navigation.\n\nPossible options:"
+Lockit.UI_SETTING_WAYPOINT_TRACKING_TYPE_TOOLTIP_START = "Select which type of Waypoints is used for navigation.\n\nPossible options:"
 Lockit.UI_SETTING_WAYPOINT_TRACKING_TYPE_TOOLTIP_BLIZZARD = "- Blizzard's Map Pin (the default in-game navigation)."
 Lockit.UI_SETTING_WAYPOINT_TRACKING_TYPE_TOOLTIP_TOMTOM = "- TomTom Waypoints."
 Lockit.UI_SETTING_WAYPOINT_TRACKING_TYPE_TOOLTIP_TOMTOM_UNAVAILABLE_FORMAT = "%s (%s)."
@@ -98,6 +98,13 @@ Lockit.UI_SETTING_DASHBOARD_OVERVIEW_NAME = "Delves Overview Section"
 Lockit.UI_SETTING_DASHBOARD_OVERVIEW_TOOLTIP = "Delves UI: Display an additional Overview section. It contains information about Gilded Stash, available Bountiful Delves, and Delve-related consumables."
 
 Lockit.UI_SETTINGS_TRANSLATION_TITLE = "Special thanks for the translation contribution:"
+
+Lockit.UI_SETTINGS_LINKS_TITLE = "Links"
+Lockit.UI_SETTINGS_ADDON_LINK_TOOLTIP_CURSEFORGE = "Click to copy the URL to the addon page on |cnNORMAL_FONT_COLOR:CurseForge|r."
+Lockit.UI_SETTINGS_ADDON_LINK_TOOLTIP_WAGO = "Click to copy the URL to the addon page on |cnNORMAL_FONT_COLOR:Wago.io|r."
+Lockit.UI_SETTINGS_ADDON_LINK_TOOLTIP_WOWINT = "Click to copy the URL to the addon page on |cnNORMAL_FONT_COLOR:WoW Interface|r."
+Lockit.UI_SETTINGS_ADDON_LINK_TOOLTIP_GITHUB = "Click to copy the URL to the addon page on |cnNORMAL_FONT_COLOR:GitHub|r.\n\nShare feedback, request new features, or report a bug. It helps making the addon even better!"
+Lockit.UI_SETTINGS_ADDON_LINK_POPUP_TEXT = "|cnGREEN_FONT_COLOR:Ctrl + C|r to copy the |cnNORMAL_FONT_COLOR:%s|r URL." -- `%s`: website name, e.g. CurseForge.
 -- #endregion
 
 -- #region Internal keys. These ARE NOT intended to be translated.

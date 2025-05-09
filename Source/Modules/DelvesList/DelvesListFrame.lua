@@ -21,7 +21,7 @@ local DELVES_LIST_VIEW_BUTTONS_PADDING = 5
 DelveCompanion_DelvesListFrameMixin = {}
 
 ---@param self DelvesListFrame
----@param parent any
+---@param parent Frame
 ---@param mapName string
 ---@return DelvesMapHeader
 function DelveCompanion_DelvesListFrameMixin:CreateMapHeader(parent, mapName)
@@ -33,7 +33,7 @@ function DelveCompanion_DelvesListFrameMixin:CreateMapHeader(parent, mapName)
 end
 
 ---@param self DelvesListFrame
----@param parent any
+---@param parent Frame
 ---@param config DelveConfig
 ---@return DelvesProgressWidget
 function DelveCompanion_DelvesListFrameMixin:CreateDelveProgressWidget(parent, config)
@@ -84,7 +84,7 @@ function DelveCompanion_DelvesListFrameMixin:CreateDelveProgressWidget(parent, c
 end
 
 ---@param self DelvesListFrame
----@param parent any
+---@param parent Frame
 ---@param delveData any
 ---@return DelveInstanceButton
 function DelveCompanion_DelvesListFrameMixin:CreateDelveInstanceButton(parent, delveData)
@@ -177,12 +177,14 @@ end
 
 ---@param self DelvesListFrame
 function DelveCompanion_DelvesListFrameMixin:OnLoad()
-    --Logger.Log("DelvesList OnLoad start")
+    -- Logger.Log("DelvesList OnLoad start")
+
     self.Title:SetText(_G["DELVES_LABEL"])
+
     self.KeysWidget:SetFrameInfo(DelveCompanion.Enums.CodeType.Currency, Config.BOUNTIFUL_KEY_CURRENCY_CODE)
 
-    self.AffixWidget:SetFrameInfo(DelveCompanion.Enums.CodeType.Spell, Config.NEMESIS_AFFIX_SPELL_CODE)
     self.AffixWidget:SetLabelText(_G["MODIFIERS_COLON"])
+    self.AffixWidget:SetFrameInfo(DelveCompanion.Enums.CodeType.Spell, Config.NEMESIS_AFFIX_SPELL_CODE)
 
     self:InitDelvesList()
 end
@@ -195,6 +197,7 @@ end
 ---@param self DelvesListFrame
 function DelveCompanion_DelvesListFrameMixin:OnShow()
     -- Logger.Log("DelvesList OnShow start")
+
     DelveCompanion:UpdateDelvesData()
 
     for _, instanceButton in ipairs(self.instanceButtons) do
@@ -215,15 +218,17 @@ function DelveCompanion_DelvesListFrameMixin:OnHide()
     self:UnregisterEvent("CURRENCY_DISPLAY_UPDATE")
 end
 
---#region DelvesListXml annotations
+--#region Xml annotations
 
 ---@class DelvesListScroll : ScrollFrame
 ---@field Content Frame
 
+--- `DelveCompanionDelvesListFrameTemplate`
 ---@class DelvesListXml : Frame
 ---@field Title FontString
----@field KeysWidget IconWithLabelAndTooltip
----@field AffixWidget IconWithLabelAndTooltip
+---@field KeysWidget CustomActionWidget
+---@field DelveOBotWidget DelveOBotWidget
+---@field AffixWidget CustomActionWidget
 ---@field AffixWidget.Ring Texture
 ---@field DelvesListScroll DelvesListScroll
 --#endregion

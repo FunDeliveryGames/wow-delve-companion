@@ -6,7 +6,7 @@
         <Size x="174" y="26" />
         <Frames>
             <Frame parentKey="Story"
-                inherits="DelveCompanionIconWithLabelAndTooltipTemplate">
+                inherits="DelveCompanionCustomActionWidgetTemplate">
                 <Size x="40" y="26" />
                 <KeyValues>
                     <KeyValue key="iconSizeX" value="20" type="number" />
@@ -22,7 +22,7 @@
                 </Anchors>
             </Frame>
             <Frame parentKey="Chest"
-                inherits="DelveCompanionIconWithLabelAndTooltipTemplate">
+                inherits="DelveCompanionCustomActionWidgetTemplate">
                 <Size x="40" y="26" />
                 <KeyValues>
                     <KeyValue key="iconSizeX" value="20" type="number" />
