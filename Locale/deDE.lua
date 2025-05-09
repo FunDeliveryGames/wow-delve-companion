@@ -14,7 +14,7 @@ local Lockit = DelveCompanion.Lockit
 -- Common
 
 Lockit.UI_COMMON_BOUNTIFUL_DELVE_TITLE = "Großzügige Tiefe"
-Lockit.UI_COMMON_MISSING_ADDON_TITLE = "Erforderliches AddOn fehlt: %s" -- %s: name of the missing AddOn, e.g. DelveCompanion
+Lockit.UI_COMMON_MISSING_ADDON_TITLE = "Erforderliches AddOn fehlt: %s" -- `%s`: name of the missing AddOn, e.g. DelveCompanion
 
 -- Delves List
 
@@ -73,3 +73,10 @@ Lockit.UI_SETTING_DASHBOARD_OVERVIEW_NAME = "Tiefen-Übersichtsbereich"
 Lockit.UI_SETTING_DASHBOARD_OVERVIEW_TOOLTIP = "Tiefen-UI: Zeigt einen zusätzlichen Übersichtsbereich an. Er enthält Informationen über vergoldete Schätze, verfügbare großzügige Tiefen und Tiefen-bezogene Verbrauchsgüter."
 
 Lockit.UI_SETTINGS_TRANSLATION_TITLE = "Besonderen Dank für den Beitrag zur Übersetzung:"
+
+Lockit.UI_SETTINGS_LINKS_TITLE = "Links"
+Lockit.UI_SETTINGS_ADDON_LINK_TOOLTIP_CURSEFORGE = "Click to copy the URL to the addon page on |cnNORMAL_FONT_COLOR:CurseForge|r."
+Lockit.UI_SETTINGS_ADDON_LINK_TOOLTIP_WAGO = "Click to copy the URL to the addon page on |cnNORMAL_FONT_COLOR:Wago.io|r."
+Lockit.UI_SETTINGS_ADDON_LINK_TOOLTIP_WOWINT = "Click to copy the URL to the addon page on |cnNORMAL_FONT_COLOR:WoW Interface|r."
+Lockit.UI_SETTINGS_ADDON_LINK_TOOLTIP_GITHUB = "Click to copy the URL to the addon page on |cnNORMAL_FONT_COLOR:GitHub|r.\n\nShare feedback, request new features, or report a bug. It helps making the addon even better!"
+Lockit.UI_SETTINGS_ADDON_LINK_POPUP_TEXT = "|cnGREEN_FONT_COLOR:Ctrl + C|r to copy the |cnNORMAL_FONT_COLOR:%s|r URL." -- `%s`: website name, e.g. CurseForge.

@@ -14,7 +14,7 @@ local Lockit = DelveCompanion.Lockit
 -- Common
 
 Lockit.UI_COMMON_BOUNTIFUL_DELVE_TITLE = "豐碩探究"
-Lockit.UI_COMMON_MISSING_ADDON_TITLE = "缺少必需的插件：%s" -- %s: name of the missing AddOn, e.g. DelveCompanion
+Lockit.UI_COMMON_MISSING_ADDON_TITLE = "缺少必需的插件：%s" -- `%s`: name of the missing AddOn, e.g. DelveCompanion
 
 -- Delves List
 
@@ -37,7 +37,7 @@ Lockit.UI_LOOT_INFO_DESCRIPTION = "完成探究可獲得戰利品："
 
 Lockit.UI_BOUNTIFUL_KEYS_COUNT_CACHES_PREFIX = "寶箱裡獲取的鑰匙數量"
 
--- Compartment
+-- Compartment (these are shown hovering over the addon in the corresponding dropdown menu)
 
 Lockit.UI_COMPARTMENT_DESCRIPTION_LEFT_CLICK = "左鍵點擊開啟訊息視窗。"
 Lockit.UI_COMPARTMENT_DESCRIPTION_RIGHT_CLICK = "右鍵點擊變更選項。"
@@ -73,3 +73,10 @@ Lockit.UI_SETTING_DASHBOARD_OVERVIEW_NAME = "探究總覽部分"
 Lockit.UI_SETTING_DASHBOARD_OVERVIEW_TOOLTIP = "探究介面: 顯示一個額外的總覽部分。它包含有關鍍金儲物箱，可用的豐碩探究及與探究相關的貨幣和物品的訊息。"
 
 Lockit.UI_SETTINGS_TRANSLATION_TITLE = "特別鳴謝翻譯者："
+
+Lockit.UI_SETTINGS_LINKS_TITLE = "Links"
+Lockit.UI_SETTINGS_ADDON_LINK_TOOLTIP_CURSEFORGE = "Click to copy the URL to the addon page on |cnNORMAL_FONT_COLOR:CurseForge|r."
+Lockit.UI_SETTINGS_ADDON_LINK_TOOLTIP_WAGO = "Click to copy the URL to the addon page on |cnNORMAL_FONT_COLOR:Wago.io|r."
+Lockit.UI_SETTINGS_ADDON_LINK_TOOLTIP_WOWINT = "Click to copy the URL to the addon page on |cnNORMAL_FONT_COLOR:WoW Interface|r."
+Lockit.UI_SETTINGS_ADDON_LINK_TOOLTIP_GITHUB = "Click to copy the URL to the addon page on |cnNORMAL_FONT_COLOR:GitHub|r.\n\nShare feedback, request new features, or report a bug. It helps making the addon even better!"
+Lockit.UI_SETTINGS_ADDON_LINK_POPUP_TEXT = "|cnGREEN_FONT_COLOR:Ctrl + C|r to copy the |cnNORMAL_FONT_COLOR:%s|r URL." -- `%s`: website name, e.g. CurseForge.
