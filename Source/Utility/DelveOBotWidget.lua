@@ -14,12 +14,10 @@ function DelveCompanion_DelveOBotWidgetMixin:UpdateState()
         self.SlotFrameCollected:Show()
         self.SlotFrameUncollected:Hide()
         self.Icon:SetDesaturated(false)
-        self.frameType = DelveCompanion.Enums.CodeType.Toy
     else
         self.SlotFrameCollected:Hide()
         self.SlotFrameUncollected:Show()
         self.Icon:SetDesaturated(true)
-        self.frameType = DelveCompanion.Enums.CodeType.Item
 
         self:RegisterEvent("NEW_TOY_ADDED")
     end

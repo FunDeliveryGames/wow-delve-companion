@@ -12,10 +12,12 @@
 
 --- `VerticalLayoutFrame` ([Blizzard template](https://www.townlong-yak.com/framexml/live/Blizzard_SharedXML/LayoutFrame.xml#9)).
 ---@class VerticalLayoutFrame : Frame, LayoutMixin, VerticalLayoutMixin
+---@field spacing number Spacing is the number of pixels between child elements
 
 --- `HorizontalLayoutFrame` ([Blizzard template](https://www.townlong-yak.com/framexml/live/Blizzard_SharedXML/LayoutFrame.xml#85)).
 ---@class HorizontalLayoutFrame : Frame, LayoutMixin, HorizontalLayoutMixin
 ---@field fixedHeight number
+---@field spacing number Spacing is the number of pixels between child elements
 
 --- `MagicButtonTemplate` ([Blizzard template](https://www.townlong-yak.com/framexml/live/Blizzard_SharedXML/SharedUIPanelTemplates.xml#1196)).
 ---@class MagicButton : Button, UIButtonFitToTextBehaviorMixin
