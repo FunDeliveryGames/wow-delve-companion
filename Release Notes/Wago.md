@@ -1,14 +1,10 @@
 **A new update** has arrived!<br>
 ***
-**Version \[0.6.1\]**:
-- **Localization**: Update `Traditional Chinese` and `Russian` translations.<br><br>
-**Version \[0.6\]**:
-- **Delves UI**: Introduce Companion's `Configuration Widget`. It allows to check and adjust Companion's specialization and abilities without opening an extra window.
-    - The widget has 2 layouts: `Horizontal` and `Vertical`. Refer to the addon settings to switch between them.
-    - The widget can also be hidden at all from the settings.
-- **Delves UI**: Add a progress bar to track Companion's current level and progress towards the next one.
-- **Delves UI**: Add adaptive visuals for consumables to convey their emphasis or state (_e.g., [Delver's Bounty](https://www.wowhead.com/item=233071/delvers-bounty) icon will be desaturated if it has been looted and used this week_).
-- Addon settings has been updated offering modifications without reloading the UI.
+**Version \[0.7\]**:
+- **Delves UI**: [Coffer Key Shards](https://www.wowhead.com/item=236096/coffer-key-shard) and [Delver's Bounty](https://www.wowhead.com/item=233071/delvers-bounty) can now be used directly from the Overview section by clicking on the corresponding icons.
+- **QoL**: Introduce a widget to use [Delve-O-Bot 7001](https://www.wowhead.com/item=230850/delve-o-bot-7001) from Delves list and Delves UI.
+- **Localization**: Add `German` translation (thanks to `Dionys` for contribution).
+- Sharing made easy: Added copy-to-clipboard buttons for addon platform links, available under `Options → AddOns tab → Delve Companion`.
 ***
 [Full versions history](https://github.com/FunDeliveryGames/wow-delve-companion/blob/main/CHANGELOG.md)<br>
 [Report an issue](https://github.com/FunDeliveryGames/wow-delve-companion/issues)

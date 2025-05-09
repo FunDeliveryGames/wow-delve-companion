@@ -1,5 +1,11 @@
 # Change Log
 
+## [0.6.1] - 10 May 2025
+- **Delves UI**: [Coffer Key Shards](https://www.wowhead.com/item=236096/coffer-key-shard) and [Delver's Bounty](https://www.wowhead.com/item=233071/delvers-bounty) can now be used directly from the Overview section by clicking on the corresponding icons.
+- **QoL**: Introduce a widget to use [Delve-O-Bot 7001](https://www.wowhead.com/item=230850/delve-o-bot-7001) from Delves list and Delves UI.
+- **Localization**: Add `German` translation (thanks to `Dionys` for contribution).
+- Sharing made easy: Added copy-to-clipboard buttons for addon platform links, available under `Options → AddOns tab → Delve Companion`.
+
 ## [0.6.1] - 05 May 2025
 - **Localization**: Update `Traditional Chinese` and `Russian` translations.
 
@@ -9,7 +15,7 @@
     - The widget can also be hidden at all from the settings.
 - **Delves UI**: Add a progress bar to track Companion's current level and progress towards the next one.
 - **Delves UI**: Add adaptive visuals for consumables to convey their emphasis or state (_e.g., [Delver's Bounty](https://www.wowhead.com/item=233071/delvers-bounty) icon will be desaturated if it has been looted and used this week_).
-- Addon settings has been updated offering modifications without reloading the UI.
+- Addon settings have been updated offering modifications without reloading the UI.
 - Addon architecture has been completely overhauled. Scripts have been covered with the documentation.
 
 ## [0.5.1] - 22 April 2025
