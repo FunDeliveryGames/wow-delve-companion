@@ -1,0 +1,70 @@
+local addonName, AddonTbl = ...
+
+---@type DelveCompanion
+local DelveCompanion = AddonTbl.DelveCompanion
+
+---@type Logger
+local Logger = DelveCompanion.Logger
+
+---@class DelveOBotWidget : DelveOBotWidgetXml
+DelveCompanion_DelveOBotWidgetMixin = {}
+
+function DelveCompanion_DelveOBotWidgetMixin:UpdateState()
+    if PlayerHasToy(self.frameCode) then
+        self.SlotFrameCollected:Show()
+        self.SlotFrameUncollected:Hide()
+        self.Icon:SetDesaturated(false)
+    else
+        self.SlotFrameCollected:Hide()
+        self.SlotFrameUncollected:Show()
+        self.Icon:SetDesaturated(true)
+
+        self:RegisterEvent("NEW_TOY_ADDED")
+    end
+
+    self:RegisterEvent("SPELL_UPDATE_COOLDOWN")
+end
+
+function DelveCompanion_DelveOBotWidgetMixin:OnEvent(event, ...)
+    if event == "NEW_TOY_ADDED" then
+        self:UpdateState()
+    elseif event == "SPELL_UPDATE_COOLDOWN" then
+        self:UpdateCooldown()
+    end
+end
+
+function DelveCompanion_DelveOBotWidgetMixin:OnLoad()
+    -- Logger.Log("DelveOBotWidget OnLoad start")
+
+    DelveCompanion_CustomActionWidgetMixin.OnLoad(self)
+
+    self:SetFrameInfo(DelveCompanion.Enums.CodeType.Toy, DelveCompanion.Config.DELVE_O_BOT_ITEM_CODE)
+    local macroText = string.format("/use item:%s", self.frameCode)
+    self:SetInsecureAction({ type1 = "macro", macrotext = macroText })
+
+    self.SlotFrameCollected:SetSize(self:GetSize())
+    self.SlotFrameUncollected:SetSize(self:GetSize())
+end
+
+function DelveCompanion_DelveOBotWidgetMixin:OnShow()
+    -- Logger.Log("DelveOBotWidget OnShow start")
+
+    DelveCompanion_CustomActionWidgetMixin.OnShow(self)
+    self:UpdateState()
+end
+
+function DelveCompanion_DelveOBotWidgetMixin:OnHide()
+    -- Logger.Log("DelveOBotWidget OnShow start")
+
+    self:UnregisterEvent("NEW_TOY_ADDED")
+    self:UnregisterEvent("SPELL_UPDATE_COOLDOWN")
+    DelveCompanion_CustomActionWidgetMixin.OnHide(self)
+end
+
+--#region Xml annotations
+
+--- `DelvelCompanionDelveOBotWidgetTemplate`
+---@class DelveOBotWidgetXml : CustomActionWidget
+---@field SlotFrameCollected Texture
+---@field SlotFrameUncollected Texture
+--#endregion

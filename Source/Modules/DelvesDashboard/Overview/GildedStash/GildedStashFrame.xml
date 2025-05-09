@@ -8,7 +8,7 @@
             <Layer level="ARTWORK">
                 <Texture name="Divider" atlas="delves-companion-divider"
                     useAtlasSize="false">
-                    <Size x="120" y="5" />
+                    <Size x="130" y="5" />
                     <Anchors>
                         <Anchor point="BOTTOM" y="-3" />
                     </Anchors>
@@ -40,7 +40,7 @@
                 <Size y="70" />
                 <KeyValues>
                     <KeyValue key="expand" value="false" type="boolean" />
-                    <KeyValue key="spacing" value="5" type="number" />
+                    <KeyValue key="spacing" value="7" type="number" />
                 </KeyValues>
                 <Anchors>
                     <Anchor point="TOP" relativeKey="$parent.Name" relativePoint="BOTTOM"

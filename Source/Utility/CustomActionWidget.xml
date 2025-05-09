@@ -6,7 +6,7 @@
     frameType is a value of `Enums.CodeType`
     -->
     <Frame name="DelveCompanionCustomActionWidgetTemplate"
-        mixin="DelveCompanionCustomActionWidgetMixin" virtual="true">
+        mixin="DelveCompanion_CustomActionWidgetMixin" virtual="true">
         <KeyValues>
             <KeyValue key="iconSizeX" value="24" type="number" />
             <KeyValue key="iconSizeY" value="24" type="number" />
@@ -51,6 +51,17 @@
             </Layer>
         </Layers>
         <Frames>
+            <Cooldown parentKey="Cooldown" inherits="CooldownFrameTemplate" hidden="true">
+                <Anchors>
+                    <Anchor point="TOPLEFT" relativeKey="$parent.Icon" />
+                    <Anchor point="BOTTOMRIGHT" relativeKey="$parent.Icon" />
+                </Anchors>
+                <SwipeTexture file="Interface\Cooldown\cooldown2" />
+                <EdgeTexture file="Interface\Cooldown\edge" />
+                <BlingTexture file="Interface\Cooldown\star4">
+                    <Color r="0.3" g="0.6" b="1" a="0.8" />
+                </BlingTexture>
+            </Cooldown>
             <Button parentKey="ClickCatcher" registerForClicks="LeftButtonUp"
                 propagateMouseInput="Motion">
             </Button>

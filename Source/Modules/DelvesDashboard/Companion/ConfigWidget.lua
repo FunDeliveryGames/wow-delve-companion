@@ -75,19 +75,19 @@ end
 --- Display the widget as `Horizontal` layout.
 ---@param self CompanionConfigWidget
 function DelveCompanion_DashboardCompanionConfigWidgetMixin:SetHorizontalLayout()
-    DashboardCompanion.ParentPanel.CompanionModelScene:Show()
-    DashboardCompanion.ParentPanel.isCompanionButtonPanelFrame = true
+    DashboardCompanion.ParentFrame.CompanionModelScene:Show()
+    DashboardCompanion.ParentFrame.isCompanionButtonPanelFrame = true
 
     self:SetSize(130, 40)
     self:ClearAllPoints()
-    self:SetPoint("BOTTOMLEFT", DashboardCompanion.ParentPanel, "BOTTOMLEFT", 24, 23)
+    self:SetPoint("BOTTOMLEFT", DashboardCompanion.ParentFrame, "BOTTOMLEFT", 24, 23)
 
     self.defaultConfigButton:Hide()
 
     if self.customConfigButton then
         self.customConfigButton:Show()
     else
-        local customConfigButton = CreateFrame("Button", "$parent.CustomConfigButton", DashboardCompanion.ParentPanel,
+        local customConfigButton = CreateFrame("Button", "$parent.CustomConfigButton", DashboardCompanion.ParentFrame,
             "DelveCompanionDashboardCompanionConfigButtonTemplate")
         customConfigButton:SetPoint("LEFT", self, "RIGHT", 5, 0)
         customConfigButton:SetScript("OnEnter", function(button)
@@ -131,8 +131,8 @@ end
 --- Display the widget as `Vertical` layout.
 ---@param self CompanionConfigWidget
 function DelveCompanion_DashboardCompanionConfigWidgetMixin:SetVerticalLayout()
-    DashboardCompanion.ParentPanel.CompanionModelScene:Hide()
-    DashboardCompanion.ParentPanel.isCompanionButtonPanelFrame = false
+    DashboardCompanion.ParentFrame.CompanionModelScene:Hide()
+    DashboardCompanion.ParentFrame.isCompanionButtonPanelFrame = false
 
     self:SetSize(170, 145)
     self:ClearAllPoints()
@@ -163,8 +163,8 @@ end
 --- Display the `Default` layout.
 ---@param self CompanionConfigWidget
 function DelveCompanion_DashboardCompanionConfigWidgetMixin:SetDefaultLayout()
-    DashboardCompanion.ParentPanel.CompanionModelScene:Show()
-    DashboardCompanion.ParentPanel.isCompanionButtonPanelFrame = true
+    DashboardCompanion.ParentFrame.CompanionModelScene:Show()
+    DashboardCompanion.ParentFrame.isCompanionButtonPanelFrame = true
 
     self.defaultConfigButton:Show()
     if self.customConfigButton then
@@ -187,7 +187,7 @@ end
 function DelveCompanion_DashboardCompanionConfigWidgetMixin:OnLoad()
     -- Logger.Log("CompanionConfigWidget OnLoad start")
 
-    self.defaultConfigButton = DashboardCompanion.ParentPanel.CompanionConfigButton
+    self.defaultConfigButton = DashboardCompanion.ParentFrame.CompanionConfigButton
 
     InitSlot(self.RoleSlot)
     InitSlot(self.CombatSlot)

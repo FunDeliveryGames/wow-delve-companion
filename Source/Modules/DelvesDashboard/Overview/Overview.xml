@@ -4,7 +4,7 @@
     <Frame name="DelveCompanionDashboardOverviewFrame"
         mixin="DelveCompanion_DashboardOverviewMixin" inherits="DelvesDashboardButtonPanelFrame"
         virtual="true" hidden="false">
-        <Size x="160" y="283" />
+        <Size x="180" y="283" />
         <KeyValues>
             <KeyValue key="layoutIndex" value="3" type="number" />
             <KeyValue type="boolean" key="isCompanionButtonPanelFrame" value="true" />
