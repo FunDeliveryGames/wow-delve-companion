@@ -1,4 +1,4 @@
-if GetLocale() ~= "ruRU" then return end
+if GetLocale() ~= "ruRU" then return end -- Russian
 
 local _, AddonTbl = ...
 
@@ -74,9 +74,9 @@ Lockit.UI_SETTING_DASHBOARD_OVERVIEW_TOOLTIP = "Интерфейс Вылазо�
 
 Lockit.UI_SETTINGS_TRANSLATION_TITLE = "Особая благодарность за помощь с переводом:"
 
-Lockit.UI_SETTINGS_LINKS_TITLE = "Links"
-Lockit.UI_SETTINGS_ADDON_LINK_TOOLTIP_CURSEFORGE = "Click to copy the URL to the addon page on |cnNORMAL_FONT_COLOR:CurseForge|r."
-Lockit.UI_SETTINGS_ADDON_LINK_TOOLTIP_WAGO = "Click to copy the URL to the addon page on |cnNORMAL_FONT_COLOR:Wago.io|r."
-Lockit.UI_SETTINGS_ADDON_LINK_TOOLTIP_WOWINT = "Click to copy the URL to the addon page on |cnNORMAL_FONT_COLOR:WoW Interface|r."
-Lockit.UI_SETTINGS_ADDON_LINK_TOOLTIP_GITHUB = "Click to copy the URL to the addon page on |cnNORMAL_FONT_COLOR:GitHub|r.\n\nShare feedback, request new features, or report a bug. It helps making the addon even better!"
-Lockit.UI_SETTINGS_ADDON_LINK_POPUP_TEXT = "|cnGREEN_FONT_COLOR:Ctrl + C|r to copy the |cnNORMAL_FONT_COLOR:%s|r URL." -- `%s`: website name, e.g. CurseForge.
+Lockit.UI_SETTINGS_LINKS_TITLE = "Ссылки"
+Lockit.UI_SETTINGS_ADDON_LINK_TOOLTIP_CURSEFORGE = "Нажмите, чтобы скопировать ссылку на страницу аддона |cnNORMAL_FONT_COLOR:CurseForge|r."
+Lockit.UI_SETTINGS_ADDON_LINK_TOOLTIP_WAGO = "Нажмите, чтобы скопировать ссылку на страницу аддона |cnNORMAL_FONT_COLOR:Wago.io|r."
+Lockit.UI_SETTINGS_ADDON_LINK_TOOLTIP_WOWINT = "Нажмите, чтобы скопировать ссылку на страницу аддона |cnNORMAL_FONT_COLOR:WoW Interface|r."
+Lockit.UI_SETTINGS_ADDON_LINK_TOOLTIP_GITHUB = "Нажмите, чтобы скопировать ссылку на страницу аддона |cnNORMAL_FONT_COLOR:GitHub|r.\n\nПоделитесь отзывами, предложите новые функции или сообщите об ошибке. Это поможет сделать аддон еще лучше!"
+Lockit.UI_SETTINGS_ADDON_LINK_POPUP_TEXT = "|cnGREEN_FONT_COLOR:Ctrl + C|r, чтобы скопировать |cnNORMAL_FONT_COLOR:%s|r ссылку." -- `%s`: название веб-сайта, например CurseForge.

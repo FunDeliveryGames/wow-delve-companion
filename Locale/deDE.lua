@@ -1,4 +1,4 @@
-if GetLocale() ~= "deDE" then return end
+if GetLocale() ~= "deDE" then return end -- German
 
 local _, AddonTbl = ...
 
@@ -25,7 +25,7 @@ Lockit.UI_DELVE_INSTANCE_BUTTON_TOOLTIP_CURRENT_INSTRUCTION = "<Shift + Linkskli
 -- Delves UI
 
 Lockit.UI_GILDED_STASH_CANNOT_RETRIEVE_DATA = "Besuche die Gebiete von Khaz Algar, um den Fortschritt zu sehen."
-Lockit.UI_GILDED_STASH_BOUNTIFUL_NOTE = "Erscheint nur in großzügigen Tiefen der |cnNORM...NT_COLOR:Stufe 11|r |A:delves-bountiful:16:16|a."
+Lockit.UI_GILDED_STASH_BOUNTIFUL_NOTE = "Erscheint nur in großzügigen Tiefen der |cnNORMAL_FONT_COLOR:Stufe 11|r |A:delves-bountiful:16:16|a."
 Lockit.UI_NO_ACTIVE_BOUNTIFUL = "Keine aktiven Tiefen."
 Lockit.UI_LOOT_INFO_BUTTON_TOOLTIP_INSTRUCTION = "<Klicken, um Beuteinformationen der Tiefen anzuzeigen>"
 
@@ -75,8 +75,8 @@ Lockit.UI_SETTING_DASHBOARD_OVERVIEW_TOOLTIP = "Tiefen-UI: Zeigt einen zusätzli
 Lockit.UI_SETTINGS_TRANSLATION_TITLE = "Besonderen Dank für den Beitrag zur Übersetzung:"
 
 Lockit.UI_SETTINGS_LINKS_TITLE = "Links"
-Lockit.UI_SETTINGS_ADDON_LINK_TOOLTIP_CURSEFORGE = "Click to copy the URL to the addon page on |cnNORMAL_FONT_COLOR:CurseForge|r."
-Lockit.UI_SETTINGS_ADDON_LINK_TOOLTIP_WAGO = "Click to copy the URL to the addon page on |cnNORMAL_FONT_COLOR:Wago.io|r."
-Lockit.UI_SETTINGS_ADDON_LINK_TOOLTIP_WOWINT = "Click to copy the URL to the addon page on |cnNORMAL_FONT_COLOR:WoW Interface|r."
-Lockit.UI_SETTINGS_ADDON_LINK_TOOLTIP_GITHUB = "Click to copy the URL to the addon page on |cnNORMAL_FONT_COLOR:GitHub|r.\n\nShare feedback, request new features, or report a bug. It helps making the addon even better!"
-Lockit.UI_SETTINGS_ADDON_LINK_POPUP_TEXT = "|cnGREEN_FONT_COLOR:Ctrl + C|r to copy the |cnNORMAL_FONT_COLOR:%s|r URL." -- `%s`: website name, e.g. CurseForge.
+Lockit.UI_SETTINGS_ADDON_LINK_TOOLTIP_CURSEFORGE = "Klicke hier um die URL nach |cnNORMAL_FONT_COLOR:CurseForge|r zu kopieren."
+Lockit.UI_SETTINGS_ADDON_LINK_TOOLTIP_WAGO = "Klicke hier um die URL nach |cnNORMAL_FONT_COLOR:Wago.io|r zu kopieren."
+Lockit.UI_SETTINGS_ADDON_LINK_TOOLTIP_WOWINT = "Klicke hier um die URL nach |cnNORMAL_FONT_COLOR:WoW Interface|r zu kopieren."
+Lockit.UI_SETTINGS_ADDON_LINK_TOOLTIP_GITHUB = "Klicke hier um die URL nach |cnNORMAL_FONT_COLOR:GitHub|r zu kopieren.\n\nTeile dein Feedback, fordere neue Funktionen an oder melden Fehler. Es hilft, das Addon noch besser zu machen!"
+Lockit.UI_SETTINGS_ADDON_LINK_POPUP_TEXT = "Drücke |cnGREEN_FONT_COLOR:STRG + C|r um die |cnNORMAL_FONT_COLOR:%s|r URL zu kopieren." -- `%s`: website name, e.g. CurseForge.

@@ -1,4 +1,4 @@
-if GetLocale() ~= "zhCN" then return end
+if GetLocale() ~= "zhCN" then return end -- Simplified Chinese
 
 local _, AddonTbl = ...
 
@@ -39,44 +39,44 @@ Lockit.UI_BOUNTIFUL_KEYS_COUNT_CACHES_PREFIX = "宝箱里获取的钥匙数量"
 
 -- Compartment (these are shown hovering over the addon in the corresponding dropdown menu)
 
-Lockit.UI_COMPARTMENT_DESCRIPTION_LEFT_CLICK = "|cnGREEN_FONT_COLOR:Left Click|r to show information window."
-Lockit.UI_COMPARTMENT_DESCRIPTION_RIGHT_CLICK = "|cnGREEN_FONT_COLOR:Right Click|r to access Addon Options."
+Lockit.UI_COMPARTMENT_DESCRIPTION_LEFT_CLICK = "|cnGREEN_FONT_COLOR:左键|r 显示插件信息界面。"
+Lockit.UI_COMPARTMENT_DESCRIPTION_RIGHT_CLICK = "|cnGREEN_FONT_COLOR:右键|r 显示插件设置界面。"
 
 -- Settings
 
 Lockit.UI_SETTINGS_SECTION_TITLE_ACCOUNT = "账号设置"
-Lockit.UI_SETTING_DELVE_PROGRESS_WIDGETS_NAME = "Delve's Progress Info"
-Lockit.UI_SETTING_DELVE_PROGRESS_WIDGETS_TOOLTIP = "冒险指南-地下堡：显示地下堡成就进度（故事和探索）。"
-Lockit.UI_SETTING_WAYPOINT_TRACKING_TYPE_NAME = "Waypoint Tracking Type"
-Lockit.UI_SETTING_WAYPOINT_TRACKING_TYPE_TOOLTIP_START = "Select which type of Waypoints are used for navigation.\n\nPossible options:"
-Lockit.UI_SETTING_WAYPOINT_TRACKING_TYPE_TOOLTIP_BLIZZARD = "- Blizzard's Map Pin (the default in-game navigation)."
-Lockit.UI_SETTING_WAYPOINT_TRACKING_TYPE_TOOLTIP_TOMTOM = "- TomTom Waypoints."
+Lockit.UI_SETTING_DELVE_PROGRESS_WIDGETS_NAME = "地下堡进度信息"
+Lockit.UI_SETTING_DELVE_PROGRESS_WIDGETS_TOOLTIP = "冒险指南-地下堡：显示各个地下堡的成就进度（故事和探索）。"
+Lockit.UI_SETTING_WAYPOINT_TRACKING_TYPE_NAME = "路径点跟踪风格"
+Lockit.UI_SETTING_WAYPOINT_TRACKING_TYPE_TOOLTIP_START = "选择导航使用的路径点类型。\n\n可用选项："
+Lockit.UI_SETTING_WAYPOINT_TRACKING_TYPE_TOOLTIP_BLIZZARD = "- 暴雪导航点（游戏内置）。"
+Lockit.UI_SETTING_WAYPOINT_TRACKING_TYPE_TOOLTIP_TOMTOM = "- TomTom 路径点。"
 Lockit.UI_SETTING_WAYPOINT_TRACKING_TYPE_TOOLTIP_TOMTOM_UNAVAILABLE_FORMAT = "%s (%s)."
 Lockit.UI_SETTING_WAYPOINT_TRACKING_TYPE_TOOLTIP_FORMAT = "%s\n%s\n%s"
 Lockit.UI_SETTING_WAYPOINT_TRACKING_OPTION_BLIZZARD_NAME = "Blizzard"
-Lockit.UI_SETTING_WAYPOINT_TRACKING_OPTION_BLIZZARD_DESCRIPTION = "Use Blizzard's Map Pin."
+Lockit.UI_SETTING_WAYPOINT_TRACKING_OPTION_BLIZZARD_DESCRIPTION = "暴雪导航点。"
 Lockit.UI_SETTING_WAYPOINT_TRACKING_OPTION_TOMTOM_NAME = "TomTom"
-Lockit.UI_SETTING_WAYPOINT_TRACKING_OPTION_TOMTOM_DESCRIPTION = "Use TomTom Waypoints."
+Lockit.UI_SETTING_WAYPOINT_TRACKING_OPTION_TOMTOM_DESCRIPTION = "TomTom 路径点。"
 
 Lockit.UI_SETTINGS_SECTION_TITLE_CHARACTER = "角色设置"
-Lockit.UI_SETTING_TOOLTIP_EXTENSION_NAME = "Extra Info in Tooltips"
-Lockit.UI_SETTING_TOOLTIP_EXTENSION_TOOLTIP = "Display additional information in tooltips (e.g., the number of |cnITEM_EPIC_COLOR:Restored Coffer Keys|r received this week)."
-Lockit.UI_SETTING_COMPANION_CONFIG_NAME = "Companion Configuration Widget"
-Lockit.UI_SETTING_COMPANION_CONFIG_TOOLTIP = "Delves UI: Enable a widget that displays the Companion's current specialization and abilities.\nIt can be used to modify the configuration directly from the Delves UI.\nNote: layout type doesn't affect the functionality, only visual arrangement."
-Lockit.UI_SETTING_COMPANION_CONFIG_OPTION_HORIZONTAL_NAME = "Horizontal Layout"
-Lockit.UI_SETTING_COMPANION_CONFIG_OPTION_HORIZONTAL_DESCRIPTION = "A compact layout with the buttons arranged horizontally. The Companion model is shown."
-Lockit.UI_SETTING_COMPANION_CONFIG_OPTION_VERTICAL_NAME = "Vertical Layout"
-Lockit.UI_SETTING_COMPANION_CONFIG_OPTION_VERTICAL_DESCRIPTION = "A more detailed layout with the buttons arranged vertically. The Companion model is hidden."
-Lockit.UI_SETTING_GV_DETAILS_NAME = "Custom Great Vault"
-Lockit.UI_SETTING_GV_DETAILS_TOOLTIP = "Delves UI: Display Great Vault rewards and progress (relevant for Delves) directly in the Delves UI."
-Lockit.UI_SETTING_DASHBOARD_OVERVIEW_NAME = "Delves Overview Section"
-Lockit.UI_SETTING_DASHBOARD_OVERVIEW_TOOLTIP = "Delves UI: Display an additional Overview section. It contains information about Gilded Stash, available Bountiful Delves, and Delve-related consumables."
+Lockit.UI_SETTING_TOOLTIP_EXTENSION_NAME = "额外提示信息"
+Lockit.UI_SETTING_TOOLTIP_EXTENSION_TOOLTIP = "在鼠标提示中显示额外信息（例如，本周宝箱里获取的 |cnITEM_EPIC_COLOR:修复的宝匣钥匙|r 数量）。"
+Lockit.UI_SETTING_COMPANION_CONFIG_NAME = "地下堡伙伴配置控件"
+Lockit.UI_SETTING_COMPANION_CONFIG_TOOLTIP = "启用显示地下堡伙伴当前专精和珍玩的控件。\n可直接在地下堡面板修改地下堡伙伴的专精和珍玩。\n注意：布局类型不影响功能实现，仅涉及视觉排布方式。"
+Lockit.UI_SETTING_COMPANION_CONFIG_OPTION_HORIZONTAL_NAME = "水平布局"
+Lockit.UI_SETTING_COMPANION_CONFIG_OPTION_HORIZONTAL_DESCRIPTION = "采用水平排列按钮的精简布局。地下堡伙伴模型可见。"
+Lockit.UI_SETTING_COMPANION_CONFIG_OPTION_VERTICAL_NAME = "垂直布局"
+Lockit.UI_SETTING_COMPANION_CONFIG_OPTION_VERTICAL_DESCRIPTION = "采用垂直排列按钮的详细布局。地下堡伙伴模型隐藏。"
+Lockit.UI_SETTING_GV_DETAILS_NAME = "宏伟宝库版块"
+Lockit.UI_SETTING_GV_DETAILS_TOOLTIP = "直接在地下堡面板显示宏伟宝库（地下堡部分）的奖励和进度。"
+Lockit.UI_SETTING_DASHBOARD_OVERVIEW_NAME = "地下堡概要版块"
+Lockit.UI_SETTING_DASHBOARD_OVERVIEW_TOOLTIP = "显示地下堡附加的概要信息，它包含鎏金藏匿物、丰裕地下堡和地下堡相关消耗品的内容。"
 
 Lockit.UI_SETTINGS_TRANSLATION_TITLE = "特别鸣谢翻译贡献者："
 
-Lockit.UI_SETTINGS_LINKS_TITLE = "Links"
-Lockit.UI_SETTINGS_ADDON_LINK_TOOLTIP_CURSEFORGE = "Click to copy the URL to the addon page on |cnNORMAL_FONT_COLOR:CurseForge|r."
-Lockit.UI_SETTINGS_ADDON_LINK_TOOLTIP_WAGO = "Click to copy the URL to the addon page on |cnNORMAL_FONT_COLOR:Wago.io|r."
-Lockit.UI_SETTINGS_ADDON_LINK_TOOLTIP_WOWINT = "Click to copy the URL to the addon page on |cnNORMAL_FONT_COLOR:WoW Interface|r."
-Lockit.UI_SETTINGS_ADDON_LINK_TOOLTIP_GITHUB = "Click to copy the URL to the addon page on |cnNORMAL_FONT_COLOR:GitHub|r.\n\nShare feedback, request new features, or report a bug. It helps making the addon even better!"
-Lockit.UI_SETTINGS_ADDON_LINK_POPUP_TEXT = "|cnGREEN_FONT_COLOR:Ctrl + C|r to copy the |cnNORMAL_FONT_COLOR:%s|r URL." -- `%s`: website name, e.g. CurseForge.
+Lockit.UI_SETTINGS_LINKS_TITLE = "链接"
+Lockit.UI_SETTINGS_ADDON_LINK_TOOLTIP_CURSEFORGE = "点击复制 |cnNORMAL_FONT_COLOR:CurseForge|r 插件页面网址。"
+Lockit.UI_SETTINGS_ADDON_LINK_TOOLTIP_WAGO = "点击复制 |cnNORMAL_FONT_COLOR:Wago.io|r 插件页面网址。"
+Lockit.UI_SETTINGS_ADDON_LINK_TOOLTIP_WOWINT = "点击复制 |cnNORMAL_FONT_COLOR:WoW Interface|r 插件页面网址。"
+Lockit.UI_SETTINGS_ADDON_LINK_TOOLTIP_GITHUB = "点击复制 |cnNORMAL_FONT_COLOR:GitHub|r 插件页面网址。\n\n提交反馈 | 申请新功能 | 报告漏洞（您的建议将驱动插件进化）"
+Lockit.UI_SETTINGS_ADDON_LINK_POPUP_TEXT = "|cnGREEN_FONT_COLOR:Ctrl + C|r 复制 |cnNORMAL_FONT_COLOR:%s|r 网址。" -- `%s`: website name, e.g. CurseForge.

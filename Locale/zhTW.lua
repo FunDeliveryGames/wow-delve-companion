@@ -1,4 +1,4 @@
-if GetLocale() ~= "zhTW" then return end
+if GetLocale() ~= "zhTW" then return end  -- Traditional Chinese
 
 local _, AddonTbl = ...
 

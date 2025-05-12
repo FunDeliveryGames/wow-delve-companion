@@ -33,10 +33,9 @@ local function CreateDelvesTabButton()
     ---@type Button
     local button = CreateFrame("Button", "$parent.DelvesTab", EncounterJournal,
         "BottomEncounterTierTabTemplate")
-    button:SetPoint("LEFT", EncounterJournal.LootJournalTab, "RIGHT", -15, 0)
+    button:SetParentKey("DelvesTab")
     button:SetText(_G["DELVES_LABEL"])
     button:SetID(EJ_DELVES_TAB_BUTTON_ID)
-    button:SetParentKey("delvesTab")
 
     PanelTemplates_SetNumTabs(EncounterJournal, EJ_TABS_COUNT)
 
