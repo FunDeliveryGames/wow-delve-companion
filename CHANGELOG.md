@@ -1,5 +1,8 @@
 # Change Log
 
+## [0.7.1] - 12 May 2025
+- **Localization**: Update addon translations (`Russian`, `German`, and `Simplified Chinese`).
+
 ## [0.7] - 10 May 2025
 - **Delves UI**: [Coffer Key Shards](https://www.wowhead.com/item=236096/coffer-key-shard) and [Delver's Bounty](https://www.wowhead.com/item=233071/delvers-bounty) can now be used directly from the Overview section by clicking on the corresponding icons.
 - **QoL**: Introduce a widget to use [Delve-O-Bot 7001](https://www.wowhead.com/item=230850/delve-o-bot-7001) from Delves list and Delves UI.
