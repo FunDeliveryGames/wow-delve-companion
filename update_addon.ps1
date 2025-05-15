@@ -8,19 +8,30 @@ The script copies all required files according to YAML configuration file.
 .PARAMETER yamlPath
 Path to YAML configuration file.
 
-.PARAMETER addonsLocation
-Path to WoW AddOns folder.
+.PARAMETER addonsFolderRetail
+Path to WoW Retail AddOns folder.
+
+.PARAMETER addonsFolderPtr
+Path to WoW PTR AddOns folder.
 
 .EXAMPLE
-.\pack_addon_mainline.ps1 -yamlPath ".\\.pkgmeta" -addonsLocation "C:\\Program Files\\World of Warcraft\\_retail_\\Interface\\AddOns"
+.\pack_addon_mainline.ps1
+-yamlPath ".\\.pkgmeta"
+-addonsFolderRetail "C:\\Program Files\\World of Warcraft\\_retail_\\Interface\\AddOns"
+-addonsFolderPtr "C:\\Program Files\\World of Warcraft\\_ptr_\\Interface\\AddOns"
 #>
 param (
     [string]$yamlPath,
-    [string]$addonsLocation
+    [string]$addonsFolderRetail,
+    [string]$addonsFolderPtr
 )
 
-if ([string]::IsNullOrEmpty($addonsLocation)) {
+if ([string]::IsNullOrEmpty($addonsFolderRetail)) {
     Write-Error "Addons folder is not provided. Check script args."
+    exit 1
+}
+if ([string]::IsNullOrEmpty($addonsFolderPtr)) {
+    Write-Error "Addons PTR folder is not provided. Check script args."
     exit 1
 }
 if ([string]::IsNullOrEmpty($yamlPath)) {
@@ -67,36 +78,39 @@ $ignoreFiles += $yamlFileName
 
 # ======= DETERMINE DIRECTORIES =======
 $sourceDir = Get-Location
-$targetDir = Join-Path $addonsLocation $packageAs
+$targetDirs = @()
+$targetDirs += Join-Path $addonsFolderRetail $packageAs
+$targetDirs += Join-Path $addonsFolderPtr $packageAs
 
-if (Test-Path $targetDir) {
-    Write-Output "Target folder '$targetDir' exists. Deleting..."
-    Remove-Item $targetDir -Recurse -Force
-}
-
-Write-Output "Creating target folder '$targetDir'."
-New-Item -ItemType Directory -Path $targetDir | Out-Null
-
-# ======= COPY CONTENT WITH ROBOCOPY =======
-# Build robocopy exclusion parameters:
-#   /E  -> Copy all subdirectories (including empty ones)
-#   /XD -> Exclude directories (separated by space)
-#   /XF -> Exclude files (separated by space)
-$sourcePath = $sourceDir.Path
-$destinationPath = $targetDir
-
-$xdParams = ""
-if ($ignoreDirs.Count -gt 0) {
-    $quotedDirs = $ignoreDirs | ForEach-Object {
-        if ($_ -match '\s') { '"{0}"' -f $_ } else { $_ }
+foreach ($targetPath in $targetDirs) {
+    if (Test-Path $targetPath) {
+        Write-Output "Target folder '$targetPath' exists. Deleting..."
+        Remove-Item $targetPath -Recurse -Force
     }
-    $xdParams = "/XD " + ($quotedDirs -join " ")
-}
 
-$xfParams = ""
-if ($ignoreFiles.Count -gt 0) {
-    $xfParams = "/XF " + ($ignoreFiles -join " ")
-}
+    Write-Output "Creating target folder '$targetPath'."
+    New-Item -ItemType Directory -Path $targetPath | Out-Null
 
-$robocopyCmd = "robocopy `"$sourcePath`" `"$destinationPath`" /E $xdParams $xfParams"
-Invoke-Expression $robocopyCmd
+    # ======= COPY CONTENT WITH ROBOCOPY =======
+    # Build robocopy exclusion parameters:
+    #   /E  -> Copy all subdirectories (including empty ones)
+    #   /XD -> Exclude directories (separated by space)
+    #   /XF -> Exclude files (separated by space)
+    $sourcePath = $sourceDir.Path
+
+    $xdParams = ""
+    if ($ignoreDirs.Count -gt 0) {
+        $quotedDirs = $ignoreDirs | ForEach-Object {
+            if ($_ -match '\s') { '"{0}"' -f $_ } else { $_ }
+        }
+        $xdParams = "/XD " + ($quotedDirs -join " ")
+    }
+
+    $xfParams = ""
+    if ($ignoreFiles.Count -gt 0) {
+        $xfParams = "/XF " + ($ignoreFiles -join " ")
+    }
+
+    $robocopyCmd = "robocopy `"$sourcePath`" `"$targetPath`" /E $xdParams $xfParams"
+    Invoke-Expression $robocopyCmd
+}

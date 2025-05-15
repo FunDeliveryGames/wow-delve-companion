@@ -31,6 +31,7 @@ function DelveCompanion:InitDelvesData()
         ---@field parentMapName string Localized name of the map this Delve located in.
         ---@field isTracking boolean Whether player is tracking this Delve.
         ---@field isBountiful boolean Whether this Delve is bountiful now.
+        ---@field isOvercharged boolean Whether this Delve is overcharged now.
         local data = {
             config = delveConfig,
             poiID = nil,
@@ -38,7 +39,8 @@ function DelveCompanion:InitDelvesData()
             delveName = delveMap.name,
             parentMapName = C_Map.GetMapInfo(delveMap.parentMapID).name,
             isTracking = false,
-            isBountiful = false
+            isBountiful = false,
+            isOvercharged = false
         }
 
         table.insert(delvesData, data)
@@ -64,9 +66,30 @@ function DelveCompanion:UpdateDelvesData()
             delveData.poiID = poiIDs.regular
             delveData.isBountiful = false
         end
+
+        ---@type number
+        local uiVer = (select(4, GetBuildInfo()))
+        delveData.isOvercharged = uiVer >= 110107
+            and delveData.isBountiful
+            and self:CanRetrieveDelveWidgetIDInfo()
+            and delveConfig.overchargedUiWidgetID
+            and C_UIWidgetManager.GetSpellDisplayVisualizationInfo(delveConfig.overchargedUiWidgetID) ~= nil
     end
 
     -- Logger.Log("Finished updating Delves data")
+end
+
+--- Check whether information about `Gilded Stash` can be retrieved.
+---@param self DelveCompanion
+---@return boolean|nil
+function DelveCompanion:CanRetrieveDelveWidgetIDInfo()
+    local currentMap = C_Map.GetBestMapForUnit("player")
+    if not (currentMap and MapUtil.IsMapTypeZone(currentMap)) then
+        return false
+    end
+
+    local continent = DelveCompanion:GetContinentMapIDForMap(currentMap)
+    return continent and continent == self.Config.KHAZ_ALGAR_MAP_ID
 end
 
 --- Cache number of [Restored Coffer Keys](https://www.wowhead.com/currency=3028/restored-coffer-key) player has got from Caches this week.
@@ -110,16 +133,16 @@ function DelveCompanion:InitAccountSave()
 
     if not DelveCompanionAccountData then
         ---@type DelveCompanionAccountData
-        DelveCompanionAccountData = CopyTable(DelveCompanion.Config.DEFAULT_ACCOUNT_DATA)
+        DelveCompanionAccountData = CopyTable(self.Config.DEFAULT_ACCOUNT_DATA)
     else
-        for key, value in pairs(DelveCompanion.Config.DEFAULT_ACCOUNT_DATA) do
+        for key, value in pairs(self.Config.DEFAULT_ACCOUNT_DATA) do
             if DelveCompanionAccountData[key] == nil then
                 DelveCompanionAccountData[key] = value
             end
         end
 
-        if not DelveCompanion.Variables.tomTomAvailable then
-            DelveCompanionAccountData.trackingType = DelveCompanion.Enums.WaypointTrackingType.superTrack
+        if not self.Variables.tomTomAvailable then
+            DelveCompanionAccountData.trackingType = self.Enums.WaypointTrackingType.superTrack
         end
     end
 end
@@ -131,9 +154,9 @@ function DelveCompanion:InitCharacterSave()
 
     if not DelveCompanionCharacterData then
         ---@type DelveCompanionCharacterData
-        DelveCompanionCharacterData = CopyTable(DelveCompanion.Config.DEFAULT_CHARACTER_DATA)
+        DelveCompanionCharacterData = CopyTable(self.Config.DEFAULT_CHARACTER_DATA)
     else
-        for key, value in pairs(DelveCompanion.Config.DEFAULT_CHARACTER_DATA) do
+        for key, value in pairs(self.Config.DEFAULT_CHARACTER_DATA) do
             if DelveCompanionCharacterData[key] == nil then
                 DelveCompanionCharacterData[key] = value
             end

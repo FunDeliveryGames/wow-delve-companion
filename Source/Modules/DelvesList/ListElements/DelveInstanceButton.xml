@@ -41,6 +41,14 @@
                             relativePoint="BOTTOMLEFT" x="3" y="2" />
                     </Anchors>
                 </Texture>
+                <Texture parentKey="OverchargedIcon"
+                    file="interface/icons/achievement_legionpvp2tier5" hidden="true">
+                    <Size x="36" y="36" />
+                    <Anchors>
+                        <Anchor point="LEFT" relativeKey="$parent.BountifulIcon"
+                            relativePoint="RIGHT" x="2" y="0" />
+                    </Anchors>
+                </Texture>
                 <Texture parentKey="WaypointIcon"
                     atlas="Waypoint-MapPin-Minimap-Tracked" hidden="true">
                     <Size x="32" y="32" />

@@ -31,24 +31,11 @@ function DelveCompanion_OverviewGildedStashFrameMixin:PrepareContainerTooltip()
     end)
 end
 
---- Check whether information about `Gilded Stash` can be retrieved.
----@param self GildedStashFrame
----@return boolean
-function DelveCompanion_OverviewGildedStashFrameMixin:CanRetrieveGildedStashInfo()
-    local currentMap = C_Map.GetBestMapForUnit("player")
-    if not (currentMap and MapUtil.IsMapTypeZone(currentMap)) then
-        return false
-    end
-
-    local continent = DelveCompanion:GetContinentMapIDForMap(currentMap)
-    return continent and continent == Config.KHAZ_ALGAR_MAP_ID
-end
-
 --- Attempt to get information about `Gilded Stash` using Delves' `UiWidgetID`.
 ---@param self GildedStashFrame
 ---@return SpellDisplayVisualizationInfo|nil # Returns the 1st found widget info. Or `nil` if any found.
 function DelveCompanion_OverviewGildedStashFrameMixin:TryGetStashInfo()
-    if not self:CanRetrieveGildedStashInfo() then
+    if not DelveCompanion:CanRetrieveDelveWidgetIDInfo() then
         return nil
     end
 

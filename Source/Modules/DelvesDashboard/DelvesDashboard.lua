@@ -12,6 +12,11 @@ local Lockit = DelveCompanion.Lockit
 
 --#region Constants
 
+---@type string
+local LOOT_INFO_BUTTON_PARENT_KEY = "ShowLootInfoButton"
+---@type string
+local TITAN_CONSOLE_BUTTON_PARENT_KEY = "ShowTitanConsoleButton"
+
 ---@type number
 local DASHBOARD_PANELS_DEFAULT_SPACING = 5
 ---@type number
@@ -27,20 +32,42 @@ local DASHBOARD_PANELS_CUSTOM_SPACING = -20
 local DelvesDashboard = {}
 DelveCompanion.DelvesDashboard = DelvesDashboard
 
+--- Add a button to open Overcharged Titan Console.
+---@param parent any
+local function CreateTitanConsoleButton(parent)
+    local button = CreateFrame("Button",
+        "$parent." .. TITAN_CONSOLE_BUTTON_PARENT_KEY,
+        parent,
+        "DelveCompanionLootInfoButtonTemplate")
+    button:SetParentKey(TITAN_CONSOLE_BUTTON_PARENT_KEY)
+
+    button:SetTextToFit("Titan Console")
+
+    button:ClearAllPoints()
+    button:SetPoint("RIGHT", parent[LOOT_INFO_BUTTON_PARENT_KEY], "LEFT", -5)
+
+    button:HookScript("OnClick", function()
+        GenericTraitUI_LoadUI()
+        GenericTraitFrame:SetSystemID(22)
+        GenericTraitFrame:SetTreeID(1061)
+        ToggleFrame(GenericTraitFrame)
+    end)
+end
+
 --- Add a button to open Delves' Loot info.
 ---@param parent any
 local function CreateLootInfoButton(parent)
     local button = CreateFrame("Button",
-        "$parent.ShowLootInfoButton",
+        "$parent." .. LOOT_INFO_BUTTON_PARENT_KEY,
         parent,
         "DelveCompanionLootInfoButtonTemplate")
+    button:SetParentKey(LOOT_INFO_BUTTON_PARENT_KEY)
 
-    button:SetText(_G["LOOT"])
-    button:FitToText()
+    button:SetTextToFit(_G["LOOT"])
 
     button:HookScript("OnClick", function()
         GameTooltip:Hide()
-        DelvesDashboard.LootInfo:Show()
+        ToggleFrame(DelvesDashboard.LootInfo)
     end)
 
     button:HookScript("OnEnter", function()
@@ -103,6 +130,13 @@ local function InitDelvesDashboard()
         DelvesDashboardFrame:HookScript("OnHide", function()
             DelvesDashboard.LootInfo:Hide()
         end)
+    end
+
+    do
+        local uiVer = (select(4, GetBuildInfo()))
+        if uiVer >= 110107 then
+            CreateTitanConsoleButton(DelvesDashboardFrame)
+        end
     end
 
     do

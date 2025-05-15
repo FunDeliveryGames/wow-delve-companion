@@ -58,7 +58,7 @@ Lockit.UI_LOOT_INFO_BUTTON_TOOLTIP_INSTRUCTION = "<Click to display Delves' Loot
 
 Lockit.UI_LOOT_INFO_DESCRIPTION = "Complete a delve to get:"
 
--- Keys Info
+-- Tooltips Extension
 
 Lockit.UI_BOUNTIFUL_KEYS_COUNT_CACHES_PREFIX = "Keys from caches"
 

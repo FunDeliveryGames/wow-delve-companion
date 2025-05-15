@@ -19,7 +19,7 @@
 ---@field fixedHeight number
 ---@field spacing number Spacing is the number of pixels between child elements
 
---- `MagicButtonTemplate` ([Blizzard template](https://www.townlong-yak.com/framexml/live/Blizzard_SharedXML/SharedUIPanelTemplates.xml#1196)).
+--- `MagicButtonTemplate` ([Blizzard template](https://www.townlong-yak.com/framexml/live/Blizzard_SharedXML/SharedUIPanelTemplates.xml#909)).
 ---@class MagicButton : Button, UIButtonFitToTextBehaviorMixin
 ---@field fitTextCanWidthDecrease boolean Whether the button width can decrease depending on the text width.
 ---@field fitTextWidthPadding number Extra padding around the text.

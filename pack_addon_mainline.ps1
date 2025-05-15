@@ -8,22 +8,25 @@ The script copies all files of the addon from WoW AddOns folder and put them int
 .PARAMETER yamlPath
 Path to YAML configuration file.
 
-.PARAMETER addonsLocation
+.PARAMETER addonsFolderRetail
 Path to WoW AddOns folder.
 
 .PARAMETER 7zipPath
 Path to 7zip.exe.
 
 .EXAMPLE
-.\pack_addon_mainline.ps1 -yamlPath ".\\.pkgmeta" -addonsLocation "C:\\Program Files\\World of Warcraft\\_retail_\\Interface\\AddOns" -7zipPath "C:\\Program Files\\7-Zip\\7z.exe"
+.\pack_addon_mainline.ps1
+-yamlPath ".\\.pkgmeta"
+-addonsFolderRetail "C:\\Program Files\\World of Warcraft\\_retail_\\Interface\\AddOns"
+-7zipPath "C:\\Program Files\\7-Zip\\7z.exe"
 #>
 param (
     [string]$yamlPath,
-    [string]$addonsLocation,
+    [string]$addonsFolderRetail,
     [string]$7zipPath
 )
 
-if ([string]::IsNullOrEmpty($addonsLocation)) {
+if ([string]::IsNullOrEmpty($addonsFolderRetail)) {
     Write-Error "Addons folder is not provided. Check script args."
     exit 1
 }
@@ -95,7 +98,7 @@ if ([string]::IsNullOrEmpty($packageAs)) {
 }
 
 # ======= DETERMINE DIRECTORIES =======
-$sourceDir = Join-Path $addonsLocation $packageAs
+$sourceDir = Join-Path $addonsFolderRetail $packageAs
 $targetDir = ".\Releases"
 if (-Not (Test-Path $targetDir)) {
     Write-Output "Creating release directory at '$targetDir'."
