@@ -35,4 +35,22 @@ local function OnAddonLoaded()
 end
 
 EventRegistry:RegisterFrameEventAndCallback("PLAYER_LOGIN", OnPlayerLogin)
+-- EventRegistry:RegisterFrameEventAndCallback("GOSSIP_SHOW", function(payload, arg1, arg2)
+--     if payload then
+--         Logger.Log("Payload: %s", payload)
+--     end
+--     if arg1 then
+--         Logger.Log("Gossip type: %s", arg1)
+--     end
+--     if arg2 then
+--         Logger.Log("Gossip type: %s", arg2)
+--     end
+
+--     if arg1 == "delves-difficulty-picker" then
+--         -- local options = DelvesDifficultyPickerFrame:GetOptions()
+--         Logger.Log("=================")
+--         Logger.Log("Modifiers info:")
+--         Logger.LogTable(DelvesDifficultyPickerFrame.DelveModifiersWidgetContainer.widgetFrames)
+--     end
+-- end)
 EventUtil.ContinueOnAddOnLoaded(addonName, OnAddonLoaded)
