@@ -30,8 +30,9 @@ function DelveCompanion:InitDelvesData()
         ---@field delveName string Localized name of the Delve.
         ---@field parentMapName string Localized name of the map this Delve located in.
         ---@field isTracking boolean Whether player is tracking this Delve.
+        -- ---@field wasBountiful boolean Whether this Delve was bountiful that day.
         ---@field isBountiful boolean Whether this Delve is bountiful now.
-        ---@field isOvercharged boolean Whether this Delve is overcharged now.
+        ---@field isOvercharged boolean Whether this Delve is overcharged today.
         local data = {
             config = delveConfig,
             poiID = nil,
@@ -39,6 +40,7 @@ function DelveCompanion:InitDelvesData()
             delveName = delveMap.name,
             parentMapName = C_Map.GetMapInfo(delveMap.parentMapID).name,
             isTracking = false,
+            -- wasBountiful = false,
             isBountiful = false,
             isOvercharged = false
         }
@@ -67,6 +69,9 @@ function DelveCompanion:UpdateDelvesData()
             delveData.isBountiful = false
         end
 
+        --[[
+        Use C_DateAndTime.GetSecondsUntilDailyReset or GetQuestResetTime to save bountiful state and use it to check "Overcharged"
+        ]]
         ---@type number
         local uiVer = (select(4, GetBuildInfo()))
         delveData.isOvercharged = uiVer >= 110107
@@ -74,6 +79,10 @@ function DelveCompanion:UpdateDelvesData()
             and self:CanRetrieveDelveWidgetIDInfo()
             and delveConfig.overchargedUiWidgetID
             and C_UIWidgetManager.GetSpellDisplayVisualizationInfo(delveConfig.overchargedUiWidgetID) ~= nil
+
+        if delveConfig.overchargedUiWidgetID and C_UIWidgetManager.GetSpellDisplayVisualizationInfo(delveConfig.overchargedUiWidgetID) == nil then
+            DelveCompanion.Logger.Log("Canot retrieve info for widget: %d", delveConfig.overchargedUiWidgetID)
+        end
     end
 
     -- Logger.Log("Finished updating Delves data")
@@ -81,7 +90,7 @@ end
 
 --- Check whether information about `Gilded Stash` can be retrieved.
 ---@param self DelveCompanion
----@return boolean|nil
+---@return boolean
 function DelveCompanion:CanRetrieveDelveWidgetIDInfo()
     local currentMap = C_Map.GetBestMapForUnit("player")
     if not (currentMap and MapUtil.IsMapTypeZone(currentMap)) then
@@ -89,7 +98,7 @@ function DelveCompanion:CanRetrieveDelveWidgetIDInfo()
     end
 
     local continent = DelveCompanion:GetContinentMapIDForMap(currentMap)
-    return continent and continent == self.Config.KHAZ_ALGAR_MAP_ID
+    return continent ~= nil and continent == self.Config.KHAZ_ALGAR_MAP_ID
 end
 
 --- Cache number of [Restored Coffer Keys](https://www.wowhead.com/currency=3028/restored-coffer-key) player has got from Caches this week.

@@ -229,6 +229,5 @@ end
 ---@field KeysWidget CustomActionWidget
 ---@field DelveOBotWidget DelveOBotWidget
 ---@field AffixWidget CustomActionWidget
----@field AffixWidget.Ring Texture
 ---@field DelvesListScroll DelvesListScroll
 --#endregion

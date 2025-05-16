@@ -123,6 +123,9 @@ Config.SHARDS_FOR_KEY = 100
 
 ---@type integer Spell ID of [Nemesis Strongbox](https://www.wowhead.com/spell=472952/nemesis-strongbox).
 Config.NEMESIS_AFFIX_SPELL_CODE = 472952
+
+---@type integer Spell ID of [Overcharged](https://www.wowhead.com/ptr/spell=1216544/overcharged).
+Config.OVERCHARGED_SPELL_CODE = 1216544
 --#endregion
 
 --#region Delves data
