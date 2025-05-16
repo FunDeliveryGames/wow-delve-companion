@@ -16,7 +16,7 @@ function DelveCompanion_DelveInstanceButtonMixin:Update()
     self.BountifulIcon:SetShown(self.data.isBountiful)
     self.OverchargedIcon:SetShown(self.data.isOvercharged)
 
-    if DelveCompanionAccountData.trackingType == DelveCompanion.Enums.WaypointTrackingType.tomtom then
+    if DelveCompanionAccountData.trackingType == DelveCompanion.Definitions.WaypointTrackingType.tomtom then
         self:CheckTomTomWaypoint()
     else
         self:OnSuperTrackChanged()

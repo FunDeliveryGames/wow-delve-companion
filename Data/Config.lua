@@ -3,7 +3,7 @@ local addonName, AddonTbl = ...
 ---@type DelveCompanion
 local DelveCompanion = AddonTbl.DelveCompanion
 
---- Table containing all addon external parameters, such as game entity IDs, Delves parameters, limits, etc.
+--- Table containing external parameters used by the addon, such as game entity IDs, Delves parameters, limits, etc.
 ---@class Config
 local Config = {}
 DelveCompanion.Config = Config
@@ -16,7 +16,7 @@ DelveCompanion.Config = Config
 ---@field trackingType WaypointTrackingType
 Config.DEFAULT_ACCOUNT_DATA = {
     delveProgressWidgetsEnabled = true,
-    trackingType = DelveCompanion.Enums.WaypointTrackingType.superTrack
+    trackingType = DelveCompanion.Definitions.WaypointTrackingType.superTrack
 }
 
 --- Character Save Data

@@ -42,7 +42,7 @@ function DelveCompanion_LootInfoFrameMixin:OnLoad()
     self.BountifulGear.Text:SetText(bountifulText)
     self.VaultGear.Text:SetText(vaultText)
 
-    if C_AddOns.IsAddOnLoaded(DelveCompanion.Enums.DependencyAddonName.rio) then
+    if C_AddOns.IsAddOnLoaded(DelveCompanion.Definitions.DependencyAddonName.rio) then
         -- Display LootInfoFrame above the RIO Profile's Tooltip
         self:SetFrameStrata("HIGH")
     end

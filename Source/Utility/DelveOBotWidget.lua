@@ -41,7 +41,7 @@ function DelveCompanion_DelveOBotWidgetMixin:OnLoad()
 
     DelveCompanion_CustomActionWidgetMixin.OnLoad(self)
 
-    self:SetFrameInfo(DelveCompanion.Enums.CodeType.Toy, DelveCompanion.Config.DELVE_O_BOT_ITEM_CODE)
+    self:SetFrameInfo(DelveCompanion.Definitions.CodeType.Toy, DelveCompanion.Config.DELVE_O_BOT_ITEM_CODE)
     local macroText = string.format("/use item:%s", self.frameCode)
     self:SetInsecureAction({ type1 = "macro", macrotext = macroText })
 

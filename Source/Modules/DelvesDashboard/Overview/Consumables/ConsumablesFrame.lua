@@ -68,20 +68,20 @@ end
 function DelveCompanion_OverviewConsumablesFrameMixin:OnLoad()
     -- Logger.Log("OverviewConsumablesFrame OnLoad start")
 
-    local enums = DelveCompanion.Enums
-    self.Keys:SetFrameInfo(enums.CodeType.Currency, Config.BOUNTIFUL_KEY_CURRENCY_CODE)
+    local defs = DelveCompanion.Definitions
+    self.Keys:SetFrameInfo(defs.CodeType.Currency, Config.BOUNTIFUL_KEY_CURRENCY_CODE)
     do
-        self.Shards:SetFrameInfo(enums.CodeType.Item, Config.KEY_SHARD_ITEM_CODE)
+        self.Shards:SetFrameInfo(defs.CodeType.Item, Config.KEY_SHARD_ITEM_CODE)
         local macroText = string.format("/use item:%s", Config.KEY_SHARD_ITEM_CODE)
         self.Shards:SetInsecureAction({ type1 = "macro", macrotext = macroText })
     end
 
     do
-        self.BountyMap:SetFrameInfo(enums.CodeType.Item, Config.BOUNTY_MAP_ITEM_CODE)
+        self.BountyMap:SetFrameInfo(defs.CodeType.Item, Config.BOUNTY_MAP_ITEM_CODE)
         local macroText = string.format("/use item:%s", Config.BOUNTY_MAP_ITEM_CODE)
         self.BountyMap:SetInsecureAction({ type1 = "macro", macrotext = macroText })
     end
-    self.Echoes:SetFrameInfo(enums.CodeType.Item, Config.ECHO_ITEM_CODE)
+    self.Echoes:SetFrameInfo(defs.CodeType.Item, Config.ECHO_ITEM_CODE)
 end
 
 ---@param self OverviewConsumablesFrame

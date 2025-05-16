@@ -9,8 +9,8 @@ local Logger = DelveCompanion.Logger
 local Lockit = DelveCompanion.Lockit
 ---@type Config
 local Config = DelveCompanion.Config
----@type Enums
-local Enums = DelveCompanion.Enums
+---@type Definitions
+local Definitions = DelveCompanion.Definitions
 
 --#region Constants
 
@@ -58,9 +58,9 @@ function DelveCompanionCompartmentOnClick(addonName, buttonName)
 
     local id = ""
 
-    if buttonName == Enums.ButtonAlias.leftClick then
+    if buttonName == Definitions.ButtonAlias.leftClick then
         id = AddonSettings.mainCategory:GetID()
-    elseif buttonName == Enums.ButtonAlias.rightClick then
+    elseif buttonName == Definitions.ButtonAlias.rightClick then
         id = AddonSettings.settingsCategory:GetID()
     end
 
@@ -74,7 +74,7 @@ local function OnSettingChanged(setting, value)
     local variableName = gsub(setting:GetVariable(), ADDON_SETTING_PREFIX, "")
 
     -- Logger.Log("Firing changed var `%s` with value: %s", variableName, tostring(value))
-    EventRegistry:TriggerEvent(DelveCompanion.Enums.Events.ON_SETTING_CHANGED, variableName, value)
+    EventRegistry:TriggerEvent(DelveCompanion.Definitions.Events.SETTING_CHANGE, variableName, value)
 end
 
 --- Create and register an addon Setting.
@@ -130,11 +130,11 @@ local function PrepareAccountSettings(category, layout)
 
         local function GetDropdownOptions()
             local container = Settings.CreateControlTextContainer()
-            container:Add(DelveCompanion.Enums.WaypointTrackingType.superTrack,
+            container:Add(DelveCompanion.Definitions.WaypointTrackingType.superTrack,
                 Lockit.UI_SETTING_WAYPOINT_TRACKING_OPTION_BLIZZARD_NAME,
                 Lockit.UI_SETTING_WAYPOINT_TRACKING_OPTION_BLIZZARD_DESCRIPTION)
             if DelveCompanion.Variables.tomTomAvailable then
-                container:Add(DelveCompanion.Enums.WaypointTrackingType.tomtom,
+                container:Add(DelveCompanion.Definitions.WaypointTrackingType.tomtom,
                     Lockit.UI_SETTING_WAYPOINT_TRACKING_OPTION_TOMTOM_NAME,
                     Lockit.UI_SETTING_WAYPOINT_TRACKING_OPTION_TOMTOM_DESCRIPTION)
             end
@@ -151,7 +151,7 @@ local function PrepareAccountSettings(category, layout)
             if DelveCompanion.Variables.tomTomAvailable then
                 tooltipLineTomTom = _G["NORMAL_FONT_COLOR"]:WrapTextInColorCode(tooltipLineTomTom)
             else
-                local unavailableLine = format(Lockit.UI_COMMON_MISSING_ADDON_TITLE, Enums.DependencyAddonName.tomtom)
+                local unavailableLine = format(Lockit.UI_COMMON_MISSING_ADDON_TITLE, Definitions.DependencyAddonName.tomtom)
                 tooltipLineTomTom = format(
                     Lockit.UI_SETTING_WAYPOINT_TRACKING_TYPE_TOOLTIP_TOMTOM_UNAVAILABLE_FORMAT,
                     _G["DISABLED_FONT_COLOR"]:WrapTextInColorCode(tooltipLineTomTom),
@@ -205,10 +205,10 @@ local function PrepareCharacterSettings(category, layout)
 
         local function GetOptions()
             local container = Settings.CreateControlTextContainer()
-            container:Add(DelveCompanion.Enums.CompanionWidgetLayout.horizontal,
+            container:Add(DelveCompanion.Definitions.CompanionWidgetLayout.horizontal,
                 Lockit.UI_SETTING_COMPANION_CONFIG_OPTION_HORIZONTAL_NAME,
                 Lockit.UI_SETTING_COMPANION_CONFIG_OPTION_HORIZONTAL_DESCRIPTION)
-            container:Add(DelveCompanion.Enums.CompanionWidgetLayout.vertical,
+            container:Add(DelveCompanion.Definitions.CompanionWidgetLayout.vertical,
                 Lockit.UI_SETTING_COMPANION_CONFIG_OPTION_VERTICAL_NAME,
                 Lockit.UI_SETTING_COMPANION_CONFIG_OPTION_VERTICAL_DESCRIPTION)
 

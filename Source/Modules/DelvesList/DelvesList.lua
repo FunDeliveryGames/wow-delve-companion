@@ -68,4 +68,4 @@ local function InitDelvesList()
     }
 end
 
-EventUtil.ContinueOnAddOnLoaded(DelveCompanion.Enums.DependencyAddonName.encounterJournal, InitDelvesList)
+EventUtil.ContinueOnAddOnLoaded(DelveCompanion.Definitions.DependencyAddonName.encounterJournal, InitDelvesList)

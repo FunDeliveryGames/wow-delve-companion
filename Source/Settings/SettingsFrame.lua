@@ -49,13 +49,13 @@ function DelveCompanionSettingsFrameMixin:OnLoad()
     self.LocalizationSection:Layout()
 
     -- Footer with links
-    local enums = DelveCompanion.Enums
+    local defs = DelveCompanion.Definitions
     local links = self.Footer.Links
     links.Text:SetText(Lockit.UI_SETTINGS_LINKS_TITLE)
-    SetupLinkButton(links.CurseForge, enums.Links.CurseForge, Lockit.UI_SETTINGS_ADDON_LINK_TOOLTIP_CURSEFORGE)
-    SetupLinkButton(links.Wago, enums.Links.Wago, Lockit.UI_SETTINGS_ADDON_LINK_TOOLTIP_WAGO)
-    SetupLinkButton(links.WoWInt, enums.Links.WoWInt, Lockit.UI_SETTINGS_ADDON_LINK_TOOLTIP_WOWINT)
-    SetupLinkButton(links.GitHub, enums.Links.GitHub, Lockit.UI_SETTINGS_ADDON_LINK_TOOLTIP_GITHUB)
+    SetupLinkButton(links.CurseForge, defs.Links.CurseForge, Lockit.UI_SETTINGS_ADDON_LINK_TOOLTIP_CURSEFORGE)
+    SetupLinkButton(links.Wago, defs.Links.Wago, Lockit.UI_SETTINGS_ADDON_LINK_TOOLTIP_WAGO)
+    SetupLinkButton(links.WoWInt, defs.Links.WoWInt, Lockit.UI_SETTINGS_ADDON_LINK_TOOLTIP_WOWINT)
+    SetupLinkButton(links.GitHub, defs.Links.GitHub, Lockit.UI_SETTINGS_ADDON_LINK_TOOLTIP_GITHUB)
     links:Layout()
 end
 

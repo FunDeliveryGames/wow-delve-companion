@@ -160,7 +160,7 @@ local function InitDelvesDashboard()
     DelvesDashboard.ButtonPanelFrame = DelvesDashboardFrame.ButtonPanelLayoutFrame
     UpdateButtonPanelSpacing()
 
-    EventRegistry:RegisterCallback(DelveCompanion.Enums.Events.ON_SETTING_CHANGED, OnSettingChanged, DelvesDashboard)
+    EventRegistry:RegisterCallback(DelveCompanion.Definitions.Events.SETTING_CHANGE, OnSettingChanged, DelvesDashboard)
 end
 
-EventUtil.ContinueOnAddOnLoaded(DelveCompanion.Enums.DependencyAddonName.delvesDashboardUI, InitDelvesDashboard)
+EventUtil.ContinueOnAddOnLoaded(DelveCompanion.Definitions.DependencyAddonName.delvesDashboardUI, InitDelvesDashboard)

@@ -153,9 +153,9 @@ function DelveCompanion_DashboardCompanionConfigWidgetMixin:SelectLayout()
     ---@type CompanionWidgetLayout
     local layoutType = DelveCompanionCharacterData.companionConfigLayout
 
-    if layoutType == DelveCompanion.Enums.CompanionWidgetLayout.vertical then
+    if layoutType == DelveCompanion.Definitions.CompanionWidgetLayout.vertical then
         self:SetVerticalLayout()
-    elseif layoutType == DelveCompanion.Enums.CompanionWidgetLayout.horizontal then
+    elseif layoutType == DelveCompanion.Definitions.CompanionWidgetLayout.horizontal then
         self:SetHorizontalLayout()
     end
 end

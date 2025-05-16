@@ -5,7 +5,7 @@ local addonName, AddonTbl = ...
 ---@field Logger Logger
 ---@field Config Config
 ---@field Lockit Lockit
----@field Enums Enums
+---@field Definitions Definitions
 ---@field Variables Variables
 ---@field AddonSettings AddonSettings
 ---@field DelvesList DelvesList
@@ -69,8 +69,8 @@ function DelveCompanion:UpdateDelvesData()
             delveData.isBountiful = false
         end
 
-        --[[
-        Use C_DateAndTime.GetSecondsUntilDailyReset or GetQuestResetTime to save bountiful state and use it to check "Overcharged"
+        --[[ TODO:
+            Use C_DateAndTime.GetSecondsUntilDailyReset or GetQuestResetTime to save bountiful state and use it to check "Overcharged"
         ]]
         ---@type number
         local uiVer = (select(4, GetBuildInfo()))
@@ -80,9 +80,10 @@ function DelveCompanion:UpdateDelvesData()
             and delveConfig.overchargedUiWidgetID
             and C_UIWidgetManager.GetSpellDisplayVisualizationInfo(delveConfig.overchargedUiWidgetID) ~= nil
 
-        if delveConfig.overchargedUiWidgetID and C_UIWidgetManager.GetSpellDisplayVisualizationInfo(delveConfig.overchargedUiWidgetID) == nil then
-            DelveCompanion.Logger.Log("Canot retrieve info for widget: %d", delveConfig.overchargedUiWidgetID)
-        end
+        -- TODO: Remove
+        -- if delveConfig.overchargedUiWidgetID and C_UIWidgetManager.GetSpellDisplayVisualizationInfo(delveConfig.overchargedUiWidgetID) == nil then
+        --     DelveCompanion.Logger.Log("Canot retrieve info for widget: %d", delveConfig.overchargedUiWidgetID)
+        -- end
     end
 
     -- Logger.Log("Finished updating Delves data")
@@ -151,7 +152,7 @@ function DelveCompanion:InitAccountSave()
         end
 
         if not self.Variables.tomTomAvailable then
-            DelveCompanionAccountData.trackingType = self.Enums.WaypointTrackingType.superTrack
+            DelveCompanionAccountData.trackingType = self.Definitions.WaypointTrackingType.superTrack
         end
     end
 end

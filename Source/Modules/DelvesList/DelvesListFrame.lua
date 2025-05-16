@@ -40,12 +40,12 @@ function DelveCompanion_DelvesListFrameMixin:CreateDelveProgressWidget(parent, c
     ---@type DelvesProgressWidget
     local widget = CreateFrame("Frame", nil, parent, "DelveCompanionDelveProgressWidgetTemplate")
 
-    local Enums = DelveCompanion.Enums
+    local defs = DelveCompanion.Definitions
     do
         -- Story progress
 
         local achID = config.achievements.story
-        widget.Story:SetFrameInfo(Enums.CodeType.Achievement, achID)
+        widget.Story:SetFrameInfo(defs.CodeType.Achievement, achID)
 
         local totalCount = GetAchievementNumCriteria(achID)
         local completedCount = 0
@@ -68,7 +68,7 @@ function DelveCompanion_DelvesListFrameMixin:CreateDelveProgressWidget(parent, c
         -- Chest progress
 
         local achID = config.achievements.chest
-        widget.Chest:SetFrameInfo(Enums.CodeType.Achievement, achID)
+        widget.Chest:SetFrameInfo(defs.CodeType.Achievement, achID)
 
         ---@type number, number
         local quantity, reqQuantity = select(4, GetAchievementCriteriaInfo(achID, 1))
@@ -181,10 +181,10 @@ function DelveCompanion_DelvesListFrameMixin:OnLoad()
 
     self.Title:SetText(_G["DELVES_LABEL"])
 
-    self.KeysWidget:SetFrameInfo(DelveCompanion.Enums.CodeType.Currency, Config.BOUNTIFUL_KEY_CURRENCY_CODE)
+    self.KeysWidget:SetFrameInfo(DelveCompanion.Definitions.CodeType.Currency, Config.BOUNTIFUL_KEY_CURRENCY_CODE)
 
     self.AffixWidget:SetLabelText(_G["MODIFIERS_COLON"])
-    self.AffixWidget:SetFrameInfo(DelveCompanion.Enums.CodeType.Spell, Config.NEMESIS_AFFIX_SPELL_CODE)
+    self.AffixWidget:SetFrameInfo(DelveCompanion.Definitions.CodeType.Spell, Config.NEMESIS_AFFIX_SPELL_CODE)
 
     self:InitDelvesList()
 end

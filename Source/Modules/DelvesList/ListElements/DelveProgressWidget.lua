@@ -19,7 +19,7 @@ function DelveCompanion_DelveProgressWidgetMixin:ToggleShown(isShown)
 end
 
 function DelveCompanion_DelveProgressWidgetMixin:OnLoad()
-    EventRegistry:RegisterCallback(DelveCompanion.Enums.Events.ON_SETTING_CHANGED,
+    EventRegistry:RegisterCallback(DelveCompanion.Definitions.Events.SETTING_CHANGE,
         function(_, changedVarKey, newValue)
             if not (changedVarKey == "delveProgressWidgetsEnabled") then
                 return
