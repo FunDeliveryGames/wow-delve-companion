@@ -10,27 +10,28 @@
 		</Anchors>
 		<Layers>
 			<Layer level="BACKGROUND">
-				<Texture atlas="UI-EJ-TheWarWithin" useAtlasSize="true">
+				<Texture parentKey="Background" atlas="UI-EJ-TheWarWithin" useAtlasSize="true">
 					<Anchors>
 						<Anchor point="TOPLEFT" x="3" y="-1" />
 					</Anchors>
 				</Texture>
 			</Layer>
-			<!-- TODO: Try to add an extra texture above the content to make the scrolling smoother
-		<Layer level="BACKGROUND" textureSubLevel="0">
-			<Texture name="$parentBG" atlas="UI-EJ-TheWarWithin"
-				parentKey="scrollPatch">
-				<Anchors>
-					<Anchor point="TOPLEFT" relativeKey="$parent.bg"
-						relativePoint="BOTTOMLEFT" x="0" y="50" />
-					<Anchor point="BOTTOMRIGHT" relativeKey="$parent.bg"
-						relativePoint="BOTTOMRIGHT" x="0" y="0" />
-				</Anchors>
-				<TexCoords left="0" right="1" top="0.9"
-					bottom="1" />
-			</Texture>
-		</Layer>
-		-->
+			<!-- TODO: Try to add an extra texture above the content to make the scrolling
+			smoother
+			<Layer level="OVERLAY">
+				<Texture parentKey="BackgroundPatch" atlas="UI-EJ-TheWarWithin" useAtlasSize="false">
+					<Size y="25" />
+					<Anchors>
+						<Anchor point="BOTTOMLEFT" relativeTo="$parent.Background"
+							relativePoint="BOTTOMLEFT" />
+						<Anchor point="BOTTOMRIGHT" relativeTo="$parent.Background"
+							relativePoint="BOTTOMRIGHT" />
+					</Anchors>
+					<TexCoords left="0" right="1" top="0.9"
+						bottom="1" />
+				</Texture>
+			</Layer>
+			-->
 			<Layer level="OVERLAY">
 				<FontString parentKey="Title" inherits="GameFontNormalLarge2"
 					justifyH="LEFT" text="DELVES">
@@ -98,7 +99,7 @@
 				</Layers>
 				<Frames>
 					<Frame parentKey="OverchargedWidget"
-						inherits="DelveCompanionCustomActionWidgetTemplate">
+						inherits="DelveCompanionCustomActionWidgetTemplate" hidden="true">
 						<Size x="50" y="50" />
 						<KeyValues>
 							<KeyValue key="layoutIndex" value="1" type="number" />

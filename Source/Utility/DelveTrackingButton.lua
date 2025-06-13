@@ -36,7 +36,8 @@ function DelveCompanion_DelveTrackingButtonMixin:UpdateTooltip()
     if data.isBountiful then
         iconsSequence = string.join("", iconsSequence, BOUNTIFUL_ICON_SEQUENCE)
     end
-    if data.isOvercharged then
+
+    if data.isOvercharged and not DelveCompanion.Variables.hideForMainline then
         iconsSequence = string.join("", iconsSequence, OVERCHARGED_ICON_SEQUENCE)
     end
 

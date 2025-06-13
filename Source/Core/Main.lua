@@ -69,9 +69,7 @@ function DelveCompanion:UpdateDelvesData()
             delveData.isBountiful = false
         end
 
-        ---@type number
-        local uiVer = (select(4, GetBuildInfo()))
-        if uiVer >= 110107 and delveConfig.overchargedUiWidgetID then
+        if delveConfig.overchargedUiWidgetID and not DelveCompanion.Variables.hideForMainline then
             local visInfo = C_UIWidgetManager.GetSpacerVisualizationInfo(delveConfig.overchargedUiWidgetID)
             delveData.isOvercharged = visInfo and visInfo.shownState == 1
         end

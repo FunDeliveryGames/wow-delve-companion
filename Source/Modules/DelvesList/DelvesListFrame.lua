@@ -183,13 +183,18 @@ function DelveCompanion_DelvesListFrameMixin:OnLoad()
 
     self.KeysWidget:SetFrameInfo(DelveCompanion.Definitions.CodeType.Currency, Config.BOUNTIFUL_KEY_CURRENCY_CODE)
 
+    do
+        self.ModifiersContainer.ModifiersLabel:SetText(_G["MODIFIERS_COLON"])
 
-    self.ModifiersContainer.ModifiersLabel:SetText(_G["MODIFIERS_COLON"])
-    self.ModifiersContainer.OverchargedWidget:SetFrameInfo(DelveCompanion.Definitions.CodeType.Spell,
-        Config.OVERCHARGED_SPELL_CODE)
-    self.ModifiersContainer.AffixWidget:SetFrameInfo(DelveCompanion.Definitions.CodeType.Spell,
-        Config.NEMESIS_AFFIX_SPELL_CODE)
-    self.ModifiersContainer:Layout()
+        if not DelveCompanion.Variables.hideForMainline then
+            self.ModifiersContainer.OverchargedWidget:Show()
+            self.ModifiersContainer.OverchargedWidget:SetFrameInfo(DelveCompanion.Definitions.CodeType.Spell,
+                Config.OVERCHARGED_SPELL_CODE)
+        end
+        self.ModifiersContainer.AffixWidget:SetFrameInfo(DelveCompanion.Definitions.CodeType.Spell,
+            Config.NEMESIS_AFFIX_SPELL_CODE)
+        self.ModifiersContainer:Layout()
+    end
 
     self:InitDelvesList()
 end

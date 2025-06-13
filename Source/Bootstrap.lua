@@ -24,6 +24,10 @@ end
 local function OnAddonLoaded()
     -- Logger.Log("OnAddonLoaded start...")
 
+    ---@type number
+    local uiVer = (select(4, GetBuildInfo()))
+    DelveCompanion.Variables.hideForMainline = uiVer < 110107
+
     DelveCompanion.Variables.tomTomAvailable = TomTom ~= nil
 
     DelveCompanion:InitAccountSave()

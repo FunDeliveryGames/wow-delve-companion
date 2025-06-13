@@ -133,8 +133,7 @@ local function InitDelvesDashboard()
     end
 
     do
-        local uiVer = (select(4, GetBuildInfo()))
-        if uiVer >= 110107 then
+        if not DelveCompanion.Variables.hideForMainline then
             CreateTitanConsoleButton(DelvesDashboardFrame)
         end
     end
