@@ -1,5 +1,9 @@
 # Change Log
 
+## [0.8] - 13 June 2025
+- **Delves Tab**: Add displaying of the `Overcharged Delves`: a corresponding image will be shown if a Delve is currently `Overcharged`.
+- **Delves UI**: Add a button to access `Overcharged Titan Console` talent tree.
+
 ## [0.7.1] - 12 May 2025
 - **Localization**: Update addon translations (`Russian`, `German`, and `Simplified Chinese`).
 

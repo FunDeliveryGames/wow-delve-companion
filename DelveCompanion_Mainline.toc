@@ -1,6 +1,6 @@
 ## Interface: 110107, 110105
 ## Author: FunDeliveryGames
-## Version: v0.7.1
+## Version: v0.8
 
 ## IconTexture: interface/icons/ui_delves
 ## Title: Delve Companion
