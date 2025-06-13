@@ -11,6 +11,8 @@ local Lockit = DelveCompanion.Lockit
 --#region Constants
 
 local TOM_TOM_WAYPOINT_DISTANCE_CLEAR = 10
+local BOUNTIFUL_ICON_SEQUENCE = "|A:delves-bountiful:24:24|a"
+local OVERCHARGED_ICON_SEQUENCE = "|TInterface\\Icons\\achievement_legionpvp2tier5:20|t"
 --#endregion
 
 ---@class (exact) DelveTrackingButton
@@ -29,12 +31,17 @@ function DelveCompanion_DelveTrackingButtonMixin:UpdateTooltip()
     tooltip:SetOwner(self, "ANCHOR_TOP")
     tooltip:ClearLines()
 
+    local iconsSequence = ""
+
     if data.isBountiful then
-        GameTooltip_AddColoredDoubleLine(tooltip, data.delveName, "|A:delves-bountiful:24:24|a",
-            _G["NORMAL_FONT_COLOR"], _G["NORMAL_FONT_COLOR"], true)
-    else
-        GameTooltip_AddNormalLine(tooltip, data.delveName, true)
+        iconsSequence = string.join("", iconsSequence, BOUNTIFUL_ICON_SEQUENCE)
     end
+    if data.isOvercharged then
+        iconsSequence = string.join("", iconsSequence, OVERCHARGED_ICON_SEQUENCE)
+    end
+
+    GameTooltip_AddColoredDoubleLine(tooltip, data.delveName, iconsSequence,
+        _G["NORMAL_FONT_COLOR"], _G["NORMAL_FONT_COLOR"], true)
     GameTooltip_AddHighlightLine(tooltip, data.parentMapName, true)
     GameTooltip_AddBlankLineToTooltip(tooltip)
 

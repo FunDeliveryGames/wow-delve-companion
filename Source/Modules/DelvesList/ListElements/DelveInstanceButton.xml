@@ -43,10 +43,10 @@
                 </Texture>
                 <Texture parentKey="OverchargedIcon"
                     file="interface/icons/achievement_legionpvp2tier5" hidden="true">
-                    <Size x="36" y="36" />
+                    <Size x="28" y="28" />
                     <Anchors>
                         <Anchor point="LEFT" relativeKey="$parent.BountifulIcon"
-                            relativePoint="RIGHT" x="2" y="0" />
+                            relativePoint="RIGHT" x="2" y="2" />
                     </Anchors>
                 </Texture>
                 <Texture parentKey="WaypointIcon"

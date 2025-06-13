@@ -69,21 +69,12 @@ function DelveCompanion:UpdateDelvesData()
             delveData.isBountiful = false
         end
 
-        --[[ TODO:
-            Use C_DateAndTime.GetSecondsUntilDailyReset or GetQuestResetTime to save bountiful state and use it to check "Overcharged"
-        ]]
         ---@type number
         local uiVer = (select(4, GetBuildInfo()))
-        delveData.isOvercharged = uiVer >= 110107
-            and delveData.isBountiful
-            and self:CanRetrieveDelveWidgetIDInfo()
-            and delveConfig.overchargedUiWidgetID
-            and C_UIWidgetManager.GetSpellDisplayVisualizationInfo(delveConfig.overchargedUiWidgetID) ~= nil
-
-        -- TODO: Remove
-        -- if delveConfig.overchargedUiWidgetID and C_UIWidgetManager.GetSpellDisplayVisualizationInfo(delveConfig.overchargedUiWidgetID) == nil then
-        --     DelveCompanion.Logger.Log("Canot retrieve info for widget: %d", delveConfig.overchargedUiWidgetID)
-        -- end
+        if uiVer >= 110107 and delveConfig.overchargedUiWidgetID then
+            local visInfo = C_UIWidgetManager.GetSpacerVisualizationInfo(delveConfig.overchargedUiWidgetID)
+            delveData.isOvercharged = visInfo and visInfo.shownState == 1
+        end
     end
 
     -- Logger.Log("Finished updating Delves data")

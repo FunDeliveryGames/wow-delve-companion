@@ -177,7 +177,7 @@ Config.DELVES_CONFIG = {
             bountiful = 7779
         },
         gildedStashUiWidgetID = 6728,
-        overchargedUiWidgetID = 7102,
+        overchargedUiWidgetID = 7105,
         atlasBgID = "delve-entrance-background-fungal-folly",
         achievements = {
             chest = 40803,
@@ -192,7 +192,7 @@ Config.DELVES_CONFIG = {
             bountiful = 7781
         },
         gildedStashUiWidgetID = 6719,
-        overchargedUiWidgetID = 7036,
+        overchargedUiWidgetID = 7041,
         atlasBgID = "delve-entrance-background-kriegvals-rest",
         achievements = {
             chest = 40807,
@@ -263,7 +263,7 @@ Config.DELVES_CONFIG = {
             bountiful = 7785
         },
         gildedStashUiWidgetID = 6727,
-        overchargedUiWidgetID = 7049,
+        overchargedUiWidgetID = 7052,
         atlasBgID = "delve-entrance-background-nightfall-sanctum",
         achievements = {
             chest = 40809,
@@ -292,7 +292,7 @@ Config.DELVES_CONFIG = {
             bountiful = 7789
         },
         gildedStashUiWidgetID = 6725,
-        overchargedUiWidgetID = 7048,
+        overchargedUiWidgetID = 7051,
         atlasBgID = "delve-entrance-background-skittering-breach",
         achievements = {
             chest = 40810,
@@ -307,7 +307,7 @@ Config.DELVES_CONFIG = {
             bountiful = 7790
         },
         gildedStashUiWidgetID = 6726,
-        overchargedUiWidgetID = 7050,
+        overchargedUiWidgetID = 7053,
         atlasBgID = "delve-entrance-background-the-spiral-weave",
         achievements = {
             chest = 40814,
@@ -350,7 +350,7 @@ Config.DELVES_CONFIG = {
             bountiful = 8246
         },
         gildedStashUiWidgetID = 6718,
-        overchargedUiWidgetID = 7103,
+        overchargedUiWidgetID = 7104,
         atlasBgID = "delves-entrance-background-sewers",
         achievements = {
             chest = 41101,
