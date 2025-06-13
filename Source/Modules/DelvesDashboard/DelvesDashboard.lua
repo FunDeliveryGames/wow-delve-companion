@@ -41,7 +41,7 @@ local function CreateTitanConsoleButton(parent)
         "DelveCompanionLootInfoButtonTemplate")
     button:SetParentKey(TITAN_CONSOLE_BUTTON_PARENT_KEY)
 
-    button:SetTextToFit("Titan Console")
+    button:SetTextToFit(_G["GENERIC_TRAIT_FRAME_TITAN_CONSOLE_TITLE"])
 
     button:ClearAllPoints()
     button:SetPoint("RIGHT", parent[LOOT_INFO_BUTTON_PARENT_KEY], "LEFT", -5)

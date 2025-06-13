@@ -183,8 +183,13 @@ function DelveCompanion_DelvesListFrameMixin:OnLoad()
 
     self.KeysWidget:SetFrameInfo(DelveCompanion.Definitions.CodeType.Currency, Config.BOUNTIFUL_KEY_CURRENCY_CODE)
 
-    self.AffixWidget:SetLabelText(_G["MODIFIERS_COLON"])
-    self.AffixWidget:SetFrameInfo(DelveCompanion.Definitions.CodeType.Spell, Config.NEMESIS_AFFIX_SPELL_CODE)
+
+    self.ModifiersContainer.ModifiersLabel:SetText(_G["MODIFIERS_COLON"])
+    self.ModifiersContainer.OverchargedWidget:SetFrameInfo(DelveCompanion.Definitions.CodeType.Spell,
+        Config.OVERCHARGED_SPELL_CODE)
+    self.ModifiersContainer.AffixWidget:SetFrameInfo(DelveCompanion.Definitions.CodeType.Spell,
+        Config.NEMESIS_AFFIX_SPELL_CODE)
+    self.ModifiersContainer:Layout()
 
     self:InitDelvesList()
 end
@@ -223,11 +228,16 @@ end
 ---@class DelvesListScroll : ScrollFrame
 ---@field Content Frame
 
+---@class DelvesListModifiersContainer : HorizontalLayoutFrame
+---@field ModifiersLabel FontString
+---@field OverchargedWidget CustomActionWidget
+---@field AffixWidget CustomActionWidget
+
 --- `DelveCompanionDelvesListFrameTemplate`
 ---@class DelvesListXml : Frame
 ---@field Title FontString
 ---@field KeysWidget CustomActionWidget
 ---@field DelveOBotWidget DelveOBotWidget
----@field AffixWidget CustomActionWidget
+---@field ModifiersContainer DelvesListModifiersContainer
 ---@field DelvesListScroll DelvesListScroll
 --#endregion

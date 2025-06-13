@@ -156,10 +156,7 @@ function DelveCompanion_CustomActionWidgetMixin:OnLoad()
     -- Logger.Log("DelveCompanionIconWithTextAndTooltip `%s` OnLoad start", self:GetDebugName())
 
     self.Icon:SetSize(self.iconSizeX, self.iconSizeY)
-
-    if not self.displayLabel then
-        self.Label:Hide()
-    end
+    self.Label:SetShown(self.displayLabel)
 
     if self.fontOverride then
         self.Label:SetFontObject(self.fontOverride)
