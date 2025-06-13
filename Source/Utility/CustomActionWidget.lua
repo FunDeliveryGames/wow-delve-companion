@@ -87,6 +87,7 @@ end
 
 ---@param self CustomActionWidget
 local function SetFromTexture(self)
+    ---@type string|number|integer
     local texture = nil
     local type, code = self.frameType, self.frameCode
 

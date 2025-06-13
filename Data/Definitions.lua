@@ -91,5 +91,5 @@ Definitions.CompanionWidgetLayout = {
 ---@class AddonEvents
 Definitions.Events = {
     SETTING_CHANGE = "DelveCompanion.SettingChange",
-    REQUEST_DELVE_INFO_FRAME = "DelveCompanion.RequestDelveInfoFrame"
+    DELVE_INSTANCE_BUTTON_CLICK = "DelveCompanion.RequestDelveInfoFrame"
 }

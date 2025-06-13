@@ -11,5 +11,8 @@
 	<Include file="DelvesListFrame.xml" />
 	<Script file="DelvesListFrame.lua" />
 
+	<Include file="InfoFrame\DelveInfoFrame.xml" />
+	<Script file="InfoFrame\DelveInfoFrame.lua" />
+
 	<Script file="DelvesList.lua" />
 </Ui>

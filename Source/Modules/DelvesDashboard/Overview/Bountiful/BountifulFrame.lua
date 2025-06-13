@@ -23,7 +23,7 @@ function DelveCompanion_OverviewBountifulFrameMixin:OnLoad()
     self.bountifulButtonsPool = CreateFramePool("BUTTON", self.ActiveDelves.Container,
         "DelveCompanionOverviewBountifulButtonTemplate")
 
-        self.DelveOBotWidget.Cooldown:SetCountdownFont("GameFontHighlightSmall")
+    self.DelveOBotWidget.Cooldown:SetCountdownFont("GameFontHighlightSmall")
 end
 
 ---@param self OverviewBountifulFrame
@@ -35,8 +35,6 @@ end
 function DelveCompanion_OverviewBountifulFrameMixin:OnShow()
     -- Logger.Log("OverviewBountifulFrame OnShow start")
     DelveCompanion:UpdateDelvesData()
-    self.bountifulButtonsPool:ReleaseAll()
-    self.ActiveDelves.NoBountifulLabel:Hide()
 
     for index, delveData in ipairs(DelveCompanion.Variables.delvesData) do
         if delveData.isBountiful then
@@ -54,14 +52,14 @@ function DelveCompanion_OverviewBountifulFrameMixin:OnShow()
     self.ActiveDelves.Container.fixedHeight = spaceAvailable
     self.ActiveDelves.Container:Layout()
 
-    if #self.ActiveDelves.Container:GetLayoutChildren() == 0 then
-        self.ActiveDelves.NoBountifulLabel:Show()
-    end
+    self.ActiveDelves.NoBountifulLabel:SetShown(#self.ActiveDelves.Container:GetLayoutChildren() == 0)
 end
 
 ---@param self OverviewBountifulFrame
 function DelveCompanion_OverviewBountifulFrameMixin:OnHide()
     -- Logger.Log("OverviewBountifulFrame OnHide start")
+
+    self.bountifulButtonsPool:ReleaseAll()
 end
 
 --#region XML Annotations

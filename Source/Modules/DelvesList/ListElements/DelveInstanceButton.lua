@@ -60,6 +60,8 @@ function DelveCompanion_DelveInstanceButtonMixin:OnClick()
 
     if IsShiftKeyDown() then
         self:ToggleTracking()
+    else
+        -- EventRegistry:TriggerEvent(DelveCompanion.Definitions.Events.DELVE_INSTANCE_BUTTON_CLICK, self.data)
     end
 end
 
