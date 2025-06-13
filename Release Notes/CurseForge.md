@@ -1,4 +1,4 @@
-**A new update** has arrived!
+**A new update** has arrived! It includes support of the upcoming 11.1.7 features.
 
 **Version <u>0.8</u>**:
 - **Delves Tab**: Add displaying of the `Overcharged Delves`: a corresponding image will be shown if a Delve is currently `Overcharged`.

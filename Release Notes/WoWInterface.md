@@ -1,4 +1,4 @@
-[b]A new update[/b] has arrived!
+[b]A new update[/b] has arrived!  It includes support of the upcoming 11.1.7 features.
 
 [b]Version [0.8][/b]:
 [list]
