@@ -133,7 +133,7 @@ local function InitDelvesDashboard()
     end
 
     do
-        if not DelveCompanion.Variables.hideForMainline then
+        if not DelveCompanion.Variables.hideForMainline and C_QuestLog.IsQuestFlaggedCompleted(DelveCompanion.Config.TITAN_CONSOLE_UNLOCK_QUEST) then
             CreateTitanConsoleButton(DelvesDashboardFrame)
         end
     end

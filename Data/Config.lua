@@ -126,6 +126,9 @@ Config.NEMESIS_AFFIX_SPELL_CODE = 472952
 
 ---@type integer Spell ID of [Overcharged](https://www.wowhead.com/ptr/spell=1216544/overcharged).
 Config.OVERCHARGED_SPELL_CODE = 1216544
+
+---@type integer Quest ID required to unlock [Overcharged Console](https://www.wowhead.com/quest=90971/overcharged-console).
+Config.TITAN_CONSOLE_UNLOCK_QUEST = 90971
 --#endregion
 
 --#region Delves data
