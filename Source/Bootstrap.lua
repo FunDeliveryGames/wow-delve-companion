@@ -24,10 +24,6 @@ end
 local function OnAddonLoaded()
     -- Logger.Log("OnAddonLoaded start...")
 
-    ---@type number
-    local uiVer = (select(4, GetBuildInfo()))
-    DelveCompanion.Variables.hideForMainline = uiVer < 110107
-
     DelveCompanion.Variables.tomTomAvailable = TomTom ~= nil
 
     DelveCompanion:InitAccountSave()
@@ -40,16 +36,6 @@ end
 
 EventRegistry:RegisterFrameEventAndCallback("PLAYER_LOGIN", OnPlayerLogin)
 -- EventRegistry:RegisterFrameEventAndCallback("GOSSIP_SHOW", function(payload, arg1, arg2)
---     if payload then
---         Logger.Log("Payload: %s", payload)
---     end
---     if arg1 then
---         Logger.Log("Gossip type: %s", arg1)
---     end
---     if arg2 then
---         Logger.Log("Gossip type: %s", arg2)
---     end
-
 --     if arg1 == "delves-difficulty-picker" then
 --         -- local options = DelvesDifficultyPickerFrame:GetOptions()
 --         Logger.Log("=================")

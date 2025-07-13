@@ -15,6 +15,6 @@ local Variables = {
     maxLevelReached = false,
     keysCollected = 0,
     tomTomAvailable = false,
-    hideForMainline = false
+    hideForMainline = (select(4, GetBuildInfo())) < 110200
 }
 DelveCompanion.Variables = Variables

@@ -63,33 +63,32 @@ Config.BOUNTIFUL_KEY_QUESTS_DATA = {
     [3] = 84738,
     [4] = 84739
 }
----@type table<integer, number> Indexed table of Caches containing [Restored Coffer Keys](https://www.wowhead.com/currency=3028/restored-coffer-key) (e.g. [Pinnacle Cache](https://www.wowhead.com/item=239118/pinnacle-cache)).<br>
---- Index scheme: `XXYYZZ`, e.g. 110107 (`XX`: expansion major version; `YY`: season number inside the expansion; `ZZ`: consecutive numbering of Caches).<br>
---- Non-season sources index scheme: `99NNN`, e.g. 99001 (`NNN`: consecutive numbering).
+---@type table<integer, number> Indexed table of Caches containing [Restored Coffer Keys](https://www.wowhead.com/currency=3028/restored-coffer-key) (e.g. [Pinnacle Cache](https://www.wowhead.com/item=239118/pinnacle-cache)).
 Config.BOUNTIFUL_KEY_SOURCE_CACHES_DATA = {
     -- TWW Season 1
-    [110101] = 226263,
-    [110102] = 226273,
-    [110103] = 226264,
-    [110104] = 224784,
-    [110105] = 225571,
-    [110106] = 225572,
-    [110107] = 225573,
-    [110108] = 228361,
+    226263,
+    226273,
+    226264,
+    224784,
+    225571,
+    225572,
+    225573,
+    228361,
     -- TWW Season 2
-    [110201] = 239128,
-    [110202] = 239121,
-    [110203] = 239126,
-    [110204] = 239118,
-    [110205] = 239125,
-    [110206] = 239122,
-    [110207] = 239124,
-    [110208] = 238208,
-    [110209] = 235639,
-    [110210] = 235610,
-    [110211] = 239120,
+    239128,
+    239121,
+    239126,
+    239118,
+    239125,
+    239122,
+    239124,
+    238208,
+    235639,
+    235610,
+    239120,
+    -- TWW Season 3
     -- Others
-    [99001]  = 233014
+    233014
 }
 --#endregion
 
@@ -103,26 +102,38 @@ Config.GILDED_STASH_WEEKLY_CAP = 3
 
 --#region Delve-related entities which are updated every season
 
----@type integer Item ID of [Delver's Bounty](https://www.wowhead.com/item=233071/delvers-bounty).
-Config.BOUNTY_MAP_ITEM_CODE = 233071
 ---@type integer Weekly cap of [Delver's Bounty](https://www.wowhead.com/item=233071/delvers-bounty).
 Config.BOUNTY_MAP_MAX_PER_WEEK = 1
 ---@type integer Quest ID used to track whether player has looted [Delver's Bounty](https://www.wowhead.com/item=233071/delvers-bounty) during the week.
 Config.BOUNTY_MAP_QUEST = 86371
+---@type integer Item ID of [Delver's Bounty](https://www.wowhead.com/item=233071/delvers-bounty).
+Config.BOUNTY_MAP_ITEM_CODE = 233071
+if not DelveCompanion.Variables.hideForMainline then
+    Config.BOUNTY_MAP_ITEM_CODE = 248142
+end
 
 ---@type integer Item ID of [Radiant Echo](https://www.wowhead.com/item=235897/radiant-echo).
 Config.ECHO_ITEM_CODE = 235897
+if not DelveCompanion.Variables.hideForMainline then
+    Config.ECHO_ITEM_CODE = 246771
+end
 
----@type integer Item ID of [Coffer Key Shard](https://www.wowhead.com/item=236096/coffer-key-shard).
-Config.KEY_SHARD_ITEM_CODE = 236096
 ---@type integer Number of [Coffer Key Shards](https://www.wowhead.com/item=236096/coffer-key-shard) required to assemble [Restored Coffer Key](https://www.wowhead.com/currency=3028/restored-coffer-key).
 Config.SHARDS_FOR_KEY = 100
+---@type integer Item ID of [Coffer Key Shard](https://www.wowhead.com/item=236096/coffer-key-shard).
+Config.KEY_SHARD_ITEM_CODE = 236096
+if not DelveCompanion.Variables.hideForMainline then
+    Config.KEY_SHARD_ITEM_CODE = 245653
+end
 --#endregion
 
 --#region Seasonal modifiers
 
 ---@type integer Spell ID of [Nemesis Strongbox](https://www.wowhead.com/spell=472952/nemesis-strongbox).
 Config.NEMESIS_AFFIX_SPELL_CODE = 472952
+if not DelveCompanion.Variables.hideForMainline then
+    Config.NEMESIS_AFFIX_SPELL_CODE = 1239535
+end
 
 ---@type integer Spell ID of [Overcharged](https://www.wowhead.com/ptr/spell=1216544/overcharged).
 Config.OVERCHARGED_SPELL_CODE = 1216544
@@ -139,12 +150,16 @@ Config.KHAZ_ALGAR_MAP_ID = 2274
 ---@type table<integer, number> Indexed table of [uiMapIDs](https://warcraft.wiki.gg/wiki/UiMapID) which contain Delves.
 Config.MAPS_WITH_DELVES = {
     -- Khaz Algar
-    [1] = 2248,
-    [2] = 2214,
-    [3] = 2215,
-    [4] = 2255,
-    [5] = 2346
+    2346, -- Undermine
+    2248, -- Isle of Dorn
+    2214, -- The Ringing Deeps
+    2215, -- Hallowfall
+    2255  -- Azj-Kahet
 }
+
+if not DelveCompanion.Variables.hideForMainline then
+    table.insert(Config.MAPS_WITH_DELVES, 1, 2371) -- "K`aresh"
+end
 
 --- Table with Delve parameters.
 ---@class (exact) DelveConfig
@@ -159,7 +174,7 @@ Config.MAPS_WITH_DELVES = {
 ---@type DelveConfig[] Indexed table of all Delves in the game and their parameters.
 Config.DELVES_CONFIG = {
     -- "Earthcrawl Mines"
-    [1] = {
+    {
         uiMapID = 2269,
         poiIDs = {
             regular = 7863,
@@ -173,7 +188,7 @@ Config.DELVES_CONFIG = {
         }
     },
     -- "Fungal Folly"
-    [2] = {
+    {
         uiMapID = 2249,
         poiIDs = {
             regular = 7864,
@@ -188,7 +203,7 @@ Config.DELVES_CONFIG = {
         }
     },
     -- "Kriegval's Rest"
-    [3] = {
+    {
         uiMapID = 2250,
         poiIDs = {
             regular = 7865,
@@ -203,7 +218,7 @@ Config.DELVES_CONFIG = {
         }
     },
     -- "The Waterworks"
-    [4] = {
+    {
         uiMapID = 2251,
         poiIDs = {
             regular = 7866,
@@ -217,7 +232,7 @@ Config.DELVES_CONFIG = {
         }
     },
     -- "The Dread Pit"
-    [5] = {
+    {
         uiMapID = 2302,
         poiIDs = {
             regular = 7867,
@@ -231,7 +246,7 @@ Config.DELVES_CONFIG = {
         }
     },
     -- "Excavation Site 9"
-    [6] = {
+    {
         uiMapID = 2396,
         poiIDs = {
             regular = 8143,
@@ -244,8 +259,8 @@ Config.DELVES_CONFIG = {
             story = 41098
         }
     },
-    -- "The Sinkhole" (it has a second ID in Wago Tools: 2301)
-    [7] = {
+    -- "The Sinkhole"
+    {
         uiMapID = 2300,
         poiIDs = {
             regular = 7870,
@@ -259,7 +274,7 @@ Config.DELVES_CONFIG = {
         }
     },
     -- "Nightfall Sanctum"
-    [8] = {
+    {
         uiMapID = 2277,
         poiIDs = {
             regular = 7868,
@@ -274,7 +289,7 @@ Config.DELVES_CONFIG = {
         }
     },
     -- "Mycomancer Cavern"
-    [9] = {
+    {
         uiMapID = 2312,
         poiIDs = {
             regular = 7869,
@@ -288,7 +303,7 @@ Config.DELVES_CONFIG = {
         }
     },
     -- "Skittering Breach"
-    [10] = {
+    {
         uiMapID = 2310,
         poiIDs = {
             regular = 7871,
@@ -302,8 +317,8 @@ Config.DELVES_CONFIG = {
             story = 40533
         }
     },
-    -- "The Spiral Weave" (it has a second ID in Wago Tools: 2347)
-    [11] = {
+    -- "The Spiral Weave"
+    {
         uiMapID = 2313,
         poiIDs = {
             regular = 7874,
@@ -318,7 +333,7 @@ Config.DELVES_CONFIG = {
         }
     },
     -- "The Underkeep"
-    [12] = {
+    {
         uiMapID = 2299,
         poiIDs = {
             regular = 7872,
@@ -331,8 +346,8 @@ Config.DELVES_CONFIG = {
             story = 40534
         }
     },
-    -- "Tak-Rethan Abyss" (it has a second ID in Wago Tools: 2314)
-    [13] = {
+    -- "Tak-Rethan Abyss"
+    {
         uiMapID = 2259,
         poiIDs = {
             regular = 7873,
@@ -345,8 +360,8 @@ Config.DELVES_CONFIG = {
             story = 40535
         }
     },
-    -- "Sidestreet Sluice" (it has more IDs in Wago Tools: 2421, 2422, 2423)
-    [14] = {
+    -- "Sidestreet Sluice"
+    {
         uiMapID = 2420,
         poiIDs = {
             regular = 8140,
@@ -360,8 +375,8 @@ Config.DELVES_CONFIG = {
             story = 41099
         }
     },
-    -- "Demolition Dome" (it has a second ID in Wago Tools: 2426)
-    [15] = {
+    -- "Demolition Dome"
+    {
         uiMapID = 2425,
         poiIDs = {
             regular = 8142
@@ -373,8 +388,7 @@ Config.DELVES_CONFIG = {
         atlasBgID = "delve-entrance-background-goblin-boss"
     },
     -- "Zekvir's Lair"
-    -- TODO: SuperTrack works but it's not shown on map anymore. Place a map pin for it?
-    [16] = {
+    {
         uiMapID = 2348,
         poiIDs = {
             regular = 7875
@@ -386,6 +400,37 @@ Config.DELVES_CONFIG = {
         atlasBgID = "delve-entrance-background-zekvirs-lair"
     }
 }
+
+if not DelveCompanion.Variables.hideForMainline then
+    table.insert(Config.DELVES_CONFIG,
+        -- "Archival Assault"
+        {
+            uiMapID = 2452,
+            poiIDs = {
+                regular = 8274,
+                bountiful = 8273
+            },
+            gildedStashUiWidgetID = 7193,
+            atlasBgID = "delve-entrance-background-Archival-Assault",
+            achievements = {
+                chest = 42679,
+                story = 42771
+            }
+        })
+    table.insert(Config.DELVES_CONFIG,
+        --"Voidrazor Sanctuary"
+        {
+            uiMapID = 2348, -- FIXME
+            poiIDs = {
+                regular = 8323
+            },
+            coordinates = {
+                x = 64.34,
+                y = 78.62
+            },
+            atlasBgID = "delve-entrance-background-Voidrazor-Sanctuary"
+        })
+end
 
 --- Table with Delve Loot information
 ---@class DelveLootInfo
@@ -440,4 +485,53 @@ Config.DELVES_LOOT_INFO_DATA = {
         vaultLvl = 649
     }
 }
+
+if not DelveCompanion.Variables.hideForMainline then
+    Config.DELVES_LOOT_INFO_DATA = {
+        [1] = {
+            bountifulLvl = 655,
+            vaultLvl = 668
+        },
+        [2] = {
+            bountifulLvl = 658,
+            vaultLvl = 668
+        },
+        [3] = {
+            bountifulLvl = 662,
+            vaultLvl = 671
+        },
+        [4] = {
+            bountifulLvl = 665,
+            vaultLvl = 681
+        },
+        [5] = {
+            bountifulLvl = 668,
+            vaultLvl = 688
+        },
+        [6] = {
+            bountifulLvl = 671,
+            vaultLvl = 691
+        },
+        [7] = {
+            bountifulLvl = 681,
+            vaultLvl = 691
+        },
+        [8] = {
+            bountifulLvl = 684,
+            vaultLvl = 694
+        },
+        [9] = {
+            bountifulLvl = 684,
+            vaultLvl = 694
+        },
+        [10] = {
+            bountifulLvl = 684,
+            vaultLvl = 694
+        },
+        [11] = {
+            bountifulLvl = 684,
+            vaultLvl = 694
+        }
+    }
+end
 --#endregion

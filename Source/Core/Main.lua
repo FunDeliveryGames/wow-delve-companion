@@ -30,7 +30,6 @@ function DelveCompanion:InitDelvesData()
         ---@field delveName string Localized name of the Delve.
         ---@field parentMapName string Localized name of the map this Delve located in.
         ---@field isTracking boolean Whether player is tracking this Delve.
-        -- ---@field wasBountiful boolean Whether this Delve was bountiful that day.
         ---@field isBountiful boolean Whether this Delve is bountiful now.
         ---@field isOvercharged boolean Whether this Delve is overcharged today.
         local data = {
@@ -40,7 +39,6 @@ function DelveCompanion:InitDelvesData()
             delveName = delveMap.name,
             parentMapName = C_Map.GetMapInfo(delveMap.parentMapID).name,
             isTracking = false,
-            -- wasBountiful = false,
             isBountiful = false,
             isOvercharged = false
         }
@@ -69,7 +67,7 @@ function DelveCompanion:UpdateDelvesData()
             delveData.isBountiful = false
         end
 
-        if delveConfig.overchargedUiWidgetID and not DelveCompanion.Variables.hideForMainline then
+        if delveConfig.overchargedUiWidgetID then
             local visInfo = C_UIWidgetManager.GetSpacerVisualizationInfo(delveConfig.overchargedUiWidgetID)
             delveData.isOvercharged = visInfo and visInfo.shownState == 1
         end
