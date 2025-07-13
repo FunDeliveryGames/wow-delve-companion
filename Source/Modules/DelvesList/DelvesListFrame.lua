@@ -41,9 +41,9 @@ function DelveCompanion_DelvesListFrameMixin:CreateDelveProgressWidget(parent, c
     local widget = CreateFrame("Frame", nil, parent, "DelveCompanionDelveProgressWidgetTemplate")
 
     local defs = DelveCompanion.Definitions
-    do
-        -- Story progress
 
+    -- Story progress
+    do
         local achID = config.achievements.story
         widget.Story:SetFrameInfo(defs.CodeType.Achievement, achID)
 
@@ -64,9 +64,8 @@ function DelveCompanion_DelvesListFrameMixin:CreateDelveProgressWidget(parent, c
         widget.Story:SetOnClick(function() OpenAchievementFrameToAchievement(achID) end)
     end
 
+    -- Chest progress
     do
-        -- Chest progress
-
         local achID = config.achievements.chest
         widget.Chest:SetFrameInfo(defs.CodeType.Achievement, achID)
 
@@ -85,7 +84,7 @@ end
 
 ---@param self DelvesListFrame
 ---@param parent Frame
----@param delveData any
+---@param delveData DelveData
 ---@return DelveInstanceButton
 function DelveCompanion_DelvesListFrameMixin:CreateDelveInstanceButton(parent, delveData)
     ---@type DelveInstanceButton

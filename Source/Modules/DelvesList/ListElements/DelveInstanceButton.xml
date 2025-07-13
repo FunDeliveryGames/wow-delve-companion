@@ -57,6 +57,14 @@
                             relativePoint="BOTTOMRIGHT" x="-5" y="5" />
                     </Anchors>
                 </Texture>
+                <Texture parentKey="NotCompletedStoryIcon"
+                    atlas="QuestLegendary" hidden="true">
+                    <Size x="20" y="20" />
+                    <Anchors>
+                        <Anchor point="RIGHT" relativeKey="$parent.WaypointIcon"
+                            relativePoint="LEFT" x="5" />
+                    </Anchors>
+                </Texture>
             </Layer>
         </Layers>
         <NormalTexture file="Interface\EncounterJournal\UI-EncounterJournalTextures">

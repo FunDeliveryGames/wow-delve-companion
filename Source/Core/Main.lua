@@ -27,8 +27,10 @@ function DelveCompanion:InitDelvesData()
         ---@field config DelveConfig [DelveConfig](lua://DelveConfig) table associated with the Delve.
         ---@field poiID number? Current [areaPoiID](https://wago.tools/db2/areapoi) of the Delve.
         ---@field tomtom any? Reference to TomTom waypoint set for the Delve. `nil` if not set.
-        ---@field delveName string Localized name of the Delve.
         ---@field parentMapName string Localized name of the map this Delve located in.
+        ---@field delveName string Localized name of the Delve.
+        ---@field storyVariant string Localized label of the current story of the Delve.
+        ---@field isStoryCompleted boolean Whether player has completed the current storyVariant.
         ---@field isTracking boolean Whether player is tracking this Delve.
         ---@field isBountiful boolean Whether this Delve is bountiful now.
         ---@field isOvercharged boolean Whether this Delve is overcharged today.
@@ -36,8 +38,10 @@ function DelveCompanion:InitDelvesData()
             config = delveConfig,
             poiID = nil,
             tomtom = nil,
-            delveName = delveMap.name,
             parentMapName = C_Map.GetMapInfo(delveMap.parentMapID).name,
+            delveName = delveMap.name,
+            storyVariant = nil,
+            isStoryCompleted = false,
             isTracking = false,
             isBountiful = false,
             isOvercharged = false
@@ -59,7 +63,7 @@ function DelveCompanion:UpdateDelvesData()
         local parentMapID = C_Map.GetMapInfo(delveConfig.uiMapID).parentMapID
         local poiIDs = delveConfig.poiIDs
 
-        if poiIDs.bountiful and C_AreaPoiInfo.GetAreaPOIInfo(parentMapID, poiIDs.bountiful) then
+        if poiIDs.bountiful and tContains(C_AreaPoiInfo.GetDelvesForMap(parentMapID), poiIDs.bountiful) then
             delveData.poiID = poiIDs.bountiful
             delveData.isBountiful = true
         else
@@ -70,6 +74,33 @@ function DelveCompanion:UpdateDelvesData()
         if delveConfig.overchargedUiWidgetID then
             local visInfo = C_UIWidgetManager.GetSpacerVisualizationInfo(delveConfig.overchargedUiWidgetID)
             delveData.isOvercharged = visInfo and visInfo.shownState == 1
+        end
+
+        local delvePoiInfo = C_AreaPoiInfo.GetAreaPOIInfo(parentMapID, delveData.poiID)
+        if delvePoiInfo and delvePoiInfo.tooltipWidgetSet then
+            local tooltipWidgets = C_UIWidgetManager.GetAllWidgetsBySetID(delvePoiInfo.tooltipWidgetSet)
+
+            if tooltipWidgets then
+                for _, widgetInfo in ipairs(tooltipWidgets) do
+                    if widgetInfo.widgetType == Enum.UIWidgetVisualizationType.TextWithState then
+                        local visInfo = C_UIWidgetManager.GetTextWithStateWidgetVisualizationInfo(widgetInfo.widgetID)
+
+                        if visInfo and visInfo.orderIndex == 0 then
+                            delveData.storyVariant = visInfo.text
+
+                            local achID = delveData.config.achievements.story
+                            for index = 1, GetAchievementNumCriteria(achID), 1 do
+                                local criteriaString, _, completed = GetAchievementCriteriaInfo(achID, index)
+
+                                if string.find(delveData.storyVariant, criteriaString) then
+                                    delveData.isStoryCompleted = completed
+                                    break
+                                end
+                            end
+                        end
+                    end
+                end
+            end
         end
     end
 

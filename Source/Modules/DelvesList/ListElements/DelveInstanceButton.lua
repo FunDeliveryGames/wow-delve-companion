@@ -15,6 +15,9 @@ DelveCompanion_DelveInstanceButtonMixin = CreateFromMixins(DelveCompanion_DelveT
 function DelveCompanion_DelveInstanceButtonMixin:Update()
     self.BountifulIcon:SetShown(self.data.isBountiful)
     self.OverchargedIcon:SetShown(self.data.isOvercharged)
+    if not DelveCompanion.Variables.hideForMainline then
+        self.NotCompletedStoryIcon:SetShown(self.data.config.achievements and not self.data.isStoryCompleted)
+    end
 
     if DelveCompanionAccountData.trackingType == DelveCompanion.Definitions.WaypointTrackingType.tomtom then
         self:CheckTomTomWaypoint()
@@ -75,4 +78,5 @@ end
 ---@field BountifulIcon Texture
 ---@field OverchargedIcon Texture
 ---@field WaypointIcon Texture
+---@field NotCompletedStoryIcon Texture
 --#endregion

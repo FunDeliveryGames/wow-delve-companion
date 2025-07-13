@@ -44,14 +44,26 @@ function DelveCompanion_DelveTrackingButtonMixin:UpdateTooltip()
     GameTooltip_AddColoredDoubleLine(tooltip, data.delveName, iconsSequence,
         _G["NORMAL_FONT_COLOR"], _G["NORMAL_FONT_COLOR"], true)
     GameTooltip_AddHighlightLine(tooltip, data.parentMapName, true)
+    do
+        if not DelveCompanion.Variables.hideForMainline and data.storyVariant then
+            local completionText = data.isStoryCompleted and Lockit.UI_DELVE_STORY_VARIANT_COMPLETED_SEQUENCE or
+                Lockit.UI_DELVE_STORY_VARIANT_NOT_COMPLETED_SEQUENCE
+            local completionColor = data.isStoryCompleted and _G["DIM_GREEN_FONT_COLOR"] or _G["WARNING_FONT_COLOR"]
+            GameTooltip_AddColoredDoubleLine(tooltip, data.storyVariant, completionText,
+                _G["NORMAL_FONT_COLOR"], completionColor, true)
+        end
+    end
+
     GameTooltip_AddBlankLineToTooltip(tooltip)
 
-    local text = Lockit.UI_DELVE_INSTANCE_BUTTON_TOOLTIP_CLICK_INSTRUCTION
-    if data.isTracking then
-        GameTooltip_AddHighlightLine(tooltip, Lockit.UI_DELVE_INSTANCE_BUTTON_TOOLTIP_CURRENT_TEXT, true)
-        text = Lockit.UI_DELVE_INSTANCE_BUTTON_TOOLTIP_CURRENT_INSTRUCTION
+    do
+        local line = Lockit.UI_DELVE_INSTANCE_BUTTON_TOOLTIP_CLICK_INSTRUCTION
+        if data.isTracking then
+            GameTooltip_AddHighlightLine(tooltip, Lockit.UI_DELVE_INSTANCE_BUTTON_TOOLTIP_CURRENT_TEXT, true)
+            line = Lockit.UI_DELVE_INSTANCE_BUTTON_TOOLTIP_CURRENT_INSTRUCTION
+        end
+        GameTooltip_AddInstructionLine(tooltip, line, true)
     end
-    GameTooltip_AddInstructionLine(tooltip, text, true)
 
     tooltip:Show()
 end
@@ -74,7 +86,7 @@ function DelveCompanion_DelveTrackingButtonMixin:SetTomTomWaypoint(delveData)
     local mapInfo = C_Map.GetMapInfo(delveData.config.uiMapID)
     local poiInfo = C_AreaPoiInfo.GetAreaPOIInfo(mapInfo.parentMapID, delveData.poiID)
 
-    -- Blizzard removes Boss Delve POIs from Map with the season change. They can be entered but the API doesn't provide their POIInfo.
+    -- Blizzard removes Nemesis Delves' POI from Map with the season change. Their POIInfo cannot be retrieved from API but they can still be entered.
     -- To set a waypoint, coordinates from the Config are used.
     local posX, posY = -1, -1
     if poiInfo then
