@@ -61,8 +61,9 @@ function DelveCompanion:UpdateDelvesData()
     for _, delveData in ipairs(self.Variables.delvesData) do
         local delveConfig = delveData.config
         local parentMapID = C_Map.GetMapInfo(delveConfig.uiMapID).parentMapID
-        local poiIDs = delveConfig.poiIDs
 
+        local poiIDs = delveConfig.poiIDs
+        -- Bountiful
         if poiIDs.bountiful and tContains(C_AreaPoiInfo.GetDelvesForMap(parentMapID), poiIDs.bountiful) then
             delveData.poiID = poiIDs.bountiful
             delveData.isBountiful = true
@@ -71,12 +72,14 @@ function DelveCompanion:UpdateDelvesData()
             delveData.isBountiful = false
         end
 
+        -- Overcharged
         if delveConfig.overchargedUiWidgetID then
             local visInfo = C_UIWidgetManager.GetSpacerVisualizationInfo(delveConfig.overchargedUiWidgetID)
             delveData.isOvercharged = visInfo and visInfo.shownState == 1
         end
 
         local delvePoiInfo = C_AreaPoiInfo.GetAreaPOIInfo(parentMapID, delveData.poiID)
+        -- Active story
         if delvePoiInfo and delvePoiInfo.tooltipWidgetSet then
             local tooltipWidgets = C_UIWidgetManager.GetAllWidgetsBySetID(delvePoiInfo.tooltipWidgetSet)
 

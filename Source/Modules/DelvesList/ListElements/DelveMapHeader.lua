@@ -5,6 +5,11 @@ local DelveCompanion = AddonTbl.DelveCompanion
 
 --- `Frame` with a map name displayed in the `Delves list` to group Delves.
 ---@class (exact) DelvesMapHeader : DelvesMapHeaderXml
+DelveCompanion_DelvesListMapHeaderMixin = {}
+
+function DelveCompanion_DelvesListMapHeaderMixin:Init(name)
+    self.MapName:SetText(name)
+end
 
 --#region XML Annotations
 

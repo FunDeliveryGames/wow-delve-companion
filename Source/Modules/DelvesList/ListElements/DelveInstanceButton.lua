@@ -12,6 +12,17 @@ local Logger = DelveCompanion.Logger
 DelveCompanion_DelveInstanceButtonMixin = CreateFromMixins(DelveCompanion_DelveTrackingButtonMixin)
 
 ---@param self DelveInstanceButton
+---@param data DelveData
+function DelveCompanion_DelveInstanceButtonMixin:Init(data)
+    self.data = data
+
+    self.DelveName:SetText(data.delveName)
+    if C_Texture.GetAtlasInfo(data.config.atlasBgID) ~= nil then
+        self.DelveArtBg:SetAtlas(data.config.atlasBgID)
+    end
+end
+
+---@param self DelveInstanceButton
 function DelveCompanion_DelveInstanceButtonMixin:Update()
     self.BountifulIcon:SetShown(self.data.isBountiful)
     self.OverchargedIcon:SetShown(self.data.isOvercharged)

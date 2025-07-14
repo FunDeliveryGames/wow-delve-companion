@@ -27,7 +27,7 @@ DelveCompanion_DelvesListFrameMixin = {}
 function DelveCompanion_DelvesListFrameMixin:CreateMapHeader(parent, mapName)
     ---@type DelvesMapHeader
     local header = CreateFrame("Frame", nil, parent, "DelveCompanionDelveMapHeaderTemplate")
-    header.MapName:SetText(mapName)
+    header:Init(mapName)
 
     return header
 end
@@ -39,45 +39,7 @@ end
 function DelveCompanion_DelvesListFrameMixin:CreateDelveProgressWidget(parent, config)
     ---@type DelvesProgressWidget
     local widget = CreateFrame("Frame", nil, parent, "DelveCompanionDelveProgressWidgetTemplate")
-
-    local defs = DelveCompanion.Definitions
-
-    -- Story progress
-    do
-        local achID = config.achievements.story
-        widget.Story:SetFrameInfo(defs.CodeType.Achievement, achID)
-
-        local totalCount = GetAchievementNumCriteria(achID)
-        local completedCount = 0
-        for index = 1, totalCount, 1 do
-            ---@type boolean
-            local completed = select(3, GetAchievementCriteriaInfo(achID, index))
-            if completed then
-                completedCount = completedCount + 1
-            end
-        end
-        local text = format(_G["GENERIC_FRACTION_STRING"], completedCount, totalCount)
-        if completedCount == totalCount then
-            text = _G["GREEN_FONT_COLOR"]:WrapTextInColorCode(text)
-        end
-        widget.Story:SetLabelText(text)
-        widget.Story:SetOnClick(function() OpenAchievementFrameToAchievement(achID) end)
-    end
-
-    -- Chest progress
-    do
-        local achID = config.achievements.chest
-        widget.Chest:SetFrameInfo(defs.CodeType.Achievement, achID)
-
-        ---@type number, number
-        local quantity, reqQuantity = select(4, GetAchievementCriteriaInfo(achID, 1))
-        local text = format(_G["GENERIC_FRACTION_STRING"], quantity, reqQuantity)
-        if quantity == reqQuantity then
-            text = _G["GREEN_FONT_COLOR"]:WrapTextInColorCode(text)
-        end
-        widget.Chest:SetLabelText(text)
-        widget.Chest:SetOnClick(function() OpenAchievementFrameToAchievement(achID) end)
-    end
+    widget:Init(config.achievements.story, config.achievements.chest)
 
     return widget
 end
@@ -89,12 +51,7 @@ end
 function DelveCompanion_DelvesListFrameMixin:CreateDelveInstanceButton(parent, delveData)
     ---@type DelveInstanceButton
     local item = CreateFrame("Button", nil, parent, "DelveCompanionDelveInstanceButtonTemplate")
-    item.data = delveData
-
-    item.DelveName:SetText(delveData.delveName)
-    if C_Texture.GetAtlasInfo(delveData.config.atlasBgID) ~= nil then
-        item.DelveArtBg:SetAtlas(delveData.config.atlasBgID)
-    end
+    item:Init(delveData)
 
     return item
 end

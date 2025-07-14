@@ -103,7 +103,7 @@ local function OnSettingChanged(_, changedVarKey, newValue)
     elseif changedVarKey == "gvDetailsEnabled" then
         DelvesDashboard.GreatVault.CustomDetails.shouldRefresh = true
     elseif changedVarKey == "dashOverviewEnabled" then
-        DelvesDashboard.Overview:ToggleShown(newValue)
+        DelvesDashboard.Overview:SetShown(newValue)
         UpdateButtonPanelSpacing()
     end
 end
