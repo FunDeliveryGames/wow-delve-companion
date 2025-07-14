@@ -65,12 +65,12 @@ end
 --#region XML Annotations
 
 --- `DelveCompanionOverviewBountifulFrameTemplate.ActiveDelves`
----@class OverviewBountifulFrameActiveDelvesXml : Frame
+---@class (exact) OverviewBountifulFrameActiveDelvesXml : Frame
 ---@field NoBountifulLabel FontString
 ---@field Container HorizontalLayoutFrame
 
 --- `DelveCompanionOverviewBountifulFrameTemplate`
----@class OverviewBountifulFrameXml : Frame
+---@class (exact) OverviewBountifulFrameXml : Frame
 ---@field Divider Texture
 ---@field Title FontString
 ---@field DelveOBotWidget DelveOBotWidget

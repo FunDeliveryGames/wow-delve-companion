@@ -20,6 +20,8 @@ function DelveCompanion_DelveInstanceButtonMixin:Init(data)
     if C_Texture.GetAtlasInfo(data.config.atlasBgID) ~= nil then
         self.DelveArtBg:SetAtlas(data.config.atlasBgID)
     end
+
+    self.RightIconsContainer:Layout()
 end
 
 ---@param self DelveInstanceButton
@@ -27,7 +29,8 @@ function DelveCompanion_DelveInstanceButtonMixin:Update()
     self.BountifulIcon:SetShown(self.data.isBountiful)
     self.OverchargedIcon:SetShown(self.data.isOvercharged)
     if not DelveCompanion.Variables.hideForMainline then
-        self.NotCompletedStoryIcon:SetShown(self.data.config.achievements and not self.data.isStoryCompleted)
+        self.RightIconsContainer.NotCompletedStoryIcon:SetShown(self.data.config.achievements and
+            not self.data.isStoryCompleted)
     end
 
     if DelveCompanionAccountData.trackingType == DelveCompanion.Definitions.WaypointTrackingType.tomtom then
@@ -35,11 +38,14 @@ function DelveCompanion_DelveInstanceButtonMixin:Update()
     else
         self:OnSuperTrackChanged()
     end
+    self.RightIconsContainer.WaypointIcon:SetShown(self.data.isTracking)
+
+    self.RightIconsContainer:Layout()
 end
 
 ---@param self DelveInstanceButton
 function DelveCompanion_DelveInstanceButtonMixin:OnEvent(event, ...)
-    self:OnSuperTrackChanged()
+    self:Update()
 end
 
 ---@param self DelveInstanceButton
@@ -81,13 +87,16 @@ end
 
 --#region XML Annotations
 
+---@class (exact) RightIconsContainer : HorizontalLayoutFrame
+---@field WaypointIcon Frame
+---@field NotCompletedStoryIcon Frame
+
 --- `DelveCompanionDelveInstanceButtonTemplate`
----@class DelveInstanceButtonXml : Button
+---@class (exact) DelveInstanceButtonXml : Button
 ---@field DefaultBg Texture
 ---@field DelveArtBg Texture
 ---@field DelveName FontString
 ---@field BountifulIcon Texture
 ---@field OverchargedIcon Texture
----@field WaypointIcon Texture
----@field NotCompletedStoryIcon Texture
+---@field RightIconsContainer RightIconsContainer
 --#endregion

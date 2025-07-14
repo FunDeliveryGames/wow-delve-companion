@@ -171,7 +171,7 @@ end
 --#region XML Annotations
 
 --- `DelveCompanionGreatVaultItemTemplate`
----@class GVDetailsItemXml : Frame
+---@class (exact) GVDetailsItemXml : Frame
 ---@field layoutIndex number
 ---@field ItemInfoLabel FontString
 

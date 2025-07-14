@@ -56,12 +56,12 @@ end
 --#region XML Annotations
 
 --- `DelveCompanionColumnWithTitleTemplate`
----@class ColumnWithTitleXml : Frame
+---@class (exact) ColumnWithTitleXml : Frame
 ---@field Title FontString
 ---@field Text FontString
 
 --- `DelveCompanionLootInfoFrameTemplate`
----@class LootInfoFrameXml : Frame
+---@class (exact) LootInfoFrameXml : Frame
 ---@field Header FontString
 ---@field CloseButton Button
 ---@field DelveTiers ColumnWithTitleXml

@@ -117,7 +117,7 @@ end
 --#region XML Annotations
 
 --- `DelveCompanionOverviewGildedStashFrameTemplate`
----@class GildedStashFrameXml : Frame
+---@class (exact) GildedStashFrameXml : Frame
 ---@field Name FontString
 ---@field ErrorLabel FontString
 ---@field Container HorizontalLayoutFrame

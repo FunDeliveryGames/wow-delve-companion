@@ -14,7 +14,7 @@ end
 --#region XML Annotations
 
 --- `DelveCompanionDelveMapHeaderTemplate`
----@class DelvesMapHeaderXml : Frame
+---@class (exact) DelvesMapHeaderXml : Frame
 ---@field Background Texture
 ---@field MapName FontString Localized name of the map
 --#endregion

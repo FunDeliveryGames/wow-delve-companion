@@ -115,7 +115,7 @@ end
 --#region XML Annotations
 
 --- `DelveCompanionDashboardExpBarTemplate`
----@class DashboardExpBarXml : StatusBar
+---@class (exact) DashboardExpBarXml : StatusBar
 ---@field Background Texture
 ---@field BarText FontString
 

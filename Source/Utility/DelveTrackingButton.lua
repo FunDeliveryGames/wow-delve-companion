@@ -71,13 +71,11 @@ end
 ---@param self DelveInstanceButton|OverviewBountifulButton
 function DelveCompanion_DelveTrackingButtonMixin:SetTracking()
     self.data.isTracking = true
-    self.WaypointIcon:Show()
 end
 
 ---@param self DelveInstanceButton|OverviewBountifulButton
 function DelveCompanion_DelveTrackingButtonMixin:ClearTracking()
     self.data.isTracking = false
-    self.WaypointIcon:Hide()
 end
 
 ---@param self DelveInstanceButton|OverviewBountifulButton
@@ -113,6 +111,8 @@ function DelveCompanion_DelveTrackingButtonMixin:SetTomTomWaypoint(delveData)
         mapInfo.parentMapID,
         posX, posY,
         options)
+
+    self:SetTracking()
 end
 
 ---@param self DelveInstanceButton|OverviewBountifulButton
@@ -140,7 +140,6 @@ function DelveCompanion_DelveTrackingButtonMixin:ToggleTracking()
             self:ClearTomTomWaypoint()
         else
             self:SetTomTomWaypoint(delveData)
-            self:SetTracking()
         end
     else
         if delveData.isTracking then
@@ -149,7 +148,9 @@ function DelveCompanion_DelveTrackingButtonMixin:ToggleTracking()
             C_SuperTrack.SetSuperTrackedMapPin(Enum.SuperTrackingMapPinType.AreaPOI, delveData.poiID)
         end
     end
+
     self:UpdateTooltip()
+    self:Update()
 end
 
 ---@param self DelveInstanceButton|OverviewBountifulButton

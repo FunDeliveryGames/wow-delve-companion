@@ -49,24 +49,59 @@
                             relativePoint="RIGHT" x="2" y="2" />
                     </Anchors>
                 </Texture>
-                <Texture parentKey="WaypointIcon"
-                    atlas="Waypoint-MapPin-Minimap-Tracked" hidden="true">
-                    <Size x="32" y="32" />
-                    <Anchors>
-                        <Anchor point="BOTTOMRIGHT" relativeKey="$parentBackground"
-                            relativePoint="BOTTOMRIGHT" x="-5" y="5" />
-                    </Anchors>
-                </Texture>
-                <Texture parentKey="NotCompletedStoryIcon"
-                    atlas="QuestLegendary" hidden="true">
-                    <Size x="20" y="20" />
-                    <Anchors>
-                        <Anchor point="RIGHT" relativeKey="$parent.WaypointIcon"
-                            relativePoint="LEFT" x="5" />
-                    </Anchors>
-                </Texture>
             </Layer>
         </Layers>
+        <Frames>
+            <Frame parentKey="RightIconsContainer" inherits="HorizontalLayoutFrame">
+                <KeyValues>
+                    <KeyValue key="expand" value="false" type="boolean" />
+                    <KeyValue key="spacing" value="-8" type="number" />
+                    <KeyValue key="maximumWidth" value="140" type="number" />
+                    <KeyValue key="align" value="center" type="string" />
+                    <KeyValue key="childLayoutDirection" value="rightToLeft" type="string" />
+                </KeyValues>
+                <Anchors>
+                    <Anchor point="BOTTOMRIGHT" relativeKey="$parentBackground"
+                        relativePoint="BOTTOMRIGHT" x="-5" y="5" />
+                </Anchors>
+                <Frames>
+                    <Frame parentKey="WaypointIcon" hidden="true">
+                        <Size x="32" y="32" />
+                        <KeyValues>
+                            <KeyValue key="layoutIndex" value="1" type="number" />
+                        </KeyValues>
+                        <Layers>
+                            <Layer level="OVERLAY">
+                                <Texture parentKey="Icon"
+                                    atlas="Waypoint-MapPin-Minimap-Tracked">
+                                    <Size x="32" y="32" />
+                                    <Anchors>
+                                        <Anchor point="CENTER" />
+                                    </Anchors>
+                                </Texture>
+                            </Layer>
+                        </Layers>
+                    </Frame>
+                    <Frame parentKey="NotCompletedStoryIcon" hidden="true">
+                        <Size x="32" y="32" />
+                        <KeyValues>
+                            <KeyValue key="layoutIndex" value="2" type="number" />
+                        </KeyValues>
+                        <Layers>
+                            <Layer level="OVERLAY">
+                                <Texture parentKey="Icon"
+                                    atlas="QuestLegendary">
+                                    <Size x="20" y="20" />
+                                    <Anchors>
+                                        <Anchor point="CENTER" />
+                                    </Anchors>
+                                </Texture>
+                            </Layer>
+                        </Layers>
+                    </Frame>
+                </Frames>
+            </Frame>
+        </Frames>
         <NormalTexture file="Interface\EncounterJournal\UI-EncounterJournalTextures">
             <Size x="174" y="96" />
             <TexCoords left="0.00195313" right="0.34179688" top="0.42871094" bottom="0.52246094" />

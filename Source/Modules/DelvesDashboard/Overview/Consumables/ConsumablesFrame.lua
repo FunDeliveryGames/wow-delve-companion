@@ -115,7 +115,7 @@ end
 --#region XML Annotations
 
 --- `DelveCompanionOverviewConsumablesFrameTemplate`
----@class OverviewConsumablesFrameXml : Frame
+---@class (exact) OverviewConsumablesFrameXml : Frame
 ---@field Keys CustomActionWidget
 ---@field Shards CustomActionWidget
 ---@field BountyMap CustomActionWidget

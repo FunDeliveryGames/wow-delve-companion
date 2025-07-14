@@ -203,16 +203,22 @@ end
 
 --#region XML Annotations
 
+--- `CompanionConfigListTemplate` ([Blizzard template](https://www.townlong-yak.com/framexml/live/Blizzard_DelvesCompanionConfiguration/Blizzard_DelvesCompanionConfiguration.xml#120)).
+---@class (exact) CompanionConfigListXml : Frame
+---@field Top Texture
+---@field Pin Texture Created by the addon
+
+
 --- `CompanionConfigSlotTemplate` ([Blizzard template](https://www.townlong-yak.com/framexml/live/Blizzard_DelvesCompanionConfiguration/Blizzard_DelvesCompanionConfiguration.xml#4)).
----@class CompanionConfigSlotXml : Button
+---@class (exact) CompanionConfigSlotXml : Button
 ---@field type string
 ---@field Label FontString
 ---@field Value FontString
 ---@field Texture Texture
----@field OptionsList Frame
+---@field OptionsList CompanionConfigListXml
 
 --- `DelveCompanionDashboardCompanionConfigWidgetTemplate`
----@class CompanionConfigWidgetXml : Frame
+---@class (exact) CompanionConfigWidgetXml : Frame
 ---@field RoleSlot CompanionConfigSlotXml
 ---@field CombatSlot CompanionConfigSlotXml
 ---@field UtilitySlot CompanionConfigSlotXml

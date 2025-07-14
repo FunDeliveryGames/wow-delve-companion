@@ -112,7 +112,7 @@ end
 --#region XML Annotations
 
 --- `DelveCompanionGreatVaultDetailsFrame`
----@class GVDetailsXml : Frame
+---@class (exact) GVDetailsXml : Frame
 ---@field LoadingLabel FontString
 ---@field GVButton MagicButton
 ---@field Rewards VerticalLayoutFrame
