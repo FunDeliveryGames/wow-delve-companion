@@ -95,7 +95,7 @@ function DelveCompanion:UpdateDelvesData()
                             for index = 1, GetAchievementNumCriteria(achID), 1 do
                                 local criteriaString, _, completed = GetAchievementCriteriaInfo(achID, index)
 
-                                if string.find(delveData.storyVariant, criteriaString) then
+                                if string.find(string.lower(delveData.storyVariant), string.lower(criteriaString)) then
                                     delveData.isStoryCompleted = completed
                                     break
                                 end

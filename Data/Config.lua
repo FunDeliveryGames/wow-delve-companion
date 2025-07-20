@@ -420,7 +420,7 @@ if not DelveCompanion.Variables.hideForMainline then
     table.insert(Config.DELVES_CONFIG,
         --"Voidrazor Sanctuary"
         {
-            uiMapID = 2348, -- FIXME
+            uiMapID = 2484,
             poiIDs = {
                 regular = 8323
             },
