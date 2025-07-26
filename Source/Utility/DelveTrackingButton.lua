@@ -41,9 +41,14 @@ function DelveCompanion_DelveTrackingButtonMixin:UpdateTooltip()
         iconsSequence = string.join("", iconsSequence, OVERCHARGED_ICON_SEQUENCE)
     end
 
-    GameTooltip_AddColoredDoubleLine(tooltip, data.delveName, iconsSequence,
-        _G["NORMAL_FONT_COLOR"], _G["NORMAL_FONT_COLOR"], true)
+    -- Title + icons
+    GameTooltip_AddColoredDoubleLine(tooltip,
+        data.delveName, iconsSequence,
+        _G["NORMAL_FONT_COLOR"], _G["NORMAL_FONT_COLOR"],
+        true)
+    -- Parent map
     GameTooltip_AddHighlightLine(tooltip, data.parentMapName, true)
+    -- Active story + completion state
     do
         if not DelveCompanion.Variables.hideForMainline and data.storyVariant then
             local completionText = data.isStoryCompleted and Lockit.UI_DELVE_STORY_VARIANT_COMPLETED_SEQUENCE or
@@ -56,6 +61,7 @@ function DelveCompanion_DelveTrackingButtonMixin:UpdateTooltip()
 
     GameTooltip_AddBlankLineToTooltip(tooltip)
 
+    -- Tracking instruction
     do
         local line = Lockit.UI_DELVE_INSTANCE_BUTTON_TOOLTIP_CLICK_INSTRUCTION
         if data.isTracking then

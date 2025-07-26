@@ -10,6 +10,10 @@ local Config = DelveCompanion.Config
 ---@type Lockit
 local Lockit = DelveCompanion.Lockit
 
+--#region Constants
+
+--#endregion
+
 --- Compose a locale for [Delver's Bounty](https://www.wowhead.com/item=233071/delvers-bounty) looted this week.
 ---@return string # Composed locale.
 local function GetMapInfoText()
@@ -33,12 +37,13 @@ end
 local function GetKeysInfoText()
     local weekText = strtrim(format(_G["CURRENCY_THIS_WEEK"], Lockit.UI_BOUNTIFUL_KEYS_COUNT_CACHES_PREFIX))
     local keysCollected = DelveCompanion.Variables.keysCollected
-    local keysAmountWrapColor = keysCollected ~= Config.BOUNTIFUL_KEY_MAX_PER_WEEK
+    local maxKeys = #Config.BOUNTIFUL_KEY_QUESTS_DATA
+    local keysAmountWrapColor = keysCollected ~= maxKeys
         and _G["GREEN_FONT_COLOR"]
         or _G["WHITE_FONT_COLOR"]
 
     local keysAmountText = keysAmountWrapColor:WrapTextInColorCode(format(_G["GENERIC_FRACTION_STRING"],
-        keysCollected, Config.BOUNTIFUL_KEY_MAX_PER_WEEK))
+        keysCollected, maxKeys))
     local keysInfoText = format("%s%s", _G["NORMAL_FONT_COLOR"]:WrapTextInColorCode(weekText .. ": "),
         keysAmountText)
 
@@ -99,8 +104,10 @@ local function TooltipPostCallItem(tooltipDataHandler, ...)
             line:SetText(text)
         end
     elseif FindInTable(Config.BOUNTIFUL_KEY_SOURCE_CACHES_DATA, tooltipId) then
+        local iconPath = C_CurrencyInfo.GetCurrencyInfo(Config.BOUNTIFUL_KEY_CURRENCY_CODE).iconFileID
+        local lineText = string.join("", GetKeysInfoText(), " |T", iconPath, ":20|t")
         GameTooltip_AddBlankLineToTooltip(tooltipDataHandler)
-        GameTooltip_AddHighlightLine(tooltipDataHandler, GetKeysInfoText(), true)
+        GameTooltip_AddHighlightLine(tooltipDataHandler, lineText, true)
     end
 end
 

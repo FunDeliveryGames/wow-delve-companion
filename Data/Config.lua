@@ -40,6 +40,7 @@ Config.EXPANSION_MAX_LEVEL = 80
 
 ---@type integer Item ID of [Delve-O-Bot 7001](https://www.wowhead.com/item=230850/delve-o-bot-7001).
 Config.DELVE_O_BOT_ITEM_CODE = 230850
+
 --#region Great Vault
 
 ---@type integer Delves' Activity ID to retrieve Great Vault rewards state.
@@ -54,16 +55,19 @@ Config.BOUNTIFUL_COFFER_ITEM_CODE = 228942
 
 ---@type integer Currency ID of [Restored Coffer Key](https://www.wowhead.com/currency=3028/restored-coffer-key).
 Config.BOUNTIFUL_KEY_CURRENCY_CODE = 3028
----@type integer Weekly cap of [Restored Coffer Keys](https://www.wowhead.com/currency=3028/restored-coffer-key) player can get from Caches like [Pinnacle Cache](https://www.wowhead.com/item=239118/pinnacle-cache).
-Config.BOUNTIFUL_KEY_MAX_PER_WEEK = 4
----@type table<integer, number> Indexed table of Quest IDs used to track [Restored Coffer Keys](https://www.wowhead.com/currency=3028/restored-coffer-key) player has received during the week.
+---@type integer Amount of [Coffer Key Shards](https://www.wowhead.com/item=236096/coffer-key-shard) player gets from a Cache like [Pinnacle Cache](https://www.wowhead.com/item=239118/pinnacle-cache).
+Config.KEY_SHARDS_PER_CACHE = 50
+---@type integer Amount of [Coffer Key Shards](https://www.wowhead.com/item=236096/coffer-key-shard) required to assemble [Restored Coffer Key](https://www.wowhead.com/currency=3028/restored-coffer-key).
+Config.SHARDS_FOR_KEY = 100
+
+---@type table<integer, number> Table of Quest IDs used to track [Restored Coffer Keys](https://www.wowhead.com/currency=3028/restored-coffer-key) player has received during the week.
 Config.BOUNTIFUL_KEY_QUESTS_DATA = {
-    [1] = 84736,
-    [2] = 84737,
-    [3] = 84738,
-    [4] = 84739
+    84736,
+    84737,
+    84738,
+    84739
 }
----@type table<integer, number> Indexed table of Caches containing [Restored Coffer Keys](https://www.wowhead.com/currency=3028/restored-coffer-key) (e.g. [Pinnacle Cache](https://www.wowhead.com/item=239118/pinnacle-cache)).
+---@type table<integer, number> Table of Caches containing [Restored Coffer Keys](https://www.wowhead.com/currency=3028/restored-coffer-key) (e.g. [Pinnacle Cache](https://www.wowhead.com/item=239118/pinnacle-cache)).
 Config.BOUNTIFUL_KEY_SOURCE_CACHES_DATA = {
     -- TWW Season 1
     226263,
@@ -86,10 +90,81 @@ Config.BOUNTIFUL_KEY_SOURCE_CACHES_DATA = {
     235639,
     235610,
     239120,
-    -- TWW Season 3
     -- Others
     233014
 }
+---@type table<integer, number> Table of Quest IDs used to track [Coffer Key Shards](https://www.wowhead.com/currency=3028/restored-coffer-key) player has received during the week.
+Config.KEY_SHARD_QUESTS_DATA = {
+}
+---@type table<integer, number> Table of Caches containing [Coffer Key Shards](https://www.wowhead.com/currency=3028/restored-coffer-key) (e.g. [Pinnacle Cache](https://www.wowhead.com/item=239118/pinnacle-cache)).
+Config.KEY_SHARD_SOURCE_CACHES_DATA = {
+}
+
+if not DelveCompanion.Variables.hideForMainline then
+    Config.BOUNTIFUL_KEY_QUESTS_DATA = {
+        91175,
+        91176,
+        91177,
+        91178
+    }
+    Config.BOUNTIFUL_KEY_SOURCE_CACHES_DATA = {
+        -- TWW Season 3
+        244842,
+        244865,
+        245611
+    }
+
+    Config.KEY_SHARD_QUESTS_DATA = {
+        84736,
+        84737,
+        84738,
+        84739
+    }
+    Config.KEY_SHARD_SOURCE_CACHES_DATA = {
+        -- TWW Season 1
+        226263,
+        226273,
+        226264,
+        224784,
+        225571,
+        225572,
+        225573,
+        228361,
+        -- TWW Season 2
+        239128,
+        239121,
+        239126,
+        239125,
+        239118,
+        239122,
+        239124,
+        238208,
+        235639,
+        235610,
+        239120,
+        -- TWW Season 3
+        244883,
+        244865,
+        245280,
+        250768,
+        250766,
+        250765,
+        250769,
+        250763,
+        250764,
+        250767,
+        -- Others
+        233014
+    }
+end
+--#endregion
+
+--#region Delver's Bounty
+
+---@type integer Weekly cap of [Delver's Bounty](https://www.wowhead.com/item=233071/delvers-bounty).
+Config.BOUNTY_MAP_MAX_PER_WEEK = 1
+---@type integer Quest ID used to track whether player has looted [Delver's Bounty](https://www.wowhead.com/item=233071/delvers-bounty) during the week.
+Config.BOUNTY_MAP_QUEST = 86371
 --#endregion
 
 --#region Gilded Stash
@@ -102,10 +177,6 @@ Config.GILDED_STASH_WEEKLY_CAP = 3
 
 --#region Delve-related entities which are updated every season
 
----@type integer Weekly cap of [Delver's Bounty](https://www.wowhead.com/item=233071/delvers-bounty).
-Config.BOUNTY_MAP_MAX_PER_WEEK = 1
----@type integer Quest ID used to track whether player has looted [Delver's Bounty](https://www.wowhead.com/item=233071/delvers-bounty) during the week.
-Config.BOUNTY_MAP_QUEST = 86371
 ---@type integer Item ID of [Delver's Bounty](https://www.wowhead.com/item=233071/delvers-bounty).
 Config.BOUNTY_MAP_ITEM_CODE = 233071
 if not DelveCompanion.Variables.hideForMainline then
@@ -118,8 +189,6 @@ if not DelveCompanion.Variables.hideForMainline then
     Config.ECHO_ITEM_CODE = 246771
 end
 
----@type integer Number of [Coffer Key Shards](https://www.wowhead.com/item=236096/coffer-key-shard) required to assemble [Restored Coffer Key](https://www.wowhead.com/currency=3028/restored-coffer-key).
-Config.SHARDS_FOR_KEY = 100
 ---@type integer Item ID of [Coffer Key Shard](https://www.wowhead.com/item=236096/coffer-key-shard).
 Config.KEY_SHARD_ITEM_CODE = 236096
 if not DelveCompanion.Variables.hideForMainline then

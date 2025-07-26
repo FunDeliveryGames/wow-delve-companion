@@ -21,7 +21,7 @@ function DelveCompanion_OverviewConsumablesFrameMixin:UpdateConsumables()
         self.Keys:SetLabelText(keysCount)
 
         self.Keys.Icon:SetDesaturated(keysCount == 0 and
-            DelveCompanion.Variables.keysCollected >= Config.BOUNTIFUL_KEY_MAX_PER_WEEK)
+            DelveCompanion.Variables.keysCollected >= #Config.BOUNTIFUL_KEY_QUESTS_DATA)
     end
 
     -- Delver's Bounty
