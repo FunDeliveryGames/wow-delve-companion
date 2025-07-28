@@ -5,5 +5,5 @@
 	<Script file="CustomActionWidget.lua" />
 	<Include file="DelveOBotWidget.xml" />
 	<Script file="DelveOBotWidget.lua" />
-	<Script file="DelveTrackingButton.lua" />
+	<Script file="DelveWaypointTracker.lua" />
 </Ui>

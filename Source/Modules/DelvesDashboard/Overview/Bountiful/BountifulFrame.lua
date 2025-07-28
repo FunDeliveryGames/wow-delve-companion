@@ -40,9 +40,7 @@ function DelveCompanion_OverviewBountifulFrameMixin:OnShow()
         if delveData.isBountiful then
             ---@type OverviewBountifulButton
             local button = self.bountifulButtonsPool:Acquire()
-            button.layoutIndex = index
-            button.data = delveData
-
+            button:Init(delveData, index)
             button:Show()
         end
     end

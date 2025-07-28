@@ -26,12 +26,11 @@ function DelveCompanion:InitDelvesData()
         ---@class (exact) DelveData
         ---@field config DelveConfig [DelveConfig](lua://DelveConfig) table associated with the Delve.
         ---@field poiID number? Current [areaPoiID](https://wago.tools/db2/areapoi) of the Delve.
-        ---@field tomtom any? Reference to TomTom waypoint set for the Delve. `nil` if not set.
+        ---@field tomtom table? Reference to TomTom waypoint set for the Delve. `nil` if not set.
         ---@field parentMapName string Localized name of the map this Delve located in.
         ---@field delveName string Localized name of the Delve.
         ---@field storyVariant string Localized label of the current story of the Delve.
         ---@field isStoryCompleted boolean Whether player has completed the current storyVariant.
-        ---@field isTracking boolean Whether player is tracking this Delve.
         ---@field isBountiful boolean Whether this Delve is bountiful now.
         ---@field isOvercharged boolean Whether this Delve is overcharged today.
         local data = {
@@ -42,7 +41,6 @@ function DelveCompanion:InitDelvesData()
             delveName = delveMap.name,
             storyVariant = nil,
             isStoryCompleted = false,
-            isTracking = false,
             isBountiful = false,
             isOvercharged = false
         }

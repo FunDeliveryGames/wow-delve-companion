@@ -6,9 +6,10 @@ local DelveCompanion = AddonTbl.DelveCompanion
 ---@type Logger
 local Logger = DelveCompanion.Logger
 
----@class (exact) OverviewBountifulButton : OverviewBountifulButtonXml, DelveTrackingButton
+---@class (exact) OverviewBountifulButton : OverviewBountifulButtonXml
 ---@field data DelveData
-DelveCompanion_OverviewBountifulButtonMixin = CreateFromMixins(DelveCompanion_DelveTrackingButtonMixin)
+---@field waypointTracker DelveWaypointTracker
+DelveCompanion_OverviewBountifulButtonMixin = {}
 
 ---@param self OverviewBountifulButton
 function DelveCompanion_OverviewBountifulButtonMixin:OnLoad()
@@ -24,17 +25,20 @@ function DelveCompanion_OverviewBountifulButtonMixin:Init(data, index)
     ---@diagnostic disable-next-line: inject-field
     self.layoutIndex = index
     self.data = data
+
+    local waypointTracker = CreateFromMixins(DelveCompanion_DelveWaypointMixin)
+    waypointTracker:Prepare()
+    self.waypointTracker = waypointTracker
 end
 
 ---@param self OverviewBountifulButton
 function DelveCompanion_OverviewBountifulButtonMixin:Update()
-    if DelveCompanion.Variables.tomTomAvailable and DelveCompanionAccountData.trackingType == DelveCompanion.Definitions.WaypointTrackingType.tomtom then
-        self:CheckTomTomWaypoint()
-    else
-        self:OnSuperTrackChanged()
-    end
+    self.waypointTracker.Update(self.data)
+    self.WaypointIcon:SetShown(self.waypointTracker.isActive)
 
-    self.WaypointIcon:SetShown(self.data.isTracking)
+    ---@type number
+    local achIcon = select(10, GetAchievementInfo(self.data.config.achievements.story))
+    self.ArtBg:SetTexture(achIcon)
 end
 
 ---@param self OverviewBountifulButton
@@ -47,11 +51,6 @@ function DelveCompanion_OverviewBountifulButtonMixin:OnShow()
     -- Logger.Log("OverviewBountifulButton OnShow start")
 
     self:RegisterEvent("SUPER_TRACKING_CHANGED")
-
-    ---@type number
-    local achIcon = select(10, GetAchievementInfo(self.data.config.achievements.story))
-    self.ArtBg:SetTexture(achIcon)
-
     self:Update()
 end
 
@@ -62,7 +61,7 @@ end
 
 ---@param self OverviewBountifulButton
 function DelveCompanion_OverviewBountifulButtonMixin:OnEnter()
-    self:UpdateTooltip()
+    self.waypointTracker:DisplayDelveTooltip(self, "ANCHOR_TOP", self.data)
 end
 
 ---@param self OverviewBountifulButton
@@ -72,8 +71,10 @@ end
 
 ---@param self OverviewBountifulButton
 function DelveCompanion_OverviewBountifulButtonMixin:OnClick()
-    if IsShiftKeyDown() then
-        self:ToggleTracking()
+    if self.waypointTracker:VerifyInput() then
+        self.waypointTracker:ToggleTracking(self.data)
+        self:Update()
+        self.waypointTracker:DisplayDelveTooltip(self, "ANCHOR_TOP", self.data)
     end
 end
 
