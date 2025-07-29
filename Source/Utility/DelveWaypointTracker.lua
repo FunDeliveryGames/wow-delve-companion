@@ -10,9 +10,11 @@ local Lockit = DelveCompanion.Lockit
 
 --#region Constants
 
-local TOM_TOM_WAYPOINT_DISTANCE_CLEAR = 10
 local BOUNTIFUL_ICON_SEQUENCE = "|A:delves-bountiful:24:24|a"
 local OVERCHARGED_ICON_SEQUENCE = "|TInterface\\Icons\\achievement_legionpvp2tier5:20|t"
+local TOM_TOM_WAYPOINT_DISTANCE_CLEAR = 10
+local MPE_DELVE_REGULAR_ATLAS_NAME = "delves-regular"
+local MPE_DELVE_BOUNTIFUL_ATLAS_NAME = "delves-bountiful"
 --#endregion
 
 ---@class (exact) DelveWaypointTracker
@@ -108,6 +110,72 @@ local function CheckSuperTrackPin(poiID)
 end
 --#endregion
 
+--#region MapPinEnhanced tracking
+
+-- TODO: replace if MPE provides it via API
+local function GetMPEStoredPins()
+    return MapPinEnhancedDB.storedPins
+end
+
+---@param delveData DelveData
+local function CheckMPEWaypoint(delveData)
+    local pins = GetMPEStoredPins()
+
+    if pins == nil or #pins == 0 then
+        return false
+    end
+
+    for _, value in ipairs(pins) do
+        ---@type pinData
+        local pin = value
+
+        if pin.title == delveData.delveName and (pin.texture == MPE_DELVE_REGULAR_ATLAS_NAME or pin.texture == MPE_DELVE_BOUNTIFUL_ATLAS_NAME) then
+            return true
+        end
+    end
+
+    return false
+end
+
+---@param delveData DelveData
+local function AddMPEWaypoint(delveData)
+    local parentMapID = C_Map.GetMapInfo(delveData.config.uiMapID).parentMapID
+
+    local posX, posY = -1, -1
+    if delveData.config.coordinates then
+        posX = delveData.config.coordinates.x
+        posY = delveData.config.coordinates.y
+    else
+        local poiInfo = C_AreaPoiInfo.GetAreaPOIInfo(parentMapID, delveData.poiID)
+        posX = poiInfo.position.x
+        posY = poiInfo.position.y
+    end
+
+    ---@class pinData From MapPinEnhanced -> pinFactory.lua
+    ---@field mapID number
+    ---@field x number x coordinate between 0 and 1
+    ---@field y number y coordinate between 0 and 1
+    ---@field setTracked boolean? set to true to autotrack this pin on creation
+    ---@field title string? title of the pin
+    ---@field texture string? an optional texture to use for the pin this will override the color
+    ---@field usesAtlas boolean? if true, the texture is an atlas, otherwise it is a file path
+    ---@field color string? the color of the pin, if texture is set, this will be ignored -> the colors are predefined names in CONSTANTS.PIN_COLORS
+    ---@field lock boolean? if true, the pin will be not be removed automatically when it has been reached
+    ---@field order number? the order of the pin: the lower the number, the higher the pin will be displayed on the tracker -> if not set, the pin will be displayed at the end of the tracker
+    local pinData = {
+        mapID = parentMapID,
+        x = posX,
+        y = posY,
+        title = delveData.delveName,
+        texture = delveData.isBountiful and MPE_DELVE_BOUNTIFUL_ATLAS_NAME or MPE_DELVE_REGULAR_ATLAS_NAME,
+        usesAtlas = true,
+        setTracked = true
+    }
+
+    MapPinEnhanced:AddPin(pinData)
+end
+--#endregion
+
 --- Set tracker methods depending on the selected [tracking type](lua://WaypointTrackingType).
 ---@param self DelveWaypointTracker
 function DelveCompanion_DelveWaypointMixin:Prepare()
@@ -119,6 +187,8 @@ function DelveCompanion_DelveWaypointMixin:Prepare()
             if state == false then
                 data.tomtom = nil
             end
+        elseif DelveCompanionAccountData.trackingType == DelveCompanion.Definitions.WaypointTrackingType.mpe then
+            state = CheckMPEWaypoint(data)
         else
             state = CheckSuperTrackPin(data.poiID)
         end
@@ -129,6 +199,8 @@ function DelveCompanion_DelveWaypointMixin:Prepare()
     self.Activate = function(data)
         if DelveCompanionAccountData.trackingType == DelveCompanion.Definitions.WaypointTrackingType.tomtom then
             SetTomTomWaypoint(data)
+        elseif DelveCompanionAccountData.trackingType == DelveCompanion.Definitions.WaypointTrackingType.mpe then
+            AddMPEWaypoint(data)
         else
             C_SuperTrack.SetSuperTrackedMapPin(Enum.SuperTrackingMapPinType.AreaPOI, data.poiID)
         end
@@ -139,6 +211,9 @@ function DelveCompanion_DelveWaypointMixin:Prepare()
     self.Clear = function(data)
         if DelveCompanionAccountData.trackingType == DelveCompanion.Definitions.WaypointTrackingType.tomtom then
             ClearTomTomWaypoint(data.tomtom)
+        elseif DelveCompanionAccountData.trackingType == DelveCompanion.Definitions.WaypointTrackingType.mpe then
+            -- TODO: Add a method when new MPE API arrives.
+            return
         else
             C_SuperTrack.ClearSuperTrackedMapPin()
         end
@@ -218,12 +293,18 @@ function DelveCompanion_DelveWaypointMixin:DisplayDelveTooltip(owner, anchor, de
 
     -- Tracking instruction
     do
-        local line = Lockit.UI_DELVE_INSTANCE_BUTTON_TOOLTIP_CLICK_INSTRUCTION
         if self.isActive then
             GameTooltip_AddHighlightLine(tooltip, Lockit.UI_DELVE_INSTANCE_BUTTON_TOOLTIP_CURRENT_TEXT, true)
-            line = Lockit.UI_DELVE_INSTANCE_BUTTON_TOOLTIP_CURRENT_INSTRUCTION
+
+            if DelveCompanionAccountData.trackingType ~= DelveCompanion.Definitions.WaypointTrackingType.mpe then
+                GameTooltip_AddInstructionLine(tooltip, Lockit.UI_DELVE_INSTANCE_BUTTON_TOOLTIP_CLEAR_INSTRUCTION, true)
+            else
+                -- TODO: Remove when new MPE API arrives.
+                GameTooltip_AddNormalLine(tooltip, Lockit.UI_DELVE_INSTANCE_BUTTON_TOOLTIP_CLEAR_MPE, true)
+            end
+        else
+            GameTooltip_AddInstructionLine(tooltip, Lockit.UI_DELVE_INSTANCE_BUTTON_TOOLTIP_CLICK_INSTRUCTION, true)
         end
-        GameTooltip_AddInstructionLine(tooltip, line, true)
     end
 
     tooltip:Show()

@@ -38,7 +38,8 @@ Definitions.DependencyAddonName = {
     delvesDashboardUI = "Blizzard_DelvesDashboardUI",
     encounterJournal = "Blizzard_EncounterJournal",
     rio = "RaiderIO",
-    tomtom = "TomTom"
+    tomtom = "TomTom",
+    mpe = "MapPinEnhanced"
 }
 
 ---@class Link
@@ -78,7 +79,8 @@ Definitions.ButtonAlias = {
 ---@class WaypointTrackingType
 Definitions.WaypointTrackingType = {
     superTrack = 1,
-    tomtom = 2
+    tomtom = 2,
+    mpe = 3
 }
 
 ---@class CompanionWidgetLayout

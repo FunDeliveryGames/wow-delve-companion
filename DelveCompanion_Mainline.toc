@@ -27,7 +27,7 @@
 ## SavedVariables: DelveCompanionAccountData
 ## SavedVariablesPerCharacter: DelveCompanionCharacterData
 
-## OptionalDeps: TomTom
+## OptionalDeps: TomTom, MapPinEnhanced
 
 ## X-Category: Delves
 ## X-Curse-Project-ID: 1218457

@@ -25,6 +25,7 @@ local function OnAddonLoaded()
     -- Logger.Log("OnAddonLoaded start...")
 
     DelveCompanion.Variables.tomTomAvailable = TomTom ~= nil
+    DelveCompanion.Variables.mpeAvailable = MapPinEnhanced ~= nil
 
     DelveCompanion:InitAccountSave()
     DelveCompanion:InitCharacterSave()

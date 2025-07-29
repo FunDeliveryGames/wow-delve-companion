@@ -20,7 +20,8 @@ Lockit.UI_COMMON_MISSING_ADDON_TITLE = "Erforderliches AddOn fehlt: %s" -- `%s`:
 
 Lockit.UI_DELVE_INSTANCE_BUTTON_TOOLTIP_CLICK_INSTRUCTION = "<Shift + Linksklick, um einen Wegpunkt zur Tiefe zu setzen>"
 Lockit.UI_DELVE_INSTANCE_BUTTON_TOOLTIP_CURRENT_TEXT = "Wegpunkt gesetzt."
-Lockit.UI_DELVE_INSTANCE_BUTTON_TOOLTIP_CURRENT_INSTRUCTION = "<Shift + Linksklick, um den Wegpunkt zu entfernen>"
+Lockit.UI_DELVE_INSTANCE_BUTTON_TOOLTIP_CLEAR_INSTRUCTION = "<Shift + Linksklick, um den Wegpunkt zu entfernen>"
+Lockit.UI_DELVE_INSTANCE_BUTTON_TOOLTIP_CLEAR_MPE = "Please use MapPinEnhanced Tracker to remove the waypoint."
 
 -- Delves UI
 
@@ -51,12 +52,14 @@ Lockit.UI_SETTING_WAYPOINT_TRACKING_TYPE_NAME = "Art der Wegpunktverfolgung"
 Lockit.UI_SETTING_WAYPOINT_TRACKING_TYPE_TOOLTIP_START = "Wähle aus, welche Art von Wegpunkten für die Navigation verwendet werden soll.\n\nMögliche Optionen:"
 Lockit.UI_SETTING_WAYPOINT_TRACKING_TYPE_TOOLTIP_BLIZZARD = "- Blizzards-Kartenpin (die Standard-Navigation im Spiel)"
 Lockit.UI_SETTING_WAYPOINT_TRACKING_TYPE_TOOLTIP_TOMTOM = "- TomTom-Wegpunkte"
+Lockit.UI_SETTING_WAYPOINT_TRACKING_TYPE_TOOLTIP_MPE = "- MapPinEnhanced Waypoints."
 Lockit.UI_SETTING_WAYPOINT_TRACKING_TYPE_TOOLTIP_TOMTOM_UNAVAILABLE_FORMAT = "%s (%s)."
-Lockit.UI_SETTING_WAYPOINT_TRACKING_TYPE_TOOLTIP_FORMAT = "%s\n%s\n%s"
 Lockit.UI_SETTING_WAYPOINT_TRACKING_OPTION_BLIZZARD_NAME = "Blizzard"
 Lockit.UI_SETTING_WAYPOINT_TRACKING_OPTION_BLIZZARD_DESCRIPTION = "verwende Blizzards-Kartenpin"
 Lockit.UI_SETTING_WAYPOINT_TRACKING_OPTION_TOMTOM_NAME = "TomTom"
 Lockit.UI_SETTING_WAYPOINT_TRACKING_OPTION_TOMTOM_DESCRIPTION = "verwende TomTom-Wegpunkte"
+Lockit.UI_SETTING_WAYPOINT_TRACKING_OPTION_MPE_NAME = "MapPinEnhanced"
+Lockit.UI_SETTING_WAYPOINT_TRACKING_OPTION_MPE_DESCRIPTION = "Use MapPinEnhanced Waypoints."
 
 Lockit.UI_SETTINGS_SECTION_TITLE_CHARACTER = "Charakter-spezifische Einstellungen"
 Lockit.UI_SETTING_TOOLTIP_EXTENSION_NAME = "Tooltip-Zusatzinfo"

@@ -20,7 +20,8 @@ Lockit.UI_COMMON_MISSING_ADDON_TITLE = "Отсутствует необходи�
 
 Lockit.UI_DELVE_INSTANCE_BUTTON_TOOLTIP_CLICK_INSTRUCTION = "<[Shift + ЛКМ] - установить точку маршрута к вылазке>"
 Lockit.UI_DELVE_INSTANCE_BUTTON_TOOLTIP_CURRENT_TEXT = "Точка маршрута установлена."
-Lockit.UI_DELVE_INSTANCE_BUTTON_TOOLTIP_CURRENT_INSTRUCTION = "<[Shift + ЛКМ] - сбросить точку маршрута>"
+Lockit.UI_DELVE_INSTANCE_BUTTON_TOOLTIP_CLEAR_INSTRUCTION = "<[Shift + ЛКМ] - сбросить точку маршрута>"
+Lockit.UI_DELVE_INSTANCE_BUTTON_TOOLTIP_CLEAR_MPE = "Please use MapPinEnhanced Tracker to remove the waypoint."
 
 -- Интерфейс вылазок
 
@@ -51,12 +52,14 @@ Lockit.UI_SETTING_WAYPOINT_TRACKING_TYPE_NAME = "Тип отслеживания
 Lockit.UI_SETTING_WAYPOINT_TRACKING_TYPE_TOOLTIP_START = "Выберите, какой тип путевых точек используется для навигации.\n\nВозможные варианты:"
 Lockit.UI_SETTING_WAYPOINT_TRACKING_TYPE_TOOLTIP_BLIZZARD = "- Отметка на карте Blizzard (стандартная внутриигровая навигация)"
 Lockit.UI_SETTING_WAYPOINT_TRACKING_TYPE_TOOLTIP_TOMTOM = "- Точки маршрута TomTom"
+Lockit.UI_SETTING_WAYPOINT_TRACKING_TYPE_TOOLTIP_MPE = "- MapPinEnhanced Waypoints."
 Lockit.UI_SETTING_WAYPOINT_TRACKING_TYPE_TOOLTIP_TOMTOM_UNAVAILABLE_FORMAT = "%s (%s)."
-Lockit.UI_SETTING_WAYPOINT_TRACKING_TYPE_TOOLTIP_FORMAT = "%s\n%s\n%s"
 Lockit.UI_SETTING_WAYPOINT_TRACKING_OPTION_BLIZZARD_NAME = "Blizzard"
 Lockit.UI_SETTING_WAYPOINT_TRACKING_OPTION_BLIZZARD_DESCRIPTION = "Использовать отметки на карте Blizzard."
 Lockit.UI_SETTING_WAYPOINT_TRACKING_OPTION_TOMTOM_NAME = "TomTom"
 Lockit.UI_SETTING_WAYPOINT_TRACKING_OPTION_TOMTOM_DESCRIPTION = "Использовать путевые точки TomTom."
+Lockit.UI_SETTING_WAYPOINT_TRACKING_OPTION_MPE_NAME = "MapPinEnhanced"
+Lockit.UI_SETTING_WAYPOINT_TRACKING_OPTION_MPE_DESCRIPTION = "Use MapPinEnhanced Waypoints."
 
 Lockit.UI_SETTINGS_SECTION_TITLE_CHARACTER = "Параметры персонажа"
 Lockit.UI_SETTING_TOOLTIP_EXTENSION_NAME = "Дополнительная информация в подсказках"

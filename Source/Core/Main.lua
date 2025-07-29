@@ -170,7 +170,9 @@ function DelveCompanion:InitAccountSave()
             end
         end
 
-        if not self.Variables.tomTomAvailable then
+        if (DelveCompanionAccountData.trackingType == self.Definitions.WaypointTrackingType.tomtom and not self.Variables.tomTomAvailable)
+            or (DelveCompanionAccountData.trackingType == self.Definitions.WaypointTrackingType.mpe and not self.Variables.mpeAvailable)
+        then
             DelveCompanionAccountData.trackingType = self.Definitions.WaypointTrackingType.superTrack
         end
     end

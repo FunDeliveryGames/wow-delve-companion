@@ -138,6 +138,11 @@ local function PrepareAccountSettings(category, layout)
                     Lockit.UI_SETTING_WAYPOINT_TRACKING_OPTION_TOMTOM_NAME,
                     Lockit.UI_SETTING_WAYPOINT_TRACKING_OPTION_TOMTOM_DESCRIPTION)
             end
+            if DelveCompanion.Variables.mpeAvailable then
+                container:Add(DelveCompanion.Definitions.WaypointTrackingType.mpe,
+                    Lockit.UI_SETTING_WAYPOINT_TRACKING_OPTION_MPE_NAME,
+                    Lockit.UI_SETTING_WAYPOINT_TRACKING_OPTION_MPE_DESCRIPTION)
+            end
             return container:GetData()
         end
 
@@ -147,21 +152,36 @@ local function PrepareAccountSettings(category, layout)
             local tooltipLineBlizzard = _G["NORMAL_FONT_COLOR"]:WrapTextInColorCode(
                 Lockit.UI_SETTING_WAYPOINT_TRACKING_TYPE_TOOLTIP_BLIZZARD)
             local tooltipLineTomTom = Lockit.UI_SETTING_WAYPOINT_TRACKING_TYPE_TOOLTIP_TOMTOM
+            local tooltipLineMPE = Lockit.UI_SETTING_WAYPOINT_TRACKING_TYPE_TOOLTIP_MPE
 
             if DelveCompanion.Variables.tomTomAvailable then
                 tooltipLineTomTom = _G["NORMAL_FONT_COLOR"]:WrapTextInColorCode(tooltipLineTomTom)
             else
-                local unavailableLine = format(Lockit.UI_COMMON_MISSING_ADDON_TITLE, Definitions.DependencyAddonName.tomtom)
+                local unavailableLine = format(Lockit.UI_COMMON_MISSING_ADDON_TITLE,
+                    Definitions.DependencyAddonName.tomtom)
                 tooltipLineTomTom = format(
                     Lockit.UI_SETTING_WAYPOINT_TRACKING_TYPE_TOOLTIP_TOMTOM_UNAVAILABLE_FORMAT,
                     _G["DISABLED_FONT_COLOR"]:WrapTextInColorCode(tooltipLineTomTom),
                     _G["WARNING_FONT_COLOR"]:WrapTextInColorCode(unavailableLine))
             end
 
-            return format(Lockit.UI_SETTING_WAYPOINT_TRACKING_TYPE_TOOLTIP_FORMAT,
+            if DelveCompanion.Variables.mpeAvailable then
+                tooltipLineMPE = _G["NORMAL_FONT_COLOR"]:WrapTextInColorCode(tooltipLineMPE)
+            else
+                local unavailableLine = format(Lockit.UI_COMMON_MISSING_ADDON_TITLE,
+                    Definitions.DependencyAddonName.mpe)
+                tooltipLineMPE = format(
+                    Lockit.UI_SETTING_WAYPOINT_TRACKING_TYPE_TOOLTIP_TOMTOM_UNAVAILABLE_FORMAT,
+                    _G["DISABLED_FONT_COLOR"]:WrapTextInColorCode(tooltipLineMPE),
+                    _G["WARNING_FONT_COLOR"]:WrapTextInColorCode(unavailableLine))
+            end
+
+
+            return string.join("\n",
                 tooltipLineStart,
                 tooltipLineBlizzard,
-                tooltipLineTomTom)
+                tooltipLineTomTom,
+                tooltipLineMPE)
         end
 
         Settings.CreateDropdown(category, setting, GetDropdownOptions, tooltip)
@@ -250,7 +270,8 @@ function AddonSettings:Init()
     -- Logger.Log("Start initing Settings...")
 
     do
-        local settingsFrame = CreateFrame("Frame", "$parent.DelveCompanionSettings", nil, "DelveCompanionSettingsFrameTemplate")
+        local settingsFrame = CreateFrame("Frame", "$parent.DelveCompanionSettings", nil,
+            "DelveCompanionSettingsFrameTemplate")
         local category, _ = Settings.RegisterCanvasLayoutCategory(settingsFrame, Lockit.UI_ADDON_NAME)
         Settings.RegisterAddOnCategory(category)
         AddonSettings.mainCategory = category
