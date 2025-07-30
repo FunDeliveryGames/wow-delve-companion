@@ -33,7 +33,7 @@ end
 function DelveCompanion_DelveInstanceButtonMixin:Update()
     self.BountifulIcon:SetShown(self.data.isBountiful)
     self.OverchargedIcon:SetShown(self.data.isOvercharged)
-    if not DelveCompanion.Variables.hideForMainline then
+    if DelveCompanion.Variables.isPTR then
         self.RightIconsContainer.NotCompletedStoryIcon:SetShown(self.data.config.achievements and
             not self.data.isStoryCompleted)
     end

@@ -279,7 +279,7 @@ function DelveCompanion_DelveWaypointMixin:DisplayDelveTooltip(owner, anchor, de
     GameTooltip_AddHighlightLine(tooltip, delveData.parentMapName, true)
     -- Active story + completion state
     do
-        if not DelveCompanion.Variables.hideForMainline and delveData.storyVariant then
+        if DelveCompanion.Variables.isPTR and delveData.storyVariant then
             local completionText = delveData.isStoryCompleted and Lockit.UI_DELVE_STORY_VARIANT_COMPLETED_SEQUENCE or
                 Lockit.UI_DELVE_STORY_VARIANT_NOT_COMPLETED_SEQUENCE
             local completionColor = delveData.isStoryCompleted and _G["DIM_GREEN_FONT_COLOR"]

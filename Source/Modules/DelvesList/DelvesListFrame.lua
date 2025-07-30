@@ -142,9 +142,11 @@ function DelveCompanion_DelvesListFrameMixin:OnLoad()
     do
         self.ModifiersContainer.ModifiersLabel:SetText(_G["MODIFIERS_COLON"])
 
-        self.ModifiersContainer.OverchargedWidget:Show()
-        self.ModifiersContainer.OverchargedWidget:SetFrameInfo(DelveCompanion.Definitions.CodeType.Spell,
-            Config.OVERCHARGED_SPELL_CODE)
+        if not DelveCompanion.Variables.isPTR then
+            self.ModifiersContainer.OverchargedWidget:Show()
+            self.ModifiersContainer.OverchargedWidget:SetFrameInfo(DelveCompanion.Definitions.CodeType.Spell,
+                Config.OVERCHARGED_SPELL_CODE)
+        end
 
         self.ModifiersContainer.AffixWidget:SetFrameInfo(DelveCompanion.Definitions.CodeType.Spell,
             Config.NEMESIS_AFFIX_SPELL_CODE)

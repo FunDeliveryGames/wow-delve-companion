@@ -100,7 +100,7 @@ Config.KEY_SHARD_QUESTS_DATA = {
 Config.KEY_SHARD_SOURCE_CACHES_DATA = {
 }
 
-if not DelveCompanion.Variables.hideForMainline then
+if DelveCompanion.Variables.isPTR then
     Config.BOUNTIFUL_KEY_QUESTS_DATA = {
         91175,
         91176,
@@ -179,19 +179,19 @@ Config.GILDED_STASH_WEEKLY_CAP = 3
 
 ---@type integer Item ID of [Delver's Bounty](https://www.wowhead.com/item=233071/delvers-bounty).
 Config.BOUNTY_MAP_ITEM_CODE = 233071
-if not DelveCompanion.Variables.hideForMainline then
+if DelveCompanion.Variables.isPTR then
     Config.BOUNTY_MAP_ITEM_CODE = 248142
 end
 
 ---@type integer Item ID of [Radiant Echo](https://www.wowhead.com/item=235897/radiant-echo).
 Config.ECHO_ITEM_CODE = 235897
-if not DelveCompanion.Variables.hideForMainline then
+if DelveCompanion.Variables.isPTR then
     Config.ECHO_ITEM_CODE = 246771
 end
 
 ---@type integer Item ID of [Coffer Key Shard](https://www.wowhead.com/item=236096/coffer-key-shard).
 Config.KEY_SHARD_ITEM_CODE = 236096
-if not DelveCompanion.Variables.hideForMainline then
+if DelveCompanion.Variables.isPTR then
     Config.KEY_SHARD_ITEM_CODE = 245653
 end
 --#endregion
@@ -200,7 +200,7 @@ end
 
 ---@type integer Spell ID of [Nemesis Strongbox](https://www.wowhead.com/spell=472952/nemesis-strongbox).
 Config.NEMESIS_AFFIX_SPELL_CODE = 472952
-if not DelveCompanion.Variables.hideForMainline then
+if DelveCompanion.Variables.isPTR then
     Config.NEMESIS_AFFIX_SPELL_CODE = 1239535
 end
 
@@ -226,7 +226,7 @@ Config.MAPS_WITH_DELVES = {
     2255  -- Azj-Kahet
 }
 
-if not DelveCompanion.Variables.hideForMainline then
+if DelveCompanion.Variables.isPTR then
     table.insert(Config.MAPS_WITH_DELVES, 1, 2371) -- "K`aresh"
 end
 
@@ -470,7 +470,7 @@ Config.DELVES_CONFIG = {
     }
 }
 
-if not DelveCompanion.Variables.hideForMainline then
+if DelveCompanion.Variables.isPTR then
     table.insert(Config.DELVES_CONFIG,
         -- "Archival Assault"
         {
@@ -555,7 +555,7 @@ Config.DELVES_LOOT_INFO_DATA = {
     }
 }
 
-if not DelveCompanion.Variables.hideForMainline then
+if DelveCompanion.Variables.isPTR then
     Config.DELVES_LOOT_INFO_DATA = {
         [1] = {
             bountifulLvl = 655,

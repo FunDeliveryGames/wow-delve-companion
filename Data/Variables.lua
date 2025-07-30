@@ -10,13 +10,13 @@ local DelveCompanion = AddonTbl.DelveCompanion
 ---@field keysCollected integer Number of [Restored Coffer Keys](https://www.wowhead.com/currency=3028/restored-coffer-key) player has got from Caches this week.
 ---@field tomTomAvailable boolean Whether TomTom addon is loaded.
 ---@field mpeAvailable boolean Whether MapPinEnhanced addon is loaded.
----@field hideForMainline boolean A flag used to hide features not yet available in the Mainline client version.
+---@field isPTR boolean A flag used to check client version: Mainline or PTR.
 local Variables = {
     delvesData = {},
     maxLevelReached = false,
     keysCollected = 0,
     tomTomAvailable = false,
     mpeAvailable = false,
-    hideForMainline = (select(4, GetBuildInfo())) < 110200
+    isPTR = (select(4, GetBuildInfo())) >= 110200
 }
 DelveCompanion.Variables = Variables

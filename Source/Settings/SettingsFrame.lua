@@ -64,6 +64,7 @@ function DelveCompanionSettingsFrameMixin:OnShow()
     -- Logger.Log("SettingsFrame OnShow start...")
 end
 
+-- TODO: it breakes other StaticPopups in 11.2. Need to dig into the changes of StaticPopup classes.
 StaticPopupDialogs[STATIC_POPUP_ADDON_LINK_ID] = {
     text = Lockit.UI_SETTINGS_ADDON_LINK_POPUP_TEXT,
     button1 = _G["CLOSE"],
@@ -73,7 +74,7 @@ StaticPopupDialogs[STATIC_POPUP_ADDON_LINK_ID] = {
         end
 
         local editBox = self.editBox
-        if not DelveCompanion.Variables.hideForMainline then
+        if DelveCompanion.Variables.isPTR then
             editBox = self.EditBox
         end
 
