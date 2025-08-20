@@ -60,15 +60,29 @@ Config.KEY_SHARDS_PER_CACHE = 50
 ---@type integer Amount of [Coffer Key Shards](https://www.wowhead.com/item=236096/coffer-key-shard) required to assemble [Restored Coffer Key](https://www.wowhead.com/currency=3028/restored-coffer-key).
 Config.SHARDS_FOR_KEY = 100
 
----@type table<integer, number> Table of Quest IDs used to track [Restored Coffer Keys](https://www.wowhead.com/currency=3028/restored-coffer-key) player has received during the week.
+---@type table<integer, number> Table of Quest IDs used to track [Restored Coffer Keys](https://www.wowhead.com/currency=3028/restored-coffer-key) player has received from Caches this week.
 Config.BOUNTIFUL_KEY_QUESTS_DATA = {
+    91175,
+    91176,
+    91177,
+    91178
+}
+---@type table<integer, number> Table of Caches containing [Restored Coffer Keys](https://www.wowhead.com/currency=3028/restored-coffer-key) (e.g. [Pinnacle Cache](https://www.wowhead.com/item=239118/pinnacle-cache)).
+Config.BOUNTIFUL_KEY_SOURCE_CACHES_DATA = {
+    -- TWW Season 3
+    244842,
+    244865,
+    245611
+}
+---@type table<integer, number> Table of Quest IDs used to track [Coffer Key Shards](https://www.wowhead.com/currency=3028/restored-coffer-key) player has received from Caches this week.
+Config.KEY_SHARD_QUESTS_DATA = {
     84736,
     84737,
     84738,
     84739
 }
----@type table<integer, number> Table of Caches containing [Restored Coffer Keys](https://www.wowhead.com/currency=3028/restored-coffer-key) (e.g. [Pinnacle Cache](https://www.wowhead.com/item=239118/pinnacle-cache)).
-Config.BOUNTIFUL_KEY_SOURCE_CACHES_DATA = {
+---@type table<integer, number> Table of Caches containing [Coffer Key Shards](https://www.wowhead.com/currency=3028/restored-coffer-key).
+Config.KEY_SHARD_SOURCE_CACHES_DATA = {
     -- TWW Season 1
     226263,
     226273,
@@ -82,81 +96,28 @@ Config.BOUNTIFUL_KEY_SOURCE_CACHES_DATA = {
     239128,
     239121,
     239126,
-    239118,
     239125,
+    239118,
     239122,
     239124,
     238208,
     235639,
     235610,
     239120,
+    -- TWW Season 3
+    244883,
+    244865,
+    245280,
+    250768,
+    250766,
+    250765,
+    250769,
+    250763,
+    250764,
+    250767,
     -- Others
     233014
 }
----@type table<integer, number> Table of Quest IDs used to track [Coffer Key Shards](https://www.wowhead.com/currency=3028/restored-coffer-key) player has received during the week.
-Config.KEY_SHARD_QUESTS_DATA = {
-}
----@type table<integer, number> Table of Caches containing [Coffer Key Shards](https://www.wowhead.com/currency=3028/restored-coffer-key) (e.g. [Pinnacle Cache](https://www.wowhead.com/item=239118/pinnacle-cache)).
-Config.KEY_SHARD_SOURCE_CACHES_DATA = {
-}
-
-if DelveCompanion.Variables.isPTR then
-    Config.BOUNTIFUL_KEY_QUESTS_DATA = {
-        91175,
-        91176,
-        91177,
-        91178
-    }
-    Config.BOUNTIFUL_KEY_SOURCE_CACHES_DATA = {
-        -- TWW Season 3
-        244842,
-        244865,
-        245611
-    }
-
-    Config.KEY_SHARD_QUESTS_DATA = {
-        84736,
-        84737,
-        84738,
-        84739
-    }
-    Config.KEY_SHARD_SOURCE_CACHES_DATA = {
-        -- TWW Season 1
-        226263,
-        226273,
-        226264,
-        224784,
-        225571,
-        225572,
-        225573,
-        228361,
-        -- TWW Season 2
-        239128,
-        239121,
-        239126,
-        239125,
-        239118,
-        239122,
-        239124,
-        238208,
-        235639,
-        235610,
-        239120,
-        -- TWW Season 3
-        244883,
-        244865,
-        245280,
-        250768,
-        250766,
-        250765,
-        250769,
-        250763,
-        250764,
-        250767,
-        -- Others
-        233014
-    }
-end
 --#endregion
 
 --#region Delver's Bounty
@@ -178,31 +139,19 @@ Config.GILDED_STASH_WEEKLY_CAP = 3
 --#region Delve-related entities which are updated every season
 
 ---@type integer Item ID of [Delver's Bounty](https://www.wowhead.com/item=233071/delvers-bounty).
-Config.BOUNTY_MAP_ITEM_CODE = 233071
-if DelveCompanion.Variables.isPTR then
-    Config.BOUNTY_MAP_ITEM_CODE = 248142
-end
+Config.BOUNTY_MAP_ITEM_CODE = 248142
 
 ---@type integer Item ID of [Radiant Echo](https://www.wowhead.com/item=235897/radiant-echo).
-Config.ECHO_ITEM_CODE = 235897
-if DelveCompanion.Variables.isPTR then
-    Config.ECHO_ITEM_CODE = 246771
-end
+Config.ECHO_ITEM_CODE = 246771
 
 ---@type integer Item ID of [Coffer Key Shard](https://www.wowhead.com/item=236096/coffer-key-shard).
-Config.KEY_SHARD_ITEM_CODE = 236096
-if DelveCompanion.Variables.isPTR then
-    Config.KEY_SHARD_ITEM_CODE = 245653
-end
+Config.KEY_SHARD_ITEM_CODE = 245653
 --#endregion
 
 --#region Seasonal modifiers
 
 ---@type integer Spell ID of [Nemesis Strongbox](https://www.wowhead.com/spell=472952/nemesis-strongbox).
-Config.NEMESIS_AFFIX_SPELL_CODE = 472952
-if DelveCompanion.Variables.isPTR then
-    Config.NEMESIS_AFFIX_SPELL_CODE = 1239535
-end
+Config.NEMESIS_AFFIX_SPELL_CODE = 1239535
 
 ---@type integer Spell ID of [Overcharged](https://www.wowhead.com/ptr/spell=1216544/overcharged).
 Config.OVERCHARGED_SPELL_CODE = 1216544
@@ -219,16 +168,13 @@ Config.KHAZ_ALGAR_MAP_ID = 2274
 ---@type table<integer, number> Indexed table of [uiMapIDs](https://warcraft.wiki.gg/wiki/UiMapID) which contain Delves.
 Config.MAPS_WITH_DELVES = {
     -- Khaz Algar
+    2371, -- K`aresh
     2346, -- Undermine
     2248, -- Isle of Dorn
     2214, -- The Ringing Deeps
     2215, -- Hallowfall
-    2255  -- Azj-Kahet
+    2255, -- Azj-Kahet
 }
-
-if DelveCompanion.Variables.isPTR then
-    table.insert(Config.MAPS_WITH_DELVES, 1, 2371) -- "K`aresh"
-end
 
 --- Table with Delve parameters.
 ---@class (exact) DelveConfig
@@ -467,39 +413,34 @@ Config.DELVES_CONFIG = {
             y = 76.87
         },
         atlasBgID = "delve-entrance-background-zekvirs-lair"
+    },
+    -- "Archival Assault"
+    {
+        uiMapID = 2452,
+        poiIDs = {
+            regular = 8274,
+            bountiful = 8273
+        },
+        gildedStashUiWidgetID = 7193,
+        atlasBgID = "delve-entrance-background-Archival-Assault",
+        achievements = {
+            chest = 42679,
+            story = 42771
+        }
+    },
+    --"Voidrazor Sanctuary"
+    {
+        uiMapID = 2484,
+        poiIDs = {
+            regular = 8323
+        },
+        coordinates = {
+            x = 64.34,
+            y = 78.62
+        },
+        atlasBgID = "delve-entrance-background-Voidrazor-Sanctuary"
     }
 }
-
-if DelveCompanion.Variables.isPTR then
-    table.insert(Config.DELVES_CONFIG,
-        -- "Archival Assault"
-        {
-            uiMapID = 2452,
-            poiIDs = {
-                regular = 8274,
-                bountiful = 8273
-            },
-            gildedStashUiWidgetID = 7193,
-            atlasBgID = "delve-entrance-background-Archival-Assault",
-            achievements = {
-                chest = 42679,
-                story = 42771
-            }
-        })
-    table.insert(Config.DELVES_CONFIG,
-        --"Voidrazor Sanctuary"
-        {
-            uiMapID = 2484,
-            poiIDs = {
-                regular = 8323
-            },
-            coordinates = {
-                x = 64.34,
-                y = 78.62
-            },
-            atlasBgID = "delve-entrance-background-Voidrazor-Sanctuary"
-        })
-end
 
 --- Table with Delve Loot information
 ---@class DelveLootInfo
@@ -510,97 +451,48 @@ end
 ---@type DelveLootInfo[]
 Config.DELVES_LOOT_INFO_DATA = {
     [1] = {
-        bountifulLvl = 610,
-        vaultLvl = 623
+        bountifulLvl = 655,
+        vaultLvl = 668
     },
     [2] = {
-        bountifulLvl = 613,
-        vaultLvl = 626
+        bountifulLvl = 658,
+        vaultLvl = 668
     },
     [3] = {
-        bountifulLvl = 616,
-        vaultLvl = 629
+        bountifulLvl = 662,
+        vaultLvl = 671
     },
     [4] = {
-        bountifulLvl = 619,
-        vaultLvl = 632
+        bountifulLvl = 665,
+        vaultLvl = 681
     },
     [5] = {
-        bountifulLvl = 623,
-        vaultLvl = 639
+        bountifulLvl = 668,
+        vaultLvl = 688
     },
     [6] = {
-        bountifulLvl = 626,
-        vaultLvl = 642
+        bountifulLvl = 671,
+        vaultLvl = 691
     },
     [7] = {
-        bountifulLvl = 636,
-        vaultLvl = 645
+        bountifulLvl = 681,
+        vaultLvl = 691
     },
     [8] = {
-        bountifulLvl = 639,
-        vaultLvl = 649
+        bountifulLvl = 684,
+        vaultLvl = 694
     },
     [9] = {
-        bountifulLvl = 639,
-        vaultLvl = 649
+        bountifulLvl = 684,
+        vaultLvl = 694
     },
     [10] = {
-        bountifulLvl = 639,
-        vaultLvl = 649
+        bountifulLvl = 684,
+        vaultLvl = 694
     },
     [11] = {
-        bountifulLvl = 639,
-        vaultLvl = 649
+        bountifulLvl = 684,
+        vaultLvl = 694
     }
 }
-
-if DelveCompanion.Variables.isPTR then
-    Config.DELVES_LOOT_INFO_DATA = {
-        [1] = {
-            bountifulLvl = 655,
-            vaultLvl = 668
-        },
-        [2] = {
-            bountifulLvl = 658,
-            vaultLvl = 668
-        },
-        [3] = {
-            bountifulLvl = 662,
-            vaultLvl = 671
-        },
-        [4] = {
-            bountifulLvl = 665,
-            vaultLvl = 681
-        },
-        [5] = {
-            bountifulLvl = 668,
-            vaultLvl = 688
-        },
-        [6] = {
-            bountifulLvl = 671,
-            vaultLvl = 691
-        },
-        [7] = {
-            bountifulLvl = 681,
-            vaultLvl = 691
-        },
-        [8] = {
-            bountifulLvl = 684,
-            vaultLvl = 694
-        },
-        [9] = {
-            bountifulLvl = 684,
-            vaultLvl = 694
-        },
-        [10] = {
-            bountifulLvl = 684,
-            vaultLvl = 694
-        },
-        [11] = {
-            bountifulLvl = 684,
-            vaultLvl = 694
-        }
-    }
-end
 --#endregion

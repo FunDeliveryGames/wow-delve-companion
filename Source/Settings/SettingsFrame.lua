@@ -73,11 +73,7 @@ StaticPopupDialogs[STATIC_POPUP_ADDON_LINK_ID] = {
             StaticPopup_Hide(STATIC_POPUP_ADDON_LINK_ID)
         end
 
-        local editBox = self.editBox
-        if DelveCompanion.Variables.isPTR then
-            editBox = self.EditBox
-        end
-
+        local editBox = self.EditBox
         editBox:SetScript("OnEscapePressed", HidePopup)
         editBox:SetScript("OnKeyUp", function(_, key)
             if IsControlKeyDown() and key == "C" then
