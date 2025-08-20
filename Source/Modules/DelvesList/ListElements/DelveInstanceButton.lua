@@ -32,7 +32,6 @@ end
 ---@param self DelveInstanceButton
 function DelveCompanion_DelveInstanceButtonMixin:Update()
     self.BountifulIcon:SetShown(self.data.isBountiful)
-    self.OverchargedIcon:SetShown(self.data.isOvercharged)
     if DelveCompanion.Variables.isPTR then
         self.RightIconsContainer.NotCompletedStoryIcon:SetShown(self.data.config.achievements and
             not self.data.isStoryCompleted)
@@ -102,6 +101,5 @@ end
 ---@field DelveArtBg Texture
 ---@field DelveName FontString
 ---@field BountifulIcon Texture
----@field OverchargedIcon Texture
 ---@field RightIconsContainer RightIconsContainer
 --#endregion

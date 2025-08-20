@@ -152,12 +152,6 @@ Config.KEY_SHARD_ITEM_CODE = 245653
 
 ---@type integer Spell ID of [Nemesis Strongbox](https://www.wowhead.com/spell=472952/nemesis-strongbox).
 Config.NEMESIS_AFFIX_SPELL_CODE = 1239535
-
----@type integer Spell ID of [Overcharged](https://www.wowhead.com/ptr/spell=1216544/overcharged).
-Config.OVERCHARGED_SPELL_CODE = 1216544
-
----@type integer Quest ID required to unlock [Overcharged Console](https://www.wowhead.com/quest=90971/overcharged-console).
-Config.TITAN_CONSOLE_UNLOCK_QUEST = 90971
 --#endregion
 
 --#region Delves data
@@ -181,7 +175,6 @@ Config.MAPS_WITH_DELVES = {
 ---@field uiMapID number Delve [uiMapID](https://warcraft.wiki.gg/wiki/UiMapID).
 ---@field poiIDs {regular: number, bountiful: number?} Delve [areaPoiIDs](https://wago.tools/db2/areapoi).
 ---@field gildedStashUiWidgetID number? [UiWidgetID](https://wago.tools/db2/UiWidget) used to retrieve information about [Gilded Stash](https://www.wowhead.com/spell=1216211/gilded-stash) weekly progress.
----@field overchargedUiWidgetID number? [UiWidgetID](https://wago.tools/db2/UiWidget) used to retrieve information about [Overcharged](https://www.wowhead.com/ptr/spell=1216544/overcharged) modifier.
 ---@field atlasBgID string [AtlasID](https://warcraft.wiki.gg/wiki/AtlasID) used to get Delve's background texture.
 ---@field achievements {chest: number, story: number}? Achievement IDs related to the Delve.
 ---@field coordinates MapCoord? Delve entrance coordinates. Used primarly for Boss Delves and TomTom waypoints.
@@ -210,7 +203,6 @@ Config.DELVES_CONFIG = {
             bountiful = 7779
         },
         gildedStashUiWidgetID = 6728,
-        overchargedUiWidgetID = 7105,
         atlasBgID = "delve-entrance-background-fungal-folly",
         achievements = {
             chest = 40803,
@@ -225,7 +217,6 @@ Config.DELVES_CONFIG = {
             bountiful = 7781
         },
         gildedStashUiWidgetID = 6719,
-        overchargedUiWidgetID = 7041,
         atlasBgID = "delve-entrance-background-kriegvals-rest",
         achievements = {
             chest = 40807,
@@ -296,7 +287,6 @@ Config.DELVES_CONFIG = {
             bountiful = 7785
         },
         gildedStashUiWidgetID = 6727,
-        overchargedUiWidgetID = 7052,
         atlasBgID = "delve-entrance-background-nightfall-sanctum",
         achievements = {
             chest = 40809,
@@ -325,7 +315,6 @@ Config.DELVES_CONFIG = {
             bountiful = 7789
         },
         gildedStashUiWidgetID = 6725,
-        overchargedUiWidgetID = 7051,
         atlasBgID = "delve-entrance-background-skittering-breach",
         achievements = {
             chest = 40810,
@@ -340,7 +329,6 @@ Config.DELVES_CONFIG = {
             bountiful = 7790
         },
         gildedStashUiWidgetID = 6726,
-        overchargedUiWidgetID = 7053,
         atlasBgID = "delve-entrance-background-the-spiral-weave",
         achievements = {
             chest = 40814,
@@ -383,7 +371,6 @@ Config.DELVES_CONFIG = {
             bountiful = 8246
         },
         gildedStashUiWidgetID = 6718,
-        overchargedUiWidgetID = 7104,
         atlasBgID = "delves-entrance-background-sewers",
         achievements = {
             chest = 41101,

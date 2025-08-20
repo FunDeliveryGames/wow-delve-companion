@@ -32,7 +32,6 @@ function DelveCompanion:InitDelvesData()
         ---@field storyVariant string Localized label of the current story of the Delve.
         ---@field isStoryCompleted boolean Whether player has completed the current storyVariant.
         ---@field isBountiful boolean Whether this Delve is bountiful now.
-        ---@field isOvercharged boolean Whether this Delve is overcharged today.
         local data = {
             config = delveConfig,
             poiID = nil,
@@ -41,8 +40,7 @@ function DelveCompanion:InitDelvesData()
             delveName = delveMap.name,
             storyVariant = nil,
             isStoryCompleted = false,
-            isBountiful = false,
-            isOvercharged = false
+            isBountiful = false
         }
 
         table.insert(delvesData, data)
@@ -68,12 +66,6 @@ function DelveCompanion:UpdateDelvesData()
         else
             delveData.poiID = poiIDs.regular
             delveData.isBountiful = false
-        end
-
-        -- Overcharged
-        if delveConfig.overchargedUiWidgetID then
-            local visInfo = C_UIWidgetManager.GetSpacerVisualizationInfo(delveConfig.overchargedUiWidgetID)
-            delveData.isOvercharged = visInfo and visInfo.shownState == 1
         end
 
         local delvePoiInfo = C_AreaPoiInfo.GetAreaPOIInfo(parentMapID, delveData.poiID)

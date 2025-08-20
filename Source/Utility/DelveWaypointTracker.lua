@@ -11,7 +11,6 @@ local Lockit = DelveCompanion.Lockit
 --#region Constants
 
 local BOUNTIFUL_ICON_SEQUENCE = "|A:delves-bountiful:24:24|a"
-local OVERCHARGED_ICON_SEQUENCE = "|TInterface\\Icons\\achievement_legionpvp2tier5:20|t"
 local TOM_TOM_WAYPOINT_DISTANCE_CLEAR = 10
 local MPE_DELVE_REGULAR_ATLAS_NAME = "delves-regular"
 local MPE_DELVE_BOUNTIFUL_ATLAS_NAME = "delves-bountiful"
@@ -264,10 +263,6 @@ function DelveCompanion_DelveWaypointMixin:DisplayDelveTooltip(owner, anchor, de
 
     if delveData.isBountiful then
         iconsSequence = string.join("", iconsSequence, BOUNTIFUL_ICON_SEQUENCE)
-    end
-
-    if delveData.isOvercharged then
-        iconsSequence = string.join("", iconsSequence, OVERCHARGED_ICON_SEQUENCE)
     end
 
     -- Title + icons
