@@ -89,14 +89,23 @@ function DelveCompanion:UpdateDelvesData()
                         if visInfo and visInfo.orderIndex == 0 then
                             delveData.storyVariant = visInfo.text
 
+                            -- Some story variants are not included into the achievement (as they were added with content updates during the expansion).
+                            -- The primary goal here is to highlight achievement completion, so such variants are marked as "completed". The addon doesn't track whether players have completed them.
+                            local isVariantInAchievement = false
                             local achID = delveData.config.achievements.story
+
                             for index = 1, GetAchievementNumCriteria(achID), 1 do
                                 local criteriaString, _, completed = GetAchievementCriteriaInfo(achID, index)
 
                                 if string.find(string.lower(delveData.storyVariant), string.lower(criteriaString)) then
                                     delveData.isStoryCompleted = completed
+                                    isVariantInAchievement = true
                                     break
                                 end
+                            end
+
+                            if not isVariantInAchievement then
+                                delveData.isStoryCompleted = true
                             end
                         end
                     end
