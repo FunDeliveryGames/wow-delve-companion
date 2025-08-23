@@ -74,14 +74,14 @@ Config.BOUNTIFUL_KEY_SOURCE_CACHES_DATA = {
     244865,
     245611
 }
----@type table<integer, number> Table of Quest IDs used to track [Coffer Key Shards](https://www.wowhead.com/currency=3028/restored-coffer-key) player has received from Caches this week.
+---@type table<integer, number> Table of Quest IDs used to track [Coffer Key Shards](https://www.wowhead.com/item=245653/coffer-key-shard) player has received from Caches this week.
 Config.KEY_SHARD_QUESTS_DATA = {
     84736,
     84737,
     84738,
     84739
 }
----@type table<integer, number> Table of Caches containing [Coffer Key Shards](https://www.wowhead.com/currency=3028/restored-coffer-key).
+---@type table<integer, number> Table of Caches containing [Coffer Key Shards](https://www.wowhead.com/item=245653/coffer-key-shard).
 Config.KEY_SHARD_SOURCE_CACHES_DATA = {
     -- TWW Season 1
     226263,
@@ -138,13 +138,13 @@ Config.GILDED_STASH_WEEKLY_CAP = 3
 
 --#region Delve-related entities which are updated every season
 
----@type integer Item ID of [Delver's Bounty](https://www.wowhead.com/item=233071/delvers-bounty).
+---@type integer Item ID of [Delver's Bounty](https://www.wowhead.com/item=248142/delvers-bounty).
 Config.BOUNTY_MAP_ITEM_CODE = 248142
 
----@type integer Item ID of [Radiant Echo](https://www.wowhead.com/item=235897/radiant-echo).
+---@type integer Item ID of [Radiant Echo](https://www.wowhead.com/item=246771/radiant-echo).
 Config.ECHO_ITEM_CODE = 246771
 
----@type integer Item ID of [Coffer Key Shard](https://www.wowhead.com/item=236096/coffer-key-shard).
+---@type integer Item ID of [Coffer Key Shard](https://www.wowhead.com/item=245653/coffer-key-shard).
 Config.KEY_SHARD_ITEM_CODE = 245653
 --#endregion
 

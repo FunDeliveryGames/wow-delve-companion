@@ -61,7 +61,7 @@ Lockit.UI_LOOT_INFO_DESCRIPTION = "Complete a delve to get:"
 
 -- Tooltips Extension
 
-Lockit.UI_BOUNTIFUL_KEYS_COUNT_CACHES_PREFIX = "Keys from caches"
+Lockit.UI_BOUNTIFUL_KEYS_COUNT_CACHES_PREFIX = "Keys from Caches"
 
 -- Compartment (these are shown hovering over the addon in the corresponding dropdown menu)
 

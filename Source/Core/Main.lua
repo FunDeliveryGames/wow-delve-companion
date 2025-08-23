@@ -122,17 +122,32 @@ function DelveCompanion:CanRetrieveDelveWidgetIDInfo()
     return continent ~= nil and continent == self.Config.KHAZ_ALGAR_MAP_ID
 end
 
---- Cache number of [Restored Coffer Keys](https://www.wowhead.com/currency=3028/restored-coffer-key) player has got from Caches this week.
+--- Cache number of consumables (Keys, Shards, etc.) player has collected.
 ---@param self DelveCompanion
-function DelveCompanion:CacheKeysCount()
-    local keysCollected = 0
-    for _, questId in ipairs(self.Config.BOUNTIFUL_KEY_QUESTS_DATA) do
-        if C_QuestLog.IsQuestFlaggedCompleted(questId) then
-            keysCollected = keysCollected + 1
+function DelveCompanion:CacheCollectedConsumables()
+    -- [Restored Coffer Keys](https://www.wowhead.com/currency=3028/restored-coffer-key) player has got from Caches this week.
+    do
+        local keysCollected = 0
+        for _, questId in ipairs(self.Config.BOUNTIFUL_KEY_QUESTS_DATA) do
+            if C_QuestLog.IsQuestFlaggedCompleted(questId) then
+                keysCollected = keysCollected + 1
+            end
         end
+
+        self.Variables.keysCollected = keysCollected
     end
 
-    self.Variables.keysCollected = keysCollected
+    -- [Coffer Key Shards](https://www.wowhead.com/item=245653/coffer-key-shard) player has got from Caches this week.
+    do
+        local shardsCollected = 0
+        for _, questId in ipairs(self.Config.KEY_SHARD_QUESTS_DATA) do
+            if C_QuestLog.IsQuestFlaggedCompleted(questId) then
+                shardsCollected = shardsCollected + 1
+            end
+        end
+
+        self.Variables.shardsCollected = shardsCollected * DelveCompanion.Config.KEY_SHARDS_PER_CACHE
+    end
 end
 
 --- Try to retrieve `uiMapID` of the parent map with `Enum.UIMapType.Continent` for the given [uiMapID](https://warcraft.wiki.gg/wiki/UiMapID).
