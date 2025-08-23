@@ -108,6 +108,7 @@ function DelveCompanion_DelvesListFrameMixin:InitDelvesList()
                     local progressWidget = self:CreateDelveProgressWidget(self.DelvesListScroll.Content,
                         delveConfig)
                     progressWidget:SetPoint("TOPLEFT", instanceButton, "BOTTOMLEFT", 0, 0)
+                    instanceButton.progressWidget = progressWidget
                 end
             end
         end

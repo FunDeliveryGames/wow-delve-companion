@@ -10,6 +10,7 @@ local Logger = DelveCompanion.Logger
 ---@class (exact) DelveInstanceButton : DelveInstanceButtonXml
 ---@field data DelveData?
 ---@field waypointTracker DelveWaypointTracker
+---@field progressWidget DelvesProgressWidget?
 DelveCompanion_DelveInstanceButtonMixin = {}
 
 ---@param self DelveInstanceButton
@@ -32,15 +33,19 @@ end
 ---@param self DelveInstanceButton
 function DelveCompanion_DelveInstanceButtonMixin:Update()
     self.BountifulIcon:SetShown(self.data.isBountiful)
-    if DelveCompanion.Variables.isPTR then
-        self.RightIconsContainer.NotCompletedStoryIcon:SetShown(self.data.config.achievements and
-            not self.data.isStoryCompleted)
-    end
+    self.RightIconsContainer.NotCompletedStoryIcon:SetShown(
+        self.data.config.achievements
+        and not self.data.isStoryCompleted
+    )
 
     self.waypointTracker.Update(self.data)
     self.RightIconsContainer.WaypointIcon:SetShown(self.waypointTracker.isActive)
 
     self.RightIconsContainer:Layout()
+
+    if self.progressWidget ~= nil then
+        self.progressWidget:Update()
+    end
 end
 
 ---@param self DelveInstanceButton
