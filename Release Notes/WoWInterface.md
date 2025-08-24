@@ -1,4 +1,11 @@
-[b]A new update[/b] has arrived!  It includes support for the upcoming 11.2 features.
+[b]A new update[/b] has arrived! It includes support for the upcoming 11.2 features.
+
+[b]Version [0.9.1][/b]:
+[list]
+[*] [b]QoL[/b]: Add tracking of Weekly Caches which contain [url=https://www.wowhead.com/item=245653/coffer-key-shard]Coffer Key Shards[/url]. Their tooltips will display amount of shards that can be obtained that week.
+[*] [b]Localization[/b]: Add `esES` translation (thanks to `Romanv` for contribution).
+[*] Fixed displaying of story variants which are not part of the corresponding achievements as `Not Completed`.
+[/list]
 
 [b]Version [0.9][/b]:
 [list]
