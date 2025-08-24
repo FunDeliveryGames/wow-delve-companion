@@ -1,9 +1,9 @@
-**A new update** has arrived!<br> It includes support for the upcoming 11.2 features.
+**A new update** has arrived!
 ***
 **Version \[0.9.1\]**:
 - **QoL**: Add tracking of Weekly Caches which contain [Coffer Key Shards](https://www.wowhead.com/item=245653/coffer-key-shard). Their tooltips will display amount of shards that can be obtained that week.
-- **Localization**: Add `esES` translation (thanks to `Romanv` for contribution).
-- Fixed displaying of story variants which are not part of the corresponding achievements as `Not Completed`.
+- **Localization**: Add `Spanish` translation (thanks to `Romanv` for contribution).
+- Fixed displaying of story variants which are not part of the corresponding achievements as `Not Completed`.<br><br>
 **Version \[0.9\]**:
 - **QoL**: Track the active Story Variant for each Delve (thanks Blizzard for providing this information eventually).
     - It's displayed in a tooltip hovering over a Delve button (both in **Delves Tab** and **Delves UI**).

@@ -2,7 +2,7 @@
 
 ## [0.9.1] - 25 August 2025
 - **QoL**: Add tracking of Weekly Caches which contain [Coffer Key Shards](https://www.wowhead.com/item=245653/coffer-key-shard). Their tooltips will display amount of shards that can be obtained that week.
-- **Localization**: Add `esES` translation (thanks to `Romanv` for contribution).
+- **Localization**: Add `Spanish` translation (thanks to `Romanv` for contribution).
 - Fixed displaying of story variants which are not part of the corresponding achievements as `Not Completed`.
 
 ## [0.9] - 04 August 2025
