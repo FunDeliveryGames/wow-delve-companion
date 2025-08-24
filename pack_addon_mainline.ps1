@@ -9,7 +9,7 @@ The script copies all files of the addon from WoW AddOns folder and put them int
 Path to YAML configuration file.
 
 .PARAMETER addonsFolderRetail
-Path to WoW AddOns folder.
+Path to WoW AddOns folder: _retail_.
 
 .PARAMETER 7zipPath
 Path to 7zip.exe.
@@ -26,16 +26,16 @@ param (
     [string]$7zipPath
 )
 
-if ([string]::IsNullOrEmpty($addonsFolderRetail)) {
-    Write-Error "Addons folder is not provided. Check script args."
+if ([string]::IsNullOrEmpty($yamlPath)) {
+    Write-Error "YAML configuration is not found. Check script args."
     exit 1
 }
-if ([string]::IsNullOrEmpty($yamlPath)) {
-    Write-Error "YAML configuration is not provided. Check script args."
+if ([string]::IsNullOrEmpty($addonsFolderRetail)) {
+    Write-Error "_retail_ Addons folder is not found. Check script args."
     exit 1
 }
 if ([string]::IsNullOrEmpty($7zipPath)) {
-    Write-Error "7zip path is not provided. Check script args."
+    Write-Error "7zip.exe is not found. Check script args."
     exit 1
 }
 

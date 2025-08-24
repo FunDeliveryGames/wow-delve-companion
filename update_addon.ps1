@@ -9,33 +9,42 @@ The script copies all required files according to YAML configuration file.
 Path to YAML configuration file.
 
 .PARAMETER addonsFolderRetail
-Path to WoW Retail AddOns folder.
+Path to WoW AddOns folder: _retail_.
 
 .PARAMETER addonsFolderPtr
-Path to WoW PTR AddOns folder.
+Path to WoW AddOns folder: _ptr_.
+
+.PARAMETER addonsFolderXptr
+Path to WoW AddOns folder: _xptr_.
 
 .EXAMPLE
 .\pack_addon_mainline.ps1
 -yamlPath ".\\.pkgmeta"
 -addonsFolderRetail "C:\\Program Files\\World of Warcraft\\_retail_\\Interface\\AddOns"
 -addonsFolderPtr "C:\\Program Files\\World of Warcraft\\_ptr_\\Interface\\AddOns"
+-addonsFolderPtr "C:\\Program Files\\World of Warcraft\\_xptr_\\Interface\\AddOns"
 #>
 param (
     [string]$yamlPath,
     [string]$addonsFolderRetail,
-    [string]$addonsFolderPtr
+    [string]$addonsFolderPtr,
+    [string]$addonsFolderXptr
 )
 
+if ([string]::IsNullOrEmpty($yamlPath)) {
+    Write-Error "YAML configuration is not found. Check script args."
+    exit 1
+}
 if ([string]::IsNullOrEmpty($addonsFolderRetail)) {
-    Write-Error "Addons folder is not provided. Check script args."
+    Write-Error "_retail_ Addons folder is not found. Check script args."
     exit 1
 }
 if ([string]::IsNullOrEmpty($addonsFolderPtr)) {
-    Write-Error "Addons PTR folder is not provided. Check script args."
+    Write-Error "_ptr_ Addons folder is not found. Check script args."
     exit 1
 }
-if ([string]::IsNullOrEmpty($yamlPath)) {
-    Write-Error "YAML configuration is not provided. Check script args."
+if ([string]::IsNullOrEmpty($addonsFolderXptr)) {
+    Write-Error "_xptr_ Addons folder is not found. Check script args."
     exit 1
 }
 
@@ -81,6 +90,7 @@ $sourceDir = Get-Location
 $targetDirs = @()
 $targetDirs += Join-Path $addonsFolderRetail $packageAs
 $targetDirs += Join-Path $addonsFolderPtr $packageAs
+$targetDirs += Join-Path $addonsFolderXptr $packageAs
 
 foreach ($targetPath in $targetDirs) {
     if (Test-Path $targetPath) {
