@@ -10,6 +10,7 @@ local addonName, AddonTbl = ...
 ---@field AddonSettings AddonSettings
 ---@field DelvesList DelvesList
 ---@field DelvesDashboard DelvesDashboard
+---@field WeeklyStats WeeklyStats
 local DelveCompanion = {}
 AddonTbl.DelveCompanion = DelveCompanion
 
@@ -166,6 +167,24 @@ function DelveCompanion:GetContinentMapIDForMap(mapID)
 
     if mapInfo then
         return mapInfo.mapID
+    end
+
+    return nil
+end
+
+--- Try to get a Delve config for the given [uiMapID](https://warcraft.wiki.gg/wiki/UiMapID).
+---@param self DelveCompanion
+---@param mapID number [uiMapID](https://warcraft.wiki.gg/wiki/UiMapID) of a Delve.
+---@return DelveConfig|nil # Delve config, or `nil` if no Delve with such a uiMapID.
+function DelveCompanion:GetDelveConfigByMapId(mapID)
+    if not mapID then
+        return nil
+    end
+
+    for _, config in ipairs(DelveCompanion.Config.DELVES_CONFIG) do
+        if config.uiMapID == mapID then
+            return config
+        end
     end
 
     return nil

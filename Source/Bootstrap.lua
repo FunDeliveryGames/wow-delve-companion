@@ -32,10 +32,12 @@ local function OnAddonLoaded()
 
     DelveCompanion:InitDelvesData()
 
+    DelveCompanion.WeeklyStats:Init()
+
+    EventRegistry:RegisterFrameEventAndCallback("PLAYER_LOGIN", OnPlayerLogin)
     -- Logger.Log("OnAddonLoaded finish")
 end
 
-EventRegistry:RegisterFrameEventAndCallback("PLAYER_LOGIN", OnPlayerLogin)
 -- EventRegistry:RegisterFrameEventAndCallback("GOSSIP_SHOW", function(payload, arg1, arg2)
 --     if arg1 == "delves-difficulty-picker" then
 --         -- local options = DelvesDifficultyPickerFrame:GetOptions()
