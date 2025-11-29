@@ -1,5 +1,11 @@
 # Change Log
 
+## [0.9.3] - 29 November 2025
+- Add support for the 11.2.7 game update.
+
+## [0.9.2] - 08 October 2025
+- Add support for the 11.2.5 game update.
+
 ## [0.9.1] - 25 August 2025
 - **QoL**: Add tracking of Weekly Caches which contain [Coffer Key Shards](https://www.wowhead.com/item=245653/coffer-key-shard). Their tooltips will display amount of shards that can be obtained that week.
 - **Localization**: Add `Spanish` translation (thanks to `Romanv` for contribution).
