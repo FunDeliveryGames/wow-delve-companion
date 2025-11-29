@@ -1,6 +1,6 @@
 # Change Log
 
-## [0.9.3] - 01 December 2025
+## [0.9.3] - 29 November 2025
 - Add support for the 11.2.7 game update.
 
 ## [0.9.2] - 08 October 2025
