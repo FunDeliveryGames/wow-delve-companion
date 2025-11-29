@@ -12,9 +12,9 @@ local Config = DelveCompanion.Config
 local DEVLES_TAB_PARENT_KEY = "DelvesTab"
 
 ---@type integer
-local EJ_DELVES_TAB_BUTTON_ID = 6
+local EJ_DELVES_TAB_BUTTON_ID = 7
 ---@type integer
-local EJ_TABS_COUNT = 6
+local EJ_TABS_COUNT = 7
 --#endregion
 
 ---@class DelvesList
@@ -66,6 +66,9 @@ end
 
 --- Initialize Delves list.
 local function InitDelvesList()
+    ---@type Frame
+    local EncounterJournal = EncounterJournal
+
     if not EncounterJournal then
         Logger.Log("EncounterJournal is nil. Delves tab cannot be created.")
         return
