@@ -6,7 +6,8 @@ I'm working towards the next version and plan to deliver it later this year.
 Thank you for using **Delve Companion**. Stay tuned!
 ***
 **Version [0.9.4]**:
-- Fixed broken tabs for the retail 11.2.5.
+- Fixed broken tabs for the retail 11.2.5.<br>
+
 **Version [0.9.3]**:
 - Add support for the 11.2.7 game update.
 ***
