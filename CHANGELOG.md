@@ -1,5 +1,8 @@
 # Change Log
 
+## [0.9.4] - 30 November 2025
+- Fixed broken tabs for the retail 11.2.5.
+
 ## [0.9.3] - 29 November 2025
 - Add support for the 11.2.7 game update.
 
