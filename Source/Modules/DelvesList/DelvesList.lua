@@ -12,13 +12,13 @@ local Config = DelveCompanion.Config
 local DEVLES_TAB_PARENT_KEY = "DelvesTab"
 
 ---@type integer
-local EJ_DELVES_TAB_BUTTON_ID = 6
+local EJ_DELVES_TAB_BUTTON_ID = 7
 ---@type integer
-local EJ_TABS_COUNT = 6
+local EJ_TABS_COUNT = 7
 
 if DelveCompanion.Variables.isPTR then
-    EJ_DELVES_TAB_BUTTON_ID = 7
-    EJ_TABS_COUNT = 7
+    EJ_DELVES_TAB_BUTTON_ID = 8
+    EJ_TABS_COUNT = 8
 end
 --#endregion
 

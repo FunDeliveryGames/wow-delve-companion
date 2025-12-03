@@ -22,13 +22,15 @@ Path to WoW AddOns folder: _xptr_.
 -yamlPath ".\\.pkgmeta"
 -addonsFolderRetail "C:\\Program Files\\World of Warcraft\\_retail_\\Interface\\AddOns"
 -addonsFolderPtr "C:\\Program Files\\World of Warcraft\\_ptr_\\Interface\\AddOns"
--addonsFolderPtr "C:\\Program Files\\World of Warcraft\\_xptr_\\Interface\\AddOns"
+-addonsFolderXptr "C:\\Program Files\\World of Warcraft\\_xptr_\\Interface\\AddOns"
+-addonsFolderBeta "C:\\Program Files\\World of Warcraft\\_beta_\\Interface\\AddOns"
 #>
 param (
     [string]$yamlPath,
     [string]$addonsFolderRetail,
     [string]$addonsFolderPtr,
-    [string]$addonsFolderXptr
+    [string]$addonsFolderXptr,
+    [string]$addonsFolderBeta
 )
 
 if ([string]::IsNullOrEmpty($yamlPath)) {
@@ -45,6 +47,10 @@ if ([string]::IsNullOrEmpty($addonsFolderPtr)) {
 }
 if ([string]::IsNullOrEmpty($addonsFolderXptr)) {
     Write-Error "_xptr_ Addons folder is not found. Check script args."
+    exit 1
+}
+if ([string]::IsNullOrEmpty($addonsFolderBeta)) {
+    Write-Error "_beta_ Addons folder is not found. Check script args."
     exit 1
 }
 
@@ -91,6 +97,7 @@ $targetDirs = @()
 $targetDirs += Join-Path $addonsFolderRetail $packageAs
 $targetDirs += Join-Path $addonsFolderPtr $packageAs
 $targetDirs += Join-Path $addonsFolderXptr $packageAs
+$targetDirs += Join-Path $addonsFolderBeta $packageAs
 
 foreach ($targetPath in $targetDirs) {
     if (Test-Path $targetPath) {
