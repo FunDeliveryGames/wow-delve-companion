@@ -37,6 +37,9 @@ Config.DEFAULT_CHARACTER_DATA = {
 
 ---@type integer Player's maximum level in the current expansion.
 Config.EXPANSION_MAX_LEVEL = 80
+if DelveCompanion.Variables.isPTR then
+    Config.EXPANSION_MAX_LEVEL = 90
+end
 
 ---@type integer Item ID of [Delve-O-Bot 7001](https://www.wowhead.com/item=230850/delve-o-bot-7001).
 Config.DELVE_O_BOT_ITEM_CODE = 230850
