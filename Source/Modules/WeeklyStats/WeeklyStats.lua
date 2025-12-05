@@ -7,8 +7,12 @@ local DelveCompanion = AddonTbl.DelveCompanion
 local Logger = DelveCompanion.Logger
 
 --#region Constants
----@type number
-local SCENARIO_ID_DELVE = 3022
+
+---@type string Scenario name for Delves from [Wago](https://wago.tools/db2/Scenario?page=1).
+local SCENARIO_DELVE_NAME = "Delves"
+-- local SCENARIO_ID_DELVE = 3022
+
+---@type number WidgetID with a Delve progress from [Wago](https://wago.tools/db2/UiWidget?page=1).
 local WIDGET_ID_DELVE_SCENARIO = 6183
 
 --#endregion
@@ -21,14 +25,20 @@ DelveCompanion.WeeklyStats = WeeklyStats
 local function OnScenarioCompleted(ownerID, ...)
     Logger.Log("Scenario has been completed")
 
-    ---@type number
-    local id = C_ScenarioInfo.GetScenarioInfo().scenarioID
-    if id ~= SCENARIO_ID_DELVE then
-        Logger.Log("Not Delve")
+    local info = C_ScenarioInfo.GetScenarioInfo()
+    if info == nil then
+        Logger.Log("Scenario info is nil")
         return
     end
 
-    local widgetInfo = C_UIWidgetManager.GetScenarioHeaderDelvesWidgetVisualizationInfo(6183)
+    Logger.LogTable(info)
+
+    if info.name ~= SCENARIO_DELVE_NAME then
+        Logger.Log("Not a Delve?")
+        return
+    end
+
+    local widgetInfo = C_UIWidgetManager.GetScenarioHeaderDelvesWidgetVisualizationInfo(WIDGET_ID_DELVE_SCENARIO)
     if widgetInfo then
         Logger.Log("Completed: %s - Tier %s",
             C_Map.GetMapInfo(C_Map.GetBestMapForUnit("player")).name,
