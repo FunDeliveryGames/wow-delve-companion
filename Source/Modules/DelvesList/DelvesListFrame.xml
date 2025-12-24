@@ -10,7 +10,7 @@
 		</Anchors>
 		<Layers>
 			<Layer level="BACKGROUND">
-				<Texture parentKey="Background" atlas="UI-EJ-TheWarWithin" useAtlasSize="true">
+				<Texture parentKey="Background">
 					<Anchors>
 						<Anchor point="TOPLEFT" x="3" y="-1" />
 					</Anchors>

@@ -133,6 +133,29 @@ function DelveCompanion_DelvesListFrameMixin:UpdateKeysWidget()
 end
 
 ---@param self DelvesListFrame
+function DelveCompanion_DelvesListFrameMixin:Refresh()
+    local tierData = GetEJTierData(EJ_GetCurrentTier())
+
+    do
+        local bgAtlasId = tierData.backgroundAtlas
+        self.Background:SetAtlas(bgAtlasId, true)
+    end
+
+    DelveCompanion:UpdateDelvesData()
+
+    for _, instanceButton in ipairs(self.instanceButtons) do
+        instanceButton:Update()
+    end
+
+    if DelveCompanion.Variables.maxLevelReached then
+        self:UpdateKeysWidget()
+        self:RegisterEvent("CURRENCY_DISPLAY_UPDATE")
+    else
+        self.KeysWidget:Hide()
+    end
+end
+
+---@param self DelvesListFrame
 function DelveCompanion_DelvesListFrameMixin:OnLoad()
     -- Logger.Log("DelvesList OnLoad start")
 
@@ -159,19 +182,7 @@ end
 ---@param self DelvesListFrame
 function DelveCompanion_DelvesListFrameMixin:OnShow()
     -- Logger.Log("DelvesList OnShow start")
-
-    DelveCompanion:UpdateDelvesData()
-
-    for _, instanceButton in ipairs(self.instanceButtons) do
-        instanceButton:Update()
-    end
-
-    if DelveCompanion.Variables.maxLevelReached then
-        self:UpdateKeysWidget()
-        self:RegisterEvent("CURRENCY_DISPLAY_UPDATE")
-    else
-        self.KeysWidget:Hide()
-    end
+    self:Refresh()
 end
 
 ---@param self DelvesListFrame
@@ -191,6 +202,7 @@ end
 
 --- `DelveCompanionDelvesListFrameTemplate`
 ---@class DelvesListXml : Frame
+---@field Background Texture
 ---@field Title FontString
 ---@field KeysWidget CustomActionWidget
 ---@field DelveOBotWidget DelveOBotWidget
