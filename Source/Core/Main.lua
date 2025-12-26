@@ -8,7 +8,7 @@ local addonName, AddonTbl = ...
 ---@field Definitions Definitions
 ---@field Variables Variables
 ---@field AddonSettings AddonSettings
----@field DelvesList DelvesList
+---@field EJExtension EJExtension
 ---@field DelvesDashboard DelvesDashboard
 local DelveCompanion = {}
 AddonTbl.DelveCompanion = DelveCompanion
