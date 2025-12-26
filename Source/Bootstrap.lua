@@ -13,7 +13,8 @@ local function OnPlayerLogin()
 
     DelveCompanion.AddonSettings:Init()
 
-    DelveCompanion.Variables.maxLevelReached = UnitLevel("player") == DelveCompanion.Config.EXPANSION_MAX_LEVEL
+    DelveCompanion.Variables.maxLevelReached = UnitLevel("player") ==
+        GetMaxLevelForPlayerExpansion() -- DelveCompanion.Config.EXPANSION_MAX_LEVEL
     if DelveCompanion.Variables.maxLevelReached then
         DelveCompanion_TooltipExtension_Init()
     end

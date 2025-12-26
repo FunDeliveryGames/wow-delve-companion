@@ -34,9 +34,11 @@ end
 ---@param self OverviewBountifulFrame
 function DelveCompanion_OverviewBountifulFrameMixin:OnShow()
     -- Logger.Log("OverviewBountifulFrame OnShow start")
-    DelveCompanion:UpdateDelvesData()
 
-    for index, delveData in ipairs(DelveCompanion.Variables.delvesData) do
+    local expansion = LE_EXPANSION_LEVEL_CURRENT
+    DelveCompanion:UpdateDelvesData(expansion)
+
+    for index, delveData in ipairs(DelveCompanion.Variables.delvesData[expansion]) do
         if delveData.isBountiful then
             ---@type OverviewBountifulButton
             local button = self.bountifulButtonsPool:Acquire()

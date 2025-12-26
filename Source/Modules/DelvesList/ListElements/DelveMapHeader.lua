@@ -4,7 +4,7 @@ local addonName, AddonTbl = ...
 local DelveCompanion = AddonTbl.DelveCompanion
 
 --- `Frame` with a map name displayed in the `Delves list` to group Delves.
----@class (exact) DelvesMapHeader : DelvesMapHeaderXml
+---@class (exact) DelvesMapHeader : DelveMapHeaderXml
 DelveCompanion_DelvesListMapHeaderMixin = {}
 
 function DelveCompanion_DelvesListMapHeaderMixin:Init(name)
@@ -14,7 +14,7 @@ end
 --#region XML Annotations
 
 --- `DelveCompanionDelveMapHeaderTemplate`
----@class (exact) DelvesMapHeaderXml : Frame
+---@class (exact) DelveMapHeaderXml : Frame
 ---@field Background Texture
 ---@field MapName FontString Localized name of the map
 --#endregion

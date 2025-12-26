@@ -18,7 +18,7 @@ local EJ_DELVES_TAB_BUTTON_ID = 7
 ---@type integer
 local EJ_TABS_COUNT = 7
 ---@type integer
-local EJ_DELVES_MIN_TIER = -1
+local EJ_DELVES_MIN_TIER = -1 -- Should be set when EncounterJournal is availalbe.
 
 if DelveCompanion.Variables.isPTR then
     EJ_DELVES_TAB_BUTTON_ID = 8
@@ -35,7 +35,6 @@ DelveCompanion.DelvesList = DelvesList
 
 local function ExpansionDropdown_Select(tier)
     EJ_SelectTier(tier)
-    Logger.Log("Selected: %s", tier)
 
     local tierData = GetEJTierData(tier)
     -- JourneysFrame has an internal variable to control the current displayed expansion. It should be set to properly reflect expansion switch on Delves tab.

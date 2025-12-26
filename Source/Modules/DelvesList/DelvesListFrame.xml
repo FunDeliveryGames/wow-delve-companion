@@ -126,35 +126,20 @@
 				</Frames>
 			</Frame>
 
-			<ScrollFrame parentKey="DelvesListScroll" inherits="ScrollFrameTemplate">
-				<KeyValues>
-					<KeyValue key="scrollBarX" value="15" type="number" />
-					<KeyValue key="scrollBarTopY" value="4" type="number" />
-					<KeyValue key="scrollBarBottomY" value="-7" type="number" />
-				</KeyValues>
+			<Frame parentKey="DelvesList" inherits="WowScrollBoxList">
+				<Size x="748" y="367" />
 				<Anchors>
-					<Anchor point="TOPLEFT" x="8" y="-60" />
-					<Anchor point="BOTTOMRIGHT" x="-30" y="15" />
+					<Anchor point="TOPLEFT" x="14" y="-55" />
 				</Anchors>
-				<ScrollChild>
-					<Frame parentKey="Content">
-						<Size x="748" y="367" />
-						<Layers>
-							<Layer level="BACKGROUND">
-								<!-- Extra visual for debugging
-									<Texture name="$parentDebugBackground"
-										file="Interface\Buttons\GoldGradiant">
-										<Anchors>
-											<Anchor point="TOPLEFT" x="0" y="0" />
-											<Anchor point="BOTTOMRIGHT" x="0" y="0" />
-										</Anchors>
-									</Texture>
-									 -->
-							</Layer>
-						</Layers>
-					</Frame>
-				</ScrollChild>
-			</ScrollFrame>
+			</Frame>
+			<EventFrame parentKey="ScrollBar" inherits="MinimalScrollBar">
+				<Anchors>
+					<Anchor point="TOPLEFT" relativeKey="$parent.DelvesList" relativePoint="TOPRIGHT"
+						x="12" y="-1" />
+					<Anchor point="BOTTOMLEFT" relativeKey="$parent.DelvesList"
+						relativePoint="BOTTOMRIGHT" x="12" y="1" />
+				</Anchors>
+			</EventFrame>
 		</Frames>
 		<Scripts>
 			<OnLoad method="OnLoad" />
