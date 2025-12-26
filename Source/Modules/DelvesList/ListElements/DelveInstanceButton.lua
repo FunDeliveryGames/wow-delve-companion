@@ -10,7 +10,6 @@ local Logger = DelveCompanion.Logger
 ---@class (exact) DelveInstanceButton : DelveInstanceButtonXml
 ---@field data DelveData?
 ---@field waypointTracker DelveWaypointTracker
----@field progressWidget DelvesProgressWidget?
 DelveCompanion_DelveInstanceButtonMixin = {}
 
 ---@param self DelveInstanceButton
@@ -31,7 +30,7 @@ function DelveCompanion_DelveInstanceButtonMixin:Init(data)
 end
 
 ---@param self DelveInstanceButton
-function DelveCompanion_DelveInstanceButtonMixin:Update()
+function DelveCompanion_DelveInstanceButtonMixin:Refresh()
     self.BountifulIcon:SetShown(self.data.isBountiful)
     self.RightIconsContainer.NotCompletedStoryIcon:SetShown(
         self.data.config.achievements
@@ -42,15 +41,11 @@ function DelveCompanion_DelveInstanceButtonMixin:Update()
     self.RightIconsContainer.WaypointIcon:SetShown(self.waypointTracker.isActive)
 
     self.RightIconsContainer:Layout()
-
-    if self.progressWidget ~= nil then
-        self.progressWidget:Update()
-    end
 end
 
 ---@param self DelveInstanceButton
 function DelveCompanion_DelveInstanceButtonMixin:OnEvent(event, ...)
-    self:Update()
+    self:Refresh()
 end
 
 ---@param self DelveInstanceButton
@@ -87,7 +82,7 @@ function DelveCompanion_DelveInstanceButtonMixin:OnClick()
 
     if self.waypointTracker:VerifyInput() then
         self.waypointTracker:ToggleTracking(self.data)
-        self:Update()
+        self:Refresh()
         self.waypointTracker:DisplayDelveTooltip(self, "ANCHOR_TOP", self.data)
     else
         -- EventRegistry:TriggerEvent(DelveCompanion.Definitions.Events.DELVE_INSTANCE_BUTTON_CLICK, self.data)

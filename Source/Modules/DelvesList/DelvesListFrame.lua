@@ -17,42 +17,6 @@ local Config = DelveCompanion.Config
 DelveCompanion_DelvesListFrameMixin = {}
 
 ---@param self DelvesListFrame
----@param parent Frame
----@param mapName string
----@return DelvesMapHeader
-function DelveCompanion_DelvesListFrameMixin:CreateMapHeader(parent, mapName)
-    ---@type DelvesMapHeader
-    local header = CreateFrame("Frame", nil, parent, "DelveCompanionDelveMapHeaderTemplate")
-    header:Init(mapName)
-
-    return header
-end
-
----@param self DelvesListFrame
----@param parent Frame
----@param config DelveConfig
----@return DelvesProgressWidget
-function DelveCompanion_DelvesListFrameMixin:CreateDelveProgressWidget(parent, config)
-    ---@type DelvesProgressWidget
-    local widget = CreateFrame("Frame", nil, parent, "DelveCompanionDelveProgressWidgetTemplate")
-    widget:Init(config.achievements.story, config.achievements.chest)
-
-    return widget
-end
-
----@param self DelvesListFrame
----@param parent Frame
----@param delveData DelveData
----@return DelveInstanceButton
-function DelveCompanion_DelvesListFrameMixin:CreateDelveInstanceButton(parent, delveData)
-    ---@type DelveInstanceButton
-    local item = CreateFrame("Button", nil, parent, "DelveCompanionDelveInstanceButtonTemplate")
-    item:Init(delveData)
-
-    return item
-end
-
----@param self DelvesListFrame
 function DelveCompanion_DelvesListFrameMixin:UpdateKeysWidget()
     local keyCurrInfo = C_CurrencyInfo.GetCurrencyInfo(Config.BOUNTIFUL_KEY_CURRENCY_CODE)
     if not keyCurrInfo then
@@ -143,25 +107,24 @@ function DelveCompanion_DelvesListFrameMixin:OnLoad()
             leftPadding, rightPadding,
             horizSpacing, vertSpacing)
 
-        --- Setup Delve instance button after creation
+        --- Setup Map header.
         ---@param frame DelvesMapHeader
         local function DelveMapHeaderInitializer(frame, elementData)
             frame:Init(elementData.areaName)
         end
 
-        --- Setup Delve instance button after creation
-        ---@param frame DelveInstanceButton
+        --- Setup Delve instance element.
+        ---@param frame DelveListElement
         ---@param delveData DelveData
-        local function DelveInstanceButtonInitializer(frame, delveData)
+        local function DelveListElementInitializer(frame, delveData)
             frame:Init(delveData)
-            frame:Update()
         end
 
         local function DelvesListFactory(factory, elementData)
             if elementData.areaName then
                 factory("DelveCompanionDelveMapHeaderTemplate", DelveMapHeaderInitializer)
             else
-                factory("DelveCompanionDelveInstanceButtonTemplate", DelveInstanceButtonInitializer)
+                factory("DelveCompanionDelveListElementTemplate", DelveListElementInitializer)
             end
         end
 

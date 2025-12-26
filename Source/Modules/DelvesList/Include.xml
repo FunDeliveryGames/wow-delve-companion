@@ -7,6 +7,8 @@
 	<Script file="ListElements\DelveProgressWidget.lua" />
 	<Include file="ListElements\DelveInstanceButton.xml" />
 	<Script file="ListElements\DelveInstanceButton.lua" />
+	<Include file="ListElements\DelveListElement.xml" />
+	<Script file="ListElements\DelveListElement.lua" />
 
 	<Include file="DelvesListFrame.xml" />
 	<Script file="DelvesListFrame.lua" />

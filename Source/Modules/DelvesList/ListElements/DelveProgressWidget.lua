@@ -45,12 +45,10 @@ function DelveCompanion_DelveProgressWidgetMixin:Init(storyAchID, chestAchID)
         self.Chest:SetFrameInfo(defs.CodeType.Achievement, achID)
         self.Chest:SetOnClick(function() OpenAchievementFrameToAchievement(achID) end)
     end
-
-    self:Update()
 end
 
 ---@param self DelvesProgressWidget
-function DelveCompanion_DelveProgressWidgetMixin:Update()
+function DelveCompanion_DelveProgressWidgetMixin:Refresh()
     -- Story progress
     do
         local achID = self.Story.frameCode

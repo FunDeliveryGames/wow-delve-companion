@@ -132,6 +132,8 @@ function DelveCompanion_CustomActionWidgetMixin:SetFrameInfo(frameType, frameCod
 
     self.frameType = frameType
     self.frameCode = frameCode
+
+    self:Refresh()
 end
 
 ---@param self CustomActionWidget
@@ -152,8 +154,23 @@ function DelveCompanion_CustomActionWidgetMixin:UpdateCooldown()
 end
 
 ---@param self CustomActionWidget
+function DelveCompanion_CustomActionWidgetMixin:UpdateIcon()
+    if self.atlasTexture then
+        SetFromAtlas(self)
+    else
+        SetFromTexture(self)
+    end
+end
+
+---@param self CustomActionWidget
+function DelveCompanion_CustomActionWidgetMixin:Refresh()
+    self:UpdateIcon()
+    self:UpdateCooldown()
+end
+
+---@param self CustomActionWidget
 function DelveCompanion_CustomActionWidgetMixin:OnLoad()
-    -- Logger.Log("DelveCompanionIconWithTextAndTooltip `%s` OnLoad start", self:GetDebugName())
+    -- Logger.Log("CustomActionWidget `%s` OnLoad start", self:GetName())
 
     self.Icon:SetSize(self.iconSizeX, self.iconSizeY)
     self.Label:SetShown(self.displayLabel)
@@ -211,25 +228,19 @@ function DelveCompanion_CustomActionWidgetMixin:OnLoad()
     self.ClickCatcher:SetEnabled(false)
     self.InsecureAction:SetEnabled(false)
 
-    -- Logger.Log("DelveCompanionIconWithTextAndTooltip OnLoad finish")
+    -- Logger.Log("CustomActionWidget OnLoad finish")
 end
 
 ---@param self CustomActionWidget
 function DelveCompanion_CustomActionWidgetMixin:OnShow()
-    -- Logger.Log("DelveCompanionIconWithTextAndTooltip OnShow start")
+    -- Logger.Log("CustomActionWidget OnShow start")
 
-    if self.atlasTexture then
-        SetFromAtlas(self)
-    else
-        SetFromTexture(self)
-    end
-
-    self:UpdateCooldown()
+    self:Refresh()
 end
 
 ---@param self CustomActionWidget
 function DelveCompanion_CustomActionWidgetMixin:OnHide()
-    -- Logger.Log("DelveCompanionIconWithTextAndTooltip OnHide start")
+    -- Logger.Log("CustomActionWidget OnHide start")
 end
 
 ---@param self CustomActionWidget

@@ -7,6 +7,8 @@ local DelveCompanion = AddonTbl.DelveCompanion
 ---@class (exact) DelvesMapHeader : DelveMapHeaderXml
 DelveCompanion_DelvesListMapHeaderMixin = {}
 
+---@param self DelvesMapHeader
+---@param name string
 function DelveCompanion_DelvesListMapHeaderMixin:Init(name)
     self.MapName:SetText(name)
 end
