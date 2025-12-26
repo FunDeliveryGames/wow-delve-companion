@@ -19,6 +19,7 @@ end
 
 ---@class EJExtension
 ---@field DelvesList DelvesList
+---@field DelveEncounter DelveEncounter
 local EJExtension = {}
 DelveCompanion.EJExtension = EJExtension
 
@@ -30,9 +31,12 @@ end
 function EJExtension:OnExpansionDropdownSelected(tier)
     EJ_SelectTier(tier)
 
+    local EncounterJournal = EncounterJournal
+
     local tierData = GetEJTierData(tier)
-    -- JourneysFrame has an internal variable to control the current displayed expansion. It should be set to properly reflect expansion switch on Delves tab.
     do
+        -- JourneysFrame has an internal variable to control the current displayed expansion. It should be set to properly reflect expansion switch done on the Delves tab.
+
         if EncounterJournal.JourneysFrame then
             -- If tier is greater than EJ_TIER_DATA, either we have "current season" selected, or an expansion is missing. Fall back on the current expansion.
             -- EJ_TIER_DATA is a local table so ExpansionEnumToEJTierDataTableId is used instead.
@@ -116,9 +120,19 @@ function EJExtension:Init()
         return
     end
 
-    self.DelvesList:Init(EncounterJournal)
+    -- DelvesList
+    do
+        self.DelvesList:Init(EncounterJournal)
 
-    PanelTemplates_SetNumTabs(EncounterJournal, EJ_TABS_COUNT)
+        PanelTemplates_SetNumTabs(EncounterJournal, EJ_TABS_COUNT)
+    end
+
+    -- JourneysFrame
+    do
+        if DelveCompanion.Variables.isPTR then
+            self.DelveEncounter:Init(EncounterJournal.JourneysFrame)
+        end
+    end
 
     EncounterJournal:HookScript("OnShow",
         function()
