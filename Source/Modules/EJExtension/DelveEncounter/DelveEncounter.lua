@@ -15,6 +15,7 @@ local Config = DelveCompanion.Config
 ---@class DelveEncounter
 ---@field CompanionFrame Button
 ---@field ExpBar JourneyEncounterExpBar
+---@field ConfigPanel CompanionConfigPanel
 local DelveEncounter = {}
 DelveCompanion.EJExtension.DelveEncounter = DelveEncounter
 
@@ -57,29 +58,34 @@ function DelveEncounter:Init(JourneysFrame)
         companionFrame:ClearPoint("CENTER")
         companionFrame:SetPoint("LEFT", 30, 0)
 
+        companionFrame:HookScript("OnShow",
+            function()
+                self:OnShowHook()
+            end
+        )
+        companionFrame:HookScript("OnHide",
+            function()
+                self:OnHideHook()
+            end
+        )
+        self.CompanionFrame = companionFrame
+
         ---@type FontString
         local compName = companionFrame.CompanionConfigBtn.CompanionName
         compName:SetJustifyH("CENTER")
         compName:ClearAllPoints()
-        compName:SetPoint("TOPLEFT", companionFrame.CompanionConfigBtn.Icon, "TOPRIGHT", 5, 15)
+        compName:SetPoint("TOPLEFT", companionFrame.CompanionConfigBtn.Icon, "TOPRIGHT", 5, 17)
 
         ---@type JourneyEncounterExpBar
         local bar = CreateFrame("StatusBar", "$parent.CompanionExpBar", companionFrame,
             "DelveCompanionJourneyEncounterExpBarTemplate")
-        bar:Init(compName)
-
+        bar:SetPoint("TOP", compName, "BOTTOM", 0, 2)
         self.ExpBar = bar
-    end
 
-    companionFrame:HookScript("OnShow",
-        function()
-            self:OnShowHook()
-        end
-    )
-    companionFrame:HookScript("OnHide",
-        function()
-            self:OnHideHook()
-        end
-    )
-    self.CompanionFrame = companionFrame
+        ---@type CompanionConfigPanel
+        local configPanel = CreateFrame("Frame", "$parent.ConfigPanel", companionFrame,
+            "DelveCompanionCompanionConfigPanelTemplate")
+        configPanel:SetPoint("TOP", bar, "BOTTOM", 0, 3)
+        self.ConfigPanel = configPanel
+    end
 end

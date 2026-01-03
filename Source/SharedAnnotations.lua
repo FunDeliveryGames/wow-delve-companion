@@ -31,6 +31,14 @@
 ---@field ButtonPanelBackground Texture
 ---@field PanelTitle FontString
 ---@field PanelDescription FontString
+
+--- `CompanionConfigSlotTemplate` ([Blizzard template](https://www.townlong-yak.com/framexml/live/Blizzard_DelvesCompanionConfiguration/Blizzard_DelvesCompanionConfiguration.xml#4)).
+---@class (exact) CompanionConfigSlotXml : Button
+---@field type string
+---@field Label FontString
+---@field Value FontString
+---@field Texture Texture
+---@field OptionsList CompanionConfigListXml
 --#endregion
 
 --#region Mixin annotations
