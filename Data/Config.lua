@@ -8,6 +8,9 @@ local DelveCompanion = AddonTbl.DelveCompanion
 local Config = {}
 DelveCompanion.Config = Config
 
+---@type integer Delves have been introduced in TWW. It's used in different frames to display relevant content depending on the selected expansion.
+Config.DELVES_MIN_EXPANSION = LE_EXPANSION_WAR_WITHIN
+
 --#region Save Data
 
 --- Account Save Data scheme
@@ -34,12 +37,6 @@ Config.DEFAULT_CHARACTER_DATA = {
     dashOverviewEnabled = true
 }
 --#endregion
-
----@type integer Player's maximum level in the current expansion.
-Config.EXPANSION_MAX_LEVEL = 80
-if DelveCompanion.Variables.isPTR then
-    Config.EXPANSION_MAX_LEVEL = 90
-end
 
 ---@type integer Item ID of [Delve-O-Bot 7001](https://www.wowhead.com/item=230850/delve-o-bot-7001).
 Config.DELVE_O_BOT_ITEM_CODE = 230850
@@ -126,9 +123,9 @@ Config.KEY_SHARD_SOURCE_CACHES_DATA = {
 
 --#region Delver's Bounty
 
----@type integer Weekly cap of [Delver's Bounty](https://www.wowhead.com/item=233071/delvers-bounty).
+---@type integer Weekly cap of [Delver's Bounty](https://www.wowhead.com/item=248142/delvers-bounty).
 Config.BOUNTY_MAP_MAX_PER_WEEK = 1
----@type integer Quest ID used to track whether player has looted [Delver's Bounty](https://www.wowhead.com/item=233071/delvers-bounty) during the week.
+---@type integer Quest ID used to track whether player has looted [Delver's Bounty](https://www.wowhead.com/item=248142/delvers-bounty) during the week.
 Config.BOUNTY_MAP_QUEST = 86371
 --#endregion
 
@@ -144,6 +141,9 @@ Config.GILDED_STASH_WEEKLY_CAP = 3
 
 ---@type integer Item ID of [Delver's Bounty](https://www.wowhead.com/item=248142/delvers-bounty).
 Config.BOUNTY_MAP_ITEM_CODE = 248142
+if DelveCompanion.Variables.isPTR then
+    Config.BOUNTY_MAP_ITEM_CODE = 252415
+end
 
 ---@type integer Item ID of [Radiant Echo](https://www.wowhead.com/item=246771/radiant-echo).
 Config.ECHO_ITEM_CODE = 246771
@@ -154,8 +154,11 @@ Config.KEY_SHARD_ITEM_CODE = 245653
 
 --#region Seasonal modifiers
 
----@type integer Spell ID of [Nemesis Strongbox](https://www.wowhead.com/spell=472952/nemesis-strongbox).
+---@type integer Spell ID of [Nemesis Strongbox](https://www.wowhead.com/spell=1239535/nemesis-strongbox).
 Config.NEMESIS_AFFIX_SPELL_CODE = 1239535
+if DelveCompanion.Variables.isPTR then
+    Config.NEMESIS_AFFIX_SPELL_CODE = 1270179
+end
 --#endregion
 
 --#region Delves data

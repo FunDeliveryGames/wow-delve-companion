@@ -60,7 +60,7 @@ end
 
 --- Iterate through all Delves of the selected expansion and update their runtime data.
 ---@param self DelveCompanion
----@param expansionLevel number
+---@param expansionLevel number LE_EXPANSION enum number of the expansion
 function DelveCompanion:UpdateDelvesData(expansionLevel)
     -- self.Logger.Log("Start updating Delves data for expansion: %d...", expansionLevel)
 

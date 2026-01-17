@@ -25,12 +25,14 @@ function DelveCompanion_DelvesListFrameMixin:UpdateKeysWidget()
     end
 
     self.KeysWidget:SetLabelText(keyCurrInfo.quantity)
-
     self.KeysWidget:Show()
+
+    self:RegisterEvent("CURRENCY_DISPLAY_UPDATE")
 end
 
 ---@param self DelvesListFrame
 function DelveCompanion_DelvesListFrameMixin:Refresh()
+    ---@type EJTierData
     local tierData = GetEJTierData(EJ_GetCurrentTier())
 
     if not DelveCompanion.Variables.isPTR then
@@ -48,12 +50,9 @@ function DelveCompanion_DelvesListFrameMixin:Refresh()
     DelveCompanion:UpdateDelvesData(tierData.expansionLevel)
     self:ListDelves(tierData.expansionLevel)
 
-    if DelveCompanion.Variables.maxLevelReached then
-        self:UpdateKeysWidget()
-        self:RegisterEvent("CURRENCY_DISPLAY_UPDATE")
-    else
-        self.KeysWidget:Hide()
-    end
+    self:UpdateKeysWidget()
+    self.DelveOBotWidget:SetShown(tierData.expansionLevel == LE_EXPANSION_WAR_WITHIN)       -- Delve-O-Bot 7001 works for TWW Delves only.
+    self.ModifiersContainer:SetShown(tierData.expansionLevel == LE_EXPANSION_LEVEL_CURRENT) -- Modifiers are active in the latest expansion Delves.
 end
 
 ---@param self DelvesListFrame

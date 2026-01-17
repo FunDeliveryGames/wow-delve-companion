@@ -62,9 +62,10 @@ end
 
 ---@param self DelveInstanceButton
 function DelveCompanion_DelveInstanceButtonMixin:OnEnter()
-    if DelveCompanion.Variables.maxLevelReached == false then
-        return
-    end
+    -- TODO: delete completely if works fine.
+    -- if DelveCompanion.Variables.maxLevelReached == false then
+    --     return
+    -- end
 
     self.waypointTracker:DisplayDelveTooltip(self, "ANCHOR_TOP", self.data)
 end
@@ -76,9 +77,10 @@ end
 
 ---@param self DelveInstanceButton
 function DelveCompanion_DelveInstanceButtonMixin:OnClick()
-    if not DelveCompanion.Variables.maxLevelReached then
-        return
-    end
+    -- TODO: delete completely if works fine.
+    -- if not DelveCompanion.Variables.maxLevelReached then
+    --     return
+    -- end
 
     if self.waypointTracker:VerifyInput() then
         self.waypointTracker:ToggleTracking(self.data)

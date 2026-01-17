@@ -93,7 +93,7 @@ function DelvesList:Init(EncounterJournal)
     end
 
     do
-        self.delvesMinTier = GetEJTierDataTableID(LE_EXPANSION_WAR_WITHIN)
+        self.delvesMinTier = GetEJTierDataTableID(Config.DELVES_MIN_EXPANSION)
         self:CreateDelvesListFrame(EncounterJournal)
     end
 

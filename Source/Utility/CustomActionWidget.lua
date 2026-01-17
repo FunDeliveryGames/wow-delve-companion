@@ -96,24 +96,23 @@ local function SetFromTexture(self)
     end
 
     local canSet = true
-    local defs = DelveCompanion.Definitions
-    if type == defs.CodeType.Item then
+    local codeTypes = DelveCompanion.Definitions.CodeType
+    if type == codeTypes.Item then
         texture = C_Item.GetItemIconByID(code)
-    elseif type == defs.CodeType.Spell then
+    elseif type == codeTypes.Spell then
         texture = C_Spell.GetSpellTexture(code)
-    elseif type == defs.CodeType.Currency then
+    elseif type == codeTypes.Currency then
         texture = C_CurrencyInfo.GetCurrencyInfo(code).iconFileID
-    elseif type == defs.CodeType.Achievement then
+    elseif type == codeTypes.Achievement then
         texture = select(10, GetAchievementInfo(code))
-    elseif type == defs.CodeType.Toy then
+    elseif type == codeTypes.Toy then
         canSet = false
         local toy = Item:CreateFromItemID(code)
         toy:ContinueOnItemLoad(function()
             self.Icon:SetTexture(select(3, C_ToyBox.GetToyInfo(code)))
         end)
-        -- texture = select(3, C_ToyBox.GetToyInfo(code))
     else
-        Logger.Log(Lockit.DEBUG_UNEXPECTED_ENUM_ELEMENT, tostring(defs.CodeType), type)
+        Logger.Log(Lockit.DEBUG_UNEXPECTED_ENUM_ELEMENT, tostring(codeTypes), type)
     end
 
     if texture and canSet then
@@ -138,6 +137,15 @@ end
 
 ---@param self CustomActionWidget
 function DelveCompanion_CustomActionWidgetMixin:UpdateCooldown()
+    if not (self.frameType and self.frameCode) then
+        return
+    end
+
+    -- At the moment, cooldown is implemented for Items only.
+    if self.frameType ~= DelveCompanion.Definitions.CodeType.Item then
+        return
+    end
+
     local cooldown = self.Cooldown
 
     local start, duration, enable = C_Item.GetItemCooldown(self.frameCode)
@@ -253,19 +261,19 @@ function DelveCompanion_CustomActionWidgetMixin:OnEnter()
     local tooltip = GameTooltip
     tooltip:SetOwner(self, self.tooltipAnchor or DEFAULT_TOOLTIP_ANCHOR)
 
-    local defs = DelveCompanion.Definitions
-    if type == defs.CodeType.Item then
+    local codeTypes = DelveCompanion.Definitions.CodeType
+    if type == codeTypes.Item then
         tooltip:SetItemByID(code)
-    elseif type == defs.CodeType.Spell then
+    elseif type == codeTypes.Spell then
         tooltip:SetSpellByID(code)
-    elseif type == defs.CodeType.Currency then
+    elseif type == codeTypes.Currency then
         tooltip:SetCurrencyByID(code)
-    elseif type == defs.CodeType.Achievement then
+    elseif type == codeTypes.Achievement then
         tooltip:SetHyperlink(GetAchievementLink(code))
-    elseif type == defs.CodeType.Toy then
+    elseif type == codeTypes.Toy then
         tooltip:SetToyByItemID(code)
     else
-        Logger.Log(Lockit.DEBUG_UNEXPECTED_ENUM_ELEMENT, tostring(defs.CodeType), type)
+        Logger.Log(Lockit.DEBUG_UNEXPECTED_ENUM_ELEMENT, tostring(codeTypes), type)
     end
 
     tooltip:Show()

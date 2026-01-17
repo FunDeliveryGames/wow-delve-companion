@@ -75,6 +75,7 @@ function EJExtension:OnContentTabSet(id)
 
     EJ_HideNonInstancePanels()
 
+    -- If the Delves tab is opened with an earlier expansion selected, set the selected EJ Tier to the current expansion.
     if EJ_GetCurrentTier() < self.DelvesList.delvesMinTier then
         ExpansionDropdown_Select(GetServerExpansionLevel() + 1)
     end

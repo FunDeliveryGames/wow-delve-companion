@@ -132,4 +132,6 @@ local function InitDelvesDashboard()
     EventRegistry:RegisterCallback(DelveCompanion.Definitions.Events.SETTING_CHANGE, OnSettingChanged, DelvesDashboard)
 end
 
-EventUtil.ContinueOnAddOnLoaded(DelveCompanion.Definitions.DependencyAddonName.delvesDashboardUI, InitDelvesDashboard)
+if not DelveCompanion.Variables.isPTR then
+    EventUtil.ContinueOnAddOnLoaded(DelveCompanion.Definitions.DependencyAddonName.delvesDashboardUI, InitDelvesDashboard)
+end

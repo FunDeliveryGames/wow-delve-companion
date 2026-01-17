@@ -15,7 +15,6 @@
                     <KeyValue key="labelRelPoint" value="RIGHT" type="string" />
                     <KeyValue key="labelOffsetX" value="2" type="number" />
                     <KeyValue key="frameType" value="achievement" type="string" />
-                    <KeyValue key="frameCode" value="300" type="number" />
                 </KeyValues>
                 <Anchors>
                     <Anchor point="LEFT" x="-5" y="0" />
@@ -31,7 +30,6 @@
                     <KeyValue key="labelRelPoint" value="RIGHT" type="string" />
                     <KeyValue key="labelOffsetX" value="2" type="number" />
                     <KeyValue key="frameType" value="achievement" type="string" />
-                    <KeyValue key="frameCode" value="300" type="number" />
                 </KeyValues>
                 <Anchors>
                     <Anchor point="LEFT" relativeKey="$parent.Story" relativePoint="RIGHT" x="15"
