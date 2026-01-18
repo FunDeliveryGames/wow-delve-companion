@@ -94,5 +94,10 @@ function DelveEncounter:Init(JourneysFrame)
         local bountifulFrame = CreateFrame("Frame", "$parent.BountifulPanel", companionFrame,
             "DelveCompanionDelveEncounterBountifulFrameTemplate")
         bountifulFrame:SetPoint("LEFT", companionFrame, "RIGHT", 15, -6)
+
+        ---@type DelveEncounterConsumablesFrame
+        local consumablesFrame = CreateFrame("Frame", "$parent.ConsumalesPanel", companionFrame,
+            "DelveCompanionDelveEncounterConsumablesFrameTemplate")
+        consumablesFrame:SetPoint("LEFT", bountifulFrame, "RIGHT", 10, 0)
     end
 end

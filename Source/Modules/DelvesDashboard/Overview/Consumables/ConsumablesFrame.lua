@@ -26,7 +26,7 @@ function DelveCompanion_OverviewConsumablesFrameMixin:UpdateConsumables()
 
     -- Delver's Bounty
     do
-        local mapsCount = C_Item.GetItemCount(Config.BOUNTY_MAP_ITEM_CODE)
+        local mapsCount = C_Item.GetItemCount(Config.BOUNTY_MAPS[LE_EXPANSION_WAR_WITHIN])
         local mapsLine = tostring(mapsCount)
 
         if mapsCount >= Config.BOUNTY_MAP_MAX_PER_WEEK then
@@ -77,8 +77,8 @@ function DelveCompanion_OverviewConsumablesFrameMixin:OnLoad()
     end
 
     do
-        self.BountyMap:SetFrameInfo(defs.CodeType.Item, Config.BOUNTY_MAP_ITEM_CODE)
-        local macroText = string.format("/use item:%s", Config.BOUNTY_MAP_ITEM_CODE)
+        self.BountyMap:SetFrameInfo(defs.CodeType.Item, Config.BOUNTY_MAPS[LE_EXPANSION_WAR_WITHIN])
+        local macroText = string.format("/use item:%s", Config.BOUNTY_MAPS[LE_EXPANSION_WAR_WITHIN])
         self.BountyMap:SetInsecureAction({ type1 = "macro", macrotext = macroText })
     end
     self.Echoes:SetFrameInfo(defs.CodeType.Item, Config.ECHO_ITEM_CODE)

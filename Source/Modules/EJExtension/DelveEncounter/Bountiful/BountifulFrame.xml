@@ -10,8 +10,6 @@
                 <Texture parentKey="RewardCardBG" atlas="ui-journeys-delve-reward-bar"
                     useAtlasSize="true" setAllPoints="true" />
             </Layer>
-            <Layer level="ARTWORK">
-            </Layer>
             <Layer level="OVERLAY">
                 <FontString parentKey="Title" inherits="GameFontNormal"
                     text="BOUNTIFUL" mixin="AutoScalingFontStringMixin"

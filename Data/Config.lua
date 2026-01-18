@@ -55,10 +55,13 @@ Config.BOUNTIFUL_COFFER_ITEM_CODE = 228942
 
 ---@type integer Currency ID of [Restored Coffer Key](https://www.wowhead.com/currency=3028/restored-coffer-key).
 Config.BOUNTIFUL_KEY_CURRENCY_CODE = 3028
----@type integer Amount of [Coffer Key Shards](https://www.wowhead.com/item=236096/coffer-key-shard) player gets from a Cache like [Pinnacle Cache](https://www.wowhead.com/item=239118/pinnacle-cache).
-Config.KEY_SHARDS_PER_CACHE = 50
+---@type integer Currency ID of [Coffer Key Shards](https://www.wowhead.com/currency=3310/coffer-key-shards).
+Config.KEY_SHARDS_CURRENCY_CODE = 3310
+
 ---@type integer Amount of [Coffer Key Shards](https://www.wowhead.com/item=236096/coffer-key-shard) required to assemble [Restored Coffer Key](https://www.wowhead.com/currency=3028/restored-coffer-key).
 Config.SHARDS_FOR_KEY = 100
+---@type integer Amount of [Coffer Key Shards](https://www.wowhead.com/item=236096/coffer-key-shard) player gets from a Cache like [Pinnacle Cache](https://www.wowhead.com/item=239118/pinnacle-cache).
+Config.KEY_SHARDS_PER_CACHE = 50
 
 ---@type table<integer, number> Table of Quest IDs used to track [Restored Coffer Keys](https://www.wowhead.com/currency=3028/restored-coffer-key) player has received from Caches this week.
 Config.BOUNTIFUL_KEY_QUESTS_DATA = {
@@ -121,11 +124,20 @@ Config.KEY_SHARD_SOURCE_CACHES_DATA = {
 }
 --#endregion
 
---#region Delver's Bounty
+---@type integer Currency ID of [Untainted Mana-Crystals](https://www.wowhead.com/currency=3356/untainted-mana-crystals).
+Config.MANA_CRYSTALS_CURRENCY_CODE = 3356
 
----@type integer Weekly cap of [Delver's Bounty](https://www.wowhead.com/item=248142/delvers-bounty).
+--#region Bounty Map.
+
+---@type integer Item ID of Bounty Map.
+Config.BOUNTY_MAPS = {
+    [LE_EXPANSION_WAR_WITHIN] = 248142,
+    [LE_EXPANSION_MIDNIGHT] = 252415
+}
+
+---@type integer Weekly cap of maps (par character).
 Config.BOUNTY_MAP_MAX_PER_WEEK = 1
----@type integer Quest ID used to track whether player has looted [Delver's Bounty](https://www.wowhead.com/item=248142/delvers-bounty) during the week.
+---@type integer Quest ID used to track whether player has looted Bounty Map during the week.
 Config.BOUNTY_MAP_QUEST = 86371
 --#endregion
 
@@ -139,15 +151,11 @@ Config.GILDED_STASH_WEEKLY_CAP = 3
 
 --#region Delve-related entities which are updated every season
 
----@type integer Item ID of [Delver's Bounty](https://www.wowhead.com/item=248142/delvers-bounty).
-Config.BOUNTY_MAP_ITEM_CODE = 248142
-if DelveCompanion.Variables.isPTR then
-    Config.BOUNTY_MAP_ITEM_CODE = 252415
-end
-
+-- TODO: Remove or use for TWW widget if still available
 ---@type integer Item ID of [Radiant Echo](https://www.wowhead.com/item=246771/radiant-echo).
 Config.ECHO_ITEM_CODE = 246771
 
+-- TODO: Remove or use for TWW widget if still available
 ---@type integer Item ID of [Coffer Key Shard](https://www.wowhead.com/item=245653/coffer-key-shard).
 Config.KEY_SHARD_ITEM_CODE = 245653
 --#endregion
