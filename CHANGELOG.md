@@ -1,5 +1,10 @@
 # Change Log
 
+## [2026.01.1] - 19 January 2026
+- Prepare addon to Midnight.
+- Add expansion selector to the Delves tab to switch between TWW and Midnight Delves.
+- Display Companion configuration widget, active Bountiful Delves, and Consumables in a new Delves Encounter window on the Journeys tab.
+
 ## [0.9.4] - 30 November 2025
 - Fixed broken tabs for the retail 11.2.5.
 
