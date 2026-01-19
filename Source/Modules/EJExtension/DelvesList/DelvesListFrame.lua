@@ -91,6 +91,7 @@ function DelveCompanion_DelvesListFrameMixin:OnLoad()
 
         self.ModifiersContainer.AffixWidget:SetFrameInfo(DelveCompanion.Definitions.CodeType.Spell,
             Config.NEMESIS_AFFIX_SPELL_CODE)
+        self.ModifiersContainer.AffixWidget.Icon:SetPoint("CENTER", -1, 1)
         self.ModifiersContainer:Layout()
     end
 

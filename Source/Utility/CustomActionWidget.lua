@@ -141,13 +141,7 @@ function DelveCompanion_CustomActionWidgetMixin:UpdateCooldown()
         return
     end
 
-    -- At the moment, cooldown is implemented for Items only.
-    if self.frameType ~= DelveCompanion.Definitions.CodeType.Item then
-        return
-    end
-
     local cooldown = self.Cooldown
-
     local start, duration, enable = C_Item.GetItemCooldown(self.frameCode)
     if (cooldown and start and duration) then
         if (enable) then
@@ -192,18 +186,16 @@ function DelveCompanion_CustomActionWidgetMixin:OnLoad()
     end
 
     if self.useMask then
-        self.CircleMask:SetPoint("TOPLEFT", self, "CENTER", self.maskSizeOffset, -self.maskSizeOffset)
-        self.CircleMask:SetPoint("BOTTOMRIGHT", self, "CENTER", -self.maskSizeOffset, self.maskSizeOffset)
-        self.CircleMask:Show()
-        self.Icon:AddMaskTexture(self.CircleMask)
+        -- TODO: DOESN'T WORK IN MIDNIGHT for some reason???
 
-        self.Cooldown:ClearAllPoints()
-        self.Cooldown:SetPoint("TOPLEFT", self.CircleMask)
-        self.Cooldown:SetPoint("BOTTOMRIGHT", self.CircleMask)
+        -- self.CircleMask:ClearAllPoints()
+        -- self.CircleMask:SetPoint("TOPLEFT", self, "CENTER", self.maskSizeOffset, -self.maskSizeOffset)
+        -- self.CircleMask:SetPoint("BOTTOMRIGHT", self, "CENTER", -self.maskSizeOffset, self.maskSizeOffset)
+        -- self.CircleMask:Show()
+        -- self.Icon:AddMaskTexture(self.CircleMask)
 
-        self.BlockedOverlay:ClearAllPoints()
-        self.BlockedOverlay:SetPoint("TOPLEFT", self.CircleMask)
-        self.BlockedOverlay:SetPoint("BOTTOMRIGHT", self.CircleMask)
+        -- self.Cooldown:SetAllPoints(self.CircleMask)
+        -- self.InteractionBlockedOverlay:SetAllPoints(self.CircleMask)
     end
 
     ---@type FramePoint
@@ -290,7 +282,7 @@ end
 ---@class CustomActionWidgetXml : Frame
 ---@field Icon Texture
 ---@field CircleMask MaskTexture
----@field BlockedOverlay Texture
+---@field InteractionBlockedOverlay Texture
 ---@field Label FontString
 ---@field ClickCatcher Button
 ---@field InsecureAction Button

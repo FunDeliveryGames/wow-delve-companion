@@ -40,9 +40,10 @@
                         <Anchor point="TOPLEFT" relativePoint="CENTER" x="-15" y="15" />
                         <Anchor point="BOTTOMRIGHT" relativePoint="CENTER" x="15" y="-15" />
                     </Anchors>
+                    <Color r="1" g="0" b="0" a="0.7" />
                 </MaskTexture>
                 <FontString parentKey="Label" inherits="GameFontHighlightMed2"
-                    justifyH="RIGHT" text="?">
+                    justifyH="RIGHT" text="{??}">
                     <Anchors>
                         <Anchor point="RIGHT" relativeKey="$parent.Icon"
                             relativePoint="LEFT" x="-5" y="0" />
@@ -50,7 +51,7 @@
                 </FontString>
             </Layer>
             <Layer level="OVERLAY" textureSubLevel="1">
-                <Texture parentKey="BlockedOverlay" hidden="true">
+                <Texture parentKey="InteractionBlockedOverlay" hidden="true">
                     <Anchors>
                         <Anchor point="TOPLEFT" relativeKey="$parent.Icon" />
                         <Anchor point="BOTTOMRIGHT" relativeKey="$parent.Icon" />

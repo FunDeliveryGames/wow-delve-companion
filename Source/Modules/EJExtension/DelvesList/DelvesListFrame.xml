@@ -102,13 +102,13 @@
 						inherits="DelveCompanionCustomActionWidgetTemplate">
 						<Size x="50" y="50" />
 						<KeyValues>
-							<KeyValue key="layoutIndex" value="2" type="number" />
-							<KeyValue key="iconSizeX" value="50" type="number" />
-							<KeyValue key="iconSizeY" value="50" type="number" />
-							<KeyValue key="useMask" value="true" type="boolean" />
-							<KeyValue key="maskSizeOffset" value="20" type="number" />
+							<KeyValue key="layoutIndex" value="1" type="number" />
+							<KeyValue key="iconSizeX" value="40" type="number" />
+							<KeyValue key="iconSizeY" value="40" type="number" />
 							<KeyValue key="displayLabel" value="false" type="boolean" />
 							<KeyValue key="tooltipAnchor" value="ANCHOR_RIGHT" type="string" />
+							<KeyValue key="atlasTexture"
+								value="Warfronts-BaseMapIcons-Empty-Heroes-Minimap" type="string" />
 						</KeyValues>
 						<Layers>
 							<Layer level="OVERLAY">
@@ -134,7 +134,8 @@
 			</Frame>
 			<EventFrame parentKey="ScrollBar" inherits="MinimalScrollBar">
 				<Anchors>
-					<Anchor point="TOPLEFT" relativeKey="$parent.DelvesList" relativePoint="TOPRIGHT"
+					<Anchor point="TOPLEFT" relativeKey="$parent.DelvesList"
+						relativePoint="TOPRIGHT"
 						x="12" y="-1" />
 					<Anchor point="BOTTOMLEFT" relativeKey="$parent.DelvesList"
 						relativePoint="BOTTOMRIGHT" x="12" y="1" />
