@@ -12,9 +12,6 @@ local Config = DelveCompanion.Config
 
 ---@type integer
 local EJ_TABS_COUNT = 8
-if not DelveCompanion.Variables.isPTR then
-    EJ_TABS_COUNT = 7
-end
 --#endregion
 
 ---@class EJExtension
@@ -63,37 +60,20 @@ function EJExtension:OnContentTabSet(id)
     if id ~= self.DelvesList.TabButton:GetID() then
         self.DelvesList.Frame:Hide()
 
-        if not DelveCompanion.Variables.isPTR then
-            EncounterJournal.instanceSelect.ExpansionDropdown:ClearAllPoints()
-            EncounterJournal.instanceSelect.ExpansionDropdown:SetPoint("TOPRIGHT",
-                EncounterJournal.instanceSelect,
-                "TOPRIGHT", -24, -10)
-        end
-
         return
     end
 
     EJ_HideNonInstancePanels()
+    EncounterJournal_ShowGreatVaultButton()
 
     -- If the Delves tab is opened with an earlier expansion selected, set the selected EJ Tier to the current expansion.
     if EJ_GetCurrentTier() < self.DelvesList.delvesMinTier then
         ExpansionDropdown_Select(GetServerExpansionLevel() + 1)
     end
-
     self.DelvesList:SetupExpansionDropdownForDelves(EncounterJournal, ExpansionDropdown_Select)
-
-    if DelveCompanion.Variables.isPTR then
-        EncounterJournal_EnableExpansionDropdown(-40, -30, EncounterJournal)
-
-        EncounterJournal_ShowGreatVaultButton()
-    else
-        EncounterJournal.instanceSelect.ExpansionDropdown:ClearAllPoints()
-        EncounterJournal.instanceSelect.ExpansionDropdown:SetPoint("TOPRIGHT", EncounterJournal,
-            "TOPRIGHT", -40, -30)
-        EncounterJournal_EnableExpansionDropdown()
-    end
-
+    EncounterJournal_EnableExpansionDropdown(-40, -30, EncounterJournal)
     EncounterJournal.instanceSelect.ExpansionDropdown:SetShown(true)
+
     self.DelvesList.Frame:Show()
 end
 
@@ -130,9 +110,7 @@ function EJExtension:Init()
 
     -- JourneysFrame
     do
-        if DelveCompanion.Variables.isPTR then
-            self.DelveEncounter:Init(EncounterJournal.JourneysFrame)
-        end
+        self.DelveEncounter:Init(EncounterJournal.JourneysFrame)
     end
 
     EncounterJournal:HookScript("OnShow",

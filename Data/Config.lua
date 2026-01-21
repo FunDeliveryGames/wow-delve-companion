@@ -129,7 +129,7 @@ Config.MANA_CRYSTALS_CURRENCY_CODE = 3356
 
 --#region Bounty Map.
 
----@type integer Item ID of Bounty Map.
+---@type table<integer, number> Item ID of Bounty Map.
 Config.BOUNTY_MAPS = {
     [LE_EXPANSION_WAR_WITHIN] = 248142,
     [LE_EXPANSION_MIDNIGHT] = 252415
@@ -162,19 +162,29 @@ Config.KEY_SHARD_ITEM_CODE = 245653
 
 --#region Seasonal modifiers
 
----@type integer Spell ID of [Nemesis Strongbox](https://www.wowhead.com/spell=1239535/nemesis-strongbox).
-Config.NEMESIS_AFFIX_SPELL_CODE = 1239535
-if DelveCompanion.Variables.isPTR then
-    Config.NEMESIS_AFFIX_SPELL_CODE = 1270179
-end
+---@type table<table<number, number>> Spell ID of Delve affixes.
+Config.AFFIXES = {
+    -- [Nemesis Strongbox](https://www.wowhead.com/spell=1239535/nemesis-strongbox).
+    NEMESIS = {
+        [LE_EXPANSION_WAR_WITHIN] = 1239535,
+        [LE_EXPANSION_MIDNIGHT] = 1270179
+    }
+}
 --#endregion
+
+---@type table<integer, number> Quest ID required to unlock Companions.
+Config.COMPANION_UNLOCK_QUEST = {
+    [LE_EXPANSION_WAR_WITHIN] = 78464,
+    [LE_EXPANSION_MIDNIGHT] = 86636
+}
 
 --#region Delves data
 
 ---@type integer Khaz Algar [uiMapID](https://warcraft.wiki.gg/wiki/UiMapID).
 Config.KHAZ_ALGAR_MAP_ID = 2274
 
----@type table<integer, number[]> List of [uiMapIDs](https://warcraft.wiki.gg/wiki/UiMapID) which contain Delves. Grouped by LE_EXPANSION enum.
+---@type table<integer, number[]> List of [uiMapIDs](https://warcraft.wiki.gg/wiki/UiMapID) which contain Delves.
+--- Grouped by LE_EXPANSION enum. Controls display order of zones in the list.
 Config.DELVE_MAPS = {
     [LE_EXPANSION_WAR_WITHIN] = {
         2371, -- K`aresh
@@ -183,32 +193,25 @@ Config.DELVE_MAPS = {
         2214, -- The Ringing Deeps
         2215, -- Hallowfall
         2255, -- Azj-Kahet
+    },
+    [LE_EXPANSION_MIDNIGHT] = {
+        2405, -- Voidstorm
+        2413, -- Harandar
+        2437, -- Zul'Aman
+        2395, -- Eversong Woods
+        2393, -- Silvermoon City
+        2424, -- Isle of Quel'Danas
     }
 }
-
-if DelveCompanion.Variables.isPTR then
-    table.insert(
-        Config.DELVE_MAPS,
-        LE_EXPANSION_MIDNIGHT,
-        {
-            2405, -- Voidstorm
-            2413, -- Harandar
-            2437, -- Zul'Aman
-            2395, -- Eversong Woods
-            2393, -- Silvermoon City
-            2424, -- Isle of Quel'Danas
-        }
-    )
-end
 
 --- Table with Delve parameters.
 ---@class (exact) DelveConfig
 ---@field uiMapID number Delve [uiMapID](https://warcraft.wiki.gg/wiki/UiMapID).
 ---@field poiIDs {regular: number, bountiful: number?} Delve [areaPoiIDs](https://wago.tools/db2/areapoi).
 ---@field gildedStashUiWidgetID number? [UiWidgetID](https://wago.tools/db2/UiWidget) used to retrieve information about [Gilded Stash](https://www.wowhead.com/spell=1216211/gilded-stash) weekly progress.
----@field atlasBgID string [AtlasID](https://warcraft.wiki.gg/wiki/AtlasID) used to get Delve's background texture.
+---@field atlasBgID string [AtlasID](https://warcraft.wiki.gg/wiki/AtlasID) used to get Delve's background texture. These are grouped into separate atlases for major patches.
 ---@field achievements {chest: number, story: number}? Achievement IDs related to the Delve.
----@field coordinates MapCoord? Delve entrance coordinates. Used primarly for Boss Delves and TomTom waypoints.
+---@field coordinates MapCoord? Delve entrance coordinates. Used primarly for Boss Delves and non-Blizzard waypoints (e.g. TomTom).
 
 ---@type table<integer, DelveConfig[]> Table of all Delves in the game and their parameters. Grouped by LE_EXPANSION enum.
 Config.DELVES_CONFIG = {
@@ -459,170 +462,164 @@ Config.DELVES_CONFIG = {
             },
             atlasBgID = "delve-entrance-background-Voidrazor-Sanctuary"
         }
+    },
+    [LE_EXPANSION_MIDNIGHT] = {
+        -- Gulf of Memory
+        {
+            uiMapID = 2505,
+            poiIDs = {
+                regular = 8435,
+                bountiful = 8436
+            },
+            gildedStashUiWidgetID = 6723,
+            atlasBgID = "delve-entrance-background-gulf-of-memory",
+            achievements = {
+                chest = 61898,
+                story = 61731
+            }
+        },
+        -- Parhelion Plaza
+        {
+            uiMapID = 2545,
+            poiIDs = {
+                regular = 8427,
+                bountiful = 8428
+            },
+            gildedStashUiWidgetID = 6723,
+            atlasBgID = "delve-entrance-background-parhelion-plaza",
+            achievements = {
+                chest = 61893,
+                story = 61725
+            }
+        },
+        -- Atal'Aman
+        {
+            uiMapID = 2535,
+            poiIDs = {
+                regular = 8443,
+                bountiful = 8444
+            },
+            gildedStashUiWidgetID = 6723,
+            atlasBgID = "delve-entrance-background-atal-aman",
+            achievements = {
+                chest = 61863,
+                story = 61729
+            }
+        },
+        -- Collegiate Calamity
+        {
+            uiMapID = 2577,
+            poiIDs = {
+                regular = 8425,
+                bountiful = 8426
+            },
+            gildedStashUiWidgetID = 6723,
+            atlasBgID = "delve-entrance-background-collegiate-calamity",
+            achievements = {
+                chest = 61894,
+                story = 61726
+            }
+        },
+        -- Shadowguard Point
+        {
+            uiMapID = 2506,
+            poiIDs = {
+                regular = 8431,
+                bountiful = 8432
+            },
+            gildedStashUiWidgetID = 6723,
+            atlasBgID = "delve-entrance-background-shadowguard-point",
+            achievements = {
+                chest = 61900,
+                story = 61733
+            }
+        },
+        -- The Grudge Pit
+        {
+            uiMapID = 2510,
+            poiIDs = {
+                regular = 8433,
+                bountiful = 8434
+            },
+            gildedStashUiWidgetID = 6723,
+            atlasBgID = "delve-entrance-background-the-grudge-pit",
+            achievements = {
+                chest = 61897,
+                story = 61724
+            }
+        },
+        -- Twilight Crypts
+        {
+            uiMapID = 2503,
+            poiIDs = {
+                regular = 8441,
+                bountiful = 8442
+            },
+            gildedStashUiWidgetID = 6723,
+            atlasBgID = "delve-entrance-background-twilight-crypts",
+            achievements = {
+                chest = 61896,
+                story = 61730
+            }
+        },
+        -- Shadow Enclave
+        {
+            uiMapID = 2502,
+            poiIDs = {
+                regular = 8437,
+                bountiful = 8438
+            },
+            gildedStashUiWidgetID = 6723,
+            atlasBgID = "delve-entrance-background-the-shadow-enclave",
+            achievements = {
+                chest = 61892,
+                story = 61727
+            }
+        },
+        -- The Darkway
+        {
+            uiMapID = 2525,
+            poiIDs = {
+                regular = 8439,
+                bountiful = 8440
+            },
+            gildedStashUiWidgetID = 6723,
+            atlasBgID = "delve-entrance-background-the-darkway",
+            achievements = {
+                chest = 61895,
+                story = 61728
+            }
+        },
+        -- Sunkiller Sanctum
+        {
+            uiMapID = 2528,
+            poiIDs = {
+                regular = 8429,
+                bountiful = 8430
+            },
+            gildedStashUiWidgetID = 6723,
+            atlasBgID = "delve-entrance-background-sunkiller-sanctum",
+            achievements = {
+                chest = 61899,
+                story = 61732
+            }
+        },
+        -- Torment's Rise
+        {
+            uiMapID = 2507,
+            poiIDs = {
+                regular = 8445
+            },
+            coordinates = {
+                x = 61.17,
+                y = 71.6
+            },
+            atlasBgID = "delve-entrance-background-torments-rise"
+        },
     }
 }
 
-if DelveCompanion.Variables.isPTR then
-    table.insert(
-        Config.DELVES_CONFIG,
-        LE_EXPANSION_MIDNIGHT,
-        {
-            -- Gulf of Memory
-            {
-                uiMapID = 2505,
-                poiIDs = {
-                    regular = 8435,
-                    bountiful = 8436
-                },
-                gildedStashUiWidgetID = 6723,
-                atlasBgID = "delve-entrance-background-gulf-of-memory",
-                achievements = {
-                    chest = 61898,
-                    story = 61731
-                }
-            },
-            -- Parhelion Plaza
-            {
-                uiMapID = 2545,
-                poiIDs = {
-                    regular = 8427,
-                    bountiful = 8428
-                },
-                gildedStashUiWidgetID = 6723,
-                atlasBgID = "delve-entrance-background-parhelion-plaza",
-                achievements = {
-                    chest = 61893,
-                    story = 61725
-                }
-            },
-            -- Atal'Aman
-            {
-                uiMapID = 2535,
-                poiIDs = {
-                    regular = 8443,
-                    bountiful = 8444
-                },
-                gildedStashUiWidgetID = 6723,
-                atlasBgID = "delve-entrance-background-atal-aman",
-                achievements = {
-                    chest = 61863,
-                    story = 61729
-                }
-            },
-            -- Collegiate Calamity
-            {
-                uiMapID = 2577,
-                poiIDs = {
-                    regular = 8425,
-                    bountiful = 8426
-                },
-                gildedStashUiWidgetID = 6723,
-                atlasBgID = "delve-entrance-background-collegiate-calamity",
-                achievements = {
-                    chest = 61894,
-                    story = 61726
-                }
-            },
-            -- Shadowguard Point
-            {
-                uiMapID = 2506,
-                poiIDs = {
-                    regular = 8431,
-                    bountiful = 8432
-                },
-                gildedStashUiWidgetID = 6723,
-                atlasBgID = "delve-entrance-background-shadowguard-point",
-                achievements = {
-                    chest = 61900,
-                    story = 61733
-                }
-            },
-            -- The Grudge Pit
-            {
-                uiMapID = 2510,
-                poiIDs = {
-                    regular = 8433,
-                    bountiful = 8434
-                },
-                gildedStashUiWidgetID = 6723,
-                atlasBgID = "delve-entrance-background-the-grudge-pit",
-                achievements = {
-                    chest = 61897,
-                    story = 61724
-                }
-            },
-            -- Twilight Crypts
-            {
-                uiMapID = 2503,
-                poiIDs = {
-                    regular = 8441,
-                    bountiful = 8442
-                },
-                gildedStashUiWidgetID = 6723,
-                atlasBgID = "delve-entrance-background-twilight-crypts",
-                achievements = {
-                    chest = 61896,
-                    story = 61730
-                }
-            },
-            -- Shadow Enclave
-            {
-                uiMapID = 2502,
-                poiIDs = {
-                    regular = 8437,
-                    bountiful = 8438
-                },
-                gildedStashUiWidgetID = 6723,
-                atlasBgID = "delve-entrance-background-the-shadow-enclave",
-                achievements = {
-                    chest = 61892,
-                    story = 61727
-                }
-            },
-            -- The Darkway
-            {
-                uiMapID = 2525,
-                poiIDs = {
-                    regular = 8439,
-                    bountiful = 8440
-                },
-                gildedStashUiWidgetID = 6723,
-                atlasBgID = "delve-entrance-background-the-darkway",
-                achievements = {
-                    chest = 61895,
-                    story = 61728
-                }
-            },
-            -- Sunkiller Sanctum
-            {
-                uiMapID = 2528,
-                poiIDs = {
-                    regular = 8429,
-                    bountiful = 8430
-                },
-                gildedStashUiWidgetID = 6723,
-                atlasBgID = "delve-entrance-background-sunkiller-sanctum",
-                achievements = {
-                    chest = 61899,
-                    story = 61732
-                }
-            },
-            -- Torment's Rise
-            {
-                uiMapID = 2507,
-                poiIDs = {
-                    regular = 8445
-                },
-                coordinates = {
-                    x = 61.17,
-                    y = 71.6
-                },
-                atlasBgID = "delve-entrance-background-torments-rise"
-            },
-        }
-    )
-end
-
+-- TODO: REWORK LOOT INFO
 --- Table with Delve Loot information
 ---@class DelveLootInfo
 ---@field bountifulLvl integer Item Level player gets opening [Bountiful Coffer](https://www.wowhead.com/item=228942/bountiful-coffer).

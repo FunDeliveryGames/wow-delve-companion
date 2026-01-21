@@ -25,11 +25,20 @@ function DelveEncounter:OnShowHook()
 
     local companionFrame = self.CompanionFrame
 
+    ---@type EJTierData
+    local tierData = GetEJTierData(EJ_GetCurrentTier())
+
     do
         local progressFrame = companionFrame:GetParent()
         local companionID = progressFrame.majorFactionData.playerCompanionID
         self.ExpBar.factionID = C_DelvesUI.GetFactionForCompanion(companionID)
         self.ExpBar:Show()
+    end
+
+    do
+        local isConfigUnlocked = C_QuestLog.IsQuestFlaggedCompletedOnAccount(
+            Config.COMPANION_UNLOCK_QUEST[tierData.expansionLevel])
+        self.ConfigPanel:SetShown(isConfigUnlocked)
     end
 end
 

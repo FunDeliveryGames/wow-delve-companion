@@ -35,13 +35,6 @@ function DelveCompanion_DelvesListFrameMixin:Refresh()
     ---@type EJTierData
     local tierData = GetEJTierData(EJ_GetCurrentTier())
 
-    if not DelveCompanion.Variables.isPTR then
-        local tier = EJ_GetCurrentTier() > #ExpansionEnumToEJTierDataTableId
-            and LE_EXPANSION_LEVEL_CURRENT
-            or GetEJTierDataTableID(EJ_GetCurrentTier())
-        tierData.expansionLevel = tier
-    end
-
     do
         local bgAtlasId = tierData.backgroundAtlas
         self.Background:SetAtlas(bgAtlasId, true)
@@ -51,8 +44,17 @@ function DelveCompanion_DelvesListFrameMixin:Refresh()
     self:ListDelves(tierData.expansionLevel)
 
     self:UpdateKeysWidget()
-    self.DelveOBotWidget:SetShown(tierData.expansionLevel == LE_EXPANSION_WAR_WITHIN)       -- Delve-O-Bot 7001 works for TWW Delves only.
-    self.ModifiersContainer:SetShown(tierData.expansionLevel == LE_EXPANSION_LEVEL_CURRENT) -- Modifiers are active in the latest expansion Delves.
+    self.DelveOBotWidget:SetShown(tierData.expansionLevel == LE_EXPANSION_WAR_WITHIN) -- Delve-O-Bot 7001 works for TWW Delves only.
+
+    do
+        -- TODO: What will happen after TWW S3? Modifiers are active in the latest expansion Delves.
+
+        self.ModifiersContainer.AffixWidget:SetFrameInfo(
+            DelveCompanion.Definitions.CodeType.Spell,
+            Config.AFFIXES.NEMESIS[tierData.expansionLevel])
+        self.ModifiersContainer:SetShown(true)
+        -- self.ModifiersContainer:SetShown(tierData.expansionLevel == LE_EXPANSION_LEVEL_CURRENT)
+    end
 end
 
 ---@param self DelvesListFrame
@@ -88,9 +90,6 @@ function DelveCompanion_DelvesListFrameMixin:OnLoad()
 
     do
         self.ModifiersContainer.ModifiersLabel:SetText(_G["MODIFIERS_COLON"])
-
-        self.ModifiersContainer.AffixWidget:SetFrameInfo(DelveCompanion.Definitions.CodeType.Spell,
-            Config.NEMESIS_AFFIX_SPELL_CODE)
         self.ModifiersContainer.AffixWidget.Icon:SetPoint("CENTER", -1, 1)
         self.ModifiersContainer:Layout()
     end

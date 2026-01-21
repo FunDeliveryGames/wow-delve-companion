@@ -15,10 +15,6 @@ local DELVES_TAB_PARENT_KEY = "DelvesTab"
 
 ---@type integer
 local EJ_DELVES_TAB_BUTTON_ID = 8
-
-if not DelveCompanion.Variables.isPTR then
-    EJ_DELVES_TAB_BUTTON_ID = 7
-end
 --#endregion
 
 ---@class DelvesList

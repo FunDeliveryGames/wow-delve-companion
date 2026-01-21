@@ -23,24 +23,43 @@ function DelveCompanion_DelveEncounterConsumablesFrameMixin:UpdateConsumables()
         self.Keys.Icon:SetDesaturated(keysCount == 0)
     end
 
+    ---@type EJTierData
+    local expansion = GetEJTierData(EJ_GetCurrentTier()).expansionLevel
+
     -- Coffer Key Shards
+    -- TODO: Review it after TWW S3 end.
     do
-        local shardsInfo = C_CurrencyInfo.GetCurrencyInfo(Config.KEY_SHARDS_CURRENCY_CODE)
-        local shardsCount = shardsInfo.quantity
-        local shardsLine = tostring(shardsCount)
+        ---@type string, number, CurrencyInfo
+        local shardsLine, shardsCount, shardsInfo
+
+        if expansion == LE_EXPANSION_WAR_WITHIN then
+            self.Shards:SetFrameInfo(DelveCompanion.Definitions.CodeType.Item, Config.KEY_SHARD_ITEM_CODE)
+            local macroText = string.format("/use item:%s", Config.KEY_SHARD_ITEM_CODE)
+            self.Shards:SetInsecureAction({ type1 = "macro", macrotext = macroText })
+
+            shardsCount = C_Item.GetItemCount(Config.KEY_SHARD_ITEM_CODE)
+        elseif expansion == LE_EXPANSION_MIDNIGHT then
+            self.Shards:SetFrameInfo(DelveCompanion.Definitions.CodeType.Currency, Config.KEY_SHARDS_CURRENCY_CODE)
+
+            shardsInfo = C_CurrencyInfo.GetCurrencyInfo(Config.KEY_SHARDS_CURRENCY_CODE)
+            shardsCount = shardsInfo.quantity
+        end
+
+        shardsLine = tostring(shardsCount)
         if shardsCount >= Config.SHARDS_FOR_KEY then
             shardsLine = _G["GREEN_FONT_COLOR"]:WrapTextInColorCode(shardsLine)
             self.Shards.Icon:SetDesaturated(false)
         else
             shardsLine = _G["HIGHLIGHT_FONT_COLOR"]:WrapTextInColorCode(shardsLine)
-            self.Shards.Icon:SetDesaturated(shardsInfo.quantityEarnedThisWeek >= shardsInfo.maxWeeklyQuantity)
+            self.Shards.Icon:SetDesaturated(self.Shards.frameType == DelveCompanion.Definitions.CodeType.Item and true
+                or shardsInfo.quantityEarnedThisWeek >= shardsInfo.maxWeeklyQuantity
+            )
         end
         self.Shards:SetLabelText(shardsLine)
     end
 
     -- Bounty Map
     do
-        local expansion = GetEJTierData(EJ_GetCurrentTier()).expansionLevel
         local mapCode = Config.BOUNTY_MAPS[expansion]
 
         self.BountyMap:SetFrameInfo(DelveCompanion.Definitions.CodeType.Item, mapCode)
@@ -79,7 +98,6 @@ function DelveCompanion_DelveEncounterConsumablesFrameMixin:OnLoad()
 
     local defs = DelveCompanion.Definitions
     self.Keys:SetFrameInfo(defs.CodeType.Currency, Config.BOUNTIFUL_KEY_CURRENCY_CODE)
-    self.Shards:SetFrameInfo(defs.CodeType.Currency, Config.KEY_SHARDS_CURRENCY_CODE)
     self.ManaCrystals:SetFrameInfo(defs.CodeType.Currency, Config.MANA_CRYSTALS_CURRENCY_CODE)
 end
 
