@@ -1,5 +1,8 @@
 # Change Log
 
+## [2026.01.2] - 22 January 2026
+- Tweak Delves Encounter to properly display Consumables depending on the expansion and account progress.
+
 ## [2026.01.1] - 19 January 2026
 - Prepare addon to Midnight.
 - Add expansion selector to the Delves tab to switch between TWW and Midnight Delves.
