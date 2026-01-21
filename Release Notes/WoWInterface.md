@@ -6,8 +6,6 @@ And remember Ky'veza only in nightmares...
 [b]Version [2026.01.1][/b]:
 [list]
 [*] Prepare addon to Midnight.
-    [*] It's unclear from the PTR how exactly TWW and Midnight Delves will co-exist. Presumably, TWW content will be a legacy for achievements and t-mog farm. But still accessible, with Brann and most features be the same.
-    [*] I'll dig into this on the retail once the Pre-Patch update is here. And tweak the addon further to support both expansions.
 [*] Add expansion selector to the Delves tab.
     [*] Now, Delves tab behave the same way as other tabs in the Adventure Guide.
     [*] You can use the selector to switch between TWW and Midnight Delves.
@@ -15,6 +13,11 @@ And remember Ky'veza only in nightmares...
     [*] Delves UI has been removed.
     [*] Delve Season progress and Companion configuration has been moved to a new Journeys tab.
     [*] This part is still WIP, layout and content are subject to change.
+[/list]
+
+[b]Version [2026.01.2][/b]:
+[list]
+[*] Tweak Delves Encounter to properly display Consumables depending on the expansion and account progress.
 [/list]
 
 [url=https://github.com/FunDeliveryGames/wow-delve-companion/blob/main/CHANGELOG.md]Full versions history[/url]
