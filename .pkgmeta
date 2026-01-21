@@ -2,11 +2,13 @@ package-as: DelveCompanion
 ignore:
   - .vscode #folder
   - .git #folder
-  - releases #folder
+  - Releases #folder
   - Release Notes #folder
+  - Source\Modules\DelvesDashboard #folder
   - .gitignore
   - README.md
   - LICENSE
   - CHANGELOG.md
   - update_addon.ps1
   - pack_addon_mainline.ps1
+  - SharedAnnotations.lua

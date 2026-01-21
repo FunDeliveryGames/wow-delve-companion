@@ -53,7 +53,6 @@ Source\Settings\Include.xml
 # Modules
 Source\Modules\TooltipExtension\Include.xml
 Source\Modules\EJExtension\Include.xml
-Source\Modules\DelvesDashboard\Include.xml
 
 # Addon init. Should be the last one
 Source\Bootstrap.lua

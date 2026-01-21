@@ -55,30 +55,39 @@ if ([string]::IsNullOrEmpty($addonsFolderBeta)) {
 }
 
 # ======= READ & PARSE YAML =======
-# Use YAML file to make a list of ignored folders and files
 $yamlContent = Get-Content $yamlPath
 
 $packageAs = ""
 $ignoreDirs = @()
 $ignoreFiles = @()
+$inIgnore = $false
 
 foreach ($line in $yamlContent) {
     $trimmed = $line.Trim()
-    if ($trimmed -like "package-as:*") {
-        $packageAs = $trimmed.Substring($trimmed.IndexOf(":") + 1).Trim()
-    }
-    elseif ($trimmed -like "-*") {
-        $item = $trimmed.TrimStart("-").Trim()
 
-        if ($item.EndsWith(" #folder")) {
-            $item = $item.Split('#')[0].Trim()
-            $ignoreDirs += $item
-            # Write-Output "Ignore folder: " $item
-        }
-        else {
-            $ignoreFiles += $item
-            # Write-Output "Ignore file: " $item
-        }
+    if ($trimmed -like 'package-as:*') {
+        $packageAs = ($trimmed -split ':', 2)[1].Trim()
+        continue
+    }
+
+    if ($trimmed -eq 'ignore:') {
+        $inIgnore = $true
+        continue
+    }
+
+    if (-not $inIgnore -or -not $trimmed.StartsWith('-')) {
+        continue
+    }
+
+    $item = $trimmed.TrimStart('-').Trim()
+    $item = ($item -split '#', 2)[0].Trim()  # strip inline comments
+
+    if ($line -match '#folder') {
+        # Robocopy /XD only accepts directory NAMES, not paths
+        $ignoreDirs += (Split-Path $item -Leaf)
+    }
+    else {
+        $ignoreFiles += $item
     }
 }
 
@@ -115,19 +124,22 @@ foreach ($targetPath in $targetDirs) {
     #   /XF -> Exclude files (separated by space)
     $sourcePath = $sourceDir.Path
 
-    $xdParams = ""
+    $robocopyArgs = @(
+        "`"$sourcePath`""
+        "`"$targetPath`""
+        "/E"
+    )
+
     if ($ignoreDirs.Count -gt 0) {
-        $quotedDirs = $ignoreDirs | ForEach-Object {
-            if ($_ -match '\s') { '"{0}"' -f $_ } else { $_ }
-        }
-        $xdParams = "/XD " + ($quotedDirs -join " ")
+        $robocopyArgs += "/XD"
+        $robocopyArgs += ($ignoreDirs | ForEach-Object { "`"$_`"" })
     }
 
-    $xfParams = ""
     if ($ignoreFiles.Count -gt 0) {
-        $xfParams = "/XF " + ($ignoreFiles -join " ")
+        $robocopyArgs += "/XF"
+        $robocopyArgs += ($ignoreFiles | ForEach-Object { "`"$_`"" })
     }
 
-    $robocopyCmd = "robocopy `"$sourcePath`" `"$targetPath`" /E $xdParams $xfParams"
-    Invoke-Expression $robocopyCmd
+    $robocopyCmd = "robocopy " + ($robocopyArgs -join ' ')
+    cmd /c $robocopyCmd
 }
