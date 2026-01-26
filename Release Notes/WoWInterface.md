@@ -15,10 +15,16 @@ And remember Ky'veza only in nightmares...
     [*] This part is still WIP, layout and content are subject to change.
 [/list]
 
-[b]Version [2026.01.2][/b]:
+[b]Hotfix [2026.01.2][/b]:
 [list]
 [*] Tweak Delves Encounter to properly display Consumables depending on the expansion and account progress.
 [/list]
+
+[b]Hotfix [2026.01.3][/b]:
+[list]
+[*] Return Gilded Stash progress.
+[/list]
+
 
 [url=https://github.com/FunDeliveryGames/wow-delve-companion/blob/main/CHANGELOG.md]Full versions history[/url]
 [url=https://github.com/FunDeliveryGames/wow-delve-companion/issues]Report an issue[/url]
