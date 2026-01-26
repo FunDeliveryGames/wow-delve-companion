@@ -1,5 +1,8 @@
 # Change Log
 
+## [2026.01.3] - 26 January 2026
+- Return Gilded Stash progress.
+
 ## [2026.01.2] - 22 January 2026
 - Tweak Delves Encounter to properly display Consumables depending on the expansion and account progress.
 
