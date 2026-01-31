@@ -15,26 +15,30 @@ Config.DELVES_MIN_EXPANSION = LE_EXPANSION_WAR_WITHIN
 
 --- Account Save Data scheme
 ---@class (exact) DelveCompanionAccountData
----@field delveProgressWidgetsEnabled boolean
----@field trackingType WaypointTrackingType
+---@field delvesListInfoWidgetsEnabled boolean Delves tab: achievement widgets under buttons.
+---@field trackingType WaypointTrackingType Type of tracking used to set waypoints to the Delves.
+---@field inDelveWidgetEnabled boolean Whether [InDelveWidget](lua://InDelveWidget) is displayed.
+---@field inDelveWidgetDisplayRule InDelveWidgetDisplayRule Where [InDelveWidget](lua://InDelveWidget) is displayed.
 Config.DEFAULT_ACCOUNT_DATA = {
-    delveProgressWidgetsEnabled = true,
-    trackingType = DelveCompanion.Definitions.WaypointTrackingType.superTrack
+    delvesListInfoWidgetsEnabled = true,
+    trackingType = DelveCompanion.Definitions.WaypointTrackingType.superTrack,
+    inDelveWidgetEnabled = true,
+    inDelveWidgetDisplayRule = 1
 }
 
 --- Character Save Data
 ---@class (exact) DelveCompanionCharacterData
----@field gvDetailsEnabled boolean
----@field displayCompanionConfig boolean
----@field companionConfigLayout CompanionWidgetLayout
----@field keysCapTooltipEnabled boolean
----@field dashOverviewEnabled boolean
+---@field keysCapTooltipEnabled boolean Whether to display extra info in tooltips. Bad naming, affects all tooltips, not only Restored Coffer Key.
+---@field dashOverviewEnabled boolean [RETIRED] Overview section in Delves UI.
+---@field gvDetailsEnabled boolean [RETIRED] Custom GV frame in Delves UI.
+---@field displayCompanionConfig boolean [RETIRED] Whether to show Companion config in Delves UI.
+---@field companionConfigLayout CompanionWidgetLayout [RETIRED] Type of layout used for Companion config in Delves UI.
 Config.DEFAULT_CHARACTER_DATA = {
+    keysCapTooltipEnabled = true,
+    dashOverviewEnabled = true,
     gvDetailsEnabled = true,
     displayCompanionConfig = true,
-    companionConfigLayout = 1,
-    keysCapTooltipEnabled = true,
-    dashOverviewEnabled = true
+    companionConfigLayout = 1
 }
 --#endregion
 

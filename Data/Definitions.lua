@@ -90,13 +90,21 @@ Definitions.CompanionWidgetLayout = {
     vertical = 2
 }
 
+---@class InDelveWidgetDisplayRule Controls how [InDelveWidget](lua://InDelveWidget) is displayed.
+---@field left number Widget is shown on the left side of Objective Tracker.
+---@field right number Widget is shown on the right side of Objective Tracker.
+Definitions.InDelveWidgetDisplayRule = {
+    left = 1,
+    right = 2
+}
+
 ---@class AddonEvents
 Definitions.Events = {
-    SETTING_CHANGE = "DelveCompanion.SettingChange",
+    SETTING_CHANGE = "DelveCompanion.SettingChange", -- Whenever any addon setting is changed.
     DELVE_INSTANCE_BUTTON_CLICK = "DelveCompanion.RequestDelveInfoFrame",
     PROGRESS_TRACKER = {
-        DELVE_IN_PROGRESS = "DelveCompanion.DelveInProgress",
-        DELVE_RESPAWN_ACTIVATED = "DelveCompanion.DelveRespawnActivated",
-        DELVE_COMPLETE = "DelveCompanion.DelveComplete",
+        DELVE_IN_PROGRESS = "DelveCompanion.DelveInProgress",             -- Delve has started or has been left.
+        DELVE_RESPAWN_ACTIVATED = "DelveCompanion.DelveRespawnActivated", -- Respawn has been activated in the Delve.
+        DELVE_COMPLETE = "DelveCompanion.DelveComplete",                  -- Delve has been completed.
     }
 }

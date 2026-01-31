@@ -32,6 +32,26 @@ function DelveCompanion_InDelveWidgetFrameMixin:Refresh()
         return
     end
 
+    do
+        self:ClearAllPoints()
+
+        ---@type string
+        local point =
+            DelveCompanionAccountData.inDelveWidgetDisplayRule ==
+            DelveCompanion.Definitions.InDelveWidgetDisplayRule.left
+            and "TOPRIGHT"
+            or "TOPLEFT"
+
+        ---@type string
+        local relativePoint =
+            DelveCompanionAccountData.inDelveWidgetDisplayRule ==
+            DelveCompanion.Definitions.InDelveWidgetDisplayRule.left
+            and "BOTTOMLEFT"
+            or "BOTTOMRIGHT"
+
+        self:SetPoint(point, ScenarioObjectiveTracker.Header, relativePoint, 0, 0)
+    end
+
     local expansion = self.delveExpansion
     do
         local isAvailable =
@@ -58,16 +78,13 @@ function DelveCompanion_InDelveWidgetFrameMixin:Refresh()
 end
 
 ---@param self InDelveWidgetFrame
-function DelveCompanion_InDelveWidgetFrameMixin:PrepareWidget(isForce)
+function DelveCompanion_InDelveWidgetFrameMixin:PrepareWidget(isForced)
     local expansion = self.delveExpansion
     self.Lure:Set(Config.NEMESIS_LURE[expansion])
     self.Map:Set(Config.BOUNTY_MAPS[expansion])
     self.Radar:Set(Config.LOOT_RADAR_ITEM_CODE)
 
-    self:ClearAllPoints()
-    self:SetPoint("TOPRIGHT", ScenarioObjectiveTracker.Header, "BOTTOMLEFT", 0, 0)
-
-    self.respawnState = isForce and RESPAWN_STATES[0] or RESPAWN_STATES[1]
+    self.respawnState = isForced and RESPAWN_STATES[0] or RESPAWN_STATES[1]
     self.isSet = true
 end
 
@@ -113,6 +130,19 @@ function DelveCompanion_InDelveWidgetFrameMixin:OnLoad()
 
         EventRegistry:RegisterCallback(DelveCompanion.Definitions.Events.PROGRESS_TRACKER.DELVE_RESPAWN_ACTIVATED,
             OnDelveRespawnActivated, self)
+    end
+
+    do
+        local function OnSettingChanged(_, changedVarKey, newValue)
+            if not (changedVarKey == "inDelveWidgetDisplayRule") then
+                return
+            end
+            -- Logger.Log("[InDelveWidgetFrame] OnSettingChanged. Enabled: %s...", tostring(isEnabled))
+
+            self:Refresh()
+        end
+
+        EventRegistry:RegisterCallback(DelveCompanion.Definitions.Events.SETTING_CHANGE, OnSettingChanged, self)
     end
 end
 

@@ -21,20 +21,26 @@ DelveCompanion.InDelveWidget = InDelveWidget
 
 ---@param self InDelveWidget
 ---@param _ any
----@param isInProgress boolean
-function InDelveWidget:OnProgressChanged(_, isInProgress, delveMapID)
-    Logger.Log("[InDelveWidget] OnProgressChanged. Delve: %d ||| State: %s", delveMapID, tostring(isInProgress))
+---@param isInProgress boolean Whether player has an active Delve.
+function InDelveWidget:OnDelveInProgressChanged(_, isInProgress)
+    -- Logger.Log("[InDelveWidget] OnProgressChanged. State: %s", tostring(isInProgress))
+
     if isInProgress and not self.frame.isSet then
-        self:SetupWidget(delveMapID, false)
+        self:SetupWidget(false)
     elseif not isInProgress then
         self:HideWidget()
     end
 end
 
 ---@param self InDelveWidget
-function InDelveWidget:SetupWidget(delveMapID, isForce)
+function InDelveWidget:SetupWidget(isForced)
     -- Logger.Log("[InDelveWidget] Set up widget...")
-    local delveContinent = DelveCompanion:GetContinentMapIDForMap(delveMapID)
+
+    if not DelveCompanionAccountData.inDelveWidgetEnabled then
+        return
+    end
+
+    local delveContinent = DelveCompanion:GetContinentMapIDForMap(C_Map.GetBestMapForUnit("player"))
     self.frame.delveExpansion = FindInTableIf(
         Config.DELVE_CONTINENTS,
         function(continentMapID)
@@ -42,12 +48,14 @@ function InDelveWidget:SetupWidget(delveMapID, isForce)
         end
     )
 
-    self.frame:PrepareWidget(isForce)
+    self.frame:PrepareWidget(isForced)
     self.frame:Show()
 end
 
 ---@param self InDelveWidget
 function InDelveWidget:HideWidget()
+    -- Logger.Log("[InDelveWidget] Hide widget...")
+
     self.frame:Hide()
 end
 
@@ -59,21 +67,36 @@ function InDelveWidget:Init()
         UIParent, "DelvelCompanionInDelveWidgetFrameTemplate")
     self.frame = widgetFrame
 
-    if C_PartyInfo.IsDelveInProgress() then
-        -- Logger.Log("[InDelveWidget] Already in Delve. Force setup.")
-        self:SetupWidget(C_Map.GetBestMapForUnit("player"), true)
-    end
-
     do
         ---@param _ any
         ---@param isInProgress boolean
-        local function OnProgressChanged(_, isInProgress, delveMapID)
-            -- Logger.Log("[InDelveWidget] OnProgressChanged detected. Delve (%d) state: %s.", delveMapID,
-            --     tostring(isInProgress))
-            self:OnProgressChanged(_, isInProgress, delveMapID)
+        local function OnDelveInProgressChanged(_, isInProgress)
+            self:OnDelveInProgressChanged(_, isInProgress)
         end
 
         EventRegistry:RegisterCallback(DelveCompanion.Definitions.Events.PROGRESS_TRACKER.DELVE_IN_PROGRESS,
-            OnProgressChanged, self)
+            OnDelveInProgressChanged, self)
+    end
+
+    do
+        local function OnSettingChanged(_, changedVarKey, isEnabled)
+            if not (changedVarKey == "inDelveWidgetEnabled") then
+                return
+            end
+            -- Logger.Log("[InDelveWidget] OnSettingChanged. Enabled: %s...", tostring(isEnabled))
+
+            if isEnabled then
+                self:SetupWidget(true)
+            else
+                self:HideWidget()
+            end
+        end
+
+        EventRegistry:RegisterCallback(DelveCompanion.Definitions.Events.SETTING_CHANGE, OnSettingChanged, self)
+    end
+
+    if C_PartyInfo.IsDelveInProgress() then
+        -- Logger.Log("[InDelveWidget] Already in Delve. Forced setup.")
+        self:SetupWidget(true)
     end
 end

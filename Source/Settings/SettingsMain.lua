@@ -115,13 +115,13 @@ local function PrepareAccountSettings(category, layout)
     layout:AddInitializer(CreateSettingsListSectionHeaderInitializer(Lockit.UI_SETTINGS_SECTION_TITLE_ACCOUNT))
 
     do
-        local savedVarKey = "delveProgressWidgetsEnabled"
+        local savedVarKey = "delvesListInfoWidgetsEnabled"
 
         local setting = RegisterSetting(category, savedVarKey, savedVarTbl,
-            Config.DEFAULT_ACCOUNT_DATA.delveProgressWidgetsEnabled,
+            Config.DEFAULT_ACCOUNT_DATA.delvesListInfoWidgetsEnabled,
             Lockit.UI_SETTING_DELVE_PROGRESS_WIDGETS_NAME, OnSettingChanged)
 
-        local tooltip = Lockit.UI_SETTING_DELVE_PROGRESS_WIDGETS_TOOLTIP
+        local tooltip = Lockit.UI_SETTING_DELVES_LIST_INFO_WIDGETS_TOOLTIP
         Settings.CreateCheckbox(category, setting, tooltip)
     end
 
@@ -188,6 +188,40 @@ local function PrepareAccountSettings(category, layout)
         end
 
         Settings.CreateDropdown(category, setting, GetDropdownOptions, tooltip)
+    end
+
+    do
+        local controlSavedVarKey = "inDelveWidgetEnabled"
+        local dropdownSavedVarKey = "inDelveWidgetDisplayRule"
+
+        local settingName = Lockit.UI_SETTING_IN_DELVE_WIDGET_DISPLAY_RULE_NAME
+
+        local controlSetting = RegisterSetting(category, controlSavedVarKey, savedVarTbl,
+            Config.DEFAULT_ACCOUNT_DATA.inDelveWidgetEnabled,
+            settingName, OnSettingChanged)
+
+        local dropdownSetting = RegisterSetting(category, dropdownSavedVarKey, savedVarTbl,
+            Config.DEFAULT_ACCOUNT_DATA.inDelveWidgetDisplayRule,
+            settingName, OnSettingChanged)
+
+        local function GetOptions()
+            local container = Settings.CreateControlTextContainer()
+            container:Add(DelveCompanion.Definitions.InDelveWidgetDisplayRule.left,
+                Lockit.UI_SETTING_IN_DELVE_WIDGET_DISPLAY_RULE_OPTION_LEFT_NAME,
+                Lockit.UI_SETTING_IN_DELVE_WIDGET_DISPLAY_RULE_OPTION_LEFT_DESCRIPTION)
+            container:Add(DelveCompanion.Definitions.InDelveWidgetDisplayRule.right,
+                Lockit.UI_SETTING_IN_DELVE_WIDGET_DISPLAY_RULE_OPTION_RIGHT_NAME,
+                Lockit.UI_SETTING_IN_DELVE_WIDGET_DISPLAY_RULE_OPTION_RIGHT_DESCRIPTION)
+
+            return container:GetData()
+        end
+        local controlTooltip = Lockit.UI_SETTING_IN_DELVE_WIDGET_DISPLAY_RULE_TOOLTIP
+        local dropdownTooltip = Lockit.UI_SETTING_IN_DELVE_WIDGET_DISPLAY_RULE_TOOLTIP
+
+        local initializer = CreateSettingsCheckboxDropdownInitializer(
+            controlSetting, settingName, controlTooltip,
+            dropdownSetting, GetOptions, settingName, dropdownTooltip)
+        layout:AddInitializer(initializer)
     end
 end
 

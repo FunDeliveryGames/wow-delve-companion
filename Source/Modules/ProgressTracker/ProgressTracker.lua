@@ -30,8 +30,6 @@ local baseEvents = {
 
 ---@param self ProgressTracker
 function ProgressTracker:ProcessEvent(eventName, arg1, ...)
-    Logger.Log("[ProgressTracker] Event: %s", eventName)
-
     local isInProgress = C_PartyInfo.IsDelveInProgress()
     local isComplete = C_PartyInfo.IsDelveComplete()
     -- local widgetInfo = C_UIWidgetManager.GetScenarioHeaderDelvesWidgetVisualizationInfo(6183)
@@ -40,9 +38,7 @@ function ProgressTracker:ProcessEvent(eventName, arg1, ...)
         if isInProgress then
             FrameUtil.RegisterFrameForEvents(self.eventFrame, baseEvents)
 
-            EventRegistry:TriggerEvent(DelveCompanion.Definitions.Events.PROGRESS_TRACKER.DELVE_IN_PROGRESS,
-                true,
-                C_Map.GetBestMapForUnit("player"))
+            EventRegistry:TriggerEvent(DelveCompanion.Definitions.Events.PROGRESS_TRACKER.DELVE_IN_PROGRESS, true)
         end
     elseif eventName == "SCENARIO_CRITERIA_UPDATE" then
         if isComplete then
@@ -60,9 +56,7 @@ function ProgressTracker:ProcessEvent(eventName, arg1, ...)
         if not isInProgress then
             FrameUtil.UnregisterFrameForEvents(self.eventFrame, baseEvents)
 
-            EventRegistry:TriggerEvent(DelveCompanion.Definitions.Events.PROGRESS_TRACKER.DELVE_IN_PROGRESS,
-                false,
-                nil)
+            EventRegistry:TriggerEvent(DelveCompanion.Definitions.Events.PROGRESS_TRACKER.DELVE_IN_PROGRESS, false)
         end
     end
 end
