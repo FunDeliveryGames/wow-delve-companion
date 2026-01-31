@@ -25,6 +25,8 @@ local ADDON_SETTING_PREFIX = tostring(addonName) .. "_"
 local AddonSettings = {}
 DelveCompanion.AddonSettings = AddonSettings
 
+--#region Addon Compartment
+
 --- Used in `TOC` file for [AddonCompartmentFuncOnEnter](https://warcraft.wiki.gg/wiki/TOC_format#AddonCompartmentFuncOnEnter).
 ---@param addonName string
 ---@param menuButtonFrame table
@@ -67,13 +69,15 @@ function DelveCompanionCompartmentOnClick(addonName, buttonName)
     Settings.OpenToCategory(id)
 end
 
+--#endregion
+
 --- This callback will be invoked whenever a setting is modified.
 local function OnSettingChanged(setting, value)
-    -- Logger.Log("OnChanged registered...")
+    -- Logger.Log("[Settings] OnChanged detected...")
 
     local variableName = gsub(setting:GetVariable(), ADDON_SETTING_PREFIX, "")
 
-    -- Logger.Log("Firing changed var `%s` with value: %s", variableName, tostring(value))
+    -- Logger.Log("[Settings] Firing changed var `%s` with value: %s", variableName, tostring(value))
     EventRegistry:TriggerEvent(DelveCompanion.Definitions.Events.SETTING_CHANGE, variableName, value)
 end
 
@@ -176,7 +180,6 @@ local function PrepareAccountSettings(category, layout)
                     _G["WARNING_FONT_COLOR"]:WrapTextInColorCode(unavailableLine))
             end
 
-
             return string.join("\n",
                 tooltipLineStart,
                 tooltipLineBlizzard,
@@ -206,62 +209,6 @@ local function PrepareCharacterSettings(category, layout)
             Lockit.UI_SETTING_TOOLTIP_EXTENSION_NAME, OnSettingChanged)
 
         local tooltip = Lockit.UI_SETTING_TOOLTIP_EXTENSION_TOOLTIP
-        Settings.CreateCheckbox(category, setting, tooltip)
-    end
-
-    do
-        local controlSavedVarKey = "displayCompanionConfig"
-        local dropdownSavedVarKey = "companionConfigLayout"
-
-        local settingName = Lockit.UI_SETTING_COMPANION_CONFIG_NAME
-
-        local controlSetting = RegisterSetting(category, controlSavedVarKey, savedVarTbl,
-            Config.DEFAULT_CHARACTER_DATA.displayCompanionConfig,
-            settingName, OnSettingChanged)
-
-        local dropdownSetting = RegisterSetting(category, dropdownSavedVarKey, savedVarTbl,
-            Config.DEFAULT_CHARACTER_DATA.companionConfigLayout,
-            settingName, OnSettingChanged)
-
-        local function GetOptions()
-            local container = Settings.CreateControlTextContainer()
-            container:Add(DelveCompanion.Definitions.CompanionWidgetLayout.horizontal,
-                Lockit.UI_SETTING_COMPANION_CONFIG_OPTION_HORIZONTAL_NAME,
-                Lockit.UI_SETTING_COMPANION_CONFIG_OPTION_HORIZONTAL_DESCRIPTION)
-            container:Add(DelveCompanion.Definitions.CompanionWidgetLayout.vertical,
-                Lockit.UI_SETTING_COMPANION_CONFIG_OPTION_VERTICAL_NAME,
-                Lockit.UI_SETTING_COMPANION_CONFIG_OPTION_VERTICAL_DESCRIPTION)
-
-            return container:GetData()
-        end
-        local controlTooltip = Lockit.UI_SETTING_COMPANION_CONFIG_TOOLTIP
-        local dropdownTooltip = Lockit.UI_SETTING_COMPANION_CONFIG_TOOLTIP
-
-        local initializer = CreateSettingsCheckboxDropdownInitializer(
-            controlSetting, settingName, controlTooltip,
-            dropdownSetting, GetOptions, settingName, dropdownTooltip)
-        layout:AddInitializer(initializer)
-    end
-
-    do
-        local savedVarKey = "gvDetailsEnabled"
-
-        local setting = RegisterSetting(category, savedVarKey, savedVarTbl,
-            Config.DEFAULT_CHARACTER_DATA.gvDetailsEnabled,
-            Lockit.UI_SETTING_GV_DETAILS_NAME, OnSettingChanged)
-
-        local tooltip = Lockit.UI_SETTING_GV_DETAILS_TOOLTIP
-        Settings.CreateCheckbox(category, setting, tooltip)
-    end
-
-    do
-        local savedVarKey = "dashOverviewEnabled"
-
-        local setting = RegisterSetting(category, savedVarKey, savedVarTbl,
-            Config.DEFAULT_CHARACTER_DATA.dashOverviewEnabled,
-            Lockit.UI_SETTING_DASHBOARD_OVERVIEW_NAME, OnSettingChanged)
-
-        local tooltip = Lockit.UI_SETTING_DASHBOARD_OVERVIEW_TOOLTIP
         Settings.CreateCheckbox(category, setting, tooltip)
     end
 end
