@@ -52,7 +52,8 @@ Source\Settings\Include.xml
 
 # Modules
 Source\Modules\TooltipExtension\Include.xml
+Source\Modules\ProgressTracker\Include.xml
 Source\Modules\EJExtension\Include.xml
 
-# Addon init. Should be the last one
+# Addon init. Should be the last one here.
 Source\Bootstrap.lua

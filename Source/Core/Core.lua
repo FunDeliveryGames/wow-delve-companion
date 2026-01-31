@@ -10,6 +10,8 @@ local addonName, AddonTbl = ...
 ---@field AddonSettings AddonSettings
 ---@field EJExtension EJExtension
 ---@field DelvesDashboard DelvesDashboard
+---@field ProgressTracker ProgressTracker
+---@field InDelveWidget InDelveWidget
 local DelveCompanion = {}
 AddonTbl.DelveCompanion = DelveCompanion
 

@@ -93,5 +93,10 @@ Definitions.CompanionWidgetLayout = {
 ---@class AddonEvents
 Definitions.Events = {
     SETTING_CHANGE = "DelveCompanion.SettingChange",
-    DELVE_INSTANCE_BUTTON_CLICK = "DelveCompanion.RequestDelveInfoFrame"
+    DELVE_INSTANCE_BUTTON_CLICK = "DelveCompanion.RequestDelveInfoFrame",
+    PROGRESS_TRACKER = {
+        DELVE_IN_PROGRESS = "DelveCompanion.DelveInProgress",
+        DELVE_RESPAWN_ACTIVATED = "DelveCompanion.DelveRespawnActivated",
+        DELVE_COMPLETE = "DelveCompanion.DelveComplete",
+    }
 }

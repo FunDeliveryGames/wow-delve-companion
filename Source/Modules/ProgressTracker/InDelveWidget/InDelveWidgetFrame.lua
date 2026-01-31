@@ -1,0 +1,151 @@
+local addonName, AddonTbl = ...
+
+---@type DelveCompanion
+local DelveCompanion = AddonTbl.DelveCompanion
+
+---@type Logger
+local Logger = DelveCompanion.Logger
+---@type Config
+local Config = DelveCompanion.Config
+
+--#region Constants
+
+local RESPAWN_STATES = {
+    [0] = "Unknown", -- Used for Reload UI and Logout cases in the midst of the Delve because there is no way to retrieve respawn state from the WoW API.
+    [1] = "NotActivated",
+    [2] = "Activated"
+}
+--#endregion
+
+---@class (exact) InDelveWidgetFrame : InDelveWidgetFrameXml
+---@field isSet boolean
+---@field delveExpansion number
+---@field respawnState string
+---@field Lure InDelveWidgetItem
+---@field Map InDelveWidgetItem
+---@field Radar InDelveWidgetItem
+DelveCompanion_InDelveWidgetFrameMixin = {}
+
+---@param self InDelveWidgetFrame
+function DelveCompanion_InDelveWidgetFrameMixin:Refresh()
+    if not self.isSet then
+        return
+    end
+
+    local expansion = self.delveExpansion
+    do
+        local isAvailable =
+            C_Item.GetItemCount(self.Lure.itemCode) > 0                         -- Has the lure
+            and not C_QuestLog.IsQuestFlaggedCompleted(Config.BOUNTY_MAP_QUEST) -- Can get the bounty map this week
+            and (self.respawnState ~= RESPAWN_STATES[1])                        -- Respawn is activated
+        self.Lure:RefreshItem(isAvailable)
+    end
+
+    do
+        local activeBountySpell = DelveCompanion.Config.BOUNTY_ACTIVATED_SPELL[expansion]
+        local isAvailable =
+            C_Item.GetItemCount(self.Map.itemCode) > 0                       -- Has the bounty map
+            and C_UnitAuras.GetPlayerAuraBySpellID(activeBountySpell) == nil -- Doesn't have an active map buff
+        self.Map:RefreshItem(isAvailable)
+    end
+
+    do
+        -- local activeRadarSpell = DelveCompanion.Config.LOOT_RADAR_ACTIVATED_SPELL
+        local isAvailable = C_Item.GetItemCount(self.Radar.itemCode) > 0 -- Has the radar
+        -- and C_UnitAuras.GetPlayerAuraBySpellID(activeRadarSpell) == nil -- Doesn't have an active radar buff. IT DOES NOTHING as the aura is hidden at the moment.
+        self.Radar:RefreshItem(isAvailable)
+    end
+end
+
+---@param self InDelveWidgetFrame
+function DelveCompanion_InDelveWidgetFrameMixin:PrepareWidget(isForce)
+    local expansion = self.delveExpansion
+    self.Lure:Set(Config.NEMESIS_LURE[expansion])
+    self.Map:Set(Config.BOUNTY_MAPS[expansion])
+    self.Radar:Set(Config.LOOT_RADAR_ITEM_CODE)
+
+    self:ClearAllPoints()
+    self:SetPoint("TOPRIGHT", ScenarioObjectiveTracker.Header, "BOTTOMLEFT", 0, 0)
+
+    self.respawnState = isForce and RESPAWN_STATES[0] or RESPAWN_STATES[1]
+    self.isSet = true
+end
+
+---@param self InDelveWidgetFrame
+function DelveCompanion_InDelveWidgetFrameMixin:ResetWidget()
+    self.isSet = false
+    self.respawnState = RESPAWN_STATES[0]
+end
+
+---@param self InDelveWidgetFrame
+function DelveCompanion_InDelveWidgetFrameMixin:OnLoad()
+    -- Logger.Log("[InDelveWidgetFrame] OnLoad start")
+
+    self:ResetWidget()
+
+    do
+        local function CreateItem(name, parent, index)
+            ---@type InDelveWidgetItem
+            local widgetItem = CreateFrame("Frame", "$parent." .. name,
+                parent,
+                "DelvelCompanionInDelveWidgetItemTemplate")
+
+            widgetItem.layoutIndex = index
+
+            return widgetItem
+        end
+
+        local lure = CreateItem("Lure", self.Buttons, 1)
+        self.Lure = lure
+        local map = CreateItem("Map", self.Buttons, 2)
+        self.Map = map
+        local radar = CreateItem("Radar", self.Buttons, 3)
+        self.Radar = radar
+
+        self.Buttons:Layout()
+    end
+
+    do
+        local function OnDelveRespawnActivated()
+            self.respawnState = RESPAWN_STATES[2]
+            self:Refresh()
+        end
+
+        EventRegistry:RegisterCallback(DelveCompanion.Definitions.Events.PROGRESS_TRACKER.DELVE_RESPAWN_ACTIVATED,
+            OnDelveRespawnActivated, self)
+    end
+end
+
+---@param self InDelveWidgetFrame
+function DelveCompanion_InDelveWidgetFrameMixin:OnEvent(event, ...)
+    -- Logger.Log("[InDelveWidgetFrame] OnEvent start")
+
+    C_Timer.After(0.5, function()
+        self:Refresh()
+    end)
+end
+
+---@param self InDelveWidgetFrame
+function DelveCompanion_InDelveWidgetFrameMixin:OnShow()
+    -- Logger.Log("[InDelveWidgetFrame] OnShow start")
+
+    self:Refresh()
+
+    self:RegisterEvent("BAG_UPDATE")
+end
+
+---@param self InDelveWidgetFrame
+function DelveCompanion_InDelveWidgetFrameMixin:OnHide()
+    -- Logger.Log("[InDelveWidgetFrame] OnHide start")
+
+    self:ResetWidget()
+
+    self:UnregisterEvent("BAG_UPDATE")
+end
+
+--#region Xml annotations
+
+--- `DelvelCompanionInDelveWidgetFrameTemplate`
+---@class InDelveWidgetFrameXml : Frame
+---@field Buttons VerticalLayoutFrame
+--#endregion

@@ -127,12 +127,27 @@ Config.KEY_SHARD_SOURCE_CACHES_DATA = {
 ---@type integer Currency ID of [Untainted Mana-Crystals](https://www.wowhead.com/currency=3356/untainted-mana-crystals).
 Config.MANA_CRYSTALS_CURRENCY_CODE = 3356
 
+---@type integer Item ID of [L00T RAID-R Mini](https://www.wowhead.com/item=244193/l00t-raid-r-mini).
+Config.LOOT_RADAR_ITEM_CODE = 244193
+-- Config.LOOT_RADAR_ACTIVATED_SPELL = 1236623 -- USELESS at the moment. There is no buff or aura when the radar is active.
+
+---@type table<integer, number> Item ID of a Nemesis lure.
+Config.NEMESIS_LURE = {
+    [LE_EXPANSION_WAR_WITHIN] = 248017, -- Shrieking Quartz
+    [LE_EXPANSION_MIDNIGHT] = 253342    -- Beacon of Hope
+}
+
 --#region Bounty Map.
 
 ---@type table<integer, number> Item ID of Bounty Map.
 Config.BOUNTY_MAPS = {
-    [LE_EXPANSION_WAR_WITHIN] = 248142,
-    [LE_EXPANSION_MIDNIGHT] = 252415
+    [LE_EXPANSION_WAR_WITHIN] = 248142, -- Delver's Bounty
+    [LE_EXPANSION_MIDNIGHT] = 252415    -- Trovehunter's Bounty
+}
+---@type table<integer, number> Spell ID of the active Bounty Map.
+Config.BOUNTY_ACTIVATED_SPELL = {
+    [LE_EXPANSION_WAR_WITHIN] = 1246363, -- Delver's Bounty
+    [LE_EXPANSION_MIDNIGHT] = 1254631    -- Trovehunter's Bounty
 }
 
 ---@type integer Weekly cap of maps (par character).

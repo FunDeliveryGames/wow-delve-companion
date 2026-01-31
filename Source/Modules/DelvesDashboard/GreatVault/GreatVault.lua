@@ -10,7 +10,6 @@ local DelveCompanion = AddonTbl.DelveCompanion
 local DashboardGV = {}
 DelveCompanion.DelvesDashboard.GreatVault = DashboardGV
 
-
 --- Create and set all required elements.
 ---@param GVPanel GreatVaultButtonPanel Blizzard Great Vault section frame in Delves UI.
 function DashboardGV:Init(GVPanel)
