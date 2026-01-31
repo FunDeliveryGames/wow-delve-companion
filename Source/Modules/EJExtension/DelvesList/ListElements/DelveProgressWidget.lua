@@ -12,14 +12,17 @@ DelveCompanion_DelveProgressWidgetMixin = {}
 
 ---@param self DelvesProgressWidget
 function DelveCompanion_DelveProgressWidgetMixin:OnLoad()
-    EventRegistry:RegisterCallback(DelveCompanion.Definitions.Events.SETTING_CHANGE,
-        function(_, changedVarKey, newValue)
+    do
+        local function OnSettingChanged(_, changedVarKey, isEnabled)
             if not (changedVarKey == "delvesListInfoWidgetsEnabled") then
                 return
             end
 
-            self:SetShown(newValue)
-        end, self)
+            self:SetShown(isEnabled)
+        end
+
+        EventRegistry:RegisterCallback(DelveCompanion.Definitions.Events.SETTING_CHANGE, OnSettingChanged, self)
+    end
 
     self:SetShown(DelveCompanionAccountData.delvesListInfoWidgetsEnabled)
 end

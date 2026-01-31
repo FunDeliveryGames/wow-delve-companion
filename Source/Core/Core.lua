@@ -198,6 +198,7 @@ function DelveCompanion:InitAccountSave()
             end
         end
 
+        -- Reset Tracking Type to the default if the addon selected in the save is not available.
         if (DelveCompanionAccountData.trackingType == self.Definitions.WaypointTrackingType.tomtom and not self.Variables.tomTomAvailable)
             or (DelveCompanionAccountData.trackingType == self.Definitions.WaypointTrackingType.mpe and not self.Variables.mpeAvailable)
         then
