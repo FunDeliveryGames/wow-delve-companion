@@ -40,6 +40,7 @@ function DelveCompanion:InitDelvesData()
             ---@field storyVariant string Localized label of the current story of the Delve.
             ---@field isStoryCompleted boolean Whether player has completed the current storyVariant.
             ---@field isBountiful boolean Whether this Delve is bountiful now.
+            ---@field levelRequired number Which level is required to enter this Delve (used for Nemesis Delves as they are level-gated).
             local data = {
                 config = delveConfig,
                 poiID = nil,
@@ -48,7 +49,8 @@ function DelveCompanion:InitDelvesData()
                 delveName = delveMap.name,
                 storyVariant = nil,
                 isStoryCompleted = false,
-                isBountiful = false
+                isBountiful = false,
+                levelRequired = GetMaxLevelForExpansionLevel(LE_EXPANSION_DRAGONFLIGHT)
             }
 
             table.insert(expansionDelves, data)
@@ -115,6 +117,12 @@ function DelveCompanion:UpdateDelvesData(expansionLevel)
                     end
                 end
             end
+        end
+
+        -- Check whether a required level to enter Nemesis Delve is reached.
+        if delveConfig.nemesisInfo ~= nil then
+            local expansion = GetEJTierData(EJ_GetCurrentTier()).expansionLevel
+            delveData.levelRequired = GetMaxLevelForExpansionLevel(expansion)
         end
     end
 

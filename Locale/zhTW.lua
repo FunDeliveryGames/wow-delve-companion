@@ -23,6 +23,12 @@ Lockit.UI_DELVE_INSTANCE_BUTTON_TOOLTIP_CURRENT_TEXT = "路徑點設置"
 Lockit.UI_DELVE_INSTANCE_BUTTON_TOOLTIP_CLEAR_INSTRUCTION = "<Shift + 左鍵：清空路徑點>"
 Lockit.UI_DELVE_INSTANCE_BUTTON_TOOLTIP_CLEAR_MPE = "Please use MapPinEnhanced Tracker to remove the waypoint."
 
+-- !!! Formatting note: Symbol "|" in the following text is used to split the string into 2 separate parts in the code. It's not shown in the actual locale.
+Lockit.UI_DELVE_INSTANCE_BUTTON_TOOLTIP_NEMESIS_TWW_S1 = "Nemesis: Zekvir|The War Within Season 1"
+Lockit.UI_DELVE_INSTANCE_BUTTON_TOOLTIP_NEMESIS_TWW_S2 = "Nemesis: The Underpin|The War Within Season 2"
+Lockit.UI_DELVE_INSTANCE_BUTTON_TOOLTIP_NEMESIS_TWW_S3 = "Nemesis: Ky'Veza|The War Within Season 3"
+Lockit.UI_DELVE_INSTANCE_BUTTON_TOOLTIP_NEMESIS_MIDNIGHT_S1 = "Nemesis: Nullaeus|Midnight Season 1"
+
 -- Delves UI
 
 Lockit.UI_GILDED_STASH_CANNOT_RETRIEVE_DATA_TWW = "在卡茲阿爾加地區時可獲取鍍金儲物箱進度"

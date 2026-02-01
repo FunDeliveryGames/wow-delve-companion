@@ -11,7 +11,7 @@
                 </Anchors>
             </Button>
             <Frame parentKey="ProgressWidget"
-                inherits="DelveCompanionDelveProgressWidgetTemplate"
+                inherits="DelveCompanionDLDelveInfoWidgetTemplate"
                 hidden="true">
                 <Anchors>
                     <Anchor point="TOPLEFT" relativeKey="$parent.InstanceButton"

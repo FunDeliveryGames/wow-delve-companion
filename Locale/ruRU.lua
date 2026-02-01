@@ -23,6 +23,12 @@ Lockit.UI_DELVE_INSTANCE_BUTTON_TOOLTIP_CURRENT_TEXT = "Точка маршру�
 Lockit.UI_DELVE_INSTANCE_BUTTON_TOOLTIP_CLEAR_INSTRUCTION = "<[Shift + ЛКМ] - сбросить точку маршрута>"
 Lockit.UI_DELVE_INSTANCE_BUTTON_TOOLTIP_CLEAR_MPE = "Для удаления точек маршрута используйте MapPinEnhanced Tracker."
 
+-- !!! Formatting note: Symbol "|" in the following text is used to split the string into 2 separate parts in the code. It's not shown in the actual locale.
+Lockit.UI_DELVE_INSTANCE_BUTTON_TOOLTIP_NEMESIS_TWW_S1 = "Nemesis: Zekvir|The War Within Season 1"
+Lockit.UI_DELVE_INSTANCE_BUTTON_TOOLTIP_NEMESIS_TWW_S2 = "Nemesis: The Underpin|The War Within Season 2"
+Lockit.UI_DELVE_INSTANCE_BUTTON_TOOLTIP_NEMESIS_TWW_S3 = "Nemesis: Ky'Veza|The War Within Season 3"
+Lockit.UI_DELVE_INSTANCE_BUTTON_TOOLTIP_NEMESIS_MIDNIGHT_S1 = "Nemesis: Nullaeus|Midnight Season 1"
+
 -- Интерфейс вылазок
 
 Lockit.UI_GILDED_STASH_CANNOT_RETRIEVE_DATA_TWW = "Посетите Каз Алгар, чтобы увидеть прогресс"
