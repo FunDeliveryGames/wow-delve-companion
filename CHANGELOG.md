@@ -1,7 +1,7 @@
 # Change Log
 
 ## [2026.02.1] - 01 February 2026
-- Add a new widget that is displayed inside a Delve. It serves as a remainder and a quick-cast menu for the Bounty Map, Nemesis Lure, and more.
+- Introduce a new widget that is displayed inside a Delve. It serves as a remainder and a quick-cast menu for the Bounty Map, Nemesis Lure, and more.
 - QoL: Nemesis Delves on the Delves tab now have additional visual elements and info in tooltips.
 
 ## [2026.01.3] - 26 January 2026
