@@ -14,6 +14,7 @@ local BOUNTIFUL_ICON_SEQUENCE = "|A:delves-bountiful:24:24|a"
 local TOM_TOM_WAYPOINT_DISTANCE_CLEAR = 10
 local MPE_DELVE_REGULAR_ATLAS_NAME = "delves-regular"
 local MPE_DELVE_BOUNTIFUL_ATLAS_NAME = "delves-bountiful"
+local NEMESIS_TOOLTIP_SPLIT_MARKER = "~"
 --#endregion
 
 ---@class (exact) DelveWaypointTracker
@@ -289,7 +290,8 @@ function DelveCompanion_DelveWaypointMixin:DisplayDelveTooltip(owner, anchor, de
 
     -- Nemesis info
     if isNemesisDelve then
-        local nemesisLine, seasonLine = string.split("|", delveData.config.nemesisInfo.delveTooltipLine, 2)
+        local nemesisLine, seasonLine = string.split(NEMESIS_TOOLTIP_SPLIT_MARKER,
+            delveData.config.nemesisInfo.delveTooltipLine, 2)
         local seasonColor = delveData.config.nemesisInfo.isCurrentSeason
             and _G["HIGHLIGHT_FONT_COLOR"]
             or _G["QUEST_ACTIVE_TRIVIAL_GRAY"]
@@ -320,6 +322,7 @@ function DelveCompanion_DelveWaypointMixin:DisplayDelveTooltip(owner, anchor, de
         end
     end
 
+    -- Level restiction warning for Nemesis Delves
     if isNemesisDelve and UnitLevel("player") < delveData.levelRequired then
         GameTooltip_AddBlankLineToTooltip(tooltip)
         GameTooltip_AddColoredLine(tooltip,
