@@ -181,10 +181,14 @@ Config.KEY_SHARD_ITEM_CODE = 245653
 
 --#region Seasonal modifiers
 
----@type table<table<number, number>> Spell ID of Delve affixes.
+---@class (exact) DelveConfigAffixes : table
+---@field Nemesis table<number, number>
+-- ---@field Flicker table<number, number> TODO: Add if available or remove
+
+---@type DelveConfigAffixes Spell ID of Delve affixes.
 Config.AFFIXES = {
     -- [Nemesis Strongbox](https://www.wowhead.com/spell=1239535/nemesis-strongbox).
-    NEMESIS = {
+    Nemesis = {
         [LE_EXPANSION_WAR_WITHIN] = 1239535,
         [LE_EXPANSION_MIDNIGHT] = 1270179
     }

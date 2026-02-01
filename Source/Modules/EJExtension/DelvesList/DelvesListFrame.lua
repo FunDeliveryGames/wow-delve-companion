@@ -49,9 +49,9 @@ function DelveCompanion_DelvesListFrameMixin:Refresh()
     do
         -- TODO: What will happen after TWW S3? Modifiers are active in the latest expansion Delves.
 
-        self.ModifiersContainer.AffixWidget:SetFrameInfo(
+        self.ModifiersContainer.Nemesis:SetFrameInfo(
             DelveCompanion.Definitions.CodeType.Spell,
-            Config.AFFIXES.NEMESIS[tierData.expansionLevel])
+            Config.AFFIXES.Nemesis[tierData.expansionLevel])
         self.ModifiersContainer:SetShown(true)
         -- self.ModifiersContainer:SetShown(tierData.expansionLevel == LE_EXPANSION_LEVEL_CURRENT)
     end
@@ -90,7 +90,7 @@ function DelveCompanion_DelvesListFrameMixin:OnLoad()
 
     do
         self.ModifiersContainer.ModifiersLabel:SetText(_G["MODIFIERS_COLON"])
-        self.ModifiersContainer.AffixWidget.Icon:SetPoint("CENTER", -1, 1)
+        self.ModifiersContainer.Nemesis.Icon:SetPoint("CENTER", -1, 1)
         self.ModifiersContainer:Layout()
     end
 
@@ -153,7 +153,7 @@ end
 
 ---@class ModifiersContainerXml : HorizontalLayoutFrame
 ---@field ModifiersLabel FontString
----@field AffixWidget CustomActionWidget
+---@field Nemesis CustomActionWidget
 
 --- `DelveCompanionDelvesListFrameTemplate`
 ---@class DelvesListXml : Frame
