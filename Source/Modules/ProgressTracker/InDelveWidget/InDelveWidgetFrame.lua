@@ -53,27 +53,46 @@ function DelveCompanion_InDelveWidgetFrameMixin:Refresh()
     end
 
     local expansion = self.delveExpansion
+    -- Nemesis Lure
     do
-        local isAvailable =
-            C_Item.GetItemCount(self.Lure.itemCode) > 0                         -- Has the lure
+        local frame = self.Lure
+
+        local hasItemNow = C_Item.GetItemCount(frame.itemCode) > 0
+        local isAvailable = hasItemNow                                          -- Has the lure
             and not C_QuestLog.IsQuestFlaggedCompleted(Config.BOUNTY_MAP_QUEST) -- Can get the bounty map this week
             and (self.respawnState ~= RESPAWN_STATES[1])                        -- Respawn is activated
-        self.Lure:RefreshItem(isAvailable)
+        frame:RefreshInteraction(isAvailable)
+        frame:RefreshAnim(isAvailable and not frame.hasItem)
+
+        frame.hasItem = hasItemNow
     end
 
+    -- Bounty Map
     do
+        local frame = self.Map
+
+        local hasItemNow = C_Item.GetItemCount(frame.itemCode) > 0
         local activeBountySpell = DelveCompanion.Config.BOUNTY_ACTIVATED_SPELL[expansion]
-        local isAvailable =
-            C_Item.GetItemCount(self.Map.itemCode) > 0                       -- Has the bounty map
+        local isAvailable = hasItemNow                                       -- Has the bounty map
             and C_UnitAuras.GetPlayerAuraBySpellID(activeBountySpell) == nil -- Doesn't have an active map buff
-        self.Map:RefreshItem(isAvailable)
+        frame:RefreshInteraction(isAvailable)
+        frame:RefreshAnim(isAvailable and not frame.hasItem)
+
+        frame.hasItem = hasItemNow
     end
 
+    -- Loot Radar
     do
+        local frame = self.Radar
+
+        local hasItemNow = C_Item.GetItemCount(frame.itemCode) > 0
         -- local activeRadarSpell = DelveCompanion.Config.LOOT_RADAR_ACTIVATED_SPELL
-        local isAvailable = C_Item.GetItemCount(self.Radar.itemCode) > 0 -- Has the radar
-        -- and C_UnitAuras.GetPlayerAuraBySpellID(activeRadarSpell) == nil -- Doesn't have an active radar buff. IT DOES NOTHING as the aura is hidden at the moment.
-        self.Radar:RefreshItem(isAvailable)
+        local isAvailable = hasItemNow -- Has the radar
+        --     and C_UnitAuras.GetPlayerAuraBySpellID(activeRadarSpell) == nil -- Doesn't have an active radar buff. IT DOES NOTHING as the aura is hidden at the moment.
+        frame:RefreshInteraction(isAvailable)
+        frame:RefreshAnim(isAvailable and not frame.hasItem)
+
+        frame.hasItem = hasItemNow
     end
 end
 
@@ -147,21 +166,21 @@ function DelveCompanion_InDelveWidgetFrameMixin:OnLoad()
 end
 
 ---@param self InDelveWidgetFrame
-function DelveCompanion_InDelveWidgetFrameMixin:OnEvent(event, ...)
-    -- Logger.Log("[InDelveWidgetFrame] OnEvent start")
-
-    C_Timer.After(0.5, function()
-        self:Refresh()
-    end)
-end
-
----@param self InDelveWidgetFrame
 function DelveCompanion_InDelveWidgetFrameMixin:OnShow()
     -- Logger.Log("[InDelveWidgetFrame] OnShow start")
 
     self:Refresh()
 
     self:RegisterEvent("BAG_UPDATE")
+end
+
+---@param self InDelveWidgetFrame
+function DelveCompanion_InDelveWidgetFrameMixin:OnEvent(event, ...)
+    Logger.Log("[InDelveWidgetFrame] OnEvent start")
+
+    C_Timer.After(0.5, function()
+        self:Refresh()
+    end)
 end
 
 ---@param self InDelveWidgetFrame

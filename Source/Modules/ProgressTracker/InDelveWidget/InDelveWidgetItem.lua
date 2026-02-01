@@ -11,25 +11,30 @@ local Logger = DelveCompanion.Logger
 --#endregion
 
 ---@class (exact) InDelveWidgetItem : InDelveWidgetItemXml
----@field itemCode number
+---@field itemCode number Item Code of the displayed item.
+---@field hasItem boolean Whether player has the item in their bags.
 DelveCompanion_InDelveWidgetItemMixin = {}
 
 ---@param self InDelveWidgetItem
 ---@param isAvailable boolean
-function DelveCompanion_InDelveWidgetItemMixin:RefreshItem(isAvailable)
+function DelveCompanion_InDelveWidgetItemMixin:RefreshInteraction(isAvailable)
     if isAvailable then
         local macroText = string.format("/use item:%s", self.itemCode)
         self:SetInsecureAction({ type1 = "macro", macrotext = macroText })
 
         self.InteractionBlockedOverlay:Hide()
-
-        local hasCd = select(1, C_Item.GetItemCooldown(self.itemCode)) ~= 0
-        if not hasCd then
-            self:PlayAnimation()
-        end
     else
         self.InteractionBlockedOverlay:Show()
         self:DisableInteraction()
+    end
+end
+
+---@param self InDelveWidgetItem
+---@param isAvailable boolean
+function DelveCompanion_InDelveWidgetItemMixin:RefreshAnim(isAvailable)
+    local hasCd = select(1, C_Item.GetItemCooldown(self.itemCode)) ~= 0
+    if not (hasCd) and isAvailable then
+        self:PlayAnimation()
     end
 end
 
@@ -50,6 +55,7 @@ end
 function DelveCompanion_InDelveWidgetItemMixin:Set(code)
     self:SetFrameInfo(DelveCompanion.Definitions.CodeType.Item, code)
     self.itemCode = code
+    self.hasItem = false
 end
 
 ---@param self InDelveWidgetItem
