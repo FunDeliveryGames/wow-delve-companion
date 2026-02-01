@@ -41,7 +41,7 @@ end
 ---@param self InDelveWidgetItem
 function DelveCompanion_InDelveWidgetItemMixin:PlayAnimation()
     local frame, fadeInTime, fadeOutTime, flashDuration, showWhenDone, flashInHoldTime, flashOutHoldTime =
-        self.Border, 0.8, 0.8, -1, false, 0, 0
+        self.Border, 0.7, 0.7, -1, false, 0, 0
     UIFrameFlash(frame, fadeInTime, fadeOutTime, flashDuration, showWhenDone, flashInHoldTime, flashOutHoldTime)
 end
 

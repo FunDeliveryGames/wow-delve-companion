@@ -14,7 +14,7 @@
         </KeyValues>
         <Layers>
             <Layer level="OVERLAY">
-                <Texture parentKey="Border" atlas="bags-newitem" hidden="true">
+                <Texture parentKey="Border" atlas="perks-slot-glow" hidden="true">
                     <Anchors>
                         <Anchor point="TOPLEFT" x="-3" y="3" />
                         <Anchor point="BOTTOMRIGHT" x="3" y="-3" />
