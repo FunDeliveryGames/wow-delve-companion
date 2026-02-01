@@ -176,7 +176,7 @@ end
 
 ---@param self InDelveWidgetFrame
 function DelveCompanion_InDelveWidgetFrameMixin:OnEvent(event, ...)
-    Logger.Log("[InDelveWidgetFrame] OnEvent start")
+    -- Logger.Log("[InDelveWidgetFrame] OnEvent start")
 
     C_Timer.After(0.5, function()
         self:Refresh()
