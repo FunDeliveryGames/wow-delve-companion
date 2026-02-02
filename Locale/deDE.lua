@@ -41,7 +41,7 @@ Lockit.UI_LOOT_INFO_BUTTON_TOOLTIP_INSTRUCTION = "<Klicken, um Beuteinformatione
 
 Lockit.UI_LOOT_INFO_DESCRIPTION = "Schließe eine Tiefe ab um folgendes zu erhalten:"
 
--- Keys Info
+-- Tooltips Extension
 
 Lockit.UI_BOUNTIFUL_KEYS_COUNT_CACHES_PREFIX = "Schlüssel aus Truhen"
 

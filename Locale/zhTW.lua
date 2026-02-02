@@ -41,7 +41,7 @@ Lockit.UI_LOOT_INFO_BUTTON_TOOLTIP_INSTRUCTION = "<點擊來顯示探究的拾�
 
 Lockit.UI_LOOT_INFO_DESCRIPTION = "完成探究可獲得戰利品："
 
--- Keys Info
+-- Tooltips Extension
 
 Lockit.UI_BOUNTIFUL_KEYS_COUNT_CACHES_PREFIX = "寶箱裡獲取的鑰匙數量"
 
