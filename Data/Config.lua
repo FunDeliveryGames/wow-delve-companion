@@ -23,7 +23,7 @@ Config.DEFAULT_ACCOUNT_DATA = {
     delvesListInfoWidgetsEnabled = true,
     trackingType = DelveCompanion.Definitions.WaypointTrackingType.superTrack,
     inDelveWidgetEnabled = true,
-    inDelveWidgetDisplayRule = 1
+    inDelveWidgetDisplayRule = DelveCompanion.Definitions.InDelveWidgetDisplayRule.left
 }
 
 --- Character Save Data
@@ -38,7 +38,7 @@ Config.DEFAULT_CHARACTER_DATA = {
     dashOverviewEnabled = true,
     gvDetailsEnabled = true,
     displayCompanionConfig = true,
-    companionConfigLayout = 1
+    companionConfigLayout = DelveCompanion.Definitions.CompanionWidgetLayout.horizontal
 }
 --#endregion
 

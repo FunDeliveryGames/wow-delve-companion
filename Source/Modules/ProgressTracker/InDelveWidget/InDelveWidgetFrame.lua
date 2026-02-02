@@ -10,11 +10,15 @@ local Config = DelveCompanion.Config
 
 --#region Constants
 
+---@type table<number, string>
 local RESPAWN_STATES = {
     [0] = "Unknown", -- Used for Reload UI and Logout cases in the midst of the Delve because there is no way to retrieve respawn state from the WoW API.
     [1] = "NotActivated",
     [2] = "Activated"
 }
+
+---@type string
+local SAVE_KEY = "inDelveWidgetDisplayRule"
 --#endregion
 
 ---@class (exact) InDelveWidgetFrame : InDelveWidgetFrameXml
@@ -153,7 +157,7 @@ function DelveCompanion_InDelveWidgetFrameMixin:OnLoad()
 
     do
         local function OnSettingChanged(_, changedVarKey, newValue)
-            if not (changedVarKey == "inDelveWidgetDisplayRule") then
+            if not (changedVarKey == SAVE_KEY) then
                 return
             end
             -- Logger.Log("[InDelveWidgetFrame] OnSettingChanged. Enabled: %s...", tostring(isEnabled))

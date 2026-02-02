@@ -13,6 +13,15 @@ local Lockit = DelveCompanion.Lockit
 --#region Constants
 
 ---@type string
+local CONFIG_CONTROL_SAVE_KEY = "displayCompanionConfig"
+---@type string
+local CONFIG_LAYOUT_SAVE_KEY = "companionConfigLayout"
+---@type string
+local GV_ENABLED_SAVE_KEY = "gvDetailsEnabled"
+---@type string
+local OVERVIEW_ENABLED_SAVE_KEY = "dashOverviewEnabled"
+
+---@type string
 local LOOT_INFO_BUTTON_PARENT_KEY = "ShowLootInfoButton"
 
 ---@type number
@@ -74,11 +83,11 @@ local function UpdateButtonPanelSpacing()
 end
 
 local function OnSettingChanged(_, changedVarKey, newValue)
-    if changedVarKey == "displayCompanionConfig" or changedVarKey == "companionConfigLayout" then
+    if changedVarKey == CONFIG_CONTROL_SAVE_KEY or changedVarKey == CONFIG_LAYOUT_SAVE_KEY then
         DelvesDashboard.Companion.ConfigWidget:Refresh(newValue)
-    elseif changedVarKey == "gvDetailsEnabled" then
+    elseif changedVarKey == GV_ENABLED_SAVE_KEY then
         DelvesDashboard.GreatVault.CustomDetails.shouldRefresh = true
-    elseif changedVarKey == "dashOverviewEnabled" then
+    elseif changedVarKey == OVERVIEW_ENABLED_SAVE_KEY then
         DelvesDashboard.Overview:SetShown(newValue)
         UpdateButtonPanelSpacing()
     end

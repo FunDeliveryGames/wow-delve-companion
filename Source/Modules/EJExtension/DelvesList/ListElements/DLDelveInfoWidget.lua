@@ -6,6 +6,12 @@ local DelveCompanion = AddonTbl.DelveCompanion
 ---@type Logger
 local Logger = DelveCompanion.Logger
 
+--#region
+
+---@type string
+local SAVE_KEY = "delvesListInfoWidgetsEnabled"
+--#endregion
+
 --- A widget displayed under a Delve button in the Delves list.
 ---@class (exact) DLDelveInfoWidget : DLDelveInfoWidgetXml
 DelveCompanion_DLDelveInfoWidgetMixin = {}
@@ -14,7 +20,7 @@ DelveCompanion_DLDelveInfoWidgetMixin = {}
 function DelveCompanion_DLDelveInfoWidgetMixin:OnLoad()
     do
         local function OnSettingChanged(_, changedVarKey, isEnabled)
-            if not (changedVarKey == "delvesListInfoWidgetsEnabled") then
+            if not (changedVarKey == SAVE_KEY) then
                 return
             end
 
@@ -24,7 +30,7 @@ function DelveCompanion_DLDelveInfoWidgetMixin:OnLoad()
         EventRegistry:RegisterCallback(DelveCompanion.Definitions.Events.SETTING_CHANGE, OnSettingChanged, self)
     end
 
-    self:SetShown(DelveCompanionAccountData.delvesListInfoWidgetsEnabled)
+    self:SetShown(DelveCompanionAccountData[SAVE_KEY])
 end
 
 ---@param self DLDelveInfoWidget

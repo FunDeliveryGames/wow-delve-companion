@@ -24,8 +24,8 @@ function Bootstrap:OnAddonLoaded()
 
     self:ProcessOptionalDependencies() -- Should be before any other initializations!
 
-    DelveCompanion:InitAccountSave()
-    DelveCompanion:InitCharacterSave()
+    DelveCompanion.AddonSettings:ProcessAccountSave()
+    DelveCompanion.AddonSettings:ProcessCharacterSave()
 
     -- Logger.Log("[Bootstrap] OnAddonLoaded finish")
 end

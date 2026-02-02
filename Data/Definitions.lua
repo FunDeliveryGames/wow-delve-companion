@@ -85,7 +85,6 @@ Definitions.WaypointTrackingType = {
 
 ---@class CompanionWidgetLayout
 Definitions.CompanionWidgetLayout = {
-    default = 0,
     horizontal = 1,
     vertical = 2
 }

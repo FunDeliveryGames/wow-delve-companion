@@ -7,7 +7,7 @@ local addonName, AddonTbl = ...
 ---@field Lockit Lockit
 ---@field Definitions Definitions
 ---@field Variables Variables
----@field AddonSettings AddonSettings
+---@field AddonSettings DelveCompanionSettings
 ---@field EJExtension EJExtension
 ---@field DelvesDashboard DelvesDashboard
 ---@field ProgressTracker ProgressTracker
@@ -189,45 +189,4 @@ function DelveCompanion:GetContinentMapIDForMap(mapID)
     end
 
     return nil
-end
-
---- Init [SavedVariables](https://warcraft.wiki.gg/wiki/TOC_format#SavedVariables). The [default config](lua://DelveCompanionAccountData) is used to either init them (e.g. the 1st addon load) or populate with missing fields (e.g. after addon update).
----@param self DelveCompanion
-function DelveCompanion:InitAccountSave()
-    -- DelveCompanion.Logger.Log("Init AccountSave start...")
-
-    if not DelveCompanionAccountData then
-        ---@type DelveCompanionAccountData
-        DelveCompanionAccountData = CopyTable(self.Config.DEFAULT_ACCOUNT_DATA)
-    else
-        for key, value in pairs(self.Config.DEFAULT_ACCOUNT_DATA) do
-            if DelveCompanionAccountData[key] == nil then
-                DelveCompanionAccountData[key] = value
-            end
-        end
-
-        -- Reset Tracking Type to the default if the addon selected in the save is not available.
-        if (DelveCompanionAccountData.trackingType == self.Definitions.WaypointTrackingType.tomtom and not self.Variables.tomTomAvailable)
-            or (DelveCompanionAccountData.trackingType == self.Definitions.WaypointTrackingType.mpe and not self.Variables.mpeAvailable)
-        then
-            DelveCompanionAccountData.trackingType = self.Definitions.WaypointTrackingType.superTrack
-        end
-    end
-end
-
---- Init [SavedVariablesPerCharacter](https://warcraft.wiki.gg/wiki/TOC_format#SavedVariablesPerCharacter). The [default config](lua://DelveCompanionCharacterData) is used to either init them (e.g. the 1st addon load) or populate with missing fields (e.g. after addon update).
----@param self DelveCompanion
-function DelveCompanion:InitCharacterSave()
-    -- DelveCompanion.Logger.Log("Init CharacterSave start...")
-
-    if not DelveCompanionCharacterData then
-        ---@type DelveCompanionCharacterData
-        DelveCompanionCharacterData = CopyTable(self.Config.DEFAULT_CHARACTER_DATA)
-    else
-        for key, value in pairs(self.Config.DEFAULT_CHARACTER_DATA) do
-            if DelveCompanionCharacterData[key] == nil then
-                DelveCompanionCharacterData[key] = value
-            end
-        end
-    end
 end

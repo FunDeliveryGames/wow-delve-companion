@@ -12,6 +12,8 @@ local Lockit = DelveCompanion.Lockit
 
 --#region Constants
 
+---@type string
+local SAVE_KEY = "inDelveWidgetEnabled"
 --#endregion
 
 ---@class (exact) InDelveWidget
@@ -80,7 +82,7 @@ function InDelveWidget:Init()
 
     do
         local function OnSettingChanged(_, changedVarKey, isEnabled)
-            if not (changedVarKey == "inDelveWidgetEnabled") then
+            if not (changedVarKey == SAVE_KEY) then
                 return
             end
             -- Logger.Log("[InDelveWidget] OnSettingChanged. Enabled: %s...", tostring(isEnabled))

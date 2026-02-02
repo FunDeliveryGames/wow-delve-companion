@@ -15,11 +15,11 @@ local Definitions = DelveCompanion.Definitions
 --#region Constants
 
 ---@type string
-local ADDON_SETTING_PREFIX = tostring(addonName) .. "_"
+local SETTING_PREFIX = tostring(addonName) .. "_"
 --#endregion
 
 --- Class for managing addon settings.
----@class (exact) AddonSettings
+---@class (exact) DelveCompanionSettings
 ---@field mainCategory table
 ---@field settingsCategory table
 local AddonSettings = {}
@@ -73,30 +73,31 @@ end
 
 --- This callback will be invoked whenever a setting is modified.
 local function OnSettingChanged(setting, value)
-    -- Logger.Log("[Settings] OnChanged detected...")
+    -- Logger.Log("[DelveCompanionSettings] OnChanged detected...")
 
-    local variableName = gsub(setting:GetVariable(), ADDON_SETTING_PREFIX, "")
+    local variableName = gsub(setting:GetVariable(), SETTING_PREFIX, "")
 
-    -- Logger.Log("[Settings] Firing changed var `%s` with value: %s", variableName, tostring(value))
-    EventRegistry:TriggerEvent(DelveCompanion.Definitions.Events.SETTING_CHANGE, variableName, value)
+    -- Logger.Log("[DelveCompanionSettings] Changed var `%s` with value: %s", variableName, tostring(value))
+    EventRegistry:TriggerEvent(Definitions.Events.SETTING_CHANGE, variableName, value)
 end
 
 --- Create and register an addon Setting.
----@param category any
+---@param self DelveCompanionSettings
+---@param category table
 ---@param varKey string
 ---@param varTbl DelveCompanionAccountData|DelveCompanionCharacterData
 ---@param defaultValue any
 ---@param displayText string
 ---@param onChangedCallback function
----@return unknown|nil
-local function RegisterSetting(category, varKey, varTbl, defaultValue, displayText, onChangedCallback)
+---@return table|nil
+function AddonSettings:RegisterSetting(category, varKey, varTbl, defaultValue, displayText, onChangedCallback)
     if varTbl[varKey] == nil then
         Logger.Log(Lockit.DEBUG_SAVED_VARIABLE_CONFLICT, varTbl, varKey)
         return nil
     end
 
     local setting = Settings.RegisterAddOnSetting(
-        category, ADDON_SETTING_PREFIX .. varKey,
+        category, SETTING_PREFIX .. varKey,
         varKey, varTbl,
         type(defaultValue), displayText, defaultValue)
     setting:SetValueChangedCallback(onChangedCallback)
@@ -105,9 +106,10 @@ local function RegisterSetting(category, varKey, varTbl, defaultValue, displayTe
 end
 
 --- Accound-wide settings.
----@param category any
----@param layout any
-local function PrepareAccountSettings(category, layout)
+---@param self DelveCompanionSettings
+---@param category table
+---@param layout table
+function AddonSettings:RegisterAccountSettings(category, layout)
     ---@type DelveCompanionAccountData
     local savedVarTbl = DelveCompanionAccountData
 
@@ -117,7 +119,7 @@ local function PrepareAccountSettings(category, layout)
     do
         local savedVarKey = "delvesListInfoWidgetsEnabled"
 
-        local setting = RegisterSetting(category, savedVarKey, savedVarTbl,
+        local setting = self:RegisterSetting(category, savedVarKey, savedVarTbl,
             Config.DEFAULT_ACCOUNT_DATA.delvesListInfoWidgetsEnabled,
             Lockit.UI_SETTING_DELVE_PROGRESS_WIDGETS_NAME, OnSettingChanged)
 
@@ -128,22 +130,22 @@ local function PrepareAccountSettings(category, layout)
     do
         local savedVarKey = "trackingType"
 
-        local setting = RegisterSetting(category, savedVarKey, savedVarTbl,
+        local setting = self:RegisterSetting(category, savedVarKey, savedVarTbl,
             Config.DEFAULT_ACCOUNT_DATA.trackingType,
             Lockit.UI_SETTING_WAYPOINT_TRACKING_TYPE_NAME, OnSettingChanged)
 
         local function GetDropdownOptions()
             local container = Settings.CreateControlTextContainer()
-            container:Add(DelveCompanion.Definitions.WaypointTrackingType.superTrack,
+            container:Add(Definitions.WaypointTrackingType.superTrack,
                 Lockit.UI_SETTING_WAYPOINT_TRACKING_OPTION_BLIZZARD_NAME,
                 Lockit.UI_SETTING_WAYPOINT_TRACKING_OPTION_BLIZZARD_DESCRIPTION)
             if DelveCompanion.Variables.tomTomAvailable then
-                container:Add(DelveCompanion.Definitions.WaypointTrackingType.tomtom,
+                container:Add(Definitions.WaypointTrackingType.tomtom,
                     Lockit.UI_SETTING_WAYPOINT_TRACKING_OPTION_TOMTOM_NAME,
                     Lockit.UI_SETTING_WAYPOINT_TRACKING_OPTION_TOMTOM_DESCRIPTION)
             end
             if DelveCompanion.Variables.mpeAvailable then
-                container:Add(DelveCompanion.Definitions.WaypointTrackingType.mpe,
+                container:Add(Definitions.WaypointTrackingType.mpe,
                     Lockit.UI_SETTING_WAYPOINT_TRACKING_OPTION_MPE_NAME,
                     Lockit.UI_SETTING_WAYPOINT_TRACKING_OPTION_MPE_DESCRIPTION)
             end
@@ -196,20 +198,20 @@ local function PrepareAccountSettings(category, layout)
 
         local settingName = Lockit.UI_SETTING_IN_DELVE_WIDGET_DISPLAY_RULE_NAME
 
-        local controlSetting = RegisterSetting(category, controlSavedVarKey, savedVarTbl,
+        local controlSetting = self:RegisterSetting(category, controlSavedVarKey, savedVarTbl,
             Config.DEFAULT_ACCOUNT_DATA.inDelveWidgetEnabled,
             settingName, OnSettingChanged)
 
-        local dropdownSetting = RegisterSetting(category, dropdownSavedVarKey, savedVarTbl,
+        local dropdownSetting = self:RegisterSetting(category, dropdownSavedVarKey, savedVarTbl,
             Config.DEFAULT_ACCOUNT_DATA.inDelveWidgetDisplayRule,
             settingName, OnSettingChanged)
 
         local function GetOptions()
             local container = Settings.CreateControlTextContainer()
-            container:Add(DelveCompanion.Definitions.InDelveWidgetDisplayRule.left,
+            container:Add(Definitions.InDelveWidgetDisplayRule.left,
                 Lockit.UI_SETTING_IN_DELVE_WIDGET_DISPLAY_RULE_OPTION_LEFT_NAME,
                 Lockit.UI_SETTING_IN_DELVE_WIDGET_DISPLAY_RULE_OPTION_LEFT_DESCRIPTION)
-            container:Add(DelveCompanion.Definitions.InDelveWidgetDisplayRule.right,
+            container:Add(Definitions.InDelveWidgetDisplayRule.right,
                 Lockit.UI_SETTING_IN_DELVE_WIDGET_DISPLAY_RULE_OPTION_RIGHT_NAME,
                 Lockit.UI_SETTING_IN_DELVE_WIDGET_DISPLAY_RULE_OPTION_RIGHT_DESCRIPTION)
 
@@ -226,9 +228,10 @@ local function PrepareAccountSettings(category, layout)
 end
 
 --- Character-wide settings.
----@param category any
----@param layout any
-local function PrepareCharacterSettings(category, layout)
+---@param self DelveCompanionSettings
+---@param category table
+---@param layout table
+function AddonSettings:RegisterCharacterSettings(category, layout)
     ---@type DelveCompanionCharacterData
     local savedVarTbl = DelveCompanionCharacterData
 
@@ -238,7 +241,7 @@ local function PrepareCharacterSettings(category, layout)
     do
         local savedVarKey = "keysCapTooltipEnabled"
 
-        local setting = RegisterSetting(category, savedVarKey, savedVarTbl,
+        local setting = self:RegisterSetting(category, savedVarKey, savedVarTbl,
             Config.DEFAULT_CHARACTER_DATA.keysCapTooltipEnabled,
             Lockit.UI_SETTING_TOOLTIP_EXTENSION_NAME, OnSettingChanged)
 
@@ -247,26 +250,68 @@ local function PrepareCharacterSettings(category, layout)
     end
 end
 
+--- Init [SavedVariables](https://warcraft.wiki.gg/wiki/TOC_format#SavedVariables). The [default config](lua://DelveCompanionAccountData) is used to either init them (e.g. the 1st addon load) or populate with missing fields (e.g. after addon update).
+---@param self DelveCompanionSettings
+function AddonSettings:ProcessAccountSave()
+    -- DelveCompanion.Logger.Log("[DelveCompanionSettings] Init AccountSave...")
+
+    if not DelveCompanionAccountData then
+        ---@type DelveCompanionAccountData
+        DelveCompanionAccountData = CopyTable(Config.DEFAULT_ACCOUNT_DATA)
+    else
+        -- Add new keys to the existing save
+        for key, value in pairs(Config.DEFAULT_ACCOUNT_DATA) do
+            if DelveCompanionAccountData[key] == nil then
+                DelveCompanionAccountData[key] = value
+            end
+        end
+
+        -- Reset Tracking Type to the default if the addon selected in the save is not available.
+        if (DelveCompanionAccountData.trackingType == Definitions.WaypointTrackingType.tomtom and not DelveCompanion.Variables.tomTomAvailable)
+            or (DelveCompanionAccountData.trackingType == Definitions.WaypointTrackingType.mpe and not DelveCompanion.Variables.mpeAvailable)
+        then
+            DelveCompanionAccountData.trackingType = Definitions.WaypointTrackingType.superTrack
+        end
+    end
+end
+
+--- Init [SavedVariablesPerCharacter](https://warcraft.wiki.gg/wiki/TOC_format#SavedVariablesPerCharacter). The [default config](lua://DelveCompanionCharacterData) is used to either init them (e.g. the 1st addon load) or populate with missing fields (e.g. after addon update).
+---@param self DelveCompanionSettings
+function AddonSettings:ProcessCharacterSave()
+    -- DelveCompanion.Logger.Log("[DelveCompanionSettings] Init CharacterSave...")
+
+    if not DelveCompanionCharacterData then
+        ---@type DelveCompanionCharacterData
+        DelveCompanionCharacterData = CopyTable(Config.DEFAULT_CHARACTER_DATA)
+    else
+        -- Add new keys to the existing save
+        for key, value in pairs(Config.DEFAULT_CHARACTER_DATA) do
+            if DelveCompanionCharacterData[key] == nil then
+                DelveCompanionCharacterData[key] = value
+            end
+        end
+    end
+end
+
+---@param self DelveCompanionSettings
 function AddonSettings:Init()
-    -- Logger.Log("Start initing Settings...")
+    -- Logger.Log("[DelveCompanionSettings] Start init...")
 
     do
         local settingsFrame = CreateFrame("Frame", "$parent.DelveCompanionSettings", nil,
             "DelveCompanionSettingsFrameTemplate")
         local category, _ = Settings.RegisterCanvasLayoutCategory(settingsFrame, Lockit.UI_ADDON_NAME)
         Settings.RegisterAddOnCategory(category)
-        AddonSettings.mainCategory = category
+        self.mainCategory = category
     end
 
     do
-        local category, layout = Settings.RegisterVerticalLayoutSubcategory(AddonSettings.mainCategory, _G["OPTIONS"])
-        AddonSettings.settingsCategory = category
+        local category, layout = Settings.RegisterVerticalLayoutSubcategory(self.mainCategory, _G["OPTIONS"])
+        self.settingsCategory = category
 
-        PrepareAccountSettings(category, layout)
-        PrepareCharacterSettings(category, layout)
+        self:RegisterAccountSettings(category, layout)
+        self:RegisterCharacterSettings(category, layout)
 
         Settings.RegisterAddOnCategory(category)
     end
-
-    -- Logger.Log("Settings inited")
 end
