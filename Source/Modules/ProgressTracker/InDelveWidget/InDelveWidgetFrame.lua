@@ -18,7 +18,7 @@ local RESPAWN_STATES = {
 }
 
 ---@type string
-local SAVE_KEY = "inDelveWidgetDisplayRule"
+local DISPLAY_RULE_SAVE_KEY = "inDelveWidgetDisplayRule"
 --#endregion
 
 ---@class (exact) InDelveWidgetFrame : InDelveWidgetFrameXml
@@ -157,7 +157,7 @@ function DelveCompanion_InDelveWidgetFrameMixin:OnLoad()
 
     do
         local function OnSettingChanged(_, changedVarKey, newValue)
-            if not (changedVarKey == SAVE_KEY) then
+            if not (changedVarKey == DISPLAY_RULE_SAVE_KEY) then
                 return
             end
             -- Logger.Log("[InDelveWidgetFrame] OnSettingChanged. Enabled: %s...", tostring(isEnabled))

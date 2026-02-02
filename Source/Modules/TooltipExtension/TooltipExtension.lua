@@ -12,6 +12,8 @@ local Lockit = DelveCompanion.Lockit
 
 --#region Constants
 
+---@type string
+local ENABLED_SAVE_KEY = "keysCapTooltipEnabled"
 --#endregion
 
 --- Compose a text with the amount of collected currency
@@ -82,7 +84,7 @@ end
 ---@param tooltipDataHandler any [TooltipDataHandlerMixin](https://www.townlong-yak.com/framexml/live/Blizzard_SharedXMLGame/TooltipDataHandler.lua#189).
 ---@param ... any
 local function TooltipPostCallCurrency(tooltipDataHandler, ...)
-    if not DelveCompanionCharacterData.keysCapTooltipEnabled then
+    if not DelveCompanionCharacterData[ENABLED_SAVE_KEY] then
         return
     end
 
@@ -106,7 +108,7 @@ end
 ---@param tooltipDataHandler any [TooltipDataHandlerMixin](https://www.townlong-yak.com/framexml/live/Blizzard_SharedXMLGame/TooltipDataHandler.lua#189).
 ---@param ... any
 local function TooltipPostCallItem(tooltipDataHandler, ...)
-    if not DelveCompanionCharacterData.keysCapTooltipEnabled then
+    if not DelveCompanionCharacterData[ENABLED_SAVE_KEY] then
         return
     end
 

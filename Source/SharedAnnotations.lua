@@ -8,7 +8,6 @@
 ---@field y number Y-coordinate on the map [0.0–100.0].
 --#endregion
 
-
 --#region Blizzard tables annotations
 
 --- Format of elements in [EJ_TIER_DATA](https://www.townlong-yak.com/framexml/beta/Blizzard_EncounterJournal/Blizzard_EncounterJournal.lua#105) table

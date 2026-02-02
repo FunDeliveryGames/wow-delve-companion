@@ -10,6 +10,8 @@ local Config = DelveCompanion.Config
 
 --#region Constants
 
+---@type string
+local INFO_WIDGET_SAVE_KEY = "delvesListInfoWidgetsEnabled"
 --#endregion
 
 --- A list with all Delves displayed in the EncounterJournal.
@@ -58,7 +60,7 @@ function DelveCompanion_DelvesListFrameMixin:Refresh()
 end
 
 ---@param self DelvesListFrame
----@param expansionLevel number
+---@param expansionLevel number LE_EXPANSION number.
 function DelveCompanion_DelvesListFrameMixin:ListDelves(expansionLevel)
     local dataProvider = CreateDataProvider()
 
@@ -82,7 +84,7 @@ end
 
 ---@param self DelvesListFrame
 function DelveCompanion_DelvesListFrameMixin:OnLoad()
-    -- Logger.Log("DelvesList OnLoad start")
+    -- Logger.Log("[DelvesListFrame] OnLoad start")
 
     self.Title:SetText(_G["DELVES_LABEL"])
 
@@ -106,46 +108,69 @@ function DelveCompanion_DelvesListFrameMixin:OnLoad()
             leftPadding, rightPadding,
             horizSpacing, vertSpacing)
 
-        --- Setup Map header.
-        ---@param frame DelvesMapHeader
-        local function DelveMapHeaderInitializer(frame, elementData)
-            frame:Init(elementData.areaName)
-        end
-
-        --- Setup Delve instance element.
-        ---@param frame DelveListElement
-        ---@param delveData DelveData
-        local function DelveListElementInitializer(frame, delveData)
-            frame:Init(delveData)
-        end
-
-        local function DelvesListFactory(factory, elementData)
+        --- By default, ScrollBox uses the size from templates for extents. However, Delve InstanceButton size may vary depending on the selected options.
+        --- So a calculator is required to tell ScrollBox of what size its elements are rebuilding the layout.
+        view:SetElementSizeCalculator(function(index, elementData)
             if elementData.areaName then
-                factory("DelveCompanionDelveMapHeaderTemplate", DelveMapHeaderInitializer)
+                return view:GetTemplateSizeFromElementData(elementData)
             else
-                factory("DelveCompanionDelveListElementTemplate", DelveListElementInitializer)
+                local templateWidth, _ = view:GetTemplateSizeFromElementData(elementData)
+                local totalHeight = C_XMLUtil.GetTemplateInfo("DelveCompanionDelveInstanceButtonTemplate").height
+                    + (DelveCompanionAccountData[INFO_WIDGET_SAVE_KEY]
+                        and C_XMLUtil.GetTemplateInfo("DelveCompanionDLDelveInfoWidgetTemplate").height
+                        or 0)
+                return templateWidth, totalHeight
             end
-        end
+        end)
 
-        view:SetElementFactory(DelvesListFactory)
+        do
+            --- Setup Map header.
+            ---@param frame DelvesMapHeader
+            local function DelveMapHeaderInitializer(frame, elementData)
+                frame:Init(elementData.areaName)
+            end
+
+            --- Setup Delve InstanceButton.
+            ---@param frame DelveListElement
+            ---@param delveData DelveData
+            local function DelveListElementInitializer(frame, delveData)
+                frame:Init(delveData)
+            end
+
+            ---Select initializer depending on elementData content.
+            ---@param factory table
+            ---@param elementData table Can be either a header or a Delve.
+            local function DelvesListFactory(factory, elementData)
+                if elementData.areaName then
+                    factory("DelveCompanionDelveMapHeaderTemplate", DelveMapHeaderInitializer)
+                else
+                    factory("DelveCompanionDelveListElementTemplate", DelveListElementInitializer)
+                end
+            end
+            view:SetElementFactory(DelvesListFactory)
+        end
         ScrollUtil.InitScrollBoxListWithScrollBar(self.DelvesList, self.ScrollBar, view)
     end
 end
 
 ---@param self DelvesListFrame
 function DelveCompanion_DelvesListFrameMixin:OnEvent(event, ...)
+    -- Logger.Log("[DelvesListFrame] OnEvent start")
+
     self:UpdateKeysWidget()
 end
 
 ---@param self DelvesListFrame
 function DelveCompanion_DelvesListFrameMixin:OnShow()
-    -- Logger.Log("DelvesList OnShow start")
+    -- Logger.Log("[DelvesListFrame] OnShow start")
+
     self:Refresh()
 end
 
 ---@param self DelvesListFrame
 function DelveCompanion_DelvesListFrameMixin:OnHide()
-    --Logger.Log("DelvesList OnHide start")
+    --Logger.Log("[DelvesListFrame] OnHide start")
+
     self:UnregisterEvent("CURRENCY_DISPLAY_UPDATE")
 end
 
