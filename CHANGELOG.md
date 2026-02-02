@@ -1,5 +1,10 @@
 # Change Log
 
+## [2026.02.2] - 01 February 2026
+- Fixed: Info Widgets on the Delves tab were displayed ignoring the corresponding option toggle.
+- **QOL**: Delves tab visual improvements when Info Widgets are hidden.
+- **Localization**: Update `Traditional Chinese` and `Russian` translations.
+
 ## [2026.02.1] - 01 February 2026
 - Introduce a new widget that is displayed inside a Delve. It serves as a remainder and a quick-cast menu for the Bounty Map, Nemesis Lure, and more.
 - QoL: Nemesis Delves on the Delves tab now have additional visual elements and info in tooltips.
