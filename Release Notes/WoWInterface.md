@@ -9,5 +9,12 @@
 [IMG]https://media.forgecdn.net/attachments/1218457/changelog/changelog_de0aba38-211a-402a-b043-5b1198b84fc6.png[/IMG]
 [/list]
 
+[b]Hotfix [2026.02.2][/b]:
+[list]
+[*] Fixed: Info Widgets on the Delves tab were displayed ignoring the corresponding option toggle.
+[*] [b]QOL[/b]: Delves tab visual improvements when Info Widgets are hidden.
+[*] [b]Localization[/b]: Update `Traditional Chinese` and `Russian` translations.
+[/list]
+
 [url=https://github.com/FunDeliveryGames/wow-delve-companion/blob/main/CHANGELOG.md]Full versions history[/url]
 [url=https://github.com/FunDeliveryGames/wow-delve-companion/issues]Report an issue[/url]
