@@ -20,8 +20,8 @@ local SETTING_PREFIX = tostring(addonName) .. "_"
 
 --- Class for managing addon settings.
 ---@class (exact) DelveCompanionSettings
----@field mainCategory table
----@field settingsCategory table
+---@field rootCategory table
+---@field optionsCategory table
 local AddonSettings = {}
 DelveCompanion.AddonSettings = AddonSettings
 
@@ -61,12 +61,75 @@ function DelveCompanionCompartmentOnClick(addonName, buttonName)
     local id = ""
 
     if buttonName == Definitions.ButtonAlias.leftClick then
-        id = AddonSettings.mainCategory:GetID()
+        id = AddonSettings.rootCategory:GetID()
     elseif buttonName == Definitions.ButtonAlias.rightClick then
-        id = AddonSettings.settingsCategory:GetID()
+        id = AddonSettings.optionsCategory:GetID()
     end
 
     Settings.OpenToCategory(id)
+end
+
+--#endregion
+
+--#region SavedVariables
+
+--- Add new keys to the existing save.
+---@param saveTbl table
+---@param sourceTbl DelveCompanionAccountData|DelveCompanionCharacterData
+local function AddNewKeysToSave(saveTbl, sourceTbl)
+    for key, value in pairs(sourceTbl) do
+        if saveTbl[key] == nil then
+            saveTbl[key] = value
+        end
+    end
+end
+
+--- Clear retired or renamed keys from the save.
+---@param saveTbl table
+---@param sourceTbl DelveCompanionAccountData|DelveCompanionCharacterData
+local function RemoveRetiredKeys(saveTbl, sourceTbl)
+    for key, value in pairs(saveTbl) do
+        if sourceTbl[key] == nil then
+            saveTbl[key] = nil
+        end
+    end
+end
+
+--- Init [SavedVariables](https://warcraft.wiki.gg/wiki/TOC_format#SavedVariables). The [default config](lua://DelveCompanionAccountData) is used to either init them (e.g. the 1st addon load) or populate with missing fields (e.g. after addon update).
+---@param self DelveCompanionSettings
+function AddonSettings:ProcessAccountSave()
+    -- DelveCompanion.Logger.Log("[DelveCompanionSettings] Init AccountSave...")
+
+    if not DelveCompanionAccountData then
+        -- No save. Create a fresh one.
+        ---@type DelveCompanionAccountData
+        DelveCompanionAccountData = CopyTable(Config.DEFAULT_ACCOUNT_DATA)
+    else
+        AddNewKeysToSave(DelveCompanionAccountData, Config.DEFAULT_ACCOUNT_DATA)
+        RemoveRetiredKeys(DelveCompanionAccountData, Config.DEFAULT_ACCOUNT_DATA)
+
+        -- Reset Tracking Type to the default if the addon selected in the save is not available.
+        if (DelveCompanionAccountData.trackingType == Definitions.WaypointTrackingType.tomtom and not DelveCompanion.Variables.tomTomAvailable)
+            or (DelveCompanionAccountData.trackingType == Definitions.WaypointTrackingType.mpe and not DelveCompanion.Variables.mpeAvailable)
+        then
+            DelveCompanionAccountData.trackingType = Definitions.WaypointTrackingType.superTrack
+        end
+    end
+end
+
+--- Init [SavedVariablesPerCharacter](https://warcraft.wiki.gg/wiki/TOC_format#SavedVariablesPerCharacter). The [default config](lua://DelveCompanionCharacterData) is used to either init them (e.g. the 1st addon load) or populate with missing fields (e.g. after addon update).
+---@param self DelveCompanionSettings
+function AddonSettings:ProcessCharacterSave()
+    -- DelveCompanion.Logger.Log("[DelveCompanionSettings] Init CharacterSave...")
+
+    if not DelveCompanionCharacterData then
+        -- No save. Create a fresh one.
+        ---@type DelveCompanionCharacterData
+        DelveCompanionCharacterData = CopyTable(Config.DEFAULT_CHARACTER_DATA)
+    else
+        AddNewKeysToSave(DelveCompanionCharacterData, Config.DEFAULT_CHARACTER_DATA)
+        RemoveRetiredKeys(DelveCompanionCharacterData, Config.DEFAULT_CHARACTER_DATA)
+    end
 end
 
 --#endregion
@@ -250,49 +313,6 @@ function AddonSettings:RegisterCharacterSettings(category, layout)
     end
 end
 
---- Init [SavedVariables](https://warcraft.wiki.gg/wiki/TOC_format#SavedVariables). The [default config](lua://DelveCompanionAccountData) is used to either init them (e.g. the 1st addon load) or populate with missing fields (e.g. after addon update).
----@param self DelveCompanionSettings
-function AddonSettings:ProcessAccountSave()
-    -- DelveCompanion.Logger.Log("[DelveCompanionSettings] Init AccountSave...")
-
-    if not DelveCompanionAccountData then
-        ---@type DelveCompanionAccountData
-        DelveCompanionAccountData = CopyTable(Config.DEFAULT_ACCOUNT_DATA)
-    else
-        -- Add new keys to the existing save
-        for key, value in pairs(Config.DEFAULT_ACCOUNT_DATA) do
-            if DelveCompanionAccountData[key] == nil then
-                DelveCompanionAccountData[key] = value
-            end
-        end
-
-        -- Reset Tracking Type to the default if the addon selected in the save is not available.
-        if (DelveCompanionAccountData.trackingType == Definitions.WaypointTrackingType.tomtom and not DelveCompanion.Variables.tomTomAvailable)
-            or (DelveCompanionAccountData.trackingType == Definitions.WaypointTrackingType.mpe and not DelveCompanion.Variables.mpeAvailable)
-        then
-            DelveCompanionAccountData.trackingType = Definitions.WaypointTrackingType.superTrack
-        end
-    end
-end
-
---- Init [SavedVariablesPerCharacter](https://warcraft.wiki.gg/wiki/TOC_format#SavedVariablesPerCharacter). The [default config](lua://DelveCompanionCharacterData) is used to either init them (e.g. the 1st addon load) or populate with missing fields (e.g. after addon update).
----@param self DelveCompanionSettings
-function AddonSettings:ProcessCharacterSave()
-    -- DelveCompanion.Logger.Log("[DelveCompanionSettings] Init CharacterSave...")
-
-    if not DelveCompanionCharacterData then
-        ---@type DelveCompanionCharacterData
-        DelveCompanionCharacterData = CopyTable(Config.DEFAULT_CHARACTER_DATA)
-    else
-        -- Add new keys to the existing save
-        for key, value in pairs(Config.DEFAULT_CHARACTER_DATA) do
-            if DelveCompanionCharacterData[key] == nil then
-                DelveCompanionCharacterData[key] = value
-            end
-        end
-    end
-end
-
 ---@param self DelveCompanionSettings
 function AddonSettings:Init()
     -- Logger.Log("[DelveCompanionSettings] Start init...")
@@ -300,18 +320,18 @@ function AddonSettings:Init()
     do
         local settingsFrame = CreateFrame("Frame", "$parent.DelveCompanionSettings", nil,
             "DelveCompanionSettingsFrameTemplate")
-        local category, _ = Settings.RegisterCanvasLayoutCategory(settingsFrame, Lockit.UI_ADDON_NAME)
-        Settings.RegisterAddOnCategory(category)
-        self.mainCategory = category
+        local root, _ = Settings.RegisterCanvasLayoutCategory(settingsFrame, Lockit.UI_ADDON_NAME)
+        Settings.RegisterAddOnCategory(root)
+        self.rootCategory = root
     end
 
     do
-        local category, layout = Settings.RegisterVerticalLayoutSubcategory(self.mainCategory, _G["OPTIONS"])
-        self.settingsCategory = category
+        local options, layout = Settings.RegisterVerticalLayoutSubcategory(self.rootCategory, _G["OPTIONS"])
+        self.optionsCategory = options
 
-        self:RegisterAccountSettings(category, layout)
-        self:RegisterCharacterSettings(category, layout)
+        self:RegisterAccountSettings(options, layout)
+        self:RegisterCharacterSettings(options, layout)
 
-        Settings.RegisterAddOnCategory(category)
+        Settings.RegisterAddOnCategory(options)
     end
 end
