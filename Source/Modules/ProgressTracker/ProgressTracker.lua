@@ -19,6 +19,7 @@ local RESPAWN_SPELL = 433110
 
 ---@class ProgressTracker
 ---@field eventFrame Frame
+---@field isDelveInProgress boolean
 local ProgressTracker = {}
 DelveCompanion.ProgressTracker = ProgressTracker
 
@@ -30,18 +31,20 @@ local baseEvents = {
 
 ---@param self ProgressTracker
 function ProgressTracker:ProcessEvent(eventName, arg1, ...)
-    local isInProgress = C_PartyInfo.IsDelveInProgress()
-    local isComplete = C_PartyInfo.IsDelveComplete()
+    self.isDelveInProgress = C_PartyInfo.IsDelveInProgress() and not C_PartyInfo.IsDelveComplete()
     -- local widgetInfo = C_UIWidgetManager.GetScenarioHeaderDelvesWidgetVisualizationInfo(6183)
 
+    -- Logger.Log("[ProgressTracker] Event: %s ||| inProgress: %s ||| isComplete: %s", eventName,
+    --     tostring(self.isDelveInProgress),
+    --     tostring(C_PartyInfo.IsDelveComplete()))
     if eventName == "SCENARIO_UPDATE" then
-        if isInProgress then
+        if self.isDelveInProgress then
             FrameUtil.RegisterFrameForEvents(self.eventFrame, baseEvents)
 
-            EventRegistry:TriggerEvent(DelveCompanion.Definitions.Events.PROGRESS_TRACKER.DELVE_IN_PROGRESS, true)
+            EventRegistry:TriggerEvent(DelveCompanion.Definitions.Events.PROGRESS_TRACKER.DELVE_IN_PROGRESS)
         end
     elseif eventName == "SCENARIO_CRITERIA_UPDATE" then
-        if isComplete then
+        if C_PartyInfo.IsDelveComplete() then
             self.eventFrame:UnregisterEvent("SCENARIO_CRITERIA_UPDATE")
 
             EventRegistry:TriggerEvent(DelveCompanion.Definitions.Events.PROGRESS_TRACKER.DELVE_COMPLETE)
@@ -53,10 +56,10 @@ function ProgressTracker:ProcessEvent(eventName, arg1, ...)
             self.eventFrame:UnregisterEvent("DISPLAY_EVENT_TOAST_LINK")
         end
     elseif eventName == "ZONE_CHANGED_NEW_AREA" then
-        if not isInProgress then
+        if not self.isDelveInProgress then
             FrameUtil.UnregisterFrameForEvents(self.eventFrame, baseEvents)
 
-            EventRegistry:TriggerEvent(DelveCompanion.Definitions.Events.PROGRESS_TRACKER.DELVE_IN_PROGRESS, false)
+            EventRegistry:TriggerEvent(DelveCompanion.Definitions.Events.PROGRESS_TRACKER.DELVE_IN_PROGRESS)
         end
     end
 end
@@ -75,7 +78,10 @@ function ProgressTracker:Init()
     self.eventFrame = frame
 
     if C_PartyInfo.IsDelveInProgress() then
+        self.isDelveInProgress = true
         -- If UI Reload or Logout happened in the midst of the Delve, force register required events.
         FrameUtil.RegisterFrameForEvents(self.eventFrame, baseEvents)
+    else
+        self.isDelveInProgress = false
     end
 end

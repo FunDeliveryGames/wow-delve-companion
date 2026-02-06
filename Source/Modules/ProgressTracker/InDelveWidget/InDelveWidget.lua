@@ -23,14 +23,15 @@ DelveCompanion.InDelveWidget = InDelveWidget
 
 ---@param self InDelveWidget
 ---@param _ any
----@param isInProgress boolean Whether player has an active Delve.
-function InDelveWidget:OnDelveInProgressChanged(_, isInProgress)
+function InDelveWidget:OnDelveInProgressChanged(_)
     -- Logger.Log("[InDelveWidget] OnProgressChanged. State: %s", tostring(isInProgress))
 
-    if isInProgress and not self.frame.isSet then
-        self:SetupWidget(false)
-    elseif not isInProgress then
+    if not DelveCompanion.ProgressTracker.isDelveInProgress then
+        -- Logger.Log("[InDelveWidget] No Delve in progress")
         self:HideWidget()
+    elseif not self.frame.isSet then
+        -- Logger.Log("[InDelveWidget] Delve in progress, InDelveWidget is not set")
+        self:SetupWidget(false)
     end
 end
 
@@ -70,10 +71,9 @@ function InDelveWidget:Init()
     self.frame = widgetFrame
 
     do
-        ---@param _ any
-        ---@param isInProgress boolean
-        local function OnDelveInProgressChanged(_, isInProgress)
-            self:OnDelveInProgressChanged(_, isInProgress)
+        ---@param _ table
+        local function OnDelveInProgressChanged(_)
+            self:OnDelveInProgressChanged(_)
         end
 
         EventRegistry:RegisterCallback(DelveCompanion.Definitions.Events.PROGRESS_TRACKER.DELVE_IN_PROGRESS,

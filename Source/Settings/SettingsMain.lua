@@ -149,7 +149,7 @@ end
 ---@param category table
 ---@param varKey string
 ---@param varTbl DelveCompanionAccountData|DelveCompanionCharacterData
----@param defaultValue any
+---@param defaultValue number|boolean|string
 ---@param displayText string
 ---@param onChangedCallback function
 ---@return table|nil

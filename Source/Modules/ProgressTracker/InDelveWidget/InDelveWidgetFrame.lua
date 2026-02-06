@@ -61,42 +61,48 @@ function DelveCompanion_InDelveWidgetFrameMixin:Refresh()
     do
         local frame = self.Lure
 
-        local hasItemNow = C_Item.GetItemCount(frame.itemCode) > 0
-        local isAvailable = hasItemNow                                          -- Has the lure
-            and not C_QuestLog.IsQuestFlaggedCompleted(Config.BOUNTY_MAP_QUEST) -- Can get the bounty map this week
-            and (self.respawnState ~= RESPAWN_STATES[1])                        -- Respawn is activated
-        frame:RefreshInteraction(isAvailable)
-        frame:RefreshAnim(isAvailable and not frame.hasItem)
+        if (frame.itemCode) then
+            local hasItemNow = C_Item.GetItemCount(frame.itemCode) > 0
+            local isAvailable = hasItemNow                                          -- Has the lure
+                and not C_QuestLog.IsQuestFlaggedCompleted(Config.BOUNTY_MAP_QUEST) -- Can get the bounty map this week
+                and (self.respawnState ~= RESPAWN_STATES[1])                        -- Respawn is activated
+            frame:RefreshInteraction(isAvailable)
+            frame:RefreshAnim(isAvailable and not frame.hasItem)
 
-        frame.hasItem = hasItemNow
+            frame.hasItem = hasItemNow
+        end
     end
 
     -- Bounty Map
     do
         local frame = self.Map
 
-        local hasItemNow = C_Item.GetItemCount(frame.itemCode) > 0
-        local activeBountySpell = DelveCompanion.Config.BOUNTY_ACTIVATED_SPELL[expansion]
-        local isAvailable = hasItemNow                                       -- Has the bounty map
-            and C_UnitAuras.GetPlayerAuraBySpellID(activeBountySpell) == nil -- Doesn't have an active map buff
-        frame:RefreshInteraction(isAvailable)
-        frame:RefreshAnim(isAvailable and not frame.hasItem)
+        if (frame.itemCode) then
+            local hasItemNow = C_Item.GetItemCount(frame.itemCode) > 0
+            local activeBountySpell = DelveCompanion.Config.BOUNTY_ACTIVATED_SPELL[expansion]
+            local isAvailable = hasItemNow                                       -- Has the bounty map
+                and C_UnitAuras.GetPlayerAuraBySpellID(activeBountySpell) == nil -- Doesn't have an active map buff
+            frame:RefreshInteraction(isAvailable)
+            frame:RefreshAnim(isAvailable and not frame.hasItem)
 
-        frame.hasItem = hasItemNow
+            frame.hasItem = hasItemNow
+        end
     end
 
     -- Loot Radar
     do
         local frame = self.Radar
 
-        local hasItemNow = C_Item.GetItemCount(frame.itemCode) > 0
-        -- local activeRadarSpell = DelveCompanion.Config.LOOT_RADAR_ACTIVATED_SPELL
-        local isAvailable = hasItemNow -- Has the radar
-        --     and C_UnitAuras.GetPlayerAuraBySpellID(activeRadarSpell) == nil -- Doesn't have an active radar buff. IT DOES NOTHING as the aura is hidden at the moment.
-        frame:RefreshInteraction(isAvailable)
-        frame:RefreshAnim(isAvailable and not frame.hasItem)
+        if (frame.itemCode) then
+            local hasItemNow = C_Item.GetItemCount(frame.itemCode) > 0
+            -- local activeRadarSpell = DelveCompanion.Config.LOOT_RADAR_ACTIVATED_SPELL
+            local isAvailable = hasItemNow -- Has the radar
+            --     and C_UnitAuras.GetPlayerAuraBySpellID(activeRadarSpell) == nil -- Doesn't have an active radar buff. IT DOES NOTHING as the aura is hidden at the moment.
+            frame:RefreshInteraction(isAvailable)
+            frame:RefreshAnim(isAvailable and not frame.hasItem)
 
-        frame.hasItem = hasItemNow
+            frame.hasItem = hasItemNow
+        end
     end
 end
 

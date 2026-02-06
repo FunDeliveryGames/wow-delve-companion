@@ -11,7 +11,7 @@ local Config = DelveCompanion.Config
 local Lockit = DelveCompanion.Lockit
 
 ---@class (exact) OverviewBountifulFrame : OverviewBountifulFrameXml
----@field bountifulButtonsPool any
+---@field bountifulButtonsPool table
 DelveCompanion_OverviewBountifulFrameMixin = {}
 
 ---@param self OverviewBountifulFrame
