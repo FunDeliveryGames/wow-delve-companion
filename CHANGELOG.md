@@ -1,5 +1,8 @@
 # Change Log
 
+## [2026.02.4] - 07 February 2026
+- Fixed logs spamming.
+
 ## [2026.02.3] - 07 February 2026
 - Attempt to fix an issue with the widget outside Delves (in dungeons, during other scenarios).
 - **Localization**: Update `Simplified Chinese` translation.
