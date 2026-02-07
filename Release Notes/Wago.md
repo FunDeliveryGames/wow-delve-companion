@@ -16,6 +16,10 @@
 **Hotfix [2026.02.3]**:
 - Attempt to fix an issue with the widget outside Delves (in dungeons, during other scenarios).
 - **Localization**: Update `Simplified Chinese` translation.
+<br>
+
+**Hotfix [2026.02.4]**:
+- Fixed logs spamming.
 ***
 [Full versions history](https://github.com/FunDeliveryGames/wow-delve-companion/blob/main/CHANGELOG.md)<br>
 [Report an issue](https://github.com/FunDeliveryGames/wow-delve-companion/issues)
