@@ -11,6 +11,11 @@
 - Fixed: Info Widgets on the Delves tab were displayed ignoring the corresponding option toggle.
 - **QOL**: Delves tab visual improvements when Info Widgets are hidden.
 - **Localization**: Update `Traditional Chinese` and `Russian` translations.
+<br>
+
+**Hotfix [2026.02.3]**:
+- Attempt to fix an issue with the widget outside Delves (in dungeons, during other scenarios).
+- **Localization**: Update `Simplified Chinese` translation.
 ***
 [Full versions history](https://github.com/FunDeliveryGames/wow-delve-companion/blob/main/CHANGELOG.md)<br>
 [Report an issue](https://github.com/FunDeliveryGames/wow-delve-companion/issues)
