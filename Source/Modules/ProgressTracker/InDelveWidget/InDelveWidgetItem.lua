@@ -60,21 +60,21 @@ end
 
 ---@param self InDelveWidgetItem
 function DelveCompanion_InDelveWidgetItemMixin:OnLoad()
-    -- Logger.Log("[InDelveWidgetItem] OnLoad start")
+    -- Logger:Log("[InDelveWidgetItem] OnLoad start")
 
     DelveCompanion_CustomActionWidgetMixin.OnLoad(self)
 end
 
 ---@param self InDelveWidgetItem
 function DelveCompanion_InDelveWidgetItemMixin:OnShow()
-    -- Logger.Log("[InDelveWidgetItem] OnShow start")
+    -- Logger:Log("[InDelveWidgetItem] OnShow start")
 
     DelveCompanion_CustomActionWidgetMixin.OnShow(self)
 end
 
 ---@param self InDelveWidgetItem
 function DelveCompanion_InDelveWidgetItemMixin:OnEnter()
-    -- Logger.Log("[InDelveWidgetItem] OnEnter start")
+    -- Logger:Log("[InDelveWidgetItem] OnEnter start")
 
     self:StopAnimation()
     DelveCompanion_CustomActionWidgetMixin.OnEnter(self)
@@ -82,7 +82,7 @@ end
 
 ---@param self InDelveWidgetItem
 function DelveCompanion_InDelveWidgetItemMixin:OnHide()
-    -- Logger.Log("[InDelveWidgetItem] OnHide start")
+    -- Logger:Log("[InDelveWidgetItem] OnHide start")
 
     DelveCompanion_CustomActionWidgetMixin.OnHide(self)
 end

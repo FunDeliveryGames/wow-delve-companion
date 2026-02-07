@@ -34,7 +34,7 @@ function ProgressTracker:ProcessEvent(eventName, arg1, ...)
     self.isDelveInProgress = C_PartyInfo.IsDelveInProgress() and not C_PartyInfo.IsDelveComplete()
     -- local widgetInfo = C_UIWidgetManager.GetScenarioHeaderDelvesWidgetVisualizationInfo(6183)
 
-    -- Logger.Log("[ProgressTracker] Event: %s ||| inProgress: %s ||| isComplete: %s", eventName,
+    -- Logger:Log("[ProgressTracker] Event: %s ||| inProgress: %s ||| isComplete: %s", eventName,
     --     tostring(self.isDelveInProgress),
     --     tostring(C_PartyInfo.IsDelveComplete()))
     if eventName == "SCENARIO_UPDATE" then
@@ -66,7 +66,7 @@ end
 
 ---@param self ProgressTracker
 function ProgressTracker:Init()
-    -- Logger.Log("[ProgressTracker] Init started...")
+    -- Logger:Log("[ProgressTracker] Init started...")
 
     local frame = CreateFrame("Frame", FRAME_NAME, UIParent)
     frame:RegisterEvent("SCENARIO_UPDATE")

@@ -54,7 +54,7 @@ end
 
 ---@param self GildedStashFrame
 function DelveCompanion_OverviewGildedStashFrameMixin:OnLoad()
-    -- Logger.Log("GildedStash OnLoad start")
+    -- Logger:Log("GildedStash OnLoad start")
 
     local stashSpell = Spell:CreateFromSpellID(Config.GILDED_STASH_SPELL_CODE)
     stashSpell:ContinueOnSpellLoad(function()
@@ -79,7 +79,7 @@ end
 
 ---@param self GildedStashFrame
 function DelveCompanion_OverviewGildedStashFrameMixin:OnShow()
-    -- Logger.Log("GildedStash OnShow start")
+    -- Logger:Log("GildedStash OnShow start")
 
     local stashDisplayInfo = self:TryGetStashInfo()
     if not stashDisplayInfo then

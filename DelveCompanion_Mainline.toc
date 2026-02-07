@@ -19,9 +19,9 @@
 ## Category-zhCN: 地下堡
 ## Category-zhTW: 探究
 
-## AddonCompartmentFuncOnEnter: DelveCompanionCompartmentOnEnter
-## AddonCompartmentFuncOnLeave: DelveCompanionCompartmentOnLeave
-## AddonCompartmentFunc: DelveCompanionCompartmentOnClick
+## AddonCompartmentFuncOnEnter: DelveCompanion_CompartmentOnEnter
+## AddonCompartmentFuncOnLeave: DelveCompanion_CompartmentOnLeave
+## AddonCompartmentFunc: DelveCompanion_CompartmentOnClick
 
 ## LoadSavedVariablesFirst: 1
 ## SavedVariables: DelveCompanionAccountData

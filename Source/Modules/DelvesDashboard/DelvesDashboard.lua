@@ -100,7 +100,7 @@ local function InitDelvesDashboard()
 
     local DelvesDashboardFrame = DelvesDashboardFrame
     if not DelvesDashboardFrame then
-        Logger.Log("DelvesDashboardFrame is nil. Delves UI extension is not inited.")
+        Logger:Log("DelvesDashboardFrame is nil. Delves UI extension is not inited.")
         return
     end
 

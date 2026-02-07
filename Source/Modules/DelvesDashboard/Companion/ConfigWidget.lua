@@ -185,7 +185,7 @@ end
 
 ---@param self CompanionConfigWidget
 function DelveCompanion_DashboardCompanionConfigWidgetMixin:OnLoad()
-    -- Logger.Log("CompanionConfigWidget OnLoad start")
+    -- Logger:Log("CompanionConfigWidget OnLoad start")
 
     self.defaultConfigButton = DashboardCompanion.ParentFrame.CompanionConfigButton
 
@@ -198,7 +198,7 @@ end
 
 ---@param self CompanionConfigWidget
 function DelveCompanion_DashboardCompanionConfigWidgetMixin:OnShow()
-    -- Logger.Log("CompanionConfigWidget OnShow start")
+    -- Logger:Log("CompanionConfigWidget OnShow start")
 end
 
 --#region XML Annotations

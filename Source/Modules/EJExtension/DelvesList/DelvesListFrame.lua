@@ -84,7 +84,7 @@ end
 
 ---@param self DelvesListFrame
 function DelveCompanion_DelvesListFrameMixin:OnLoad()
-    -- Logger.Log("[DelvesListFrame] OnLoad start")
+    -- Logger:Log("[DelvesListFrame] OnLoad start")
 
     self.Title:SetText(_G["DELVES_LABEL"])
 
@@ -155,21 +155,21 @@ end
 
 ---@param self DelvesListFrame
 function DelveCompanion_DelvesListFrameMixin:OnEvent(event, ...)
-    -- Logger.Log("[DelvesListFrame] OnEvent start")
+    -- Logger:Log("[DelvesListFrame] OnEvent start")
 
     self:UpdateKeysWidget()
 end
 
 ---@param self DelvesListFrame
 function DelveCompanion_DelvesListFrameMixin:OnShow()
-    -- Logger.Log("[DelvesListFrame] OnShow start")
+    -- Logger:Log("[DelvesListFrame] OnShow start")
 
     self:Refresh()
 end
 
 ---@param self DelvesListFrame
 function DelveCompanion_DelvesListFrameMixin:OnHide()
-    --Logger.Log("[DelvesListFrame] OnHide start")
+    --Logger:Log("[DelvesListFrame] OnHide start")
 
     self:UnregisterEvent("CURRENCY_DISPLAY_UPDATE")
 end

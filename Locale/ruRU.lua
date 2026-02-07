@@ -88,6 +88,9 @@ Lockit.UI_SETTING_GV_DETAILS_TOOLTIP = "Интерфейс Вылазок: От�
 Lockit.UI_SETTING_DASHBOARD_OVERVIEW_NAME = "Раздел Вылазок"
 Lockit.UI_SETTING_DASHBOARD_OVERVIEW_TOOLTIP = "Интерфейс Вылазок: Отображение дополнительного раздела 'Обзор'. Он содержит информацию о Позолоченных тайниках, доступных Многообещающих Вылазках, валютах, а также ​​предметах, которые связаны с Вылазками."
 
+Lockit.UI_SETTING_LOGS_NAME = "Enable Debug Logs"
+Lockit.UI_SETTING_LOGS_TOOLTIP = "Allows to print debug logs in the chat. Used for development and testing purposes."
+
 Lockit.UI_SETTINGS_TRANSLATION_TITLE = "Особая благодарность за помощь с переводом:"
 
 Lockit.UI_SETTINGS_LINKS_TITLE = "Ссылки"

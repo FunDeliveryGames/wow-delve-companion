@@ -88,6 +88,9 @@ Lockit.UI_SETTING_GV_DETAILS_TOOLTIP = "探究介面: 直接在探究介面顯�
 Lockit.UI_SETTING_DASHBOARD_OVERVIEW_NAME = "探究總覽部分"
 Lockit.UI_SETTING_DASHBOARD_OVERVIEW_TOOLTIP = "探究介面: 顯示一個額外的總覽部分。它包含有關鍍金儲物箱，可用的豐碩探究及與探究相關的貨幣和物品的訊息。"
 
+Lockit.UI_SETTING_LOGS_NAME = "Enable Debug Logs"
+Lockit.UI_SETTING_LOGS_TOOLTIP = "Allows to print debug logs in the chat. Used for development and testing purposes."
+
 Lockit.UI_SETTINGS_TRANSLATION_TITLE = "特別鳴謝翻譯者："
 
 Lockit.UI_SETTINGS_LINKS_TITLE = "連結"

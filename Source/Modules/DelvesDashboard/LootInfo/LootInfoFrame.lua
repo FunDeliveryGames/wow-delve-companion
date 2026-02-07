@@ -15,7 +15,7 @@ DelveCompanion_LootInfoFrameMixin = {}
 
 ---@param self LootInfoFrame
 function DelveCompanion_LootInfoFrameMixin:OnLoad()
-    -- Logger.Log("LootInfo OnLoad start")
+    -- Logger:Log("LootInfo OnLoad start")
 
     ---@see DefaultPanelBaseTemplate Blizzard's template
     ---@diagnostic disable-next-line undefined-field
@@ -50,7 +50,7 @@ end
 
 ---@param self LootInfoFrame
 function DelveCompanion_LootInfoFrameMixin:OnShow()
-    --Logger.Log("LootInfo OnShow start")
+    --Logger:Log("LootInfo OnShow start")
 end
 
 --#region XML Annotations

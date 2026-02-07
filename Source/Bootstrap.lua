@@ -20,45 +20,50 @@ end
 
 ---@param self Bootstrap
 function Bootstrap:OnAddonLoaded()
-    -- Logger.Log("[Bootstrap] OnAddonLoaded start...")
+    -- Logger:Log("[Bootstrap] OnAddonLoaded start...")
 
     self:ProcessOptionalDependencies() -- Should be before any other initializations!
 
     DelveCompanion.AddonSettings:ProcessAccountSave()
     DelveCompanion.AddonSettings:ProcessCharacterSave()
 
-    -- Logger.Log("[Bootstrap] OnAddonLoaded finish")
+    -- Logger:Log("[Bootstrap] OnAddonLoaded finish")
 end
 
 ---@param self Bootstrap
 function Bootstrap:OnPlayerLogin()
-    -- Logger.Log("[Bootstrap] OnPlayerLogin start...")
+    -- Logger:Log("[Bootstrap] OnPlayerLogin start...")
+
+    DelveCompanion.AddonSettings:Init()
 
     DelveCompanion.Variables.maxLevelReached =
         UnitLevel("player") == GetMaxLevelForExpansionLevel(Config.DELVES_MIN_EXPANSION)
 
-    DelveCompanion.AddonSettings:Init()
     DelveCompanion.ProgressTracker:Init()
     DelveCompanion.InDelveWidget:Init()
 
     DelveCompanion:InitDelvesData()
     DelveCompanion_TooltipExtension_Init()
 
-    -- Logger.Log("[Bootstrap] OnPlayerLogin finish")
+    -- Logger:Log("[Bootstrap] OnPlayerLogin finish")
 end
 
 -- EventRegistry:RegisterFrameEventAndCallback("GOSSIP_SHOW", function(payload, arg1, arg2)
 --     if arg1 == "delves-difficulty-picker" then
 --         -- local options = DelvesDifficultyPickerFrame:GetOptions()
---         Logger.Log("=================")
---         Logger.Log("Modifiers info:")
---         Logger.LogTable(DelvesDifficultyPickerFrame.DelveModifiersWidgetContainer.widgetFrames)
+--         Logger:Log("=================")
+--         Logger:Log("Modifiers info:")
+--         Logger:LogTable(DelvesDifficultyPickerFrame.DelveModifiersWidgetContainer.widgetFrames)
 --     end
 -- end)
 
+-- 1st
 EventUtil.ContinueOnAddOnLoaded(addonName, function()
+    Logger:Init()
     Bootstrap:OnAddonLoaded()
-end) -- 1st
+end)
+
+-- 2nd
 EventRegistry:RegisterFrameEventAndCallback("PLAYER_LOGIN", function()
     Bootstrap:OnPlayerLogin()
-end) -- 2nd
+end)

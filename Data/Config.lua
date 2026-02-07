@@ -19,11 +19,13 @@ Config.DELVES_MIN_EXPANSION = LE_EXPANSION_WAR_WITHIN
 ---@field trackingType WaypointTrackingType Type of tracking used to set waypoints to the Delves.
 ---@field inDelveWidgetEnabled boolean Whether [InDelveWidget](lua://InDelveWidget) is displayed.
 ---@field inDelveWidgetDisplayRule InDelveWidgetDisplayRule Where [InDelveWidget](lua://InDelveWidget) is displayed.
+---@field logsEnabled boolean Whether logs are enabled.
 Config.DEFAULT_ACCOUNT_DATA = {
     delvesListInfoWidgetsEnabled = true,
     trackingType = DelveCompanion.Definitions.WaypointTrackingType.superTrack,
     inDelveWidgetEnabled = true,
-    inDelveWidgetDisplayRule = DelveCompanion.Definitions.InDelveWidgetDisplayRule.left
+    inDelveWidgetDisplayRule = DelveCompanion.Definitions.InDelveWidgetDisplayRule.left,
+    logsEnabled = false
 }
 
 --- Character Save Data

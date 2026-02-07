@@ -13,7 +13,7 @@ DelveCompanion_OverviewBountifulButtonMixin = {}
 
 ---@param self OverviewBountifulButton
 function DelveCompanion_OverviewBountifulButtonMixin:OnLoad()
-    -- Logger.Log("OverviewBountifulButton OnLoad start")
+    -- Logger:Log("OverviewBountifulButton OnLoad start")
     -- NOTE: BountifulButton is acquired from a FramePool so OnLoad is called only once per button lifetime.
     -- Only one-time initializations here.
 end
@@ -48,7 +48,7 @@ end
 
 ---@param self OverviewBountifulButton
 function DelveCompanion_OverviewBountifulButtonMixin:OnShow()
-    -- Logger.Log("OverviewBountifulButton OnShow start")
+    -- Logger:Log("OverviewBountifulButton OnShow start")
 
     self:RegisterEvent("SUPER_TRACKING_CHANGED")
     self:Update()

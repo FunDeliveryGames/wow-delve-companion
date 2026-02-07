@@ -16,7 +16,7 @@ DelveCompanion_OverviewBountifulFrameMixin = {}
 
 ---@param self OverviewBountifulFrame
 function DelveCompanion_OverviewBountifulFrameMixin:OnLoad()
-    -- Logger.Log("OverviewBountifulFrame OnLoad start")
+    -- Logger:Log("OverviewBountifulFrame OnLoad start")
     self.Title:SetText(Lockit.UI_COMMON_BOUNTIFUL_DELVE_TITLE)
 
     self.ActiveDelves.NoBountifulLabel:SetText(Lockit.UI_NO_ACTIVE_BOUNTIFUL)
@@ -28,12 +28,12 @@ end
 
 ---@param self OverviewBountifulFrame
 function DelveCompanion_OverviewBountifulFrameMixin:OnEvent(event, ...)
-    -- Logger.Log("OverviewBountifulFrame OnEvent start")
+    -- Logger:Log("OverviewBountifulFrame OnEvent start")
 end
 
 ---@param self OverviewBountifulFrame
 function DelveCompanion_OverviewBountifulFrameMixin:OnShow()
-    -- Logger.Log("OverviewBountifulFrame OnShow start")
+    -- Logger:Log("OverviewBountifulFrame OnShow start")
 
     local expansion = LE_EXPANSION_LEVEL_CURRENT
     DelveCompanion:UpdateDelvesData(expansion)
@@ -57,7 +57,7 @@ end
 
 ---@param self OverviewBountifulFrame
 function DelveCompanion_OverviewBountifulFrameMixin:OnHide()
-    -- Logger.Log("OverviewBountifulFrame OnHide start")
+    -- Logger:Log("OverviewBountifulFrame OnHide start")
 
     self.bountifulButtonsPool:ReleaseAll()
 end

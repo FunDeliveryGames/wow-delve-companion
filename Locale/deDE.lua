@@ -88,6 +88,9 @@ Lockit.UI_SETTING_GV_DETAILS_TOOLTIP = "Tiefen-UI: Zeigt große Schatzkammer Bel
 Lockit.UI_SETTING_DASHBOARD_OVERVIEW_NAME = "Tiefen-Übersichtsbereich"
 Lockit.UI_SETTING_DASHBOARD_OVERVIEW_TOOLTIP = "Tiefen-UI: Zeigt einen zusätzlichen Übersichtsbereich an. Er enthält Informationen über vergoldete Schätze, verfügbare großzügige Tiefen und Tiefen-bezogene Verbrauchsgüter."
 
+Lockit.UI_SETTING_LOGS_NAME = "Enable Debug Logs"
+Lockit.UI_SETTING_LOGS_TOOLTIP = "Allows to print debug logs in the chat. Used for development and testing purposes."
+
 Lockit.UI_SETTINGS_TRANSLATION_TITLE = "Besonderen Dank für den Beitrag zur Übersetzung:"
 
 Lockit.UI_SETTINGS_LINKS_TITLE = "Links"

@@ -24,20 +24,20 @@ DelveCompanion.InDelveWidget = InDelveWidget
 ---@param self InDelveWidget
 ---@param _ any
 function InDelveWidget:OnDelveInProgressChanged(_)
-    -- Logger.Log("[InDelveWidget] OnProgressChanged. State: %s", tostring(isInProgress))
+    -- Logger:Log("[InDelveWidget] OnProgressChanged. State: %s", tostring(isInProgress))
 
     if not DelveCompanion.ProgressTracker.isDelveInProgress then
-        -- Logger.Log("[InDelveWidget] No Delve in progress")
+        -- Logger:Log("[InDelveWidget] No Delve in progress")
         self:HideWidget()
     elseif not self.frame.isSet then
-        -- Logger.Log("[InDelveWidget] Delve in progress, InDelveWidget is not set")
+        -- Logger:Log("[InDelveWidget] Delve in progress, InDelveWidget is not set")
         self:SetupWidget(false)
     end
 end
 
 ---@param self InDelveWidget
 function InDelveWidget:SetupWidget(isForced)
-    -- Logger.Log("[InDelveWidget] Set up widget...")
+    -- Logger:Log("[InDelveWidget] Set up widget...")
 
     if not DelveCompanionAccountData.inDelveWidgetEnabled then
         return
@@ -57,14 +57,14 @@ end
 
 ---@param self InDelveWidget
 function InDelveWidget:HideWidget()
-    -- Logger.Log("[InDelveWidget] Hide widget...")
+    -- Logger:Log("[InDelveWidget] Hide widget...")
 
     self.frame:Hide()
 end
 
 ---@param self InDelveWidget
 function InDelveWidget:Init()
-    -- Logger.Log("[InDelveWidget] Init started...")
+    -- Logger:Log("[InDelveWidget] Init started...")
 
     local widgetFrame = CreateFrame("Frame", "DelveCompanionInDelveWidgetFrame",
         UIParent, "DelvelCompanionInDelveWidgetFrameTemplate")
@@ -85,7 +85,7 @@ function InDelveWidget:Init()
             if not (changedVarKey == ENABLED_SAVE_KEY) then
                 return
             end
-            -- Logger.Log("[InDelveWidget] OnSettingChanged. Enabled: %s...", tostring(isEnabled))
+            -- Logger:Log("[InDelveWidget] OnSettingChanged. Enabled: %s...", tostring(isEnabled))
 
             if isEnabled then
                 self:SetupWidget(true)
@@ -98,7 +98,7 @@ function InDelveWidget:Init()
     end
 
     if C_PartyInfo.IsDelveInProgress() then
-        -- Logger.Log("[InDelveWidget] Already in Delve. Forced setup.")
+        -- Logger:Log("[InDelveWidget] Already in Delve. Forced setup.")
         self:SetupWidget(true)
     end
 end

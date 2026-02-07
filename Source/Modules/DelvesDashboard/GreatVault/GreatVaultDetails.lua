@@ -49,7 +49,7 @@ function DelveCompanion_GreatVaultDetailsMixin:Refresh()
     if DelveCompanionCharacterData.gvDetailsEnabled and self:CanDisplayCustomState() then
         local activitiesInfo = C_WeeklyRewards.GetActivities(Config.ACTIVITY_TYPE)
         if not activitiesInfo then
-            Logger.Log("Cannot get Activity info")
+            Logger:Log("Cannot get Activity info")
             return
         end
 
@@ -72,7 +72,7 @@ end
 
 ---@param self GVDetailsFrame
 function DelveCompanion_GreatVaultDetailsMixin:OnLoad()
-    -- Logger.Log("GreatVaultDetails OnLoad start")
+    -- Logger:Log("GreatVaultDetails OnLoad start")
 
     for i = 1, self:GetMaxNumRewards(Config.ACTIVITY_TYPE), 1 do
         ---@type GVDetailsItem
@@ -97,7 +97,7 @@ end
 
 ---@param self GVDetailsFrame
 function DelveCompanion_GreatVaultDetailsMixin:OnShow()
-    -- Logger.Log("GreatVaultDetails OnShow start")
+    -- Logger:Log("GreatVaultDetails OnShow start")
 
     if self.shouldRefresh then
         self:Refresh()
@@ -106,7 +106,7 @@ end
 
 ---@param self GVDetailsFrame
 function DelveCompanion_GreatVaultDetailsMixin:OnHide()
-    --Logger.Log("GreatVaultDetails OnHide start")
+    --Logger:Log("GreatVaultDetails OnHide start")
 end
 
 --#region XML Annotations

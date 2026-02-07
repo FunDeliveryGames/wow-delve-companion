@@ -77,28 +77,28 @@ end
 
 ---@param self DelveInstanceButton
 function DelveCompanion_DelveInstanceButtonMixin:OnShow()
-    -- Logger.Log("[DelveInstanceButton] OnShow start")
+    -- Logger:Log("[DelveInstanceButton] OnShow start")
 
     self:RegisterEvent("SUPER_TRACKING_CHANGED")
 end
 
 ---@param self DelveInstanceButton
 function DelveCompanion_DelveInstanceButtonMixin:OnHide()
-    -- Logger.Log("[DelveInstanceButton] OnHide start")
+    -- Logger:Log("[DelveInstanceButton] OnHide start")
 
     self:UnregisterEvent("SUPER_TRACKING_CHANGED")
 end
 
 ---@param self DelveInstanceButton
 function DelveCompanion_DelveInstanceButtonMixin:OnEnter()
-    -- Logger.Log("[DelveInstanceButton] OnEnter start")
+    -- Logger:Log("[DelveInstanceButton] OnEnter start")
 
     self.waypointTracker:DisplayDelveTooltip(self, "ANCHOR_TOP", self.data)
 end
 
 ---@param self DelveInstanceButton
 function DelveCompanion_DelveInstanceButtonMixin:OnLeave()
-    -- Logger.Log("[DelveInstanceButton] OnLeave start")
+    -- Logger:Log("[DelveInstanceButton] OnLeave start")
 
     GameTooltip:Hide()
 end

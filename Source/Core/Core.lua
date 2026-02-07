@@ -18,7 +18,7 @@ AddonTbl.DelveCompanion = DelveCompanion
 --- Init Delves runtime data.
 ---@param self DelveCompanion
 function DelveCompanion:InitDelvesData()
-    -- self.Logger.Log("Initing Delves data...")
+    -- self.Logger:Log("Initing Delves data...")
 
     ---@type table<integer, DelveData[]>
     local delvesData = {}
@@ -66,7 +66,7 @@ end
 ---@param self DelveCompanion
 ---@param expansionLevel number LE_EXPANSION enum number of the expansion
 function DelveCompanion:UpdateDelvesData(expansionLevel)
-    -- self.Logger.Log("Start updating Delves data for expansion: %d...", expansionLevel)
+    -- self.Logger:Log("Start updating Delves data for expansion: %d...", expansionLevel)
 
     for _, delveData in pairs(self.Variables.delvesData[expansionLevel]) do
         local delveConfig = delveData.config
@@ -126,7 +126,7 @@ function DelveCompanion:UpdateDelvesData(expansionLevel)
         end
     end
 
-    -- Logger.Log("Finished updating Delves data")
+    -- Logger:Log("Finished updating Delves data")
 end
 
 --- Cache number of consumables (Keys, Shards, etc.) player has collected.

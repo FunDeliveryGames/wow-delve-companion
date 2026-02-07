@@ -35,7 +35,7 @@ function DelveCompanion_GreatVaultItemMixin:Update()
 
     self.ItemInfoLabel:Hide()
     -- Curent level info
-    -- Logger.Log("Updating %s with id: %d", self:GetDebugName(), self.info.id)
+    -- Logger:Log("Updating %s with id: %d", self:GetDebugName(), self.info.id)
 
     local itemLink, upgradeItemLink = C_WeeklyRewards.GetExampleRewardItemHyperlinks(self.rewardInfo.id)
     ---@type number?
@@ -45,7 +45,7 @@ function DelveCompanion_GreatVaultItemMixin:Update()
     end
 
     if not itemLevel then
-        -- Logger.Log("Item level is not ready. Enable OnUpdate...")
+        -- Logger:Log("Item level is not ready. Enable OnUpdate...")
 
         self.updateTimer = 0
         self:SetScript("OnUpdate", self.OnUpdate)
@@ -69,7 +69,7 @@ function DelveCompanion_GreatVaultItemMixin:Update()
     end
 
     if not upgradeItemLevel then
-        -- Logger.Log("Item upgrade level is not ready. Enable OnUpdate...")
+        -- Logger:Log("Item upgrade level is not ready. Enable OnUpdate...")
 
         self.updateTimer = 0
         self:SetScript("OnUpdate", self.OnUpdate)
@@ -110,7 +110,7 @@ function DelveCompanion_GreatVaultItemMixin:ShowMaxUpgradeTooltip()
 
     GameTooltip_AddInstructionLine(tooltip, _G["WEEKLY_REWARDS_MAXED_REWARD"], true)
 
-    -- Logger.Log("Show tooltip: max upgrade")
+    -- Logger:Log("Show tooltip: max upgrade")
     tooltip:Show()
 end
 
@@ -126,7 +126,7 @@ function DelveCompanion_GreatVaultItemMixin:ShowUpgradeTooltip()
     local reqLine = format(_G["WEEKLY_REWARDS_COMPLETE_WORLD"], self.nextLevel)
     GameTooltip_AddHighlightLine(tooltip, reqLine, true)
 
-    -- Logger.Log("Show tooltip: upgrade")
+    -- Logger:Log("Show tooltip: upgrade")
     tooltip:Show()
 end
 
@@ -147,13 +147,13 @@ function DelveCompanion_GreatVaultItemMixin:ShowLockedTooltip()
     local diff = self.rewardInfo.threshold - self.rewardInfo.progress
     GameTooltip_AddNormalLine(tooltip, format(reqLine, diff), true)
 
-    -- Logger.Log("Show tooltip: locked")
+    -- Logger:Log("Show tooltip: locked")
     tooltip:Show()
 end
 
 ---@param self GVDetailsItem
 function DelveCompanion_GreatVaultItemMixin:OnEnter()
-    -- Logger.Log("%s OnEnter start", self:GetDebugName())
+    -- Logger:Log("%s OnEnter start", self:GetDebugName())
     if not self.unlocked then
         self:ShowLockedTooltip()
     elseif self.maxUpgraded then

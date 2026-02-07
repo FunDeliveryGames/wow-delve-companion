@@ -12,7 +12,7 @@ DelveCompanion_DashboardOverviewMixin = {}
 
 ---@param self DashOverview
 function DelveCompanion_DashboardOverviewMixin:OnLoad()
-    --Logger.Log("DashboardOverview OnLoad start")
+    --Logger:Log("DashboardOverview OnLoad start")
 
     self.PanelTitle:Hide()
     self.PanelDescription:Hide()
@@ -24,7 +24,7 @@ end
 
 ---@param self DashOverview
 function DelveCompanion_DashboardOverviewMixin:OnShow()
-    -- Logger.Log("DashboardOverview OnShow start")
+    -- Logger:Log("DashboardOverview OnShow start")
 end
 
 --#region XML Annotations

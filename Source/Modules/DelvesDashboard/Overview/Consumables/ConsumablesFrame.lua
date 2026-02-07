@@ -66,7 +66,7 @@ end
 
 ---@param self OverviewConsumablesFrame
 function DelveCompanion_OverviewConsumablesFrameMixin:OnLoad()
-    -- Logger.Log("OverviewConsumablesFrame OnLoad start")
+    -- Logger:Log("OverviewConsumablesFrame OnLoad start")
 
     local defs = DelveCompanion.Definitions
     self.Keys:SetFrameInfo(defs.CodeType.Currency, Config.BOUNTIFUL_KEY_CURRENCY_CODE)
@@ -86,7 +86,7 @@ end
 
 ---@param self OverviewConsumablesFrame
 function DelveCompanion_OverviewConsumablesFrameMixin:OnEvent(event, ...)
-    -- Logger.Log("OverviewConsumablesFrame OnEvent start")
+    -- Logger:Log("OverviewConsumablesFrame OnEvent start")
 
     C_Timer.After(0.5, function()
         self:UpdateConsumables()
@@ -95,7 +95,7 @@ end
 
 ---@param self OverviewConsumablesFrame
 function DelveCompanion_OverviewConsumablesFrameMixin:OnShow()
-    -- Logger.Log("OverviewConsumablesFrame OnShow start")
+    -- Logger:Log("OverviewConsumablesFrame OnShow start")
 
     DelveCompanion:CacheCollectedConsumables()
     self:UpdateConsumables()
@@ -106,7 +106,7 @@ end
 
 ---@param self OverviewConsumablesFrame
 function DelveCompanion_OverviewConsumablesFrameMixin:OnHide()
-    -- Logger.Log("OverviewConsumablesFrame OnHide start")
+    -- Logger:Log("OverviewConsumablesFrame OnHide start")
 
     self:UnregisterEvent("CURRENCY_DISPLAY_UPDATE")
     self:UnregisterEvent("BAG_UPDATE")

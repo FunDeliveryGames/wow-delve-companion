@@ -125,7 +125,7 @@ end
 
 ---@param self InDelveWidgetFrame
 function DelveCompanion_InDelveWidgetFrameMixin:OnLoad()
-    -- Logger.Log("[InDelveWidgetFrame] OnLoad start")
+    -- Logger:Log("[InDelveWidgetFrame] OnLoad start")
 
     self:ResetWidget()
 
@@ -166,7 +166,7 @@ function DelveCompanion_InDelveWidgetFrameMixin:OnLoad()
             if not (changedVarKey == DISPLAY_RULE_SAVE_KEY) then
                 return
             end
-            -- Logger.Log("[InDelveWidgetFrame] OnSettingChanged. Enabled: %s...", tostring(isEnabled))
+            -- Logger:Log("[InDelveWidgetFrame] OnSettingChanged. Enabled: %s...", tostring(isEnabled))
 
             self:Refresh()
         end
@@ -177,7 +177,7 @@ end
 
 ---@param self InDelveWidgetFrame
 function DelveCompanion_InDelveWidgetFrameMixin:OnShow()
-    -- Logger.Log("[InDelveWidgetFrame] OnShow start")
+    -- Logger:Log("[InDelveWidgetFrame] OnShow start")
 
     self:Refresh()
 
@@ -186,7 +186,7 @@ end
 
 ---@param self InDelveWidgetFrame
 function DelveCompanion_InDelveWidgetFrameMixin:OnEvent(event, ...)
-    -- Logger.Log("[InDelveWidgetFrame] OnEvent start")
+    -- Logger:Log("[InDelveWidgetFrame] OnEvent start")
 
     C_Timer.After(0.5, function()
         self:Refresh()
@@ -195,7 +195,7 @@ end
 
 ---@param self InDelveWidgetFrame
 function DelveCompanion_InDelveWidgetFrameMixin:OnHide()
-    -- Logger.Log("[InDelveWidgetFrame] OnHide start")
+    -- Logger:Log("[InDelveWidgetFrame] OnHide start")
 
     self:ResetWidget()
 

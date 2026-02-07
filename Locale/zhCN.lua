@@ -88,6 +88,9 @@ Lockit.UI_SETTING_GV_DETAILS_TOOLTIP = "直接在地下堡面板显示宏伟宝�
 Lockit.UI_SETTING_DASHBOARD_OVERVIEW_NAME = "地下堡概要版块"
 Lockit.UI_SETTING_DASHBOARD_OVERVIEW_TOOLTIP = "显示地下堡附加的概要信息，它包含鎏金藏匿物、丰裕地下堡和地下堡相关消耗品的内容。"
 
+Lockit.UI_SETTING_LOGS_NAME = "Enable Debug Logs"
+Lockit.UI_SETTING_LOGS_TOOLTIP = "Allows to print debug logs in the chat. Used for development and testing purposes."
+
 Lockit.UI_SETTINGS_TRANSLATION_TITLE = "特别鸣谢翻译贡献者："
 
 Lockit.UI_SETTINGS_LINKS_TITLE = "链接"

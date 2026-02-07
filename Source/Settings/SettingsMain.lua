@@ -30,7 +30,7 @@ DelveCompanion.AddonSettings = AddonSettings
 --- Used in `TOC` file for [AddonCompartmentFuncOnEnter](https://warcraft.wiki.gg/wiki/TOC_format#AddonCompartmentFuncOnEnter).
 ---@param addonName string
 ---@param menuButtonFrame table
-function DelveCompanionCompartmentOnEnter(addonName, menuButtonFrame)
+function DelveCompanion_CompartmentOnEnter(addonName, menuButtonFrame)
     local tooltip = GameTooltip
 
     tooltip:SetOwner(menuButtonFrame, "ANCHOR_NONE")
@@ -46,14 +46,14 @@ end
 --- Used in `TOC` file for [AddonCompartmentFuncOnLeave](https://warcraft.wiki.gg/wiki/TOC_format#AddonCompartmentFuncOnLeave).
 ---@param addonName string
 ---@param menuButtonFrame table
-function DelveCompanionCompartmentOnLeave(addonName, menuButtonFrame)
+function DelveCompanion_CompartmentOnLeave(addonName, menuButtonFrame)
     GameTooltip:Hide()
 end
 
 --- Global function to open addon settings. Used in `TOC` file for [AddonCompartmentFunc](https://warcraft.wiki.gg/wiki/TOC_format#AddonCompartmentFunc).
 ---@param addonName string
 ---@param buttonName string
-function DelveCompanionCompartmentOnClick(addonName, buttonName)
+function DelveCompanion_CompartmentOnClick(addonName, buttonName)
     if not (Settings and Settings.OpenToCategory) then
         return
     end
@@ -74,9 +74,10 @@ end
 --#region SavedVariables
 
 --- Add new keys to the existing save.
+---@param self DelveCompanionSettings
 ---@param saveTbl table
 ---@param sourceTbl DelveCompanionAccountData|DelveCompanionCharacterData
-local function AddNewKeysToSave(saveTbl, sourceTbl)
+function AddonSettings:AddNewKeysToSave(saveTbl, sourceTbl)
     for key, value in pairs(sourceTbl) do
         if saveTbl[key] == nil then
             saveTbl[key] = value
@@ -85,9 +86,10 @@ local function AddNewKeysToSave(saveTbl, sourceTbl)
 end
 
 --- Clear retired or renamed keys from the save.
+---@param self DelveCompanionSettings
 ---@param saveTbl table
 ---@param sourceTbl DelveCompanionAccountData|DelveCompanionCharacterData
-local function RemoveRetiredKeys(saveTbl, sourceTbl)
+function AddonSettings:RemoveRetiredKeys(saveTbl, sourceTbl)
     for key, value in pairs(saveTbl) do
         if sourceTbl[key] == nil then
             saveTbl[key] = nil
@@ -98,15 +100,15 @@ end
 --- Init [SavedVariables](https://warcraft.wiki.gg/wiki/TOC_format#SavedVariables). The [default config](lua://DelveCompanionAccountData) is used to either init them (e.g. the 1st addon load) or populate with missing fields (e.g. after addon update).
 ---@param self DelveCompanionSettings
 function AddonSettings:ProcessAccountSave()
-    -- DelveCompanion.Logger.Log("[DelveCompanionSettings] Init AccountSave...")
+    -- DelveCompanion.Logger:Log("[DelveCompanionSettings] Init AccountSave...")
 
     if not DelveCompanionAccountData then
-        -- No save. Create a fresh one.
+        -- No Account save. Create a fresh one.
         ---@type DelveCompanionAccountData
         DelveCompanionAccountData = CopyTable(Config.DEFAULT_ACCOUNT_DATA)
     else
-        AddNewKeysToSave(DelveCompanionAccountData, Config.DEFAULT_ACCOUNT_DATA)
-        RemoveRetiredKeys(DelveCompanionAccountData, Config.DEFAULT_ACCOUNT_DATA)
+        self:AddNewKeysToSave(DelveCompanionAccountData, Config.DEFAULT_ACCOUNT_DATA)
+        self:RemoveRetiredKeys(DelveCompanionAccountData, Config.DEFAULT_ACCOUNT_DATA)
 
         -- Reset Tracking Type to the default if the addon selected in the save is not available.
         if (DelveCompanionAccountData.trackingType == Definitions.WaypointTrackingType.tomtom and not DelveCompanion.Variables.tomTomAvailable)
@@ -120,15 +122,15 @@ end
 --- Init [SavedVariablesPerCharacter](https://warcraft.wiki.gg/wiki/TOC_format#SavedVariablesPerCharacter). The [default config](lua://DelveCompanionCharacterData) is used to either init them (e.g. the 1st addon load) or populate with missing fields (e.g. after addon update).
 ---@param self DelveCompanionSettings
 function AddonSettings:ProcessCharacterSave()
-    -- DelveCompanion.Logger.Log("[DelveCompanionSettings] Init CharacterSave...")
+    -- DelveCompanion.Logger:Log("[DelveCompanionSettings] Init CharacterSave...")
 
     if not DelveCompanionCharacterData then
-        -- No save. Create a fresh one.
+        -- No Character save. Create a fresh one.
         ---@type DelveCompanionCharacterData
         DelveCompanionCharacterData = CopyTable(Config.DEFAULT_CHARACTER_DATA)
     else
-        AddNewKeysToSave(DelveCompanionCharacterData, Config.DEFAULT_CHARACTER_DATA)
-        RemoveRetiredKeys(DelveCompanionCharacterData, Config.DEFAULT_CHARACTER_DATA)
+        self:AddNewKeysToSave(DelveCompanionCharacterData, Config.DEFAULT_CHARACTER_DATA)
+        self:RemoveRetiredKeys(DelveCompanionCharacterData, Config.DEFAULT_CHARACTER_DATA)
     end
 end
 
@@ -136,11 +138,11 @@ end
 
 --- This callback will be invoked whenever a setting is modified.
 local function OnSettingChanged(setting, value)
-    -- Logger.Log("[DelveCompanionSettings] OnChanged detected...")
+    -- Logger:Log("[DelveCompanionSettings] OnChanged detected...")
 
     local variableName = gsub(setting:GetVariable(), SETTING_PREFIX, "")
 
-    -- Logger.Log("[DelveCompanionSettings] Changed var `%s` with value: %s", variableName, tostring(value))
+    -- Logger:Log("[DelveCompanionSettings] Changed var `%s` with value: %s", variableName, tostring(value))
     EventRegistry:TriggerEvent(Definitions.Events.SETTING_CHANGE, variableName, value)
 end
 
@@ -149,13 +151,13 @@ end
 ---@param category table
 ---@param varKey string
 ---@param varTbl DelveCompanionAccountData|DelveCompanionCharacterData
----@param defaultValue number|boolean|string
+---@param defaultValue any
 ---@param displayText string
 ---@param onChangedCallback function
 ---@return table|nil
 function AddonSettings:RegisterSetting(category, varKey, varTbl, defaultValue, displayText, onChangedCallback)
     if varTbl[varKey] == nil then
-        Logger.Log(Lockit.DEBUG_SAVED_VARIABLE_CONFLICT, varTbl, varKey)
+        Logger:Log(Lockit.DEBUG_SAVED_VARIABLE_CONFLICT, varTbl, varKey)
         return nil
     end
 
@@ -313,9 +315,32 @@ function AddonSettings:RegisterCharacterSettings(category, layout)
     end
 end
 
+--- Character-wide settings.
+---@param self DelveCompanionSettings
+---@param category table
+---@param layout table
+function AddonSettings:RegisterDebugSettings(category, layout)
+    ---@type DelveCompanionAccountData
+    local savedVarTbl = DelveCompanionAccountData
+
+    --- Section header
+    layout:AddInitializer(CreateSettingsListSectionHeaderInitializer(_G["BINDING_HEADER_DEBUG"]))
+
+    do
+        local savedVarKey = "logsEnabled"
+
+        local setting = self:RegisterSetting(category, savedVarKey, savedVarTbl,
+            Config.DEFAULT_ACCOUNT_DATA.logsEnabled,
+            Lockit.UI_SETTING_LOGS_NAME, OnSettingChanged)
+
+        local tooltip = Lockit.UI_SETTING_LOGS_TOOLTIP
+        Settings.CreateCheckbox(category, setting, tooltip)
+    end
+end
+
 ---@param self DelveCompanionSettings
 function AddonSettings:Init()
-    -- Logger.Log("[DelveCompanionSettings] Start init...")
+    -- Logger:Log("[DelveCompanionSettings] Start init...")
 
     do
         local settingsFrame = CreateFrame("Frame", "$parent.DelveCompanionSettings", nil,
@@ -331,6 +356,7 @@ function AddonSettings:Init()
 
         self:RegisterAccountSettings(options, layout)
         self:RegisterCharacterSettings(options, layout)
+        self:RegisterDebugSettings(options, layout)
 
         Settings.RegisterAddOnCategory(options)
     end

@@ -39,7 +39,7 @@ end
 
 ---@param self AddonSettingsFrame
 function DelveCompanionSettingsFrameMixin:OnLoad()
-    -- Logger.Log("SettingsFrame OnLoad start...")
+    -- Logger:Log("SettingsFrame OnLoad start...")
 
     self.TitlePanel.Text:SetText(Lockit.UI_ADDON_NAME)
     self.TitlePanel.Version:SetText(C_AddOns.GetAddOnMetadata(addonName, "Version"))
@@ -61,7 +61,7 @@ end
 
 ---@param self AddonSettingsFrame
 function DelveCompanionSettingsFrameMixin:OnShow()
-    -- Logger.Log("SettingsFrame OnShow start...")
+    -- Logger:Log("SettingsFrame OnShow start...")
 end
 
 StaticPopupDialogs[STATIC_POPUP_ADDON_LINK_ID] = {

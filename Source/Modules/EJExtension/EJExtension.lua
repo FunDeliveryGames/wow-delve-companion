@@ -53,7 +53,7 @@ end
 
 ---@param self EJExtension
 function EJExtension:OnContentTabSet(id)
-    -- Logger.Log("EJ_ContentTab_Select Hook. Tab ID: %d", id)
+    -- Logger:Log("EJ_ContentTab_Select Hook. Tab ID: %d", id)
 
     local EncounterJournal = EncounterJournal
 
@@ -79,7 +79,7 @@ end
 
 ---@param self EJExtension
 function EJExtension:OnPostShow()
-    -- Logger.Log("[EJExtension] OnPostShow")
+    -- Logger:Log("[EJExtension] OnPostShow")
 
     local EncounterJournal = EncounterJournal
     local currentTab = EncounterJournal.selectedTab
@@ -91,13 +91,13 @@ end
 
 ---@param self EJExtension
 function EJExtension:Init()
-    -- Logger.Log("[EJExtension] Init started...")
+    -- Logger:Log("[EJExtension] Init started...")
 
     ---@type Frame
     local EncounterJournal = EncounterJournal
 
     if not EncounterJournal then
-        Logger.Log("[EJExtension] EncounterJournal is nil. Cannot init!")
+        Logger:Log("[EJExtension] EncounterJournal is nil. Cannot init!")
         return
     end
 

@@ -38,7 +38,7 @@ end
 
 ---@param self DashboardExpBar
 function DelveCompanion_DashboardExpBarMixin:OnLoad()
-    -- Logger.Log("DashboardExpBar OnLoad start")
+    -- Logger:Log("DashboardExpBar OnLoad start")
 
     self:SetPoint("TOP", DashboardCompanion.ParentFrame.PanelTitle, "BOTTOM")
 
@@ -48,7 +48,7 @@ end
 
 ---@param self DashboardExpBar
 function DelveCompanion_DashboardExpBarMixin:OnShow()
-    -- Logger.Log("DashboardExpBar OnShow start")
+    -- Logger:Log("DashboardExpBar OnShow start")
 
     self:RefreshExpProgress()
     local companionRankInfo = self.rankInfo
@@ -70,7 +70,7 @@ end
 
 ---@param self DashboardExpBar
 function DelveCompanion_DashboardExpBarMixin:OnEnter()
-    -- Logger.Log("DashboardExpBar OnEnter start")
+    -- Logger:Log("DashboardExpBar OnEnter start")
 
     local tooltip = GameTooltip
     tooltip:SetOwner(self, "ANCHOR_TOP")
@@ -106,7 +106,7 @@ end
 
 ---@param self DashboardExpBar
 function DelveCompanion_DashboardExpBarMixin:OnLeave()
-    -- Logger.Log("DashboardExpBar OnLeave start")
+    -- Logger:Log("DashboardExpBar OnLeave start")
 
     GameTooltip:Hide()
     DashboardCompanion.ParentFrame.PanelTitle:Show()

@@ -21,7 +21,7 @@ DelveCompanion.EJExtension.DelveEncounter = DelveEncounter
 
 ---@param self DelveEncounter
 function DelveEncounter:OnShowHook()
-    -- Logger.Log("[DelveEncounter] OnShowHook...")
+    -- Logger:Log("[DelveEncounter] OnShowHook...")
 
     local companionFrame = self.CompanionFrame
 
@@ -46,7 +46,7 @@ end
 
 ---@param self DelveEncounter
 function DelveEncounter:OnHideHook()
-    -- Logger.Log("[DelveEncounter] OnHideHook...")
+    -- Logger:Log("[DelveEncounter] OnHideHook...")
 
     self.ExpBar:Hide()
 end
@@ -55,13 +55,13 @@ end
 ---@param self DelveEncounter
 ---@param JourneysFrame Frame
 function DelveEncounter:Init(JourneysFrame)
-    -- Logger.Log("[DelveEncounter] Init started...")
+    -- Logger:Log("[DelveEncounter] Init started...")
 
     ---@type Button
     local companionFrame = JourneysFrame.JourneyProgress.DelvesCompanionConfigurationFrame
 
     if not companionFrame then
-        Logger.Log("[DelveEncounter] Companion frame is nil. Cannot init!")
+        Logger:Log("[DelveEncounter] Companion frame is nil. Cannot init!")
         return
     end
 

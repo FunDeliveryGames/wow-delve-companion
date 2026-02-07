@@ -11,7 +11,7 @@ local Lockit = setmetatable(
     {},
     {
         __index = function(_, ...)
-            Logger.Log("Key is not found in the Lockit: `%s`!", ...)
+            Logger:Log("Key is not found in the Lockit: `%s`!", ...)
         end
     }
 )
@@ -112,6 +112,9 @@ Lockit.UI_SETTING_GV_DETAILS_NAME = "Custom Great Vault"
 Lockit.UI_SETTING_GV_DETAILS_TOOLTIP = "Delves UI: Display Great Vault rewards and progress (relevant for Delves) directly in the Delves UI."
 Lockit.UI_SETTING_DASHBOARD_OVERVIEW_NAME = "Delves Overview Section"
 Lockit.UI_SETTING_DASHBOARD_OVERVIEW_TOOLTIP = "Delves UI: Display an additional Overview section. It contains information about Gilded Stash, available Bountiful Delves, and Delve-related consumables."
+
+Lockit.UI_SETTING_LOGS_NAME = "Enable Debug Logs"
+Lockit.UI_SETTING_LOGS_TOOLTIP = "Allows to print debug logs in the chat. Used for development and testing purposes."
 
 Lockit.UI_SETTINGS_TRANSLATION_TITLE = "Special thanks for the translation contribution:"
 
