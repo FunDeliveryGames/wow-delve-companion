@@ -84,7 +84,7 @@ end
 ---@param tooltipDataHandler table [TooltipDataHandlerMixin](https://www.townlong-yak.com/framexml/live/Blizzard_SharedXMLGame/TooltipDataHandler.lua#189).
 ---@param ... any
 local function TooltipPostCallCurrency(tooltipDataHandler, ...)
-    if not DelveCompanionCharacterData[ENABLED_SAVE_KEY] then
+    if not DelveCompanionCharacterData[ENABLED_SAVE_KEY] or PlayerIsInCombat() then
         return
     end
 
@@ -108,7 +108,7 @@ end
 ---@param tooltipDataHandler table [TooltipDataHandlerMixin](https://www.townlong-yak.com/framexml/live/Blizzard_SharedXMLGame/TooltipDataHandler.lua#189).
 ---@param ... any
 local function TooltipPostCallItem(tooltipDataHandler, ...)
-    if not DelveCompanionCharacterData[ENABLED_SAVE_KEY] then
+    if not DelveCompanionCharacterData[ENABLED_SAVE_KEY] or PlayerIsInCombat() then
         return
     end
 

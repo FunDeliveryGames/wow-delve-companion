@@ -1,5 +1,9 @@
 # Change Log
 
+## [2026.02.3] - 07 February 2026
+- Attempt to fix an issue with the widget outside Delves (in dungeons, during other scenarios).
+- **Localization**: Update `Simplified Chinese` translation.
+
 ## [2026.02.2] - 01 February 2026
 - Fixed: Info Widgets on the Delves tab were displayed ignoring the corresponding option toggle.
 - **QOL**: Delves tab visual improvements when Info Widgets are hidden.
