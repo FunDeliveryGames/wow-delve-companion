@@ -39,8 +39,7 @@ end
 --#region XML Annotations
 
 --- `CompanionConfigButtonPanel` ([Blizzard frame](https://www.townlong-yak.com/framexml/live/Blizzard_DelvesDashboardUI/Blizzard_DelvesDashboardUI.xml#324)).
----@class (exact) CompanionConfigButtonPanel : DelvesDashboardButtonPanelFrame
----@field layoutIndex number
+---@class (exact) CompanionConfigButtonPanel : DelvesDashboardButtonPanelFrame, LayoutChild
 ---@field CompanionModelScene ModelScene
 ---@field CompanionConfigButton MagicButton
 

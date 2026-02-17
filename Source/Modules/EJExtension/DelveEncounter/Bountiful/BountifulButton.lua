@@ -81,8 +81,7 @@ end
 --#region XML Annotations
 
 --- `DelveCompanionDelveEncounterBountifulButtonTemplate`
----@class (exact) DelveEncounterBountifulButtonXml : Button
----@field layoutIndex number
+---@class (exact) DelveEncounterBountifulButtonXml : Button, LayoutChild
 ---@field Background Texture
 ---@field ArtBg Texture
 ---@field WaypointIcon Texture

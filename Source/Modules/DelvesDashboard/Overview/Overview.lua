@@ -30,8 +30,7 @@ end
 --#region XML Annotations
 
 --- `DelveCompanionDashboardOverviewFrame`
----@class (exact) DashOverviewXml : DelvesDashboardButtonPanelFrame
----@field layoutIndex number
+---@class (exact) DashOverviewXml : DelvesDashboardButtonPanelFrame, LayoutChild
 ---@field GildedStashFrame GildedStashFrame
 ---@field BountifulFrame OverviewBountifulFrame
 ---@field ConsumablesFrame OverviewConsumablesFrame

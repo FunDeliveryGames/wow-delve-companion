@@ -26,6 +26,7 @@ function DelveCompanion_OverviewBountifulButtonMixin:Init(data, index)
     self.layoutIndex = index
     self.data = data
 
+
     local waypointTracker = CreateFromMixins(DelveCompanion_WaypointTrackerMixin)
     waypointTracker:Prepare()
     self.waypointTracker = waypointTracker
@@ -81,8 +82,7 @@ end
 --#region XML Annotations
 
 --- `DelveCompanionOverviewBountifulButtonTemplate`
----@class (exact) OverviewBountifulButtonXml : Button
----@field layoutIndex number
+---@class (exact) OverviewBountifulButtonXml : Button, LayoutChild
 ---@field Background Texture
 ---@field ArtBg Texture
 ---@field WaypointIcon Texture

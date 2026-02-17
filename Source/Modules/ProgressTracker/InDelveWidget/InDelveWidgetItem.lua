@@ -90,6 +90,6 @@ end
 --#region Xml annotations
 
 --- `DelvelCompanionInDelveWidgetItemTemplate`
----@class InDelveWidgetItemXml : CustomActionWidget
+---@class InDelveWidgetItemXml : CustomActionWidget, LayoutChild
 ---@field Border Texture
 --#endregion

@@ -8,8 +8,7 @@ local DelveCompanion = AddonTbl.DelveCompanion
 --#region XML Annotations
 
 --- `DelveCompanionDashboardOverviewGildedStashItemTemplate`
----@class (exact) GildedStashItemXml : Frame
----@field layoutIndex number
+---@class (exact) GildedStashItemXml : Frame, LayoutChild
 ---@field Icon Texture
 ---@field FadeBg Texture
 ---@field CheckMark Texture

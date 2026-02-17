@@ -74,6 +74,9 @@ local VerticalLayoutMixin = {}
 ---@class HorizontalLayoutMixin
 local HorizontalLayoutMixin = {}
 
+---@class LayoutChild Parameters and KeyValues added to frames put into LayoutMixin frames
+---@field layoutIndex number KeyValue used to control frame order inside LayoutMixin frames.
+
 --- `WeeklyRewardMixin` ([Blizzard object](https://www.townlong-yak.com/framexml/live/Blizzard_WeeklyRewardsUtil/Blizzard_WeeklyRewardsUtil.lua#100)).
 ---@class WeeklyRewardMixin
 local WeeklyRewardMixin = {}

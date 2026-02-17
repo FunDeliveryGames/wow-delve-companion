@@ -31,8 +31,7 @@ end
 --#region XML Annotations
 
 --- `GreatVaultButtonPanel` ([Blizzard frame](https://www.townlong-yak.com/framexml/live/Blizzard_DelvesDashboardUI/Blizzard_DelvesDashboardUI.xml#369)).
----@class (exact) GreatVaultButtonPanel : DelvesDashboardButtonPanelFrame
----@field layoutIndex number
+---@class (exact) GreatVaultButtonPanel : DelvesDashboardButtonPanelFrame, LayoutChild
 ---@field GreatVaultButton Frame
 
 --#endregion
