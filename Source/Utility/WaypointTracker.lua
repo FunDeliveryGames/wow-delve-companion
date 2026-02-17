@@ -17,14 +17,14 @@ local MPE_DELVE_BOUNTIFUL_ATLAS_NAME = "delves-bountiful"
 local NEMESIS_TOOLTIP_SPLIT_MARKER = "~"
 --#endregion
 
----@class (exact) DelveWaypointTracker
+---@class (exact) WaypointTracker
 ---@field isActive boolean Whether player has an active waypoint to a Delve.
----@field VerifyInput fun(self: DelveWaypointTracker) : boolean
+---@field VerifyInput fun(self: WaypointTracker) : boolean
 ---@field Update fun(data: DelveData)
----@field private SetState fun(self: DelveWaypointTracker, state: boolean)
+---@field private SetState fun(self: WaypointTracker, state: boolean)
 ---@field private Activate fun(data: DelveData)
 ---@field private Clear fun(data: DelveData)
-DelveCompanion_DelveWaypointMixin = {}
+DelveCompanion_WaypointTrackerMixin = {}
 
 --#region TomTom tracking
 
@@ -76,7 +76,7 @@ local function SetTomTomWaypoint(delveData)
 end
 
 ---@param tomtomWaypoint table?
----@return boolean state -- Whether SuperTrack is active for a Delve
+---@return boolean state -- Whether TomTom waypoint is valid and active.
 local function CheckTomTomWaypoint(tomtomWaypoint)
     if not DelveCompanion.Variables.tomTomAvailable or not tomtomWaypoint then
         return false
@@ -177,8 +177,8 @@ end
 --#endregion
 
 --- Set tracker methods depending on the selected [tracking type](lua://WaypointTrackingType).
----@param self DelveWaypointTracker
-function DelveCompanion_DelveWaypointMixin:Prepare()
+---@param self WaypointTracker
+function DelveCompanion_WaypointTrackerMixin:Prepare()
     self.Update = function(data)
         local state = false
 
@@ -222,20 +222,20 @@ function DelveCompanion_DelveWaypointMixin:Prepare()
     end
 end
 
----@param self DelveWaypointTracker
+---@param self WaypointTracker
 ---@param state boolean
-function DelveCompanion_DelveWaypointMixin:SetState(state)
+function DelveCompanion_WaypointTrackerMixin:SetState(state)
     self.isActive = state
 end
 
----@param self DelveWaypointTracker
-function DelveCompanion_DelveWaypointMixin:VerifyInput()
+---@param self WaypointTracker
+function DelveCompanion_WaypointTrackerMixin:VerifyInput()
     return IsShiftKeyDown()
 end
 
----@param self DelveWaypointTracker
+---@param self WaypointTracker
 ---@param delveData DelveData
-function DelveCompanion_DelveWaypointMixin:ToggleTracking(delveData)
+function DelveCompanion_WaypointTrackerMixin:ToggleTracking(delveData)
     if not delveData then
         return
     end
@@ -247,11 +247,11 @@ function DelveCompanion_DelveWaypointMixin:ToggleTracking(delveData)
     end
 end
 
----@param self DelveWaypointTracker
+---@param self WaypointTracker
 ---@param owner Frame
 ---@param anchor TooltipAnchor
 ---@param delveData DelveData
-function DelveCompanion_DelveWaypointMixin:DisplayDelveTooltip(owner, anchor, delveData)
+function DelveCompanion_WaypointTrackerMixin:DisplayDelveTooltip(owner, anchor, delveData)
     if not delveData then
         return
     end

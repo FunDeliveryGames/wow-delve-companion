@@ -16,7 +16,7 @@ local NEMESIS_INACTIVE_ATLAS = "GM-icon-difficulty-mythic-pressed"
 --- A button representing a Delve in the Delves list.
 ---@class (exact) DelveInstanceButton : DelveInstanceButtonXml
 ---@field data DelveData?
----@field waypointTracker DelveWaypointTracker
+---@field waypointTracker WaypointTracker
 DelveCompanion_DelveInstanceButtonMixin = {}
 
 ---@param self DelveInstanceButton
@@ -29,7 +29,7 @@ function DelveCompanion_DelveInstanceButtonMixin:Init(data)
         self.DelveArtBg:SetAtlas(data.config.atlasBgID)
     end
 
-    local waypointTracker = CreateFromMixins(DelveCompanion_DelveWaypointMixin)
+    local waypointTracker = CreateFromMixins(DelveCompanion_WaypointTrackerMixin)
     waypointTracker:Prepare()
     self.waypointTracker = waypointTracker
 

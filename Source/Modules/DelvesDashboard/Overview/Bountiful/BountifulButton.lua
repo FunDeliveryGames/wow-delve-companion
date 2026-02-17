@@ -8,7 +8,7 @@ local Logger = DelveCompanion.Logger
 
 ---@class (exact) OverviewBountifulButton : OverviewBountifulButtonXml
 ---@field data DelveData
----@field waypointTracker DelveWaypointTracker
+---@field waypointTracker WaypointTracker
 DelveCompanion_OverviewBountifulButtonMixin = {}
 
 ---@param self OverviewBountifulButton
@@ -26,7 +26,7 @@ function DelveCompanion_OverviewBountifulButtonMixin:Init(data, index)
     self.layoutIndex = index
     self.data = data
 
-    local waypointTracker = CreateFromMixins(DelveCompanion_DelveWaypointMixin)
+    local waypointTracker = CreateFromMixins(DelveCompanion_WaypointTrackerMixin)
     waypointTracker:Prepare()
     self.waypointTracker = waypointTracker
 end

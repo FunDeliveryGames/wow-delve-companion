@@ -20,19 +20,19 @@ end
 
 ---@param self Bootstrap
 function Bootstrap:OnAddonLoaded()
-    -- Logger:Log("[Bootstrap] OnAddonLoaded start...")
+    -- Logger:Log("[DelveCompanion Bootstrap] OnAddonLoaded start...")
 
     self:ProcessOptionalDependencies() -- Should be before any other initializations!
 
     DelveCompanion.AddonSettings:ProcessAccountSave()
     DelveCompanion.AddonSettings:ProcessCharacterSave()
 
-    -- Logger:Log("[Bootstrap] OnAddonLoaded finish")
+    -- Logger:Log("[DelveCompanion Bootstrap] OnAddonLoaded finish")
 end
 
 ---@param self Bootstrap
 function Bootstrap:OnPlayerLogin()
-    -- Logger:Log("[Bootstrap] OnPlayerLogin start...")
+    -- Logger:Log("[DelveCompanion Bootstrap] OnPlayerLogin start...")
 
     DelveCompanion.AddonSettings:Init()
 
@@ -45,7 +45,7 @@ function Bootstrap:OnPlayerLogin()
     DelveCompanion:InitDelvesData()
     DelveCompanion_TooltipExtension_Init()
 
-    -- Logger:Log("[Bootstrap] OnPlayerLogin finish")
+    -- Logger:Log("[DelveCompanion Bootstrap] OnPlayerLogin finish")
 end
 
 -- EventRegistry:RegisterFrameEventAndCallback("GOSSIP_SHOW", function(payload, arg1, arg2)
