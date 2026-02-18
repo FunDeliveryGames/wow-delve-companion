@@ -1,5 +1,10 @@
 # Change Log
 
+## [2026.02.5] - 18 February 2026
+- **Widget In Delves**: Add more options to customise the widget.
+    - Change widget position on the screen.
+    - Change buttons arrangement (vertical or horizontal).
+
 ## [2026.02.4] - 07 February 2026
 - Fixed logs spamming.
 
