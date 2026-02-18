@@ -20,13 +20,16 @@ local RESPAWN_STATE = {
     Activated = 2
 }
 
----@type string
-local DISPLAY_RULE_SAVE_KEY = "inDelveWidgetDisplayRule"
+---@type string[]
+local SAVE_KEYS = {
+    "inDelveWidgetDisplayRule",
+    "inDelveWidgetLayout"
+}
 
 ---@type number
-local WIDE_SIDE = 140
+local WIDE_SIDE_LEN = 140
 ---@type number
-local NARROW_SIDE = 50
+local NARROW_SIDE_LEN = 50
 --#endregion
 
 ---@class (exact) InDelveWidgetFrame : InDelveWidgetFrameXml
@@ -47,16 +50,15 @@ function DelveCompanion_InDelveWidgetFrameMixin:Refresh()
     do
         local buttons = self.Buttons
         local width, height = 0, 0
-        self.test = 1
 
-        if self.test == 1 then
-            Mixin(buttons, HorizontalLayoutMixin)
-            width = WIDE_SIDE
-            height = NARROW_SIDE
-        else
+        if DelveCompanionAccountData.inDelveWidgetLayout == DelveCompanion.Definitions.InDelveWidgetLayout.vertical then
             Mixin(buttons, VerticalLayoutMixin)
-            width = NARROW_SIDE
-            height = WIDE_SIDE
+            width = NARROW_SIDE_LEN
+            height = WIDE_SIDE_LEN
+        elseif DelveCompanionAccountData.inDelveWidgetLayout == DelveCompanion.Definitions.InDelveWidgetLayout.horizontal then
+            Mixin(buttons, HorizontalLayoutMixin)
+            width = WIDE_SIDE_LEN
+            height = NARROW_SIDE_LEN
         end
 
         self:SetSize(width, height)
@@ -160,6 +162,7 @@ function DelveCompanion_InDelveWidgetFrameMixin:OnLoad()
 
     self:ResetWidget()
 
+    -- Prepare widget buttons
     do
         local function CreateItem(name, parent, index)
             ---@type InDelveWidgetItem
@@ -180,6 +183,7 @@ function DelveCompanion_InDelveWidgetFrameMixin:OnLoad()
         self.Radar = radar
     end
 
+    -- Handle Delve Respawn activation
     do
         local function OnDelveRespawnActivated()
             self.respawnState = RESPAWN_STATE.Activated
@@ -190,12 +194,13 @@ function DelveCompanion_InDelveWidgetFrameMixin:OnLoad()
             OnDelveRespawnActivated, self)
     end
 
+    -- Settings change
     do
         local function OnSettingChanged(_, changedVarKey, newValue)
-            if not (changedVarKey == DISPLAY_RULE_SAVE_KEY) then
+            if not tContains(SAVE_KEYS, changedVarKey) then
                 return
             end
-            -- Logger:Log("[InDelveWidgetFrame] OnSettingChanged. Enabled: %s...", tostring(isEnabled))
+            -- Logger:Log("[InDelveWidgetFrame] OnSettingChanged. Enabled: %s...", tostring(newValue))
 
             self:Refresh()
         end
@@ -203,6 +208,7 @@ function DelveCompanion_InDelveWidgetFrameMixin:OnLoad()
         EventRegistry:RegisterCallback(DelveCompanion.Definitions.Events.SETTING_CHANGE, OnSettingChanged, self)
     end
 
+    -- Set up a click catcher to move the widget
     do
         local function OnMouseDown(owner, buttonName)
             if buttonName ~= DelveCompanion.Definitions.ButtonAlias.rightClick then

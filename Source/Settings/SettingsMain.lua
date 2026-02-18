@@ -259,39 +259,70 @@ function AddonSettings:RegisterAccountSettings(category, layout)
 
     do
         local controlSavedVarKey = "inDelveWidgetEnabled"
-        local dropdownSavedVarKey = "inDelveWidgetDisplayRule"
-
-        local settingName = Lockit.UI_SETTING_IN_DELVE_WIDGET_DISPLAY_RULE_NAME
 
         local controlSetting = self:RegisterSetting(category, controlSavedVarKey, savedVarTbl,
             Config.DEFAULT_ACCOUNT_DATA.inDelveWidgetEnabled,
-            settingName, OnSettingChanged)
+            Lockit.UI_SETTING_IN_DELVE_WIDGET_CONTROL_NAME, OnSettingChanged)
 
-        local dropdownSetting = self:RegisterSetting(category, dropdownSavedVarKey, savedVarTbl,
-            Config.DEFAULT_ACCOUNT_DATA.inDelveWidgetDisplayRule,
-            settingName, OnSettingChanged)
+        local controlTooltip = Lockit.UI_SETTING_IN_DELVE_WIDGET_CONTROL_TOOLTIP
+        local controlInitializer = Settings.CreateCheckbox(category, controlSetting, controlTooltip)
 
-        local function GetOptions()
-            local container = Settings.CreateControlTextContainer()
-            container:Add(Definitions.InDelveWidgetDisplayRule.left,
-                Lockit.UI_SETTING_IN_DELVE_WIDGET_DISPLAY_RULE_OPTION_LEFT_NAME,
-                Lockit.UI_SETTING_IN_DELVE_WIDGET_DISPLAY_RULE_OPTION_LEFT_DESCRIPTION)
-            container:Add(Definitions.InDelveWidgetDisplayRule.right,
-                Lockit.UI_SETTING_IN_DELVE_WIDGET_DISPLAY_RULE_OPTION_RIGHT_NAME,
-                Lockit.UI_SETTING_IN_DELVE_WIDGET_DISPLAY_RULE_OPTION_RIGHT_DESCRIPTION)
-            container:Add(Definitions.InDelveWidgetDisplayRule.custom,
-                Lockit.UI_SETTING_IN_DELVE_WIDGET_DISPLAY_RULE_OPTION_CUSTOM_NAME,
-                Lockit.UI_SETTING_IN_DELVE_WIDGET_DISPLAY_RULE_OPTION_CUSTOM_DESCRIPTION)
-
-            return container:GetData()
+        local function ModifyPredicate()
+            return DelveCompanionAccountData.inDelveWidgetEnabled
         end
-        local controlTooltip = Lockit.UI_SETTING_IN_DELVE_WIDGET_DISPLAY_RULE_TOOLTIP
-        local dropdownTooltip = Lockit.UI_SETTING_IN_DELVE_WIDGET_DISPLAY_RULE_TOOLTIP
 
-        local initializer = CreateSettingsCheckboxDropdownInitializer(
-            controlSetting, settingName, controlTooltip,
-            dropdownSetting, GetOptions, settingName, dropdownTooltip)
-        layout:AddInitializer(initializer)
+        do
+            local displayRuleSavedVarKey = "inDelveWidgetDisplayRule"
+            local dropdownSetting = self:RegisterSetting(category, displayRuleSavedVarKey, savedVarTbl,
+                Config.DEFAULT_ACCOUNT_DATA.inDelveWidgetDisplayRule,
+                Lockit.UI_SETTING_IN_DELVE_WIDGET_DISPLAY_RULE_NAME, OnSettingChanged)
+
+            local function GetDropdownOptions()
+                local container = Settings.CreateControlTextContainer()
+                container:Add(Definitions.InDelveWidgetDisplayRule.left,
+                    Lockit.UI_SETTING_IN_DELVE_WIDGET_DISPLAY_RULE_OPTION_LEFT_NAME,
+                    Lockit.UI_SETTING_IN_DELVE_WIDGET_DISPLAY_RULE_OPTION_LEFT_DESCRIPTION)
+                container:Add(Definitions.InDelveWidgetDisplayRule.right,
+                    Lockit.UI_SETTING_IN_DELVE_WIDGET_DISPLAY_RULE_OPTION_RIGHT_NAME,
+                    Lockit.UI_SETTING_IN_DELVE_WIDGET_DISPLAY_RULE_OPTION_RIGHT_DESCRIPTION)
+                container:Add(Definitions.InDelveWidgetDisplayRule.custom,
+                    Lockit.UI_SETTING_IN_DELVE_WIDGET_DISPLAY_RULE_OPTION_CUSTOM_NAME,
+                    Lockit.UI_SETTING_IN_DELVE_WIDGET_DISPLAY_RULE_OPTION_CUSTOM_DESCRIPTION)
+
+                return container:GetData()
+            end
+            local dropdownTooltip = Lockit.UI_SETTING_IN_DELVE_WIDGET_DISPLAY_RULE_TOOLTIP
+
+            local displayRuleInitializer = Settings.CreateDropdown(category, dropdownSetting, GetDropdownOptions,
+                dropdownTooltip)
+            displayRuleInitializer:Indent()
+            displayRuleInitializer:SetParentInitializer(controlInitializer, ModifyPredicate)
+        end
+
+        do
+            local layoutSavedVarKey = "inDelveWidgetLayout"
+            local layoutSetting = self:RegisterSetting(category, layoutSavedVarKey, savedVarTbl,
+                Config.DEFAULT_ACCOUNT_DATA.inDelveWidgetLayout,
+                Lockit.UI_SETTING_IN_DELVE_WIDGET_LAYOUT_NAME, OnSettingChanged)
+
+            local function GetDropdownOptions()
+                local container = Settings.CreateControlTextContainer()
+                container:Add(Definitions.InDelveWidgetLayout.vertical,
+                    Lockit.UI_SETTING_IN_DELVE_WIDGET_LAYOUT_OPTION_VERTICAL_NAME,
+                    Lockit.UI_SETTING_IN_DELVE_WIDGET_LAYOUT_OPTION_VERTICAL_DESCRIPTION)
+                container:Add(Definitions.InDelveWidgetLayout.horizontal,
+                    Lockit.UI_SETTING_IN_DELVE_WIDGET_LAYOUT_OPTION_HORIZONTAL_NAME,
+                    Lockit.UI_SETTING_IN_DELVE_WIDGET_LAYOUT_OPTION_HORIZONTAL_DESCRIPTION)
+
+                return container:GetData()
+            end
+            local layoutTooltip = Lockit.UI_SETTING_IN_DELVE_WIDGET_LAYOUT_TOOLTIP
+
+            local layoutInitializer = Settings.CreateDropdown(category, layoutSetting, GetDropdownOptions,
+                layoutTooltip)
+            layoutInitializer:Indent()
+            layoutInitializer:SetParentInitializer(controlInitializer, ModifyPredicate)
+        end
     end
 end
 
