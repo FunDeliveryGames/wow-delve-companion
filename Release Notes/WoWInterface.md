@@ -1,30 +1,11 @@
 [b]A new update[/b] has arrived!
 
-[b]Version [2026.02.1][/b]:
+[b]Version [2026.02.5][/b]:
 [list]
-[*] Introduce a new widget that is displayed inside a Delve. It serves as a remainder and a quick-cast menu for the 
-[url=https://www.wowhead.com/item=248142/delvers-bounty]Bounty Map[/url], [url=https://www.wowhead.com/item=248017/shrieking-quartz]Nemesis Lure[/url], and more.
-[IMG]https://media.forgecdn.net/attachments/1218457/changelog/changelog_dc7aa30c-486e-4621-b425-fbd261cdeaa4.png[/IMG]
-[*] QoL: Nemesis Delves on the Delves tab now have additional visual elements and info in tooltips.
-[IMG]https://media.forgecdn.net/attachments/1218457/changelog/changelog_de0aba38-211a-402a-b043-5b1198b84fc6.png[/IMG]
-[/list]
-
-[b]Hotfix [2026.02.2][/b]:
-[list]
-[*] Fixed: Info Widgets on the Delves tab were displayed ignoring the corresponding option toggle.
-[*] [b]QOL[/b]: Delves tab visual improvements when Info Widgets are hidden.
-[*] [b]Localization[/b]: Update `Traditional Chinese` and `Russian` translations.
-[/list]
-
-[b]Hotfix [2026.02.3][/b]:
-[list]
-[*] Attempt to fix an issue with the widget outside Delves (in dungeons, during other scenarios).
-[*] [b]Localization[/b]: Update `Simplified Chinese` translation.
-[/list]
-
-[b]Hotfix [2026.02.4][/b]:
-[list]
-[*] Fixed logs spamming.
+[*] [b]Widget In Delves[/b]: Add more options to customise the widget.
+    - Change widget position on the screen.
+    - Change buttons arrangement (vertical or horizontal).
+[IMG]https://media.forgecdn.net/attachments/1218457/changelog/changelog_c12e0c4a-a58a-4d65-8bdd-c21346188380.gif[/IMG]
 [/list]
 
 [url=https://github.com/FunDeliveryGames/wow-delve-companion/blob/main/CHANGELOG.md]Full versions history[/url]
