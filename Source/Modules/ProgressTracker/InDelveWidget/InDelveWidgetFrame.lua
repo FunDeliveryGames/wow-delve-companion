@@ -96,9 +96,9 @@ function DelveCompanion_InDelveWidgetFrameMixin:Refresh()
 
         if (frame.itemCode) then
             local hasItemNow = C_Item.GetItemCount(frame.itemCode) > 0
-            local isAvailable = hasItemNow                                          -- Has the lure
-                and not C_QuestLog.IsQuestFlaggedCompleted(Config.BOUNTY_MAP_QUEST) -- Can get the bounty map this week
-                and (self.respawnState ~= RESPAWN_STATE.NotActivated)               -- Respawn is activated
+            local isAvailable = hasItemNow                                            -- Has the lure
+                and (not C_QuestLog.IsQuestFlaggedCompleted(Config.BOUNTY_MAP_QUEST)) -- Can get the bounty map this week
+                and (self.respawnState ~= RESPAWN_STATE.NotActivated)                 -- Respawn is activated
             frame:RefreshInteraction(isAvailable)
             frame:RefreshAnim(isAvailable and not frame.hasItem)
 
@@ -140,6 +140,7 @@ function DelveCompanion_InDelveWidgetFrameMixin:Refresh()
 end
 
 ---@param self InDelveWidgetFrame
+---@param isForced boolean
 function DelveCompanion_InDelveWidgetFrameMixin:PrepareWidget(isForced)
     local expansion = self.delveExpansion
     self.Lure:Set(Config.NEMESIS_LURE[expansion])

@@ -33,7 +33,7 @@ end
 ---@param isAvailable boolean
 function DelveCompanion_InDelveWidgetItemMixin:RefreshAnim(isAvailable)
     local hasCd = select(1, C_Item.GetItemCooldown(self.itemCode)) ~= 0
-    if not (hasCd) and isAvailable then
+    if isAvailable and not hasCd then
         self:PlayAnimation()
     end
 end
@@ -53,6 +53,8 @@ end
 ---@param self InDelveWidgetItem
 ---@param code number
 function DelveCompanion_InDelveWidgetItemMixin:Set(code)
+    -- Logger:Log("[%s] Code: %d", self:GetName(), code)
+
     self:SetFrameInfo(DelveCompanion.Definitions.CodeType.Item, code)
     self.itemCode = code
     self.hasItem = false

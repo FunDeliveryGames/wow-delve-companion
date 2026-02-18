@@ -18,41 +18,44 @@ local ENABLED_SAVE_KEY = "inDelveWidgetEnabled"
 
 ---@class (exact) InDelveWidget
 ---@field frame InDelveWidgetFrame
+---@field setupInProgress boolean Used to prevent double call of the setup which may occur due to the timer delay.
 local InDelveWidget = {}
 DelveCompanion.InDelveWidget = InDelveWidget
 
 ---@param self InDelveWidget
----@param _ any
-function InDelveWidget:OnDelveInProgressChanged(_)
-    -- Logger:Log("[InDelveWidget] OnProgressChanged. State: %s", tostring(isInProgress))
+---@param isForced boolean
+function InDelveWidget:Refresh(isForced)
+    -- Logger:Log("[InDelveWidget] Refresh...")
 
-    if not DelveCompanion.ProgressTracker.isDelveInProgress then
-        -- Logger:Log("[InDelveWidget] No Delve in progress")
+    if not DelveCompanionAccountData.inDelveWidgetEnabled or not DelveCompanion.ProgressTracker.isDelveInProgress then
         self:HideWidget()
-    elseif not self.frame.isSet then
-        -- Logger:Log("[InDelveWidget] Delve in progress, InDelveWidget is not set")
-        self:SetupWidget(false)
-    end
-end
-
----@param self InDelveWidget
-function InDelveWidget:SetupWidget(isForced)
-    -- Logger:Log("[InDelveWidget] Set up widget...")
-
-    if not DelveCompanionAccountData.inDelveWidgetEnabled then
         return
     end
 
-    local delveContinent = DelveCompanion:GetContinentMapIDForMap(C_Map.GetBestMapForUnit("player"))
-    self.frame.delveExpansion = FindInTableIf(
-        Config.DELVE_CONTINENTS,
-        function(continentMapID)
-            return continentMapID == delveContinent
+    if self.frame.isSet or self.setupInProgress then
+        return
+    end
+
+    self.setupInProgress = true
+    -- Timer is required for a case when player switches between characters while one of them is in a Delve.
+    -- For unknown reason, the continent cannot be retrieved immediately logging back to the character in a Delve. And the widget gets broken.
+    C_Timer.After(2,
+        function()
+            local delveContinent = DelveCompanion:GetContinentMapIDForMap(C_Map.GetBestMapForUnit("player"))
+
+            self.frame.delveExpansion = FindInTableIf(
+                Config.DELVE_CONTINENTS,
+                function(continentMapID)
+                    return continentMapID == delveContinent
+                end
+            )
+
+            self.frame:PrepareWidget(isForced)
+            self.frame:Show()
+
+            self.setupInProgress = false
         end
     )
-
-    self.frame:PrepareWidget(isForced)
-    self.frame:Show()
 end
 
 ---@param self InDelveWidget
@@ -76,10 +79,14 @@ end
 function InDelveWidget:Init()
     -- Logger:Log("[InDelveWidget] Init started...")
 
+    self.setupInProgress = false
+
     do
-        ---@param _ table
-        local function OnDelveInProgressChanged(_)
-            self:OnDelveInProgressChanged(_)
+        ---@param owner InDelveWidget
+        local function OnDelveInProgressChanged(owner)
+            -- Logger:Log("[InDelveWidget] OnProgressChanged. State: %s", tostring(DelveCompanion.ProgressTracker.isDelveInProgress))
+
+            owner:Refresh(false)
         end
 
         EventRegistry:RegisterCallback(DelveCompanion.Definitions.Events.PROGRESS_TRACKER.DELVE_IN_PROGRESS,
@@ -87,17 +94,14 @@ function InDelveWidget:Init()
     end
 
     do
-        local function OnSettingChanged(_, changedVarKey, isEnabled)
+        ---@param owner InDelveWidget
+        local function OnSettingChanged(owner, changedVarKey, isEnabled)
             if not (changedVarKey == ENABLED_SAVE_KEY) then
                 return
             end
             -- Logger:Log("[InDelveWidget] OnSettingChanged. Enabled: %s...", tostring(isEnabled))
 
-            if isEnabled then
-                self:SetupWidget(true)
-            else
-                self:HideWidget()
-            end
+            owner:Refresh(true)
         end
 
         EventRegistry:RegisterCallback(DelveCompanion.Definitions.Events.SETTING_CHANGE, OnSettingChanged, self)
@@ -105,6 +109,6 @@ function InDelveWidget:Init()
 
     if C_PartyInfo.IsDelveInProgress() then
         -- Logger:Log("[InDelveWidget] Already in Delve. Forced setup.")
-        self:SetupWidget(true)
+        self:Refresh(true)
     end
 end
