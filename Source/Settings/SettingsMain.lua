@@ -279,6 +279,9 @@ function AddonSettings:RegisterAccountSettings(category, layout)
             container:Add(Definitions.InDelveWidgetDisplayRule.right,
                 Lockit.UI_SETTING_IN_DELVE_WIDGET_DISPLAY_RULE_OPTION_RIGHT_NAME,
                 Lockit.UI_SETTING_IN_DELVE_WIDGET_DISPLAY_RULE_OPTION_RIGHT_DESCRIPTION)
+            container:Add(Definitions.InDelveWidgetDisplayRule.custom,
+                Lockit.UI_SETTING_IN_DELVE_WIDGET_DISPLAY_RULE_OPTION_CUSTOM_NAME,
+                Lockit.UI_SETTING_IN_DELVE_WIDGET_DISPLAY_RULE_OPTION_CUSTOM_DESCRIPTION)
 
             return container:GetData()
         end

@@ -27,6 +27,8 @@ function Bootstrap:OnAddonLoaded()
     DelveCompanion.AddonSettings:ProcessAccountSave()
     DelveCompanion.AddonSettings:ProcessCharacterSave()
 
+    DelveCompanion.InDelveWidget:PreloadFrame()
+
     -- Logger:Log("[DelveCompanion Bootstrap] OnAddonLoaded finish")
 end
 

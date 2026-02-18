@@ -98,9 +98,11 @@ Definitions.CompanionWidgetLayout = {
 ---@class (exact) InDelveWidgetDisplayRule Controls how [InDelveWidget](lua://InDelveWidget) is displayed.
 ---@field left number Widget is shown on the left side of Objective Tracker.
 ---@field right number Widget is shown on the right side of Objective Tracker.
+---@field custom number Widget can be freely moved over the screen.
 Definitions.InDelveWidgetDisplayRule = {
     left = 1,
-    right = 2
+    right = 2,
+    custom = 3
 }
 
 ---@class AddonEvents

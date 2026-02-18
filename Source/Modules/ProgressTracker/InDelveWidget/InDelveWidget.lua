@@ -62,13 +62,19 @@ function InDelveWidget:HideWidget()
     self.frame:Hide()
 end
 
+--- It's called before PLAYER_LOGIN so WoW saves its position and handles repositioning between sessions.
+---@param self InDelveWidget
+function InDelveWidget:PreloadFrame()
+    -- Logger:Log("[InDelveWidget] PreloadFrame...")
+
+    local widgetFrame = CreateFrame("Frame", "DelveCompanion.InDelveWidgetFrame",
+        UIParent, "DelvelCompanionInDelveWidgetFrameTemplate")
+    self.frame = widgetFrame
+end
+
 ---@param self InDelveWidget
 function InDelveWidget:Init()
     -- Logger:Log("[InDelveWidget] Init started...")
-
-    local widgetFrame = CreateFrame("Frame", "DelveCompanionInDelveWidgetFrame",
-        UIParent, "DelvelCompanionInDelveWidgetFrameTemplate")
-    self.frame = widgetFrame
 
     do
         ---@param _ table
