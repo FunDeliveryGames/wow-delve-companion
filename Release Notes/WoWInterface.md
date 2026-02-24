@@ -8,5 +8,10 @@
 [IMG]https://media.forgecdn.net/attachments/1218457/changelog/changelog_c12e0c4a-a58a-4d65-8bdd-c21346188380.gif[/IMG]
 [/list]
 
+[b]Hotfix [2026.02.6][/b]:
+[list]
+[*] [b]Localization[/b]: Update translations.
+[/list]
+
 [url=https://github.com/FunDeliveryGames/wow-delve-companion/blob/main/CHANGELOG.md]Full versions history[/url]
 [url=https://github.com/FunDeliveryGames/wow-delve-companion/issues]Report an issue[/url]
