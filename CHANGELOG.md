@@ -1,5 +1,8 @@
 # Change Log
 
+## [2026.02.6] - 24 February 2026
+- **Localization**: Update translations.
+
 ## [2026.02.5] - 18 February 2026
 - **Widget In Delves**: Add more options to customise the widget.
     - Change widget position on the screen.
