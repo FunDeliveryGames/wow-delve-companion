@@ -41,6 +41,10 @@ function InDelveWidget:Refresh(isForced)
     -- For unknown reason, the continent cannot be retrieved immediately logging back to the character in a Delve. And the widget gets broken.
     C_Timer.After(2,
         function()
+            if not self.setupInProgress then
+                return
+            end
+
             local delveContinent = DelveCompanion:GetContinentMapIDForMap(C_Map.GetBestMapForUnit("player"))
 
             self.frame.delveExpansion = FindInTableIf(
@@ -62,6 +66,7 @@ end
 function InDelveWidget:HideWidget()
     -- Logger:Log("[InDelveWidget] Hide widget...")
 
+    self.setupInProgress = false
     self.frame:Hide()
 end
 
@@ -107,7 +112,7 @@ function InDelveWidget:Init()
         EventRegistry:RegisterCallback(DelveCompanion.Definitions.Events.SETTING_CHANGE, OnSettingChanged, self)
     end
 
-    if C_PartyInfo.IsDelveInProgress() then
+    if DelveCompanion.ProgressTracker.isDelveInProgress then
         -- Logger:Log("[InDelveWidget] Already in Delve. Forced setup.")
         self:Refresh(true)
     end
