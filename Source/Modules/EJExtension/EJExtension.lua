@@ -59,7 +59,6 @@ function EJExtension:OnContentTabSet(id)
 
     if id ~= self.DelvesList.TabButton:GetID() then
         self.DelvesList.Frame:Hide()
-
         return
     end
 
@@ -81,11 +80,31 @@ end
 function EJExtension:OnPostShow()
     -- Logger:Log("[EJExtension] OnPostShow")
 
+    ---@type Frame
     local EncounterJournal = EncounterJournal
+    ---@type number
     local currentTab = EncounterJournal.selectedTab
 
     if currentTab == self.DelvesList.TabButton:GetID() then
         self.DelvesList:SetupExpansionDropdownForDelves(EncounterJournal, ExpansionDropdown_Select)
+    end
+
+    do
+        --- Re-order tabs in EncounterJournal
+        ---@param tab Button
+        ---@param relativeTo Button
+        local function SetTabAnchor(tab, relativeTo)
+            ---@type number,number
+            local offsetX, offsetY = 3, 0
+
+            tab:ClearAllPoints()
+            tab:SetPoint("LEFT", relativeTo, "RIGHT", offsetX, offsetY)
+        end
+
+        SetTabAnchor(self.DelvesList.TabButton, EncounterJournal.suggestTab)
+        SetTabAnchor(EncounterJournal.dungeonsTab, self.DelvesList.TabButton)
+        SetTabAnchor(EncounterJournal.raidsTab, EncounterJournal.dungeonsTab)
+        SetTabAnchor(EncounterJournal.TutorialsTab, EncounterJournal.raidsTab)
     end
 end
 
