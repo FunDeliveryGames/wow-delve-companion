@@ -1,9 +1,9 @@
 # Change Log
 
 ## [2026.02.7] - 27 February 2026
-- **QoL**: Delves tab in Adventure Guilde is placed before Dungeons.
-- **Localization**: Update translations.
 - Fixed an issue with the Widget In Delves appearing outside Delves.
+- **QoL**: Delves tab in Adventure Guide is placed before Dungeons.
+- **Localization**: Update translations.
 
 ## [2026.02.6] - 24 February 2026
 - **Localization**: Update translations.
