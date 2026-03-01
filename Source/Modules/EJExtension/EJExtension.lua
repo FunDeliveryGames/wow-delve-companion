@@ -77,8 +77,8 @@ function EJExtension:OnContentTabSet(id)
 end
 
 ---@param self EJExtension
-function EJExtension:OnPostShow()
-    -- Logger:Log("[EJExtension] OnPostShow")
+function EJExtension:EJ_OnShowHook()
+    -- Logger:Log("[EJExtension] OnShow hook")
 
     ---@type Frame
     local EncounterJournal = EncounterJournal
@@ -134,7 +134,7 @@ function EJExtension:Init()
 
     EncounterJournal:HookScript("OnShow",
         function()
-            EJExtension:OnPostShow()
+            EJExtension:EJ_OnShowHook()
         end
     )
 
