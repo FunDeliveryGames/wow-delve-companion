@@ -59,6 +59,8 @@ function EJExtension:OnContentTabSet(id)
 
     if id ~= self.DelvesList.TabButton:GetID() then
         self.DelvesList.Frame:Hide()
+        PanelTemplates_DeselectTab(self.DelvesList.TabButton)
+
         return
     end
 
@@ -74,6 +76,7 @@ function EJExtension:OnContentTabSet(id)
     EncounterJournal.instanceSelect.ExpansionDropdown:SetShown(true)
 
     self.DelvesList.Frame:Show()
+    PanelTemplates_SelectTab(self.DelvesList.TabButton)
 end
 
 ---@param self EJExtension
@@ -82,12 +85,6 @@ function EJExtension:EJ_OnShowHook()
 
     ---@type Frame
     local EncounterJournal = EncounterJournal
-    ---@type number
-    local currentTab = EncounterJournal.selectedTab
-
-    if currentTab == self.DelvesList.TabButton:GetID() then
-        self.DelvesList:SetupExpansionDropdownForDelves(EncounterJournal, ExpansionDropdown_Select)
-    end
 
     do
         --- Re-order tabs in EncounterJournal
@@ -105,6 +102,13 @@ function EJExtension:EJ_OnShowHook()
         SetTabAnchor(EncounterJournal.dungeonsTab, self.DelvesList.TabButton)
         SetTabAnchor(EncounterJournal.raidsTab, EncounterJournal.dungeonsTab)
         SetTabAnchor(EncounterJournal.TutorialsTab, EncounterJournal.raidsTab)
+    end
+
+    -- Being closed, EncounterJournal remembers the last opened tab.
+    -- While OnContentTabSet is called before OnShow, the expansion dropdown gets reset somewhere in between.
+    -- And if the last tab is the Delves tab, the dropdown will contain all expansions. So it should be set here for Delves.
+    if EncounterJournal.selectedTab == self.DelvesList.TabButton:GetID() then
+        self.DelvesList:SetupExpansionDropdownForDelves(EncounterJournal, ExpansionDropdown_Select)
     end
 end
 
@@ -124,7 +128,8 @@ function EJExtension:Init()
     do
         self.DelvesList:Init(EncounterJournal)
 
-        PanelTemplates_SetNumTabs(EncounterJournal, EJ_TABS_COUNT)
+        -- TODO: Check later whether Blizz has changed smth that is a root cause of the issue #75
+        -- PanelTemplates_SetNumTabs(EncounterJournal, EJ_TABS_COUNT)
     end
 
     -- JourneysFrame
