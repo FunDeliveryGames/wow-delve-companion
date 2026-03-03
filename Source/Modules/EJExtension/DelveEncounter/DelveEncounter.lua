@@ -65,7 +65,7 @@ function DelveEncounter:EncRewTrack_OnShowHook()
     do
         self.BountifulFrame:Show()
         self.ConsumablesFrame:Show()
-        self.GildedStashFrame:Show()
+        self.GildedStashFrame:SetShown(tierData.expansionLevel == LE_EXPANSION_MIDNIGHT)
         self.LotInfoButton:SetShown(tierData.expansionLevel == LE_EXPANSION_MIDNIGHT)
     end
 end

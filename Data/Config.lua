@@ -132,7 +132,6 @@ Config.GILDED_STASH_WEEKLY_CAP = 3
 
 --#region Delve-related entities which are updated every season
 
--- TODO: Remove or use for TWW widget if still available
 ---@type number Item ID of [Radiant Echo](https://www.wowhead.com/item=246771/radiant-echo).
 Config.ECHO_ITEM_CODE = 246771
 
@@ -145,13 +144,11 @@ Config.KEY_SHARD_ITEM_CODE = 245653
 
 ---@class (exact) DelveConfigAffixes : table
 ---@field Nemesis table<number, number>
--- ---@field Flicker table<number, number> TODO: Add if available or remove
 
 ---@type DelveConfigAffixes Spell ID of Delve affixes.
 Config.AFFIXES = {
     -- [Nemesis Strongbox](https://www.wowhead.com/spell=1239535/nemesis-strongbox).
     Nemesis = {
-        [LE_EXPANSION_WAR_WITHIN] = 1239535,
         [LE_EXPANSION_MIDNIGHT] = 1270179
     }
 }

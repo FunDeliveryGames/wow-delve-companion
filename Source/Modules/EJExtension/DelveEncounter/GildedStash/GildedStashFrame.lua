@@ -76,13 +76,12 @@ function DelveCompanion_DelveEncounterGildedStashFrameMixin:OnShow()
 
     local stashDisplayInfo = self:TryGetStashInfo(expansion)
     if not stashDisplayInfo then
-        if expansion == LE_EXPANSION_WAR_WITHIN then
-            self.ErrorLabel:SetText(Lockit.UI_GILDED_STASH_CANNOT_RETRIEVE_DATA_TWW)
-        elseif expansion == LE_EXPANSION_MIDNIGHT then
+        if expansion == LE_EXPANSION_MIDNIGHT then
             self.ErrorLabel:SetText(Lockit.UI_GILDED_STASH_CANNOT_RETRIEVE_DATA_MIDNIGHT)
         end
         self.ErrorLabel:Show()
         self.Widget:Hide()
+
         return
     end
 

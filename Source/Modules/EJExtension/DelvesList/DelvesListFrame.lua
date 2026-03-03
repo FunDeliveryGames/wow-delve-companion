@@ -49,13 +49,10 @@ function DelveCompanion_DelvesListFrameMixin:Refresh()
     self.DelveOBotWidget:SetShown(tierData.expansionLevel == LE_EXPANSION_WAR_WITHIN) -- Delve-O-Bot 7001 works for TWW Delves only.
 
     do
-        -- TODO: What will happen after TWW S3? Modifiers are active in the latest expansion Delves.
-
         self.ModifiersContainer.Nemesis:SetFrameInfo(
             DelveCompanion.Definitions.CodeType.Spell,
-            Config.AFFIXES.Nemesis[tierData.expansionLevel])
-        self.ModifiersContainer:SetShown(true)
-        -- self.ModifiersContainer:SetShown(tierData.expansionLevel == LE_EXPANSION_LEVEL_CURRENT)
+            Config.AFFIXES.Nemesis[LE_EXPANSION_MIDNIGHT])
+        self.ModifiersContainer:SetShown(tierData.expansionLevel == LE_EXPANSION_LEVEL_CURRENT)
     end
 end
 
