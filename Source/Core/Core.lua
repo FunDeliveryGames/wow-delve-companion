@@ -20,7 +20,7 @@ AddonTbl.DelveCompanion = DelveCompanion
 function DelveCompanion:InitDelvesData()
     -- self.Logger:Log("Initing Delves data...")
 
-    ---@type table<integer, DelveData[]>
+    ---@type table<number, DelveData[]>
     local delvesData = {}
 
     for expansion, delveConfigs in pairs(self.Config.DELVES_CONFIG) do

@@ -10,7 +10,7 @@ local Config = DelveCompanion.Config
 
 --#region Constants
 
----@type integer
+---@type number
 local EJ_TABS_COUNT = 8
 --#endregion
 

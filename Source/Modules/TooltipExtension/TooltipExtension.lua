@@ -17,8 +17,8 @@ local ENABLED_SAVE_KEY = "keysCapTooltipEnabled"
 --#endregion
 
 --- Compose a text with the amount of collected currency
----@param collected integer
----@param max integer
+---@param collected number
+---@param max number
 ---@return string
 local function GetCollectedText(collected, max)
     local wrapColor = collected ~= max
@@ -35,7 +35,7 @@ end
 ---@param quality Enum.ItemQuality
 ---@param name string
 ---@param text string
----@param textureId integer
+---@param textureId number
 ---@return string weekText Consumable this week text
 ---@return string info Collected amount text
 local function GetCollectedInfo(quality, name, text, textureId)
