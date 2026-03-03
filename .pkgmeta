@@ -4,7 +4,6 @@ ignore:
   - .git #folder
   - Releases #folder
   - Release Notes #folder
-  - Source\Modules\DelvesDashboard #folder
   - .gitignore
   - README.md
   - LICENSE
