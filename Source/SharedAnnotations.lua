@@ -88,12 +88,12 @@ function WeeklyRewardMixin:HasUnlockedRewards(activityType) end
 
 --- Get max possible number of rewards in the Great Vault of the desired type.
 ---@param activityType Enum.WeeklyRewardChestThresholdType Type from `Enum.WeeklyRewardChestThresholdType`.
----@return integer # Max possible number of rewards.
+---@return number # Max possible number of rewards.
 function WeeklyRewardMixin:GetMaxNumRewards(activityType) end
 
 --- Get number of unlocked rewards in the Great Vault of the desired type.
 ---@param activityType Enum.WeeklyRewardChestThresholdType Type from `Enum.WeeklyRewardChestThresholdType`.
----@return integer # Number of unlocked rewards.
+---@return number # Number of unlocked rewards.
 function WeeklyRewardMixin:GetNumUnlockedRewards(activityType) end
 
 --- `UIButtonFitToTextBehaviorMixin` ([Blizzard object](https://www.townlong-yak.com/framexml/live/Blizzard_SharedXML/SecureUIPanelTemplates.lua#210)).

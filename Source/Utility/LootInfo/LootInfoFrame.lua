@@ -13,6 +13,16 @@ local Lockit = DelveCompanion.Lockit
 ---@class (exact) LootInfoFrame : LootInfoFrameXml
 DelveCompanion_LootInfoFrameMixin = {}
 
+local function GetLootRarity(ilvl)
+    for _, rarityInfo in ipairs(Config.LOOT_RARITY) do
+        if ilvl >= rarityInfo.from and ilvl <= rarityInfo.to then
+            return rarityInfo.color:WrapTextInColorCode(ilvl)
+        end
+    end
+
+    return tostring(ilvl)
+end
+
 ---@param self LootInfoFrame
 function DelveCompanion_LootInfoFrameMixin:OnLoad()
     -- Logger:Log("LootInfo OnLoad start")
@@ -45,16 +55,17 @@ function DelveCompanion_LootInfoFrameMixin:OnLoad()
     end
 
     for tier, lootInfo in ipairs(Config.DELVES_LOOT_INFO_DATA) do
+        ---@type LootInfoRowXml
         local rowFrame = CreateFrame("Frame", nil, self.Rows,
             "DelveCompanionLootInfoRowTemplate")
         rowFrame.layoutIndex = tier
 
-        rowFrame.Tier:SetText(tier)
+        rowFrame.Tier:SetText(tostring(tier))
 
         local container = rowFrame.Container
-        container.Bountiful.Text:SetText(lootInfo.bountifulLvl)
-        container.Vault.Text:SetText(lootInfo.vaultLvl)
-        container.Map.Text:SetText(lootInfo.mapLvl and lootInfo.mapLvl or "-")
+        container.Bountiful.Text:SetText(GetLootRarity(lootInfo.bountifulLvl))
+        container.Vault.Text:SetText(GetLootRarity(lootInfo.vaultLvl))
+        container.Map.Text:SetText(lootInfo.mapLvl and GetLootRarity(lootInfo.mapLvl) or "-")
     end
 
     self.Rows:Layout()
@@ -67,16 +78,38 @@ end
 
 --#region XML Annotations
 
---- `DelveCompanionColumnWithTitleTemplate`
----@class (exact) ColumnWithTitleXml : Frame
----@field Title FontString
+--- `DelveCompanionLootInfoHeaderTemplate`
+---@class (exact) LootInfoHeaderXml : Frame, LayoutChild
+---@field Icon Texture
 ---@field Text FontString
+
+---@class (exact) LootInfoHeaderContainer : HorizontalLayoutFrame
+---@field Bountiful LootInfoHeaderXml
+---@field Map LootInfoHeaderXml
+---@field Vault LootInfoHeaderXml
+
+--- `DelveCompanionLootInfoColumnHeadersTemplate`
+---@class (exact) LootInfoColumnHeadersXml : Frame
+---@field Tier FontString
+---@field Container LootInfoHeaderContainer
+
+--- `DelveCompanionLootInfoElementTemplate`
+---@class (exact) LootInfoElementXml : Frame, LayoutChild
+---@field Text FontString
+
+---@class (exact) LootInfoRowContainer : HorizontalLayoutFrame
+---@field Bountiful LootInfoElementXml
+---@field Map LootInfoElementXml
+---@field Vault LootInfoElementXml
+
+--- `DelveCompanionLootInfoRowTemplate`
+---@class (exact) LootInfoRowXml : Frame, LayoutChild
+---@field Tier FontString
+---@field Container LootInfoRowContainer
 
 --- `DelveCompanionLootInfoFrameTemplate`
 ---@class (exact) LootInfoFrameXml : Frame
----@field Header FontString
 ---@field CloseButton Button
----@field DelveTiers ColumnWithTitleXml
----@field BountifulGear ColumnWithTitleXml
----@field VaultGear ColumnWithTitleXml
+---@field ColumnHeaders LootInfoColumnHeadersXml
+---@field Rows VerticalLayoutFrame
 --#endregion

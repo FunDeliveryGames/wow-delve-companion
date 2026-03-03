@@ -24,6 +24,7 @@ local LOOT_INFO_BUTTON_PARENT_KEY = "ShowLootInfoButton"
 ---@field ConsumablesFrame DelveEncounterConsumablesFrameXml
 ---@field GildedStashFrame DelveEncounterGildedStashFrame
 ---@field LootInfo LootInfoFrameXml
+---@field LotInfoButton MagicButton
 local DelveEncounter = {}
 DelveCompanion.EJExtension.DelveEncounter = DelveEncounter
 
@@ -65,6 +66,7 @@ function DelveEncounter:EncRewTrack_OnShowHook()
         self.BountifulFrame:Show()
         self.ConsumablesFrame:Show()
         self.GildedStashFrame:Show()
+        self.LotInfoButton:SetShown(tierData.expansionLevel == LE_EXPANSION_MIDNIGHT)
     end
 end
 
@@ -168,12 +170,17 @@ function DelveEncounter:Init(JourneysFrame)
                 "$parent." .. LOOT_INFO_BUTTON_PARENT_KEY,
                 parent,
                 "DelveCompanionLootInfoButtonTemplate")
+            self.LotInfoButton = button
+
             button:SetParentKey(LOOT_INFO_BUTTON_PARENT_KEY)
             button:SetPoint("TOPRIGHT", anchorFrame, "BOTTOMRIGHT", -3, 5)
-
             button:SetTextToFit(_G["LOOT"])
 
             button:HookScript("OnClick", function()
+                if PlayerIsInCombat() then
+                    return
+                end
+
                 GameTooltip:Hide()
                 local lootFrame = self.LootInfo
                 lootFrame:ClearAllPoints()

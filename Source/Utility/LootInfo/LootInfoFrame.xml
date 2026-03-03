@@ -89,7 +89,7 @@
                 <FontString parentKey="Text" inherits="GameFontHighlightMed2"
                     justifyH="CENTER" justifyV="MIDDLE" spacing="5">
                     <Anchors>
-                        <Anchor point="CENTER" />
+                        <Anchor point="CENTER" x="5" />
                     </Anchors>
                 </FontString>
             </Layer>
