@@ -86,7 +86,7 @@ Lockit.UI_SETTING_IN_DELVE_WIDGET_LAYOUT_OPTION_HORIZONTAL_DESCRIPTION = "Кно
 
 Lockit.UI_SETTINGS_SECTION_TITLE_CHARACTER = "Параметры персонажа"
 Lockit.UI_SETTING_TOOLTIP_EXTENSION_NAME = "Дополнительная информация в подсказках"
-Lockit.UI_SETTING_TOOLTIP_EXTENSION_TOOLTIP = "Display additional information in tooltips (e.g., whether |cnITEM_EPIC_COLOR:Bounty Map|r has been looted this week)."
+Lockit.UI_SETTING_TOOLTIP_EXTENSION_TOOLTIP = "Отображать дополнительную информацию во всплывающих подсказках (например, был ли на этой неделе получен предмет |cnITEM_EPIC_COLOR:Клад участника вылазки|r)."
 Lockit.UI_SETTING_COMPANION_CONFIG_NAME = "Виджет конфигурации Компаньона"
 Lockit.UI_SETTING_COMPANION_CONFIG_TOOLTIP = "Интерфейс Вылазок: Включить виджет, отображающий текущую специализацию и способности Компаньона.\nЕго можно использовать для изменения конфигурации непосредственно из интерфейса Вылазок."
 Lockit.UI_SETTING_COMPANION_CONFIG_OPTION_HORIZONTAL_NAME = "Горизонтальная расположение"
