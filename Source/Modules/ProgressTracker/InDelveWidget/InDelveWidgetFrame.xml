@@ -11,6 +11,10 @@
                 <KeyValues>
                     <KeyValue key="expand" value="true" type="boolean" />
                     <KeyValue key="spacing" value="5" type="number" />
+                    <KeyValue key="topPadding" value="5" type="number" />
+                    <KeyValue key="bottomPadding" value="5" type="number" />
+                    <KeyValue key="leftPadding" value="5" type="number" />
+                    <KeyValue key="rightPadding" value="5" type="number" />
                     <KeyValue key="skipLayoutOnShow" value="true" type="boolean" />
                 </KeyValues>
                 <Anchors>

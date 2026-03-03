@@ -25,11 +25,6 @@ local SAVE_KEYS = {
     "inDelveWidgetDisplayRule",
     "inDelveWidgetLayout"
 }
-
----@type number
-local WIDE_SIDE_LEN = 140
----@type number
-local NARROW_SIDE_LEN = 50
 --#endregion
 
 ---@class (exact) InDelveWidgetFrame : InDelveWidgetFrameXml
@@ -45,24 +40,6 @@ DelveCompanion_InDelveWidgetFrameMixin = {}
 function DelveCompanion_InDelveWidgetFrameMixin:Refresh()
     if not self.isSet then
         return
-    end
-
-    do
-        local buttons = self.Buttons
-        local width, height = 0, 0
-
-        if DelveCompanionAccountData.inDelveWidgetLayout == DelveCompanion.Definitions.InDelveWidgetLayout.vertical then
-            Mixin(buttons, VerticalLayoutMixin)
-            width = NARROW_SIDE_LEN
-            height = WIDE_SIDE_LEN
-        elseif DelveCompanionAccountData.inDelveWidgetLayout == DelveCompanion.Definitions.InDelveWidgetLayout.horizontal then
-            Mixin(buttons, HorizontalLayoutMixin)
-            width = WIDE_SIDE_LEN
-            height = NARROW_SIDE_LEN
-        end
-
-        self:SetSize(width, height)
-        self.Buttons:Layout()
     end
 
     if DelveCompanionAccountData.inDelveWidgetDisplayRule == DelveCompanion.Definitions.InDelveWidgetDisplayRule.custom then
@@ -94,15 +71,19 @@ function DelveCompanion_InDelveWidgetFrameMixin:Refresh()
     do
         local frame = self.Lure
 
-        if (frame.itemCode) then
-            local hasItemNow = C_Item.GetItemCount(frame.itemCode) > 0
-            local isAvailable = hasItemNow                                            -- Has the lure
-                and (not C_QuestLog.IsQuestFlaggedCompleted(Config.BOUNTY_MAP_QUEST)) -- Can get the bounty map this week
-                and (self.respawnState ~= RESPAWN_STATE.NotActivated)                 -- Respawn is activated
-            frame:RefreshInteraction(isAvailable)
-            frame:RefreshAnim(isAvailable and not frame.hasItem)
+        if expansion == LE_EXPANSION_WAR_WITHIN then
+            frame:Hide()
+        elseif expansion == LE_EXPANSION_MIDNIGHT then
+            if (frame.itemCode) then
+                local hasItemNow = C_Item.GetItemCount(frame.itemCode) > 0
+                local isAvailable = hasItemNow                                            -- Has the lure
+                    and (not C_QuestLog.IsQuestFlaggedCompleted(Config.BOUNTY_MAP_QUEST)) -- Can get the bounty map this week
+                    and (self.respawnState ~= RESPAWN_STATE.NotActivated)                 -- Respawn is activated
+                frame:RefreshInteraction(isAvailable)
+                frame:RefreshAnim(isAvailable and not frame.hasItem)
 
-            frame.hasItem = hasItemNow
+                frame.hasItem = hasItemNow
+            end
         end
     end
 
@@ -110,15 +91,19 @@ function DelveCompanion_InDelveWidgetFrameMixin:Refresh()
     do
         local frame = self.Map
 
-        if (frame.itemCode) then
-            local hasItemNow = C_Item.GetItemCount(frame.itemCode) > 0
-            local activeBountySpell = DelveCompanion.Config.BOUNTY_ACTIVATED_SPELL[expansion]
-            local isAvailable = hasItemNow                                       -- Has the bounty map
-                and C_UnitAuras.GetPlayerAuraBySpellID(activeBountySpell) == nil -- Doesn't have an active map buff
-            frame:RefreshInteraction(isAvailable)
-            frame:RefreshAnim(isAvailable and not frame.hasItem)
+        if expansion == LE_EXPANSION_WAR_WITHIN then
+            frame:Hide()
+        elseif expansion == LE_EXPANSION_MIDNIGHT then
+            if (frame.itemCode) then
+                local hasItemNow = C_Item.GetItemCount(frame.itemCode) > 0
+                local activeBountySpell = DelveCompanion.Config.BOUNTY_ACTIVATED_SPELL[expansion]
+                local isAvailable = hasItemNow                                       -- Has the bounty map
+                    and C_UnitAuras.GetPlayerAuraBySpellID(activeBountySpell) == nil -- Doesn't have an active map buff
+                frame:RefreshInteraction(isAvailable)
+                frame:RefreshAnim(isAvailable and not frame.hasItem)
 
-            frame.hasItem = hasItemNow
+                frame.hasItem = hasItemNow
+            end
         end
     end
 
@@ -136,6 +121,19 @@ function DelveCompanion_InDelveWidgetFrameMixin:Refresh()
 
             frame.hasItem = hasItemNow
         end
+    end
+
+    do
+        local buttons = self.Buttons
+
+        if DelveCompanionAccountData.inDelveWidgetLayout == DelveCompanion.Definitions.InDelveWidgetLayout.vertical then
+            Mixin(buttons, VerticalLayoutMixin)
+        elseif DelveCompanionAccountData.inDelveWidgetLayout == DelveCompanion.Definitions.InDelveWidgetLayout.horizontal then
+            Mixin(buttons, HorizontalLayoutMixin)
+        end
+
+        buttons:Layout()
+        self:SetSize(buttons:GetSize())
     end
 end
 

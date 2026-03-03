@@ -55,8 +55,8 @@ Config.DELVE_O_BOT_ITEM_CODE = 230850
 Config.ACTIVITY_TYPE = Enum.WeeklyRewardChestThresholdType.World
 ---@type integer Max tier of the Delve which upgrades Great Vault rewards.
 Config.GREAT_VAULT_UPGRADE_MAX_TIER = 8
----@type integer Item ID of [Bountiful Coffer](https://www.wowhead.com/item=228942/bountiful-coffer).
-Config.BOUNTIFUL_COFFER_ITEM_CODE = 228942
+---@type integer Item ID of [Bountiful Coffer](https://www.wowhead.com/item=254250/bountiful-coffer).
+Config.BOUNTIFUL_COFFER_ITEM_CODE = 254250
 --#endregion
 
 --#region Restored Coffer Key
@@ -80,11 +80,6 @@ Config.BOUNTIFUL_KEY_QUESTS_DATA = {
 }
 ---@type table<integer, number> Table of Caches containing [Restored Coffer Keys](https://www.wowhead.com/currency=3028/restored-coffer-key) (e.g. [Pinnacle Cache](https://www.wowhead.com/item=239118/pinnacle-cache)).
 Config.BOUNTIFUL_KEY_SOURCE_CACHES_DATA = {
-    -- TWW Season 3
-    244842,
-    244865,
-    245611,
-    255676
 }
 ---@type table<integer, number> Table of Quest IDs used to track [Coffer Key Shards](https://www.wowhead.com/item=245653/coffer-key-shard) player has received from Caches this week.
 Config.KEY_SHARD_QUESTS_DATA = {
@@ -95,40 +90,6 @@ Config.KEY_SHARD_QUESTS_DATA = {
 }
 ---@type table<integer, number> Table of Caches containing [Coffer Key Shards](https://www.wowhead.com/item=245653/coffer-key-shard).
 Config.KEY_SHARD_SOURCE_CACHES_DATA = {
-    -- TWW Season 1
-    226263,
-    226273,
-    226264,
-    224784,
-    225571,
-    225572,
-    225573,
-    228361,
-    -- TWW Season 2
-    239128,
-    239121,
-    239126,
-    239125,
-    239118,
-    239122,
-    239124,
-    238208,
-    235639,
-    235610,
-    239120,
-    -- TWW Season 3
-    244883,
-    244865,
-    245280,
-    250768,
-    250766,
-    250765,
-    250769,
-    250763,
-    250764,
-    250767,
-    -- Others
-    233014
 }
 --#endregion
 
@@ -141,7 +102,6 @@ Config.LOOT_RADAR_ITEM_CODE = 244193
 
 ---@type table<integer, number> Item ID of a Nemesis lure.
 Config.NEMESIS_LURE = {
-    [LE_EXPANSION_WAR_WITHIN] = 248017, -- Shrieking Quartz
     [LE_EXPANSION_MIDNIGHT] = 253342    -- Beacon of Hope
 }
 
@@ -149,16 +109,14 @@ Config.NEMESIS_LURE = {
 
 ---@type table<integer, number> Item ID of Bounty Map.
 Config.BOUNTY_MAPS = {
-    [LE_EXPANSION_WAR_WITHIN] = 248142, -- Delver's Bounty
     [LE_EXPANSION_MIDNIGHT] = 252415    -- Trovehunter's Bounty
 }
 ---@type table<integer, number> Spell ID of the active Bounty Map.
 Config.BOUNTY_ACTIVATED_SPELL = {
-    [LE_EXPANSION_WAR_WITHIN] = 1246363, -- Delver's Bounty
     [LE_EXPANSION_MIDNIGHT] = 1254631    -- Trovehunter's Bounty
 }
 
----@type integer Weekly cap of maps (par character).
+---@type integer Weekly cap of maps (per character).
 Config.BOUNTY_MAP_MAX_PER_WEEK = 1
 ---@type integer Quest ID used to track whether player has looted Bounty Map during the week.
 Config.BOUNTY_MAP_QUEST = 86371
