@@ -28,12 +28,27 @@ function DelveCompanion_DelveEncounterConsumablesFrameMixin:UpdateConsumables()
 
     if expansion == LE_EXPANSION_WAR_WITHIN then
         self.Keys:ClearAllPoints()
-        self.Keys:SetPoint("CENTER")
+        ---@type string, number, number
+        local point, xOffset, yOffset = "LEFT", 35, 0
+        self.Keys:SetPoint(point, xOffset, yOffset)
+
+        local echoCount = C_Item.GetItemCount(self.Echo.frameCode)
+        self.Echo:SetLabelText(echoCount)
+        self.Echo.Icon:SetDesaturated(echoCount == 0)
+        self.Echo:Show()
 
         self.Shards:Hide()
         self.BountyMap:Hide()
         self.ManaCrystals:Hide()
     elseif expansion == LE_EXPANSION_MIDNIGHT then
+        do
+            self.Keys:ClearAllPoints()
+            ---@type string, number, number
+            local point, xOffset, yOffset = "TOPLEFT", 35, -22
+            self.Keys:SetPoint(point, xOffset, yOffset)
+            self.Echo:Hide()
+        end
+
         ---@type string, number, CurrencyInfo
         local shardsLine, shardsCount, shardsInfo
 
@@ -56,6 +71,7 @@ function DelveCompanion_DelveEncounterConsumablesFrameMixin:UpdateConsumables()
                 )
             end
             self.Shards:SetLabelText(shardsLine)
+            self.Shards:Show()
         end
 
         -- Bounty Map
@@ -80,6 +96,7 @@ function DelveCompanion_DelveEncounterConsumablesFrameMixin:UpdateConsumables()
                 self.BountyMap.Icon:SetDesaturated(false)
             end
             self.BountyMap:SetLabelText(mapsLine)
+            self.BountyMap:Show()
         end
 
         -- Untainted Mana-Crystals
@@ -89,6 +106,7 @@ function DelveCompanion_DelveEncounterConsumablesFrameMixin:UpdateConsumables()
             self.ManaCrystals:SetLabelText(crystalsCount)
             self.ManaCrystals.Icon:SetDesaturated(crystalsCount == 0
                 and crystalsInfo.quantityEarnedThisWeek >= crystalsInfo.maxWeeklyQuantity)
+            self.ManaCrystals:Show()
         end
     end
 end
@@ -100,6 +118,7 @@ function DelveCompanion_DelveEncounterConsumablesFrameMixin:OnLoad()
     local defs = DelveCompanion.Definitions
     self.Keys:SetFrameInfo(defs.CodeType.Currency, Config.BOUNTIFUL_KEY_CURRENCY_CODE)
     self.ManaCrystals:SetFrameInfo(defs.CodeType.Currency, Config.MANA_CRYSTALS_CURRENCY_CODE)
+    self.Echo:SetFrameInfo(defs.CodeType.Item, Config.ECHO_ITEM_CODE)
 end
 
 ---@param self DelveEncounterConsumablesFrame
@@ -135,6 +154,7 @@ end
 ---@class (exact) DelveEncounterConsumablesFrameXml : Frame
 ---@field Keys CustomActionWidget
 ---@field Shards CustomActionWidget
+---@field Echo CustomActionWidget
 ---@field BountyMap CustomActionWidget
 ---@field ManaCrystals CustomActionWidget
 
