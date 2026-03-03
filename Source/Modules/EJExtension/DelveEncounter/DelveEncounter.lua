@@ -7,18 +7,23 @@ local DelveCompanion = AddonTbl.DelveCompanion
 local Logger = DelveCompanion.Logger
 ---@type Config
 local Config = DelveCompanion.Config
+---@type Lockit
+local Lockit = DelveCompanion.Lockit
 
 --#region Constants
 
+---@type string
+local LOOT_INFO_BUTTON_PARENT_KEY = "ShowLootInfoButton"
 --#endregion
 
----@class DelveEncounter
+---@class (exact) DelveEncounter
 ---@field EncounterRewardTrack Frame
 ---@field ExpBar JourneyEncounterExpBar
 ---@field ConfigPanel CompanionConfigPanel
 ---@field BountifulFrame DelveEncounterBountifulFrame
 ---@field ConsumablesFrame DelveEncounterConsumablesFrameXml
 ---@field GildedStashFrame DelveEncounterGildedStashFrame
+---@field LootInfo LootInfoFrameXml
 local DelveEncounter = {}
 DelveCompanion.EJExtension.DelveEncounter = DelveEncounter
 
@@ -47,7 +52,7 @@ function DelveEncounter:EncRewTrack_OnShowHook()
     end
 
     do
-        local isCompUnlocked = C_QuestLog.IsQuestFlaggedCompletedOnAccount(
+        local isCompUnlocked = C_QuestLog.IsQuestFlaggedCompleted(
             Config.COMPANION_UNLOCK_QUEST[tierData.expansionLevel])
 
         if isCompUnlocked then
@@ -72,6 +77,7 @@ function DelveEncounter:EncRewTrack_OnHideHook()
     self.BountifulFrame:Hide()
     self.ConsumablesFrame:Hide()
     self.GildedStashFrame:Hide()
+    self.LootInfo:Hide()
 end
 
 --- Initialize Delves list.
@@ -152,5 +158,53 @@ function DelveEncounter:Init(JourneysFrame)
             "DelveCompanionDelveEncounterGildedStashFrameTemplate")
         gildedStashFrame:SetPoint("LEFT", consumablesFrame, "RIGHT", 0, 0)
         self.GildedStashFrame = gildedStashFrame
+    end
+
+    do
+        --- Add a button to open Delves' Loot info.
+        ---@param parent any
+        local function CreateLootInfoButton(parent, anchorFrame)
+            local button = CreateFrame("Button",
+                "$parent." .. LOOT_INFO_BUTTON_PARENT_KEY,
+                parent,
+                "DelveCompanionLootInfoButtonTemplate")
+            button:SetParentKey(LOOT_INFO_BUTTON_PARENT_KEY)
+            button:SetPoint("TOPRIGHT", anchorFrame, "BOTTOMRIGHT", -3, 5)
+
+            button:SetTextToFit(_G["LOOT"])
+
+            button:HookScript("OnClick", function()
+                GameTooltip:Hide()
+                local lootFrame = self.LootInfo
+                lootFrame:ClearAllPoints()
+                lootFrame:SetPoint("BOTTOMLEFT", EncounterJournal, "BOTTOMRIGHT", -5, 0)
+
+                ToggleFrame(self.LootInfo)
+            end)
+
+            button:HookScript("OnEnter", function()
+                if self.LootInfo:IsShown() then
+                    return
+                end
+
+                local tooltip = GameTooltip
+                tooltip:SetOwner(button, "ANCHOR_TOP")
+                GameTooltip_AddInstructionLine(tooltip, Lockit.UI_LOOT_INFO_BUTTON_TOOLTIP_INSTRUCTION, true)
+
+                tooltip:Show()
+            end)
+
+            button:HookScript("OnLeave", function()
+                GameTooltip:Hide()
+            end)
+        end
+
+        ---@type LootInfoFrame
+        local lootInfoFrame = CreateFrame("Frame",
+            "$parent.LootInfoFrame", encRewardTrack,
+            "DelveCompanionLootInfoFrameTemplate")
+        self.LootInfo = lootInfoFrame
+
+        CreateLootInfoButton(encRewardTrack, self.GildedStashFrame)
     end
 end

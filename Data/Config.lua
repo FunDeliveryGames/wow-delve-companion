@@ -102,18 +102,18 @@ Config.LOOT_RADAR_ITEM_CODE = 244193
 
 ---@type table<integer, number> Item ID of a Nemesis lure.
 Config.NEMESIS_LURE = {
-    [LE_EXPANSION_MIDNIGHT] = 253342    -- Beacon of Hope
+    [LE_EXPANSION_MIDNIGHT] = 253342 -- Beacon of Hope
 }
 
 --#region Bounty Map.
 
 ---@type table<integer, number> Item ID of Bounty Map.
 Config.BOUNTY_MAPS = {
-    [LE_EXPANSION_MIDNIGHT] = 252415    -- Trovehunter's Bounty
+    [LE_EXPANSION_MIDNIGHT] = 252415 -- Trovehunter's Bounty
 }
 ---@type table<integer, number> Spell ID of the active Bounty Map.
 Config.BOUNTY_ACTIVATED_SPELL = {
-    [LE_EXPANSION_MIDNIGHT] = 1254631    -- Trovehunter's Bounty
+    [LE_EXPANSION_MIDNIGHT] = 1254631 -- Trovehunter's Bounty
 }
 
 ---@type integer Weekly cap of maps (per character).
@@ -650,53 +650,62 @@ Config.DELVES_CONFIG = {
 ---@class DelveLootInfo
 ---@field bountifulLvl integer Item Level player gets opening [Bountiful Coffer](https://www.wowhead.com/item=228942/bountiful-coffer).
 ---@field vaultLvl integer Item Level player gets from the Great Vault completing the corresponding Delve Tier.
+---@field mapLvl integer? Item Level player gets from the Bounty Map chest completing the corresponding Delve Tier.
 
 --- Indexed table of Delves Loot information (index = Tier).
 ---@type DelveLootInfo[]
 Config.DELVES_LOOT_INFO_DATA = {
     [1] = {
-        bountifulLvl = 655,
-        vaultLvl = 668
+        bountifulLvl = 220,
+        vaultLvl = 233
     },
     [2] = {
-        bountifulLvl = 658,
-        vaultLvl = 668
+        bountifulLvl = 224,
+        vaultLvl = 237
     },
     [3] = {
-        bountifulLvl = 662,
-        vaultLvl = 671
+        bountifulLvl = 227,
+        vaultLvl = 240
     },
     [4] = {
-        bountifulLvl = 665,
-        vaultLvl = 681
+        bountifulLvl = 230,
+        vaultLvl = 243,
+        mapLvl = 237
     },
     [5] = {
-        bountifulLvl = 668,
-        vaultLvl = 688
+        bountifulLvl = 233,
+        vaultLvl = 246,
+        mapLvl = 243
     },
     [6] = {
-        bountifulLvl = 671,
-        vaultLvl = 691
+        bountifulLvl = 237,
+        vaultLvl = 253,
+        mapLvl = 246
     },
     [7] = {
-        bountifulLvl = 681,
-        vaultLvl = 691
+        bountifulLvl = 246,
+        vaultLvl = 256,
+        mapLvl = 250
     },
     [8] = {
-        bountifulLvl = 684,
-        vaultLvl = 694
+        bountifulLvl = 250,
+        vaultLvl = 259,
+        mapLvl = 259
     },
     [9] = {
-        bountifulLvl = 684,
-        vaultLvl = 694
+        bountifulLvl = 250,
+        vaultLvl = 259,
+        mapLvl = 259
     },
     [10] = {
-        bountifulLvl = 684,
-        vaultLvl = 694
+        bountifulLvl = 250,
+        vaultLvl = 259,
+        mapLvl = 259
     },
     [11] = {
-        bountifulLvl = 684,
-        vaultLvl = 694
+        bountifulLvl = 250,
+        vaultLvl = 259,
+        mapLvl = 259
     }
 }
 --#endregion

@@ -9,9 +9,6 @@
 	<Include file="Companion\ConfigWidget.xml" />
 	<Script file="Companion\ConfigWidget.lua" />
 
-	<Include file="LootInfo\LootInfoFrame.xml" />
-	<Script file="LootInfo\LootInfoFrame.lua" />
-
 	<Script file="GreatVault\GreatVault.lua" />
 	<Include file="GreatVault\GreatVaultDetailsItem.xml" />
 	<Script file="GreatVault\GreatVaultDetailsItem.lua" />
