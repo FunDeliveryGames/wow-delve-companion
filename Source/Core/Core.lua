@@ -1,7 +1,7 @@
 local addonName, AddonTbl = ...
 
 --- Addon master-table containing references to all components.
----@class DelveCompanion
+---@class (exact) DelveCompanion
 ---@field Logger Logger
 ---@field Config Config
 ---@field Lockit Lockit
@@ -127,34 +127,6 @@ function DelveCompanion:UpdateDelvesData(expansionLevel)
     end
 
     -- Logger:Log("Finished updating Delves data")
-end
-
---- Cache number of consumables (Keys, Shards, etc.) player has collected.
----@param self DelveCompanion
-function DelveCompanion:CacheCollectedConsumables()
-    -- [Restored Coffer Keys](https://www.wowhead.com/currency=3028/restored-coffer-key) player has got from Caches this week.
-    do
-        local keysCollected = 0
-        for _, questId in ipairs(self.Config.BOUNTIFUL_KEY_QUESTS_DATA) do
-            if C_QuestLog.IsQuestFlaggedCompleted(questId) then
-                keysCollected = keysCollected + 1
-            end
-        end
-
-        self.Variables.keysCollected = keysCollected
-    end
-
-    -- [Coffer Key Shards](https://www.wowhead.com/item=245653/coffer-key-shard) player has got from Caches this week.
-    do
-        local shardsCollected = 0
-        for _, questId in ipairs(self.Config.KEY_SHARD_QUESTS_DATA) do
-            if C_QuestLog.IsQuestFlaggedCompleted(questId) then
-                shardsCollected = shardsCollected + 1
-            end
-        end
-
-        self.Variables.shardsCollected = shardsCollected * DelveCompanion.Config.KEY_SHARDS_PER_CACHE
-    end
 end
 
 --- Check whether information about `Gilded Stash` can be retrieved.

@@ -151,7 +151,7 @@ local function AddMPEWaypoint(delveData)
         posY = poiInfo.position.y
     end
 
-    ---@class pinData From MapPinEnhanced -> pinFactory.lua
+    ---@class (exact) pinData From MapPinEnhanced -> pinFactory.lua
     ---@field mapID number
     ---@field x number x coordinate between 0 and 1
     ---@field y number y coordinate between 0 and 1

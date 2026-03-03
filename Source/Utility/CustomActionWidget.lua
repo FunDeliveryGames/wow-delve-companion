@@ -284,7 +284,7 @@ end
 --#region Xml annotations
 
 --- `DelveCompanionCustomActionWidgetTemplate`
----@class CustomActionWidgetXml : Frame
+---@class (exact) CustomActionWidgetXml : Frame
 ---@field Icon Texture
 ---@field CircleMask MaskTexture
 ---@field InteractionBlockedOverlay Texture

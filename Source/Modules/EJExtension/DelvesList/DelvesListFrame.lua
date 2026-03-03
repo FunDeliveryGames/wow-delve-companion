@@ -173,12 +173,12 @@ end
 
 --#region Xml annotations
 
----@class ModifiersContainerXml : HorizontalLayoutFrame
+---@class (exact) ModifiersContainerXml : HorizontalLayoutFrame
 ---@field ModifiersLabel FontString
 ---@field Nemesis CustomActionWidget
 
 --- `DelveCompanionDelvesListFrameTemplate`
----@class DelvesListXml : Frame
+---@class (exact) DelvesListXml : Frame
 ---@field Background Texture
 ---@field Title FontString
 ---@field KeysWidget CustomActionWidget

@@ -3,7 +3,7 @@
 --#region Addon annotations
 
 --- Utility class representing map coordinates.
----@class MapCoord
+---@class (exact) MapCoord
 ---@field x number X-coordinate on the map [0.0–100.0].
 ---@field y number Y-coordinate on the map [0.0–100.0].
 --#endregion
@@ -11,7 +11,7 @@
 --#region Blizzard tables annotations
 
 --- Format of elements in [EJ_TIER_DATA](https://www.townlong-yak.com/framexml/beta/Blizzard_EncounterJournal/Blizzard_EncounterJournal.lua#105) table
----@class EJTierData : table
+---@class (exact) EJTierData : table
 ---@field expansionLevel number Mapping to LE_EXPANSION as they don't match EJ Tiers.
 ---@field backgroundAtlas string Atlas ID of the background used for EJ frames for this expansion.
 --#endregion
@@ -77,6 +77,7 @@ local HorizontalLayoutMixin = {}
 ---@class LayoutChild Parameters and KeyValues added to frames put into LayoutMixin frames
 ---@field layoutIndex number KeyValue used to control frame order inside LayoutMixin frames.
 
+-- TODO: Add it to wiki?
 --- `WeeklyRewardMixin` ([Blizzard object](https://www.townlong-yak.com/framexml/live/Blizzard_WeeklyRewardsUtil/Blizzard_WeeklyRewardsUtil.lua#100)).
 ---@class WeeklyRewardMixin
 local WeeklyRewardMixin = {}

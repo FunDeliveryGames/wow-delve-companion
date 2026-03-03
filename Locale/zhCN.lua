@@ -86,7 +86,7 @@ Lockit.UI_SETTING_IN_DELVE_WIDGET_LAYOUT_OPTION_HORIZONTAL_DESCRIPTION = "按钮
 
 Lockit.UI_SETTINGS_SECTION_TITLE_CHARACTER = "角色设置"
 Lockit.UI_SETTING_TOOLTIP_EXTENSION_NAME = "额外提示信息"
-Lockit.UI_SETTING_TOOLTIP_EXTENSION_TOOLTIP = "在鼠标提示中显示额外信息（例如，本周宝箱里获取的 |cnITEM_EPIC_COLOR:修复的宝匣钥匙|r 数量）。"
+Lockit.UI_SETTING_TOOLTIP_EXTENSION_TOOLTIP = "Display additional information in tooltips (e.g., whether |cnITEM_EPIC_COLOR:Bounty Map|r has been looted this week)."
 Lockit.UI_SETTING_COMPANION_CONFIG_NAME = "地下堡伙伴配置控件"
 Lockit.UI_SETTING_COMPANION_CONFIG_TOOLTIP = "启用显示地下堡伙伴当前专精和珍玩的控件。\n可直接在地下堡面板修改地下堡伙伴的专精和珍玩。\n注意：布局类型不影响功能实现，仅涉及视觉排布方式。"
 Lockit.UI_SETTING_COMPANION_CONFIG_OPTION_HORIZONTAL_NAME = "水平布局"

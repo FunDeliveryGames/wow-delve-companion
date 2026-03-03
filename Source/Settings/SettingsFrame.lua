@@ -13,7 +13,7 @@ local Lockit = DelveCompanion.Lockit
 local STATIC_POPUP_ADDON_LINK_ID = "StaticPopup_DelveCompanionAddonLink"
 --#endregion
 
----@class AddonSettingsFrame : AddonSettingsFrameXml
+---@class (exact) AddonSettingsFrame : AddonSettingsFrameXml
 DelveCompanionSettingsFrameMixin = {}
 
 ---@param self MagicButton
@@ -93,32 +93,32 @@ StaticPopupDialogs[STATIC_POPUP_ADDON_LINK_ID] = {
 
 --#region Xml annotations
 
----@class AddonSettingsFrameTitlePanelXml : Frame
+---@class (exact) AddonSettingsFrameTitlePanelXml : Frame
 ---@field Text FontString
 ---@field Version FontString
 
----@class AddonSettingsFrameLocalizationElementXml : Frame
+---@class (exact) AddonSettingsFrameLocalizationElementXml : Frame
 ---@field FlagIcon Texture
 ---@field Name FontString
 
----@class AddonSettingsFrameLocalizationSectionXml : VerticalLayoutFrame
+---@class (exact) AddonSettingsFrameLocalizationSectionXml : VerticalLayoutFrame
 ---@field Title FontString
 ---@field ruRU AddonSettingsFrameLocalizationElementXml
 ---@field zhCN AddonSettingsFrameLocalizationElementXml
 ---@field zhTW AddonSettingsFrameLocalizationElementXml
 
----@class AddonSettingsFrameFooterLinksXml : HorizontalLayoutFrame
+---@class (exact) AddonSettingsFrameFooterLinksXml : HorizontalLayoutFrame
 ---@field Text FontString
 ---@field CurseForge MagicButton
 ---@field Wago MagicButton
 ---@field WoWInt MagicButton
 ---@field GitHub MagicButton
 
----@class AddonSettingsFrameFooterXml : Frame
+---@class (exact) AddonSettingsFrameFooterXml : Frame
 ---@field Links AddonSettingsFrameFooterLinksXml
 
 --- `DelveCompanionSettingsFrameTemplate`
----@class AddonSettingsFrameXml : Frame
+---@class (exact) AddonSettingsFrameXml : Frame
 ---@field TitlePanel AddonSettingsFrameTitlePanelXml
 ---@field LocalizationSection AddonSettingsFrameLocalizationSectionXml
 ---@field Footer AddonSettingsFrameFooterXml

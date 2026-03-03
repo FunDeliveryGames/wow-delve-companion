@@ -86,7 +86,7 @@ Lockit.UI_SETTING_IN_DELVE_WIDGET_LAYOUT_OPTION_HORIZONTAL_DESCRIPTION = "The bu
 
 Lockit.UI_SETTINGS_SECTION_TITLE_CHARACTER = "角色設置"
 Lockit.UI_SETTING_TOOLTIP_EXTENSION_NAME = "提示的額外資訊"
-Lockit.UI_SETTING_TOOLTIP_EXTENSION_TOOLTIP = "在提示中顯示額外資訊 (例如 本週收到的 |cnITEM_EPIC_COLOR:復原的寶庫鑰匙|r 的數量)。"
+Lockit.UI_SETTING_TOOLTIP_EXTENSION_TOOLTIP = "Display additional information in tooltips (e.g., whether |cnITEM_EPIC_COLOR:Bounty Map|r has been looted this week)."
 Lockit.UI_SETTING_COMPANION_CONFIG_NAME = "夥伴設置組件"
 Lockit.UI_SETTING_COMPANION_CONFIG_TOOLTIP = "探究介面: 啟用一個組件來顯示當前夥伴的專精與技能。\n它可用於直接從探究介面修改配置。"
 Lockit.UI_SETTING_COMPANION_CONFIG_OPTION_HORIZONTAL_NAME = "水平佈局"

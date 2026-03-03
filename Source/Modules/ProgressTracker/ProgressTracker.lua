@@ -17,7 +17,7 @@ local EVENT_FRAME_NAME = "DelveCompanionProgressTrackingFrame"
 local RESPAWN_SPELL = 433110
 --#endregion
 
----@class ProgressTracker
+---@class (exact) ProgressTracker
 ---@field eventFrame Frame
 ---@field isDelveInProgress boolean
 local ProgressTracker = {}

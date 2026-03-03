@@ -86,7 +86,7 @@ Lockit.UI_SETTING_IN_DELVE_WIDGET_LAYOUT_OPTION_HORIZONTAL_DESCRIPTION = "The bu
 
 Lockit.UI_SETTINGS_SECTION_TITLE_CHARACTER = "A nivel de personaje"
 Lockit.UI_SETTING_TOOLTIP_EXTENSION_NAME = "Información adicional en las descripciones emergentes"
-Lockit.UI_SETTING_TOOLTIP_EXTENSION_TOOLTIP = "Muestra información adicional en las descripciones emergentes (ej:, el número de |cnITEM_EPIC_COLOR:Llaves de arcas restauradas|r recibidas esta semana)."
+Lockit.UI_SETTING_TOOLTIP_EXTENSION_TOOLTIP = "Display additional information in tooltips (e.g., whether |cnITEM_EPIC_COLOR:Bounty Map|r has been looted this week)."
 Lockit.UI_SETTING_COMPANION_CONFIG_NAME = "Widget de configuración del compañero"
 Lockit.UI_SETTING_COMPANION_CONFIG_TOOLTIP = "Profundidades UI: Activa un widget que muestra la especialización y habilidades actuales del compañero.\nSe puede utilizar para modificar la configuración directamente desde Profundidades UI.\nNota: el tipo de diseño no afecta a la funcionalidad, solo a la disposición visual."
 Lockit.UI_SETTING_COMPANION_CONFIG_OPTION_HORIZONTAL_NAME = "Disposición horizontal"

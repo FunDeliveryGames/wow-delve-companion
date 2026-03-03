@@ -17,7 +17,7 @@ local DELVES_TAB_PARENT_KEY = "DelvesTab"
 local EJ_DELVES_TAB_BUTTON_ID = 8
 --#endregion
 
----@class DelvesList
+---@class (exact) DelvesList
 ---@field delvesMinTier number
 ---@field Frame DelvesListFrame
 ---@field TabButton Button

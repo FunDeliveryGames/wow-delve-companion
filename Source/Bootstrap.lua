@@ -8,7 +8,7 @@ local Logger = DelveCompanion.Logger
 ---@type Config
 local Config = DelveCompanion.Config
 
----@class Bootstrap
+---@class (exact) Bootstrap
 local Bootstrap = {}
 
 -- Check whether any optional dependencies are loaded.

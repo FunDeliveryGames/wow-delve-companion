@@ -6,7 +6,7 @@ local DelveCompanion = AddonTbl.DelveCompanion
 ---@type Logger
 local Logger = DelveCompanion.Logger
 
----@class DelveOBotWidget : DelveOBotWidgetXml
+---@class (exact) DelveOBotWidget : DelveOBotWidgetXml
 DelveCompanion_DelveOBotWidgetMixin = {}
 
 local widgetEvents = {

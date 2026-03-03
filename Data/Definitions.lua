@@ -71,7 +71,9 @@ Definitions.Links = {
     }
 }
 
----@class ButtonAlias
+---@class (exact) ButtonAlias
+---@field leftClick string
+---@field rightClick string
 Definitions.ButtonAlias = {
     leftClick = "LeftButton",
     rightClick = "RightButton"

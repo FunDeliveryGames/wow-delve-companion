@@ -86,7 +86,7 @@ Lockit.UI_SETTING_IN_DELVE_WIDGET_LAYOUT_OPTION_HORIZONTAL_DESCRIPTION = "Die Sc
 
 Lockit.UI_SETTINGS_SECTION_TITLE_CHARACTER = "Charakter-spezifische Einstellungen"
 Lockit.UI_SETTING_TOOLTIP_EXTENSION_NAME = "Tooltip-Zusatzinfo"
-Lockit.UI_SETTING_TOOLTIP_EXTENSION_TOOLTIP = "Zeigt zusätzliche Informationen in den Tooltips an (z.B. die Anzahl der |cnITEM_EPIC_COLOR:restaurierten Kastenschlüssel|r, die diese Woche erhalten wurden)."
+Lockit.UI_SETTING_TOOLTIP_EXTENSION_TOOLTIP = "Display additional information in tooltips (e.g., whether |cnITEM_EPIC_COLOR:Bounty Map|r has been looted this week)."
 Lockit.UI_SETTING_COMPANION_CONFIG_NAME = "Begleiter-Konfigurations-Widget"
 Lockit.UI_SETTING_COMPANION_CONFIG_TOOLTIP = "Tiefen-UI: Aktiviert ein Widget, das die aktuelle Spezialisierung und die Fähigkeiten des Begleiters anzeigt. Es kann verwendet werden, um die Konfiguration direkt von der Tiefen-UI aus zu ändern.\nHinweis: Der Layout-Typ hat keinen Einfluss auf die Funktionalität, nur auf die visuelle Anordnung."
 Lockit.UI_SETTING_COMPANION_CONFIG_OPTION_HORIZONTAL_NAME = "Horizontales Layout"

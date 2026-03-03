@@ -33,30 +33,17 @@ Config.DEFAULT_ACCOUNT_DATA = {
 --- Character Save Data
 ---@class (exact) DelveCompanionCharacterData
 ---@field keysCapTooltipEnabled boolean Whether to display extra info in tooltips. Bad naming, affects all tooltips, not only Restored Coffer Key.
----@field dashOverviewEnabled boolean [RETIRED] Overview section in Delves UI.
----@field gvDetailsEnabled boolean [RETIRED] Custom GV frame in Delves UI.
----@field displayCompanionConfig boolean [RETIRED] Whether to show Companion config in Delves UI.
----@field companionConfigLayout CompanionWidgetLayout [RETIRED] Type of layout used for Companion config in Delves UI.
 Config.DEFAULT_CHARACTER_DATA = {
-    keysCapTooltipEnabled = true,
-    dashOverviewEnabled = true,
-    gvDetailsEnabled = true,
-    displayCompanionConfig = true,
-    companionConfigLayout = DelveCompanion.Definitions.CompanionWidgetLayout.horizontal
+    keysCapTooltipEnabled = true
 }
 --#endregion
 
+--#region TWW legacy
 ---@type number Item ID of [Delve-O-Bot 7001](https://www.wowhead.com/item=230850/delve-o-bot-7001).
 Config.DELVE_O_BOT_ITEM_CODE = 230850
 
---#region Great Vault
-
----@type number Delves' Activity ID to retrieve Great Vault rewards state.
-Config.ACTIVITY_TYPE = Enum.WeeklyRewardChestThresholdType.World
----@type number Max tier of the Delve which upgrades Great Vault rewards.
-Config.GREAT_VAULT_UPGRADE_MAX_TIER = 8
----@type number Item ID of [Bountiful Coffer](https://www.wowhead.com/item=254250/bountiful-coffer).
-Config.BOUNTIFUL_COFFER_ITEM_CODE = 254250
+---@type number Item ID of [Radiant Echo](https://www.wowhead.com/item=246771/radiant-echo).
+Config.ECHO_ITEM_CODE = 246771
 --#endregion
 
 --#region Restored Coffer Key
@@ -68,29 +55,6 @@ Config.KEY_SHARDS_CURRENCY_CODE = 3310
 
 ---@type number Amount of [Coffer Key Shards](https://www.wowhead.com/item=236096/coffer-key-shard) required to assemble [Restored Coffer Key](https://www.wowhead.com/currency=3028/restored-coffer-key).
 Config.SHARDS_FOR_KEY = 100
----@type number Amount of [Coffer Key Shards](https://www.wowhead.com/item=236096/coffer-key-shard) player gets from a Cache like [Pinnacle Cache](https://www.wowhead.com/item=239118/pinnacle-cache).
-Config.KEY_SHARDS_PER_CACHE = 50
-
----@type table<number, number> Table of Quest IDs used to track [Restored Coffer Keys](https://www.wowhead.com/currency=3028/restored-coffer-key) player has received from Caches this week.
-Config.BOUNTIFUL_KEY_QUESTS_DATA = {
-    91175,
-    91176,
-    91177,
-    91178
-}
----@type table<number, number> Table of Caches containing [Restored Coffer Keys](https://www.wowhead.com/currency=3028/restored-coffer-key) (e.g. [Pinnacle Cache](https://www.wowhead.com/item=239118/pinnacle-cache)).
-Config.BOUNTIFUL_KEY_SOURCE_CACHES_DATA = {
-}
----@type table<number, number> Table of Quest IDs used to track [Coffer Key Shards](https://www.wowhead.com/item=245653/coffer-key-shard) player has received from Caches this week.
-Config.KEY_SHARD_QUESTS_DATA = {
-    84736,
-    84737,
-    84738,
-    84739
-}
----@type table<number, number> Table of Caches containing [Coffer Key Shards](https://www.wowhead.com/item=245653/coffer-key-shard).
-Config.KEY_SHARD_SOURCE_CACHES_DATA = {
-}
 --#endregion
 
 ---@type number Currency ID of [Untainted Mana-Crystals](https://www.wowhead.com/currency=3356/untainted-mana-crystals).
@@ -126,18 +90,6 @@ Config.BOUNTY_MAP_QUEST = 86371
 
 ---@type number Spell ID of [Gilded Stash](https://www.wowhead.com/spell=1216211/gilded-stash).
 Config.GILDED_STASH_SPELL_CODE = 1216211
----@type number [Gilded Stash](https://www.wowhead.com/spell=1216211/gilded-stash) player can open per week.
-Config.GILDED_STASH_WEEKLY_CAP = 3
---#endregion
-
---#region Delve-related entities which are updated every season
-
----@type number Item ID of [Radiant Echo](https://www.wowhead.com/item=246771/radiant-echo).
-Config.ECHO_ITEM_CODE = 246771
-
--- TODO: Remove or use for TWW widget if still available
----@type number Item ID of [Coffer Key Shard](https://www.wowhead.com/item=245653/coffer-key-shard).
-Config.KEY_SHARD_ITEM_CODE = 245653
 --#endregion
 
 --#region Seasonal modifiers
@@ -154,7 +106,7 @@ Config.AFFIXES = {
 }
 --#endregion
 
----@type table<number, number> Quest ID required to unlock Companions.
+---@type table<number, number> Quest ID required to unlock a Companion.
 Config.COMPANION_UNLOCK_QUEST = {
     [LE_EXPANSION_WAR_WITHIN] = 78464,
     [LE_EXPANSION_MIDNIGHT] = 86636

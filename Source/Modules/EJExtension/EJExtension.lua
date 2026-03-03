@@ -14,7 +14,7 @@ local Config = DelveCompanion.Config
 local EJ_TABS_COUNT = 8
 --#endregion
 
----@class EJExtension
+---@class (exact) EJExtension
 ---@field DelvesList DelvesList
 ---@field DelveEncounter DelveEncounter
 local EJExtension = {}

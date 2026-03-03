@@ -9,7 +9,7 @@ local CONTROL_SAVE_KEY = "logsEnabled"
 --#endregion
 
 --- Utility class for printing debug information.
----@class Logger
+---@class (exact) Logger
 ---@field logsEnabled boolean Top-level toggle to control logging
 local Logger = {}
 DelveCompanion.Logger = Logger
