@@ -53,10 +53,8 @@ function DelveEncounter:EncRewTrack_OnShowHook()
     end
 
     do
-        local isCompUnlocked = C_QuestLog.IsQuestFlaggedCompleted(
-            Config.COMPANION_UNLOCK_QUEST[tierData.expansionLevel])
-
-        if isCompUnlocked then
+        local traitTreeID = C_DelvesUI.GetTraitTreeForCompanion(companionID);
+        if C_Traits.GetConfigIDByTreeID(traitTreeID) then
             DelvesCompanionConfigurationFrame.playerCompanionID = companionID
             self.ConfigPanel:Show()
         end
@@ -70,16 +68,22 @@ function DelveEncounter:EncRewTrack_OnShowHook()
     end
 end
 
+--- Hides all addon-related frames.
 ---@param self DelveEncounter
-function DelveEncounter:EncRewTrack_OnHideHook()
-    -- Logger:Log("[DelveEncounter] EncRewTrack_OnHideHook...")
-
+function DelveEncounter:HideAll()
     self.ExpBar:Hide()
     self.ConfigPanel:Hide()
     self.BountifulFrame:Hide()
     self.ConsumablesFrame:Hide()
     self.GildedStashFrame:Hide()
     self.LootInfo:Hide()
+end
+
+---@param self DelveEncounter
+function DelveEncounter:EncRewTrack_OnHideHook()
+    -- Logger:Log("[DelveEncounter] EncRewTrack_OnHideHook...")
+
+    self:HideAll()
 end
 
 --- Initialize Delves list.
