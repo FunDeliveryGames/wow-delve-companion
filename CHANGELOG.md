@@ -1,5 +1,14 @@
 # Change Log
 
+## [2026.03.2] - 15 March 2026
+- Add a minimap icon for the addon.
+    - It's **disabled** by default. It can be toggled in the addon options.
+    - Clicking the icon opens the current season Delves encounter in the Adventure Guide.
+- Add slash commands (`/delvecompanion`, `/delvecomp`, `/delves`).
+    - All of them opens the current season Delves encounter in the Adventure Guide (the same behaviour as clicking the minimap icon).
+- Fixed an error occurred when interacting with the book next to Valeera in Silvermoon City.
+- Update localization.
+
 ## [2026.03.1] - 03 March 2026
 - **Loot Info**: Add a button to open a window with information about item levels gained from different Delve rewards.
 - Behind the scenes changes to support the full release of Midnight and TWW legacy.
