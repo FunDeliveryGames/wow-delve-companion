@@ -36,7 +36,7 @@ function DelveEncounter:EncRewTrack_OnShowHook()
     local tierData = GetEJTierData(EJ_GetCurrentTier())
 
     local progressFrame = self.EncounterRewardTrack:GetParent()
-    if progressFrame == nil or progressFrame.majorFactionData == nil then
+    if progressFrame == nil or progressFrame.majorFactionData == nil or progressFrame.majorFactionData.factionID == nil then
         return
     end
 
