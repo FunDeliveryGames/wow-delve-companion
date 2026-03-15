@@ -69,13 +69,13 @@ end
 ---@param addonName string
 ---@param buttonName string
 function DelveCompanion_CompartmentOnClick(addonName, buttonName)
-    if not (Settings and Settings.OpenToCategory) then
-        return
-    end
-
     if buttonName == Definitions.ButtonAlias.leftClick then
         DelveCompanion_CompartmentOpenDelvesInfo(LE_EXPANSION_MIDNIGHT)
     elseif buttonName == Definitions.ButtonAlias.rightClick then
+        if not (Settings and Settings.OpenToCategory) then
+            return
+        end
+
         Settings.OpenToCategory(AddonSettings.optionsCategory:GetID())
     end
 end
