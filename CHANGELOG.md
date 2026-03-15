@@ -2,7 +2,7 @@
 
 ## [2026.03.2] - 15 March 2026
 - Add a minimap icon for the addon.
-    - It's **disabled** by default. It can be toggled in the addon options.
+    - It's **__disabled__** by default. It can be toggled in the addon options.
     - Clicking the icon opens the current season Delves encounter in the Adventure Guide.
 - Add slash commands (`/delvecompanion`, `/delvecomp`, `/delves`).
     - All of them opens the current season Delves encounter in the Adventure Guide (the same behaviour as clicking the minimap icon).

@@ -40,6 +40,12 @@ local function convert_inline(line)
     -- Bold: **text**
     line = line:gsub("%*%*(.-)%*%*", "[b]%1[/b]")
 
+    -- Underline: __text__
+    line = line:gsub("%_%_(.-)%_%_", "[u]%1[/u]")
+
+    -- Italic: _text_
+    line = line:gsub("%_(.-)%_", "[i]%1[/i]")
+
     return line
 end
 
