@@ -47,7 +47,7 @@ Lockit.UI_BOUNTIFUL_KEYS_COUNT_CACHES_PREFIX = "宝箱里获取的钥匙数量"
 
 -- Compartment (these are shown hovering over the addon in the corresponding dropdown menu)
 
-Lockit.UI_COMPARTMENT_DESCRIPTION_LEFT_CLICK = "|cnGREEN_FONT_COLOR:左键|r 显示插件信息界面。"
+Lockit.UI_COMPARTMENT_DESCRIPTION_LEFT_CLICK = "|cnGREEN_FONT_COLOR:Left Click|r to open the current season Delves info."
 Lockit.UI_COMPARTMENT_DESCRIPTION_RIGHT_CLICK = "|cnGREEN_FONT_COLOR:右键|r 显示插件设置界面。"
 
 -- Settings
@@ -83,6 +83,8 @@ Lockit.UI_SETTING_IN_DELVE_WIDGET_LAYOUT_OPTION_VERTICAL_NAME = "垂直排列"
 Lockit.UI_SETTING_IN_DELVE_WIDGET_LAYOUT_OPTION_VERTICAL_DESCRIPTION = "按钮垂直排列。"
 Lockit.UI_SETTING_IN_DELVE_WIDGET_LAYOUT_OPTION_HORIZONTAL_NAME = "水平排列"
 Lockit.UI_SETTING_IN_DELVE_WIDGET_LAYOUT_OPTION_HORIZONTAL_DESCRIPTION = "按钮水平排列。"
+Lockit.UI_SETTING_MINIMAP_ICON_NAME = "Show Minimap Icon"
+Lockit.UI_SETTING_MINIMAP_ICON_TOOLTIP = "Display a minimap icon. It can be clicked to quickly access the current season Delves info."
 
 Lockit.UI_SETTINGS_SECTION_TITLE_CHARACTER = "角色设置"
 Lockit.UI_SETTING_TOOLTIP_EXTENSION_NAME = "额外提示信息"
