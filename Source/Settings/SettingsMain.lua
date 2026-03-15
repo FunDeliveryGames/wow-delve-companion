@@ -31,8 +31,13 @@ DelveCompanion.AddonSettings = AddonSettings
 function DelveCompanion_CompartmentSetTooltipContent(tooltip)
     GameTooltip_SetTitle(tooltip, Lockit.UI_ADDON_NAME, nil, true)
     GameTooltip_AddBlankLineToTooltip(tooltip)
-    GameTooltip_AddNormalLine(tooltip, Lockit.UI_COMPARTMENT_DESCRIPTION_LEFT_CLICK, true)
-    GameTooltip_AddNormalLine(tooltip, Lockit.UI_COMPARTMENT_DESCRIPTION_RIGHT_CLICK, true)
+
+    if InCombatLockdown() then
+        GameTooltip_AddErrorLine(tooltip, _G["ERR_AFFECTING_COMBAT"], true)
+    else
+        GameTooltip_AddNormalLine(tooltip, Lockit.UI_COMPARTMENT_DESCRIPTION_LEFT_CLICK, true)
+        GameTooltip_AddNormalLine(tooltip, Lockit.UI_COMPARTMENT_DESCRIPTION_RIGHT_CLICK, true)
+    end
 end
 
 ---@param expansion number LE_EXPANSION enum number of the expansion
@@ -69,6 +74,10 @@ end
 ---@param addonName string
 ---@param buttonName string
 function DelveCompanion_CompartmentOnClick(addonName, buttonName)
+    if InCombatLockdown() then
+        return
+    end
+
     if buttonName == Definitions.ButtonAlias.leftClick then
         DelveCompanion_CompartmentOpenDelvesInfo(LE_EXPANSION_MIDNIGHT)
     elseif buttonName == Definitions.ButtonAlias.rightClick then

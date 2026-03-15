@@ -219,7 +219,7 @@ function DelveEncounter:Init(JourneysFrame)
             button:SetTextToFit(_G["LOOT"])
 
             button:HookScript("OnClick", function()
-                if PlayerIsInCombat() then
+                if InCombatLockdown() then
                     return
                 end
 
