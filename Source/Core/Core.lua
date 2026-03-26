@@ -68,6 +68,10 @@ end
 function DelveCompanion:UpdateDelvesData(expansionLevel)
     -- self.Logger:Log("Start updating Delves data for expansion: %d...", expansionLevel)
 
+    if expansionLevel == nil then
+        return
+    end
+
     for _, delveData in pairs(self.Variables.delvesData[expansionLevel]) do
         local delveConfig = delveData.config
         local parentMapID = C_Map.GetMapInfo(delveConfig.uiMapID).parentMapID
