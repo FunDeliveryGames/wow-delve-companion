@@ -1,5 +1,10 @@
 # Change Log
 
+## [2026.03.3] - 28 March 2026
+- Update localization.
+- Workaround for errors which may happen in combat or being in the instanced content (Dungeons, Raids, etc.).
+- Fix more secret values issues.
+
 ## [2026.03.2] - 15 March 2026
 - Add a minimap icon for the addon.
     - It's **__disabled__** by default. It can be toggled in the addon options.
