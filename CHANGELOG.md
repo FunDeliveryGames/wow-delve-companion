@@ -2,7 +2,7 @@
 
 ## [2026.03.3] - 28 March 2026
 - Update localization.
-- Workaround for errors which may happen in combat or being in the instanced content (Dungeons, Raids, etc.).
+- Workaround for errors which may occur while in combat or in the instanced content (Dungeons, Raids, etc.).
 - Fix more secret values issues.
 
 ## [2026.03.2] - 15 March 2026
