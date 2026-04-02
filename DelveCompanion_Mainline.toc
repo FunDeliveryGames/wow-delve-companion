@@ -1,9 +1,9 @@
 ## Interface: 120005,120001
-## Author: FunDeliveryGames
 ## Version: v2026.03.3
 
-## IconTexture: interface/icons/ui_delves
 ## Title: Delve Companion
+## Author: FunDeliveryGames
+## IconTexture: interface/icons/ui_delves
 ## Notes: One-stop addon to make Delves experience even better!
 ## Notes-deDE: Addon um deine Tiefen-Erfahrung noch besser zu machen!
 ## Notes-ruRU: Универсальный аддон, который сделает игру в Вылазках еще лучше!
@@ -36,6 +36,7 @@
 ## X-Website: https://github.com/FunDeliveryGames/wow-delve-companion
 
 # Libs
+Libs\LibStub\LibStub.lua
 Libs\LibDataBroker-1.1\LibDataBroker-1.1.lua
 Libs\LibDBIcon-1.0\LibDBIcon-1.0.lua
 
