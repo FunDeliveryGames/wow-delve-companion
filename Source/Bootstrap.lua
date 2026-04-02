@@ -44,6 +44,7 @@ function Bootstrap:OnPlayerLogin()
 
     DelveCompanion.ProgressTracker:Init()
     DelveCompanion.InDelveWidget:Init()
+    DelveCompanion.GossipExtension:Init()
 
     DelveCompanion:InitDelvesData()
     DelveCompanion_TooltipExtension_Init()

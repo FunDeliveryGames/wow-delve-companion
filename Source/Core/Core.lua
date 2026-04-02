@@ -12,6 +12,7 @@ local addonName, AddonTbl = ...
 ---@field ProgressTracker ProgressTracker
 ---@field InDelveWidget InDelveWidget
 ---@field MinimapIcon DelveCompanionMinimapIcon
+---@field GossipExtension GossipExtension
 local DelveCompanion = {}
 AddonTbl.DelveCompanion = DelveCompanion
 

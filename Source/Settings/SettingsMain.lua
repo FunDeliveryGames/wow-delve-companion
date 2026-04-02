@@ -16,6 +16,9 @@ local Definitions = DelveCompanion.Definitions
 
 ---@type string
 local SETTING_PREFIX = tostring(addonName) .. "_"
+
+---@type string
+local BOUNTIFUL_ICON_SEQUENCE = "|A:delves-bountiful:16:16|a"
 --#endregion
 
 --- Class for managing addon settings.
@@ -201,6 +204,7 @@ function AddonSettings:RegisterAccountSettings(category, layout)
     --- Section header
     layout:AddInitializer(CreateSettingsListSectionHeaderInitializer(Lockit.UI_SETTINGS_SECTION_TITLE_ACCOUNT))
 
+    -- Info Widgets on Delves tab
     do
         local savedVarKey = "delvesListInfoWidgetsEnabled"
 
@@ -212,6 +216,7 @@ function AddonSettings:RegisterAccountSettings(category, layout)
         Settings.CreateCheckbox(category, setting, tooltip)
     end
 
+    -- Waypoint Tracking
     do
         local savedVarKey = "trackingType"
 
@@ -277,6 +282,7 @@ function AddonSettings:RegisterAccountSettings(category, layout)
         Settings.CreateDropdown(category, setting, GetDropdownOptions, tooltip)
     end
 
+    -- InDelveWidget
     do
         local controlSavedVarKey = "inDelveWidgetEnabled"
 
@@ -345,6 +351,7 @@ function AddonSettings:RegisterAccountSettings(category, layout)
         end
     end
 
+    -- Minimap Icon
     do
         local savedVarKey = "minimapIconEnabled"
 
@@ -354,6 +361,63 @@ function AddonSettings:RegisterAccountSettings(category, layout)
 
         local tooltip = Lockit.UI_SETTING_MINIMAP_ICON_TOOLTIP
         Settings.CreateCheckbox(category, setting, tooltip)
+    end
+
+    -- Delve Auto Enter
+    do
+        local controlSavedVarKey = "delveAutoEnterEnabled"
+
+        local controlSetting = self:RegisterSetting(category, controlSavedVarKey, savedVarTbl,
+            Config.DEFAULT_ACCOUNT_DATA.delveAutoEnterEnabled,
+            Lockit.UI_SETTING_DELVE_AUTO_ENTER_CONTROL_NAME, OnSettingChanged)
+
+        local controlTooltip = Lockit.UI_SETTING_DELVE_AUTO_ENTER_CONTROL_TOOLTIP
+        local controlInitializer = Settings.CreateCheckbox(category, controlSetting, controlTooltip)
+
+        local function IsModifiable()
+            return DelveCompanionAccountData.delveAutoEnterEnabled
+        end
+
+        do
+            local tierSavedVarKey = "delveAutoEnterTier"
+
+            local tierSetting = self:RegisterSetting(category, tierSavedVarKey, savedVarTbl,
+                Config.DEFAULT_ACCOUNT_DATA.delveAutoEnterTier,
+                _G["GARRISON_TIER"], OnSettingChanged)
+
+            local minTier, maxTier, step = 1, #Config.DELVES_LOOT_INFO_DATA, 1
+            local tierOptions = Settings.CreateSliderOptions(minTier, maxTier, step)
+            tierOptions:SetLabelFormatter(MinimalSliderWithSteppersMixin.Label.Right)
+
+            local tierTooltip = Lockit.UI_SETTING_DELVE_AUTO_ENTER_TIER_TOOLTIP
+
+            local tierInitializer = Settings.CreateSlider(category, tierSetting, tierOptions, tierTooltip)
+            tierInitializer:Indent()
+            tierInitializer:SetParentInitializer(controlInitializer, IsModifiable)
+        end
+
+        do
+            local delaySavedVarKey = "delveAutoEnterDelaySec"
+
+            local delaySetting = self:RegisterSetting(category, delaySavedVarKey, savedVarTbl,
+                Config.DEFAULT_ACCOUNT_DATA.delveAutoEnterDelaySec,
+                Lockit.UI_SETTING_DELVE_AUTO_ENTER_DELAY_NAME, OnSettingChanged)
+
+            local min, max, step = 1, 10, 1
+            local delayOptions = Settings.CreateSliderOptions(min, max, step)
+
+            local function Formatter(value)
+                return string.format(_G["D_SECONDS"], value)
+            end
+            delayOptions:SetLabelFormatter(MinimalSliderWithSteppersMixin.Label.Right, Formatter)
+
+            local delayTooltip = Lockit.UI_SETTING_DELVE_AUTO_ENTER_DELAY_TOOLTIP
+
+
+            local delayInitializer = Settings.CreateSlider(category, delaySetting, delayOptions, delayTooltip)
+            delayInitializer:Indent()
+            delayInitializer:SetParentInitializer(controlInitializer, IsModifiable)
+        end
     end
 end
 
@@ -410,7 +474,8 @@ function AddonSettings:Init()
     do
         local settingsFrame = CreateFrame("Frame", "$parent.DelveCompanionSettings", nil,
             "DelveCompanionSettingsFrameTemplate")
-        local root, _ = Settings.RegisterCanvasLayoutCategory(settingsFrame, Lockit.UI_ADDON_NAME)
+        local name = string.format("%s %s", Lockit.UI_ADDON_NAME, BOUNTIFUL_ICON_SEQUENCE)
+        local root, _ = Settings.RegisterCanvasLayoutCategory(settingsFrame, name)
         Settings.RegisterAddOnCategory(root)
         self.rootCategory = root
     end
