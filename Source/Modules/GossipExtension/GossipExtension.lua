@@ -10,7 +10,6 @@ local Config = DelveCompanion.Config
 ---@type Lockit
 local Lockit = DelveCompanion.Lockit
 
-
 --#region Constants
 
 ---@type string
@@ -21,6 +20,8 @@ local DELVE_PICKER_KIT = "delves-difficulty-picker"
 local LOOT_INFO_BUTTON_PARENT_KEY = "LootInfoButton"
 ---@type string
 local CANCEL_AUTO_ENTER_BUTTON_PARENT_KEY = "CancelAutoEnterButton"
+---@type string
+local AUTO_ENTER_CHECKBOX_PARENT_KEY = "AutoEnterCheckbox"
 
 ---@type number
 local AUTO_ENTER_COUNTDOWN_TICK_SEC = 1
@@ -33,6 +34,7 @@ local EXIT_TIMER_SEC = 10
 ---@field isDiffPickerSetupDone boolean
 ---@field LootInfoButton MagicButton
 ---@field CancelAutoEnterButton Button
+---@field AutoEnterCheckbox CheckButton
 ---@field autoEnterCancelled boolean
 ---@field exitTimer boolean
 local GossipExtension = {}
@@ -83,10 +85,12 @@ function GossipExtension:ProcessEvent(eventName, arg1, ...)
         end
 
         local isCompleted, isNemesis, isBountiful = self:GetDelveInfo()
-        if not isNemesis then
+        if DelveCompanionAccountData.displayStoryStatusInGossip and not isNemesis then
             self:DisplayStoryStatus(isCompleted)
         end
         self.LootInfoButton:SetShown(not isNemesis)
+        self.AutoEnterCheckbox:SetShown(not isNemesis)
+        self.AutoEnterCheckbox:SetChecked(DelveCompanionAccountData.delveAutoEnterEnabled)
         self:UpdateEnterButton(0)
 
         if DelveCompanionAccountData.delveAutoEnterEnabled then
@@ -103,7 +107,7 @@ function GossipExtension:ProcessEvent(eventName, arg1, ...)
                 and self:CanAutoEnter(tier, isBountiful)
 
             if canEnter then
-                Logger:Log("[GossipExtension] Can enter Tier %d", tier)
+                -- Logger:Log("[GossipExtension] Can enter Tier %d", tier)
 
                 local delay = DelveCompanionAccountData.delveAutoEnterDelaySec
                 if delay > 0 then
@@ -123,14 +127,16 @@ end
 function GossipExtension:SetupDiffPicker()
     self:CreateLootInfoButton()
     self:CreateAutoEnterCancelButton()
+    self:CreateAutoEnterCheckbox()
 
     DelvesDifficultyPickerFrame:HookScript("OnHide", function()
         self.exitTimer = false
         self.autoEnterCancelled = false
 
-        self.CancelAutoEnterButton:Hide()
         self.LootInfoButton:Hide()
         DelveCompanion:GetLootInfoFrame():Hide()
+        self.CancelAutoEnterButton:Hide()
+        self.AutoEnterCheckbox:Hide()
     end)
 
     self.isDiffPickerSetupDone = true
@@ -215,7 +221,7 @@ end
 ---@param isBountiful boolean Whether the Delve is Bountiful now.
 ---@return boolean canEnter Whether the Delve can be entered.
 function GossipExtension:CanAutoEnter(tier, isBountiful)
-    Logger:Log("[GossipExtension] Checking eligibility to enter Tier %d.", tier)
+    -- Logger:Log("[GossipExtension] Checking eligibility to enter Tier %d.", tier)
 
     local highestTier = self:GetHighestUnlockedTier()
     -- Logger:Log("[GossipExtension] Highest unlocked: Tier %d.", highestTier)
@@ -270,7 +276,7 @@ function GossipExtension:EnterWithDelay(delaySec, tier)
         return
     end
 
-    Logger:Log("[GossipExtension] Auto Enter countdown: %d.", delaySec)
+    -- Logger:Log("[GossipExtension] Auto Enter countdown: %d.", delaySec)
     self:UpdateEnterButton(delaySec)
 
     delaySec = delaySec - AUTO_ENTER_COUNTDOWN_TICK_SEC
@@ -290,7 +296,7 @@ function GossipExtension:EnterDelve(tier)
         return
     end
 
-    Logger:Log("[GossipExtension] Entering Tier %d...", tier)
+    -- Logger:Log("[GossipExtension] Entering Tier %d...", tier)
     C_GossipInfo.SelectOptionByIndex(tier - 1)
 end
 
@@ -334,7 +340,7 @@ end
 ---@param self GossipExtension
 function GossipExtension:CreateAutoEnterCancelButton()
     local button = CreateFrame("Button",
-        "$parent." .. CANCEL_AUTO_ENTER_BUTTON_PARENT_KEY,
+        "$DelveCompanion." .. CANCEL_AUTO_ENTER_BUTTON_PARENT_KEY,
         DelvesDifficultyPickerFrame,
         "UIPanelCloseButtonNoScripts")
     button:Hide()
@@ -347,6 +353,39 @@ function GossipExtension:CreateAutoEnterCancelButton()
 
     button:HookScript("OnClick", function()
         self:CancelAutoEnter()
+    end)
+end
+
+---@param self GossipExtension
+function GossipExtension:CreateAutoEnterCheckbox()
+    local cb = CreateFrame("CheckButton",
+        "$DelveCompanion." .. AUTO_ENTER_CHECKBOX_PARENT_KEY,
+        DelvesDifficultyPickerFrame,
+        "UICheckButtonTemplate"
+    )
+    self.AutoEnterCheckbox = cb
+    cb:SetPoint("BOTTOMLEFT", DelvesDifficultyPickerFrame, "BOTTOMLEFT", 0, 0)
+    cb.Text:SetWidth(75)
+    cb.Text:SetText(Lockit.UI_SETTING_DELVE_AUTO_ENTER_CONTROL_NAME)
+
+    cb:HookScript("OnShow", function()
+        cb:SetChecked(DelveCompanionAccountData.delveAutoEnterEnabled)
+    end)
+    cb:HookScript("OnEnter", function()
+        local tooltip = GameTooltip
+        tooltip:SetOwner(cb, "ANCHOR_TOP")
+        GameTooltip_SetTitle(tooltip,
+            Lockit.UI_SETTING_DELVE_AUTO_ENTER_CONTROL_NAME,
+            HIGHLIGHT_FONT_COLOR)
+        GameTooltip_AddNormalLine(tooltip, Lockit.UI_SETTING_DELVE_AUTO_ENTER_CONTROL_TOOLTIP, true)
+
+        tooltip:Show()
+    end)
+    cb:HookScript("OnLeave", function()
+        GameTooltip:Hide()
+    end)
+    cb:HookScript("OnClick", function()
+        DelveCompanionAccountData.delveAutoEnterEnabled = cb:GetChecked()
     end)
 end
 
@@ -378,7 +417,7 @@ end
 ---@param self GossipExtension
 function GossipExtension:CreateLootInfoButton()
     local button = CreateFrame("Button",
-        "$parent." .. LOOT_INFO_BUTTON_PARENT_KEY,
+        "$DelveCompanion." .. LOOT_INFO_BUTTON_PARENT_KEY,
         DelvesDifficultyPickerFrame,
         "DelveCompanionLootInfoButtonTemplate")
     button:Hide()

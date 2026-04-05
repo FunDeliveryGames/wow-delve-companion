@@ -159,7 +159,7 @@ end
 
 --#endregion
 
---- This callback will be invoked whenever a setting is modified.
+--- This callback will be invoked whenever any setting is modified.
 local function OnSettingChanged(setting, value)
     -- Logger:Log("[DelveCompanionSettings] OnChanged detected...")
 
@@ -203,6 +203,18 @@ function AddonSettings:RegisterAccountSettings(category, layout)
 
     --- Section header
     layout:AddInitializer(CreateSettingsListSectionHeaderInitializer(Lockit.UI_SETTINGS_SECTION_TITLE_ACCOUNT))
+
+    -- Minimap Icon
+    do
+        local savedVarKey = "minimapIconEnabled"
+
+        local setting = self:RegisterSetting(category, savedVarKey, savedVarTbl,
+            Config.DEFAULT_ACCOUNT_DATA.minimapIconEnabled,
+            Lockit.UI_SETTING_MINIMAP_ICON_NAME, OnSettingChanged)
+
+        local tooltip = Lockit.UI_SETTING_MINIMAP_ICON_TOOLTIP
+        Settings.CreateCheckbox(category, setting, tooltip)
+    end
 
     -- Info Widgets on Delves tab
     do
@@ -351,15 +363,15 @@ function AddonSettings:RegisterAccountSettings(category, layout)
         end
     end
 
-    -- Minimap Icon
+    -- Story Variant status in Delves' Gossip
     do
-        local savedVarKey = "minimapIconEnabled"
+        local savedVarKey = "displayStoryStatusInGossip"
 
         local setting = self:RegisterSetting(category, savedVarKey, savedVarTbl,
-            Config.DEFAULT_ACCOUNT_DATA.minimapIconEnabled,
-            Lockit.UI_SETTING_MINIMAP_ICON_NAME, OnSettingChanged)
+            Config.DEFAULT_ACCOUNT_DATA.displayStoryStatusInGossip,
+            Lockit.UI_SETTING_STORY_STATUS_IN_GOSSIP_NAME, OnSettingChanged)
 
-        local tooltip = Lockit.UI_SETTING_MINIMAP_ICON_TOOLTIP
+        local tooltip = Lockit.UI_SETTING_STORY_STATUS_IN_GOSSIP_TOOLTIP
         Settings.CreateCheckbox(category, setting, tooltip)
     end
 

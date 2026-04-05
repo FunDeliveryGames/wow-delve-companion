@@ -22,6 +22,7 @@ Config.DELVES_MIN_EXPANSION = LE_EXPANSION_WAR_WITHIN
 ---@field inDelveWidgetDisplayRule InDelveWidgetDisplayRule Where [InDelveWidget](lua://InDelveWidget) is displayed.
 ---@field inDelveWidgetLayout InDelveWidgetLayout How [InDelveWidget](lua://InDelveWidget) buttons are arranged.
 ---@field minimapIconEnabled boolean Whether a minimap icon is enabled.
+---@field displayStoryStatusInGossip boolean Whether to display Story Variant status in Delves' Gossip.
 ---@field delveAutoEnterEnabled boolean Whether to enter Delves automatically once Gossip is shown.
 ---@field delveAutoEnterTier number Delve Tier to enter.
 ---@field delveAutoEnterDelaySec number A delay in seconds before entering the Delve.
@@ -33,6 +34,7 @@ Config.DEFAULT_ACCOUNT_DATA = {
     inDelveWidgetDisplayRule = DelveCompanion.Definitions.InDelveWidgetDisplayRule.left,
     inDelveWidgetLayout = DelveCompanion.Definitions.InDelveWidgetLayout.vertical,
     minimapIconEnabled = false,
+    displayStoryStatusInGossip = true,
     delveAutoEnterEnabled = false,
     delveAutoEnterTier = 1,
     delveAutoEnterDelaySec = 3
