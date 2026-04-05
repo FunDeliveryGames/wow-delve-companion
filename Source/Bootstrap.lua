@@ -47,6 +47,7 @@ function Bootstrap:OnPlayerLogin()
     DelveCompanion.GossipExtension:Init()
 
     DelveCompanion:InitDelvesData()
+    DelveCompanion:UpdateDelvesData()
     DelveCompanion_TooltipExtension_Init()
 
     -- Logger:Log("[DelveCompanion Bootstrap] OnPlayerLogin finish")

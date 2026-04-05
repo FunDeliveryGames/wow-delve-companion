@@ -385,7 +385,7 @@ function AddonSettings:RegisterAccountSettings(category, layout)
                 Config.DEFAULT_ACCOUNT_DATA.delveAutoEnterTier,
                 _G["GARRISON_TIER"], OnSettingChanged)
 
-            local minTier, maxTier, step = 1, #Config.DELVES_LOOT_INFO_DATA, 1
+            local minTier, maxTier, step = 1, DelveCompanion:GetDelvesMaxTier(), 1
             local tierOptions = Settings.CreateSliderOptions(minTier, maxTier, step)
             tierOptions:SetLabelFormatter(MinimalSliderWithSteppersMixin.Label.Right)
 
@@ -403,8 +403,9 @@ function AddonSettings:RegisterAccountSettings(category, layout)
                 Config.DEFAULT_ACCOUNT_DATA.delveAutoEnterDelaySec,
                 Lockit.UI_SETTING_DELVE_AUTO_ENTER_DELAY_NAME, OnSettingChanged)
 
-            local min, max, step = 1, 10, 1
-            local delayOptions = Settings.CreateSliderOptions(min, max, step)
+            -- The actual range is based on common sense. 0 for players who don't want to wait at all. 7 - presumably enough for players who may want to cancel it.
+            local minDelaySec, maxDelaySec, step = 0, 7, 1
+            local delayOptions = Settings.CreateSliderOptions(minDelaySec, maxDelaySec, step)
 
             local function Formatter(value)
                 return string.format(_G["D_SECONDS"], value)

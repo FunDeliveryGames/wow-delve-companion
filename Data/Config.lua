@@ -621,7 +621,7 @@ Config.DELVES_CONFIG = {
 ---@field to number Right value of the range, inclusive.
 ---@field color colorRGBA Color for such an ilvl.
 
----@type LootRarity[]
+---@type table<number, LootRarity[]>
 Config.LOOT_RARITY = {
     [1] = {
         from = 220,
@@ -652,7 +652,7 @@ Config.LOOT_RARITY = {
 ---@field mapLvl number? Item Level player gets from the Bounty Map chest completing the corresponding Delve Tier. Can be nil because Bounty Map reward is unavailable for some tiers.
 
 --- Indexed table of Delves Loot information (index = Tier).
----@type DelveLootInfo[]
+---@type table<number, DelveLootInfo[]>
 Config.DELVES_LOOT_INFO_DATA = {
     [1] = {
         bountifulLvl = 220,
