@@ -403,8 +403,8 @@ function GossipExtension:DisplayStoryStatus(isCompleted)
     local sequence = isCompleted
         and string.format("|cnDIM_GREEN_FONT_COLOR:%s|r", Lockit.UI_DELVE_STORY_VARIANT_COMPLETED_SEQUENCE)
         or string.format("|cnWARNING_FONT_COLOR:%s|r", Lockit.UI_DELVE_STORY_VARIANT_NOT_COMPLETED_SEQUENCE)
-    local statusText = string.format("%s:\n%s", _G["STORY_PROGRESS"], sequence)
-    local descriptionText = string.format("%s\n\n%s", statusText, C_GossipInfo.GetCustomGossipDescriptionString())
+    local statusText = string.format("|cnHIGHLIGHT_FONT_COLOR:%s:|r\n%s", _G["STORY_PROGRESS"], sequence)
+    local descriptionText = string.format("%s\n\n%s", C_GossipInfo.GetCustomGossipDescriptionString(), statusText)
 
     DelvesDifficultyPickerFrame.Description:SetText(descriptionText)
 end
