@@ -354,6 +354,16 @@ function GossipExtension:CreateAutoEnterCancelButton()
     button:HookScript("OnClick", function()
         self:CancelAutoEnter()
     end)
+    button:HookScript("OnEnter", function()
+        local tooltip = GameTooltip
+        tooltip:SetOwner(button, "ANCHOR_TOP")
+        GameTooltip_AddInstructionLine(tooltip, Lockit.UI_DELVE_AUTO_ENTER_CANCEL_TOOLTIP_INSTRUCTION, true)
+
+        tooltip:Show()
+    end)
+    button:HookScript("OnLeave", function()
+        GameTooltip:Hide()
+    end)
 end
 
 ---@param self GossipExtension
