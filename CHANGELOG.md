@@ -1,5 +1,14 @@
 # Change Log
 
+## [2026.04.1] - 06 April 2026
+- Introduce an option to enter a Delve automatically reaching its entrance.
+    - It's **__disabled__** by default. It can be toggled in the addon options.
+    - There is an additional toggle in the window displayed entering a Delve. It can be used to quickly toggle the auto entering.
+- Highlight whether the active Story Variant has been completed or not (required for Delve Loremaster achievements) in the window displayed entering a Delve.
+    - It's **__enabled__** by default. It can be toggled in the addon options.
+- **Loot Info**: Add a button to open a window with information about item levels gained from different Delve rewards directly from the window displayed entering a Delve.
+- Embed LibStub to prevent related errors.
+
 ## [2026.03.3] - 28 March 2026
 - Update localization.
 - Workaround for errors which may occur while in combat or in the instanced content (Dungeons, Raids, etc.).
