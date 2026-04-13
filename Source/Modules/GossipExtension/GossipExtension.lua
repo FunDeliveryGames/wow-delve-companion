@@ -416,6 +416,8 @@ function GossipExtension:DisplayStoryStatus(isCompleted)
     local statusText = string.format("|cnHIGHLIGHT_FONT_COLOR:%s:|r\n%s", _G["STORY_PROGRESS"], sequence)
     local descriptionText = string.format("%s\n\n%s", C_GossipInfo.GetCustomGossipDescriptionString(), statusText)
 
+    local newHeight = DelvesDifficultyPickerFrame.Description:GetHeight() + 50
+    DelvesDifficultyPickerFrame.Description:SetHeight(newHeight)
     DelvesDifficultyPickerFrame.Description:SetText(descriptionText)
 end
 
