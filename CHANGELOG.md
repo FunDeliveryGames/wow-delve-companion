@@ -1,5 +1,10 @@
 # Change Log
 
+## [2026.04.2] - 19 April 2026
+- Improve Auto Enter checkbox in the window displayed entering a Delve. Now, it will display the Tier selected in AddOn Options to avoid disambiguation.
+- Disabled all tooltip modifications as an attempt to fix the annoying `MoneyFrame` taint issue. I do hope that it's the fix...
+- Update localization.
+
 ## [2026.04.1] - 06 April 2026
 - Introduce an option to enter a Delve automatically reaching its entrance.
     - It's **__disabled__** by default. It can be toggled in the addon options.
