@@ -42,6 +42,8 @@ Lockit.UI_LOOT_INFO_BUTTON_TOOLTIP_INSTRUCTION = "<Нажмите, чтобы о
 Lockit.UI_LOOT_INFO_DESCRIPTION = "Завершите Вылазку, чтобы получить:"
 
 -- Delves Gossip
+Lockit.UI_DELVE_AUTO_ENTER_SELECTED_TIER = "Auto Enter (Tier %d)" -- %d is a Tier number (1-11).
+Lockit.UI_DELVE_AUTO_ENTER_INFO = "The selected Tier can be changed in Addon Options."
 Lockit.UI_DELVE_AUTO_ENTER_CANCEL_TOOLTIP_INSTRUCTION = "<Нажмите, чтобы отменить автоматический ввод>"
 
 -- Информация о ключах
