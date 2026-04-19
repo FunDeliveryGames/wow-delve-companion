@@ -1,14 +1,10 @@
 **A new update** has arrived!
 ***
-**Version [2026.04.1]**:<br>
-![Improved Delve entrance window](https://media.forgecdn.net/attachments/1218457/changelog/changelog_6e060d41-6faa-4d8f-ab13-470cc58c99c5.png)
-- Introduce an option to enter a Delve automatically reaching its entrance.
-    - It's **__disabled__** by default. It can be toggled in the addon options.
-    - There is an additional toggle in the window displayed entering a Delve. It can be used to quickly toggle the auto entering.
-- Highlight whether the active Story Variant has been completed or not (required for Delve Loremaster achievements) in the window displayed entering a Delve.
-    - It's **__enabled__** by default. It can be toggled in the addon options.
-- **Loot Info**: Add a button to open a window with information about item levels gained from different Delve rewards directly from the window displayed entering a Delve.
-- Embed LibStub to prevent related errors.
+**Version [2026.04.2]**:<br>
+- Improve Auto Enter checkbox in the window displayed entering a Delve. Now, it will display the Tier selected in AddOn Options to avoid disambiguation.<br>
+![Better Auto Enter checkbox](https://media.forgecdn.net/attachments/1218457/changelog/changelog_462ad63b-7e6a-484b-a157-2e85bfe40728.png)
+- Disabled all tooltip modifications as an attempt to fix the annoying `MoneyFrame` taint issue. I do hope that it's the fix...
+- Update localization.
 ***
 [Full versions history](https://github.com/FunDeliveryGames/wow-delve-companion/blob/main/CHANGELOG.md)<br>
 [Report an issue](https://github.com/FunDeliveryGames/wow-delve-companion/issues)
