@@ -42,8 +42,8 @@ Lockit.UI_LOOT_INFO_BUTTON_TOOLTIP_INSTRUCTION = "<Нажмите, чтобы о
 Lockit.UI_LOOT_INFO_DESCRIPTION = "Завершите Вылазку, чтобы получить:"
 
 -- Delves Gossip
-Lockit.UI_DELVE_AUTO_ENTER_SELECTED_TIER = "Auto Enter (Tier %d)" -- %d is a Tier number (1-11).
-Lockit.UI_DELVE_AUTO_ENTER_INFO = "The selected Tier can be changed in Addon Options."
+Lockit.UI_DELVE_AUTO_ENTER_SELECTED_TIER = "Автоматический вход (уровень %d)" -- %d - это уровень Вылазки (1-11).
+Lockit.UI_DELVE_AUTO_ENTER_INFO = "Выбранный уровень можно изменить в настройках аддона."
 Lockit.UI_DELVE_AUTO_ENTER_CANCEL_TOOLTIP_INSTRUCTION = "<Нажмите, чтобы отменить автоматический ввод>"
 
 -- Информация о ключах
@@ -96,7 +96,7 @@ Lockit.UI_SETTING_DELVE_AUTO_ENTER_CONTROL_NAME = "Автоматический 
 Lockit.UI_SETTING_DELVE_AUTO_ENTER_CONTROL_TOOLTIP = "Автоматически входить в Вылазку при приближении к её входу.\n\nВылазка не будет открыта, если:\n- Этот уровень сложности ещё не разблокирован.\n- Это Вылазка Немезиды.\n- Это Многообещающая вылазка, но у Вас нет |cnITEM_EPIC_COLOR:Отреставрированный ключ от сундука|r или достаточного количества |cnITEM_SUPERIOR_COLOR:Осколок ключа от сундука|r для его создания."
 Lockit.UI_SETTING_DELVE_AUTO_ENTER_TIER_TOOLTIP = "Уровень Вылазки для входа."
 Lockit.UI_SETTING_DELVE_AUTO_ENTER_DELAY_NAME = "Задержка перед входом"
-Lockit.UI_SETTING_DELVE_AUTO_ENTER_DELAY_TOOLTIP = "A Delve will be entered with a delay (in seconds).\n\nThere is a button in the window displayed entering a Delve. It can be clicked to cancel the auto entering before the delay countdown elapsed."
+Lockit.UI_SETTING_DELVE_AUTO_ENTER_DELAY_TOOLTIP = "Вход в Вылазку будет осуществлен с задержкой (в секундах).\n\nВ окне, отображаемом при входе в Вылазку, есть кнопка. Нажав на неё, можно отменить автоматический вход до истечения обратного отсчета задержки."
 
 Lockit.UI_SETTINGS_SECTION_TITLE_CHARACTER = "Параметры персонажа"
 Lockit.UI_SETTING_TOOLTIP_EXTENSION_NAME = "Дополнительная информация в подсказках"
