@@ -14,6 +14,14 @@
 ---@class (exact) EJTierData : table
 ---@field expansionLevel number Mapping to LE_EXPANSION as they don't match EJ Tiers.
 ---@field backgroundAtlas string Atlas ID of the background used for EJ frames for this expansion.
+
+--- Format of elements in [ITEM_QUALITY_COLORS](https://www.townlong-yak.com/framexml/latest/Blizzard_Colors/ColorManager.lua#19) table
+---@class (exact) ItemQualityColorData : table
+---@field r number
+---@field g number
+---@field b number
+---@field hex string Color HEX markup
+---@field color colorRGBA
 --#endregion
 
 --#region FrameXML annotations

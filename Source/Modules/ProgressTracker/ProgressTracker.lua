@@ -40,7 +40,7 @@ local baseEvents = {
 
 ---@param self ProgressTracker
 function ProgressTracker:Init()
-    Logger:Log("[ProgressTracker] Init started...")
+    -- Logger:Log("[ProgressTracker] Init started...")
 
     local frame = CreateFrame("Frame", EVENT_FRAME_NAME, UIParent)
     frame:RegisterEvent("SCENARIO_UPDATE")
