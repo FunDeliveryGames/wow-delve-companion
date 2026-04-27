@@ -1,5 +1,9 @@
 # Change Log
 
+## [2026.04.3] - 28 April 2026
+- Fix Auto Enter feature after 12.0.5 update.
+- AddOn now tolerates Color Overrides for item qualities set in Game Options. E.g. Loot Info now displays proper colours instead of generic ones.
+
 ## [2026.04.2] - 19 April 2026
 - Improve Auto Enter checkbox in the window displayed entering a Delve. Now, it will display the Tier selected in AddOn Options to avoid disambiguation.
 - Disabled all tooltip modifications as an attempt to fix the annoying `MoneyFrame` taint issue. I do hope that it's the fix...
