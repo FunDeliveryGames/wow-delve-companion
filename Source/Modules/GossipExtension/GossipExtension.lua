@@ -61,14 +61,12 @@ function GossipExtension:Init()
 
     do
         ---@param owner GossipExtension
-        local function OnDelveInProgressChanged(owner)
-            if not DelveCompanion.ProgressTracker.isDelveInProgress then
-                self:StartExitTimer()
-            end
+        local function OnDelveExited(owner)
+            owner:StartExitTimer()
         end
 
-        EventRegistry:RegisterCallback(DelveCompanion.Definitions.Events.PROGRESS_TRACKER.DELVE_IN_PROGRESS,
-            OnDelveInProgressChanged, self)
+        EventRegistry:RegisterCallback(DelveCompanion.Definitions.Events.PROGRESS_TRACKER.DELVE_EXITED,
+            OnDelveExited, self)
     end
 end
 
