@@ -178,8 +178,6 @@ end
 
 ---@param self CustomActionWidget
 function DelveCompanion_CustomActionWidgetMixin:OnLoad()
-    -- Logger:Log("CustomActionWidget `%s` OnLoad start", self:GetName())
-
     self.Icon:SetSize(self.iconSizeX, self.iconSizeY)
     self.Label:SetShown(self.displayLabel)
 
