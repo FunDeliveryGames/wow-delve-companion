@@ -1,5 +1,9 @@
 # Change Log
 
+## [2026.05.1] - 12 May 2026
+- **QoL**: Display information about available Slash Commands in AddOn Options.
+- ToC for 12.0.7.
+
 ## [2026.04.3] - 28 April 2026
 - Fix Auto Enter feature after 12.0.5 update.
 - AddOn now tolerates Color Overrides for item qualities set in Game Options. E.g. Loot Info will display proper colours instead of generic ones.
