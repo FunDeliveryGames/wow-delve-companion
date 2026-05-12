@@ -88,7 +88,7 @@ function DelveCompanion_CompartmentOnClick(addonName, buttonName)
             return
         end
 
-        Settings.OpenToCategory(AddonSettings.optionsCategory:GetID())
+        Settings.OpenToCategory(AddonSettings.rootCategory:GetID())
     end
 end
 

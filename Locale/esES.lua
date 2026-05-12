@@ -28,6 +28,7 @@ Lockit.UI_DELVE_INSTANCE_BUTTON_TOOLTIP_NEMESIS_TWW_S1 = "Nemesis: |cnHIGHLIGHT_
 Lockit.UI_DELVE_INSTANCE_BUTTON_TOOLTIP_NEMESIS_TWW_S2 = "Nemesis: |cnHIGHLIGHT_FONT_COLOR:The Underpin|r~The War Within Season 2"
 Lockit.UI_DELVE_INSTANCE_BUTTON_TOOLTIP_NEMESIS_TWW_S3 = "Nemesis: |cnHIGHLIGHT_FONT_COLOR:Ky'Veza|r~The War Within Season 3"
 Lockit.UI_DELVE_INSTANCE_BUTTON_TOOLTIP_NEMESIS_MIDNIGHT_S1 = "Nemesis: |cnHIGHLIGHT_FONT_COLOR:Nullaeus|r~Midnight Season 1"
+-----
 
 -- Delves UI
 
@@ -62,9 +63,9 @@ Lockit.UI_SETTING_DELVE_PROGRESS_WIDGETS_NAME = "Información sobre el progreso 
 Lockit.UI_SETTING_DELVES_LIST_INFO_WIDGETS_TOOLTIP = "Lista de profundidades: Mostrar el progreso de los logros para cada profundidad (Historias y Cofres)."
 Lockit.UI_SETTING_WAYPOINT_TRACKING_TYPE_NAME = "Tipo de seguimiento de puntos de referencia"
 Lockit.UI_SETTING_WAYPOINT_TRACKING_TYPE_TOOLTIP_START = "Selecciona qué tipo de puntos de referencia se utilizan para la navegación.\n\nPosibles opciones:"
-Lockit.UI_SETTING_WAYPOINT_TRACKING_TYPE_TOOLTIP_BLIZZARD = "- Marca de mapa de Blizzard (La navegación predeterminada dentro del juego)."
-Lockit.UI_SETTING_WAYPOINT_TRACKING_TYPE_TOOLTIP_TOMTOM = "- TomTom Waypoints."
-Lockit.UI_SETTING_WAYPOINT_TRACKING_TYPE_TOOLTIP_MPE = "- MapPinEnhanced Waypoints."
+Lockit.UI_SETTING_WAYPOINT_TRACKING_TYPE_TOOLTIP_BLIZZARD = "   • Marca de mapa de Blizzard (La navegación predeterminada dentro del juego)."
+Lockit.UI_SETTING_WAYPOINT_TRACKING_TYPE_TOOLTIP_TOMTOM = "   • TomTom Waypoints."
+Lockit.UI_SETTING_WAYPOINT_TRACKING_TYPE_TOOLTIP_MPE = "   • MapPinEnhanced Waypoints."
 Lockit.UI_SETTING_WAYPOINT_TRACKING_TYPE_TOOLTIP_TOMTOM_UNAVAILABLE_FORMAT = "%s (%s)."
 Lockit.UI_SETTING_WAYPOINT_TRACKING_OPTION_BLIZZARD_NAME = "Blizzard"
 Lockit.UI_SETTING_WAYPOINT_TRACKING_OPTION_BLIZZARD_DESCRIPTION = "Utilizar marca de mapa de Blizzard."
@@ -93,7 +94,7 @@ Lockit.UI_SETTING_STORY_STATUS_IN_GOSSIP_TOOLTIP = "Highlight whether the active
 Lockit.UI_SETTING_MINIMAP_ICON_NAME = "Show Minimap Icon"
 Lockit.UI_SETTING_MINIMAP_ICON_TOOLTIP = "Display a minimap icon. It can be clicked to quickly access the current season Delves info."
 Lockit.UI_SETTING_DELVE_AUTO_ENTER_CONTROL_NAME = "Auto Enter Delves"
-Lockit.UI_SETTING_DELVE_AUTO_ENTER_CONTROL_TOOLTIP = "Enter a Delve automatically reaching its entrance.\n\nThe Delve won't be entered if:\n- The Tier has not been unlocked yet.\n- It's a Nemesis Delve.\n- It's a Bountiful Delve but you don't have a |cnIQ4:Restored Coffer Key|r nor enough |cnIQ3:Coffer Key Shards|r to assemble the key."
+Lockit.UI_SETTING_DELVE_AUTO_ENTER_CONTROL_TOOLTIP = "Enter a Delve automatically reaching its entrance.\n\nThe Delve won't be entered if:\n   • The Tier has not been unlocked yet.\n   • It's a Nemesis Delve.\n   • It's a Bountiful Delve but you don't have a |cnIQ4:Restored Coffer Key|r nor enough |cnIQ3:Coffer Key Shards|r to assemble the key."
 Lockit.UI_SETTING_DELVE_AUTO_ENTER_TIER_TOOLTIP = "Delve Tier to enter."
 Lockit.UI_SETTING_DELVE_AUTO_ENTER_DELAY_NAME = "Enter Delay"
 Lockit.UI_SETTING_DELVE_AUTO_ENTER_DELAY_TOOLTIP = "A Delve will be entered with a delay (in seconds).\n\nThere is a button in the window displayed entering a Delve. It can be clicked to cancel the auto entering before the delay countdown elapsed."
@@ -116,6 +117,11 @@ Lockit.UI_SETTING_LOGS_NAME = "Enable Debug Logs"
 Lockit.UI_SETTING_LOGS_TOOLTIP = "Allows to print debug logs in the chat. Used for development and testing purposes."
 
 Lockit.UI_SETTINGS_TRANSLATION_TITLE = "Agradecimiento especial por contribuir en la traducción para:"
+
+-- The following strings are joined into a list using "\n" (a new line) as a delimiter.
+Lockit.UI_SETTINGS_SLASH_CMD_TEXT = "Slash Commands:"
+Lockit.UI_SETTINGS_SLASH_CMD_SHOWDELVES = "   • |cnNORMAL_FONT_COLOR:/delvecompanion|r or |cnNORMAL_FONT_COLOR:/delvecomp|r or |cnNORMAL_FONT_COLOR:/delves|r: Opens the current season Delves encounter in the Adventure Guide (the same behaviour as clicking the minimap icon)." -- The commands themselves should NOT be translated.
+-----
 
 Lockit.UI_SETTINGS_LINKS_TITLE = "Enlaces:"
 Lockit.UI_SETTINGS_ADDON_LINK_TOOLTIP_CURSEFORGE = "Click para copiar la URL de la página del complemento en |cnNORMAL_FONT_COLOR:CurseForge|r."
