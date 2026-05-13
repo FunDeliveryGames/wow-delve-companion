@@ -119,8 +119,8 @@ Lockit.UI_SETTING_LOGS_TOOLTIP = "Позволяет выводить отлад
 Lockit.UI_SETTINGS_TRANSLATION_TITLE = "Особая благодарность за помощь с переводом:"
 
 -- The following strings are joined into a list using "\n" (a new line) as a delimiter.
-Lockit.UI_SETTINGS_SLASH_CMD_TEXT = "Slash Commands:"
-Lockit.UI_SETTINGS_SLASH_CMD_SHOWDELVES = "   • |cnNORMAL_FONT_COLOR:/delvecompanion|r or |cnNORMAL_FONT_COLOR:/delvecomp|r or |cnNORMAL_FONT_COLOR:/delves|r: Opens the current season Delves encounter in the Adventure Guide (the same behaviour as clicking the minimap icon)." -- The commands themselves should NOT be translated.
+Lockit.UI_SETTINGS_SLASH_CMD_TEXT = "Слэш-команды:"
+Lockit.UI_SETTINGS_SLASH_CMD_SHOWDELVES = "   • |cnNORMAL_FONT_COLOR:/delvecompanion|r или |cnNORMAL_FONT_COLOR:/delvecomp|r или |cnNORMAL_FONT_COLOR:/delves|r: Открывает доступ к текущему сезону Вылазок в руководстве по приключениям (аналогично нажатию на значок миникарты)."
 -----
 
 Lockit.UI_SETTINGS_LINKS_TITLE = "Ссылки"
