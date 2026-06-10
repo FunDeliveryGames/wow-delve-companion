@@ -43,6 +43,8 @@ Lockit.UI_COMMON_MISSING_ADDON_TITLE = "Required AddOn is missing: %s" -- `%s`: 
 
 -- Delves List
 
+Lockit.UI_DELVES_LIST_MODIFIERS_TEXT = _G["MODIFIERS_COLON"]
+
 Lockit.UI_DELVE_INSTANCE_BUTTON_TOOLTIP_CLICK_INSTRUCTION = "<Shift click to set waypoint to the delve>"
 Lockit.UI_DELVE_INSTANCE_BUTTON_TOOLTIP_CURRENT_TEXT = "Waypoint set."
 Lockit.UI_DELVE_INSTANCE_BUTTON_TOOLTIP_CLEAR_INSTRUCTION = "<Shift click to clear the waypoint>"

@@ -32,6 +32,8 @@ Lockit.UI_DELVE_INSTANCE_BUTTON_TOOLTIP_NEMESIS_MIDNIGHT_S1 = "宿敌：|cnHIGHL
 
 -- Delves UI
 
+Lockit.UI_DELVES_LIST_MODIFIERS_TEXT = "词缀："
+
 Lockit.UI_GILDED_STASH_CANNOT_RETRIEVE_DATA_TWW = "在卡兹阿加地区时可知晓鎏金藏匿物进度"
 Lockit.UI_GILDED_STASH_CANNOT_RETRIEVE_DATA_MIDNIGHT = "在奎尔萨拉斯地区时可知晓鎏金藏匿物进度"
 Lockit.UI_GILDED_STASH_BOUNTIFUL_NOTE = "仅出现在 |cnNORMAL_FONT_COLOR:难度 11|r 丰裕地下堡|A:delves-bountiful:16:16|a。"

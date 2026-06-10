@@ -32,6 +32,8 @@ Lockit.UI_DELVE_INSTANCE_BUTTON_TOOLTIP_NEMESIS_MIDNIGHT_S1 = "Nemesis: |cnHIGHL
 
 -- Delves UI
 
+Lockit.UI_DELVES_LIST_MODIFIERS_TEXT = _G["MODIFIERS_COLON"]
+
 Lockit.UI_GILDED_STASH_CANNOT_RETRIEVE_DATA_TWW = "Besuche die Gebiete von Khaz Algar, um den Fortschritt zu sehen."
 Lockit.UI_GILDED_STASH_CANNOT_RETRIEVE_DATA_MIDNIGHT = "Besuche die Gebiete von Quel'Thalas, um den Fortschritt zu sehen."
 Lockit.UI_GILDED_STASH_BOUNTIFUL_NOTE = "Erscheint nur in großzügigen Tiefen der |cnNORMAL_FONT_COLOR:Stufe 11|r |A:delves-bountiful:16:16|a."

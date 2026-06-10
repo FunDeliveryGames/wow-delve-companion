@@ -32,6 +32,8 @@ Lockit.UI_DELVE_INSTANCE_BUTTON_TOOLTIP_NEMESIS_MIDNIGHT_S1 = "Немезида:
 
 -- Интерфейс вылазок
 
+Lockit.UI_DELVES_LIST_MODIFIERS_TEXT = _G["MODIFIERS_COLON"]
+
 Lockit.UI_GILDED_STASH_CANNOT_RETRIEVE_DATA_TWW = "Посетите Каз Алгар, чтобы увидеть прогресс"
 Lockit.UI_GILDED_STASH_CANNOT_RETRIEVE_DATA_MIDNIGHT = "Посетите Кель'Талас, чтобы увидеть прогресс"
 Lockit.UI_GILDED_STASH_BOUNTIFUL_NOTE = "Появляется только на |cnNORMAL_FONT_COLOR:11-м Уровне|r Многообещающих Вылазок|A:delves-bountiful:16:16|a."
