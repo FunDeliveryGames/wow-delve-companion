@@ -1,5 +1,9 @@
 # Change Log
 
+## [2026.06.1] - 10 June 2026
+- Attemp to fix secret values error caused by the addon.
+- Locale tweak for zhCN.
+
 ## [2026.05.1] - 12 May 2026
 - **QoL**: Display information about available Slash Commands in AddOn Options.
 - ToC for 12.0.7.
