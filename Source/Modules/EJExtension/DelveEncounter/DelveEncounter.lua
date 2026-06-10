@@ -142,7 +142,7 @@ function DelveEncounter:CreateLootInfoButton(parent)
             return
         end
 
-        GameTooltip:Hide()
+        securecall(GameTooltip.Hide, GameTooltip)
         local lootFrame = DelveCompanion:GetLootInfoFrame()
         lootFrame:ClearAllPoints()
         lootFrame:SetPoint("BOTTOMLEFT", EncounterJournal, "BOTTOMRIGHT", -5, 0)
@@ -163,7 +163,7 @@ function DelveEncounter:CreateLootInfoButton(parent)
     end)
 
     button:HookScript("OnLeave", function()
-        GameTooltip:Hide()
+        securecall(GameTooltip.Hide, GameTooltip)
     end)
 end
 

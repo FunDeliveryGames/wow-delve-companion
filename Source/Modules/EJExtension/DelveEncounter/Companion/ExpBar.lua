@@ -104,7 +104,7 @@ end
 function DelveCompanion_JourneyEncounterExpBarMixin:OnLeave()
     -- Logger:Log("[JourneyEncounterExpBar] OnLeave start")
 
-    GameTooltip:Hide()
+    securecall(GameTooltip.Hide, GameTooltip)
 end
 
 --#region XML Annotations

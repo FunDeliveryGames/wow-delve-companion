@@ -276,7 +276,7 @@ end
 
 ---@param self CustomActionWidget
 function DelveCompanion_CustomActionWidgetMixin:OnLeave()
-    GameTooltip:Hide()
+    securecall(GameTooltip.Hide, GameTooltip)
 end
 
 --#region Xml annotations

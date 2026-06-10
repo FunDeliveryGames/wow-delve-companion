@@ -338,7 +338,7 @@ function GossipExtension:CreateAutoEnterCancelButton()
         tooltip:Show()
     end)
     button:HookScript("OnLeave", function()
-        GameTooltip:Hide()
+        securecall(GameTooltip.Hide, GameTooltip)
     end)
 end
 
@@ -367,7 +367,7 @@ function GossipExtension:CreateAutoEnterCheckbox()
         tooltip:Show()
     end)
     cb:HookScript("OnLeave", function()
-        GameTooltip:Hide()
+        securecall(GameTooltip.Hide, GameTooltip)
     end)
     cb:HookScript("OnClick", function()
         DelveCompanionAccountData.delveAutoEnterEnabled = cb:GetChecked()
@@ -419,7 +419,7 @@ function GossipExtension:CreateLootInfoButton()
             return
         end
 
-        GameTooltip:Hide()
+        securecall(GameTooltip.Hide, GameTooltip)
         local lootFrame = DelveCompanion:GetLootInfoFrame()
         lootFrame:ClearAllPoints()
         lootFrame:SetPoint("BOTTOMLEFT", DelvesDifficultyPickerFrame, "BOTTOMRIGHT", 0, 0)
@@ -440,7 +440,7 @@ function GossipExtension:CreateLootInfoButton()
     end)
 
     button:HookScript("OnLeave", function()
-        GameTooltip:Hide()
+        securecall(GameTooltip.Hide, GameTooltip)
     end)
 end
 

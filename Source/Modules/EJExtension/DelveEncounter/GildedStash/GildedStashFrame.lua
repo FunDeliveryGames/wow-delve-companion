@@ -27,7 +27,7 @@ function DelveCompanion_DelveEncounterGildedStashFrameMixin:PrepareContainerTool
         tooltip:Show()
     end)
     self.Widget:HookScript("OnLeave", function()
-        GameTooltip:Hide()
+        securecall(GameTooltip.Hide, GameTooltip)
     end)
 end
 

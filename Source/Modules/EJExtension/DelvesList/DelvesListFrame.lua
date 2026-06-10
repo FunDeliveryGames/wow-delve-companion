@@ -7,6 +7,8 @@ local DelveCompanion = AddonTbl.DelveCompanion
 local Logger = DelveCompanion.Logger
 ---@type Config
 local Config = DelveCompanion.Config
+---@type Lockit
+local Lockit = DelveCompanion.Lockit
 
 --#region Constants
 
@@ -89,7 +91,7 @@ function DelveCompanion_DelvesListFrameMixin:OnLoad()
     self.KeysWidget:SetFrameInfo(DelveCompanion.Definitions.CodeType.Currency, Config.BOUNTIFUL_KEY_CURRENCY_CODE)
 
     do
-        self.ModifiersContainer.ModifiersLabel:SetText(_G["MODIFIERS_COLON"])
+        self.ModifiersContainer.ModifiersLabel:SetText(Lockit.UI_DELVES_LIST_MODIFIERS_TEXT)
         self.ModifiersContainer.Nemesis.Icon:SetPoint("CENTER", -1, 1)
         self.ModifiersContainer:Layout()
     end

@@ -70,7 +70,7 @@ end
 ---@param addonName string
 ---@param menuButtonFrame table
 function DelveCompanion_CompartmentOnLeave(addonName, menuButtonFrame)
-    GameTooltip:Hide()
+    securecall(GameTooltip.Hide, GameTooltip)
 end
 
 --- Used in `TOC` file for [AddonCompartmentFunc](https://warcraft.wiki.gg/wiki/TOC_format#AddonCompartmentFunc).

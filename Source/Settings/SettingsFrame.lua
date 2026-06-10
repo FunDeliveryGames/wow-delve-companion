@@ -37,7 +37,7 @@ local function SetupLinkButton(self, data, tooltipText)
         tooltip:Show()
     end)
     self:SetScript("OnLeave", function()
-        GameTooltip:Hide()
+        securecall(GameTooltip.Hide, GameTooltip)
     end)
 end
 
