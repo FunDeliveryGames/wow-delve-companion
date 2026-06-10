@@ -128,7 +128,7 @@ function DelveCompanion:UpdateDelvesData()
         end
     end
 
-    -- Logger:Log("Finished updating Delves data")
+    -- self.Logger:Log("Finished updating Delves data")
 end
 
 --- Check whether information about `Gilded Stash` can be retrieved.
