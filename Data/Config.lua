@@ -83,14 +83,15 @@ Config.LOOT_RADAR_ITEM_CODE = 244193
 
 ---@type table<number, number> Item ID of a Nemesis lure.
 Config.NEMESIS_LURE = {
-    [LE_EXPANSION_MIDNIGHT] = 253342 -- Beacon of Hope
+    [LE_EXPANSION_MIDNIGHT] = DelveCompanion.Variables.isPTR and 275910 -- Scalebound Herald's Flute
+        or 253342                                                       -- Beacon of Hope
 }
 
 --#region Bounty Map.
 
 ---@type table<number, number> Item ID of Bounty Map.
 Config.BOUNTY_MAPS = {
-    [LE_EXPANSION_MIDNIGHT] = 252415 -- Trovehunter's Bounty
+    [LE_EXPANSION_MIDNIGHT] = DelveCompanion.Variables.isPTR and 274374 or 252415 -- Trovehunter's Bounty
 }
 ---@type table<number, number> Spell ID of the active Bounty Map.
 Config.BOUNTY_ACTIVATED_SPELL = {
@@ -116,7 +117,7 @@ Config.GILDED_STASH_SPELL_CODE = 1216211
 
 ---@type DelveConfigAffixes Spell ID of Delve affixes.
 Config.AFFIXES = {
-    -- [Nemesis Strongbox](https://www.wowhead.com/spell=1239535/nemesis-strongbox).
+    -- [Nemesis Strongbox](https://www.wowhead.com/spell=1270179/nemesis-strongbox).
     Nemesis = {
         [LE_EXPANSION_MIDNIGHT] = 1270179
     }
@@ -131,8 +132,9 @@ Config.COMPANION_UNLOCK_QUEST = {
 
 ---@type table<number, number> [Faction IDs](https://wago.tools/db2/Faction) of the Delves seasons. Used on the Journeys tab.
 Config.DELVE_FACTION_ID = {
-    [LE_EXPANSION_WAR_WITHIN] = 2722, -- TWW Season 3
-    [LE_EXPANSION_MIDNIGHT] = 2742    -- Midnight Season 1
+    [LE_EXPANSION_WAR_WITHIN] = 2722,                                         -- TWW Season 3
+    [LE_EXPANSION_MIDNIGHT] = DelveCompanion.Variables.isPTR and 2796 or 2742 -- Midnight Season 2 or 1
+    -- 2839 -- From Wago, seems to be for Season 3
 }
 
 --#region Delves data
@@ -163,6 +165,12 @@ Config.DELVE_MAPS = {
         2424, -- Isle of Quel'Danas
     }
 }
+
+if DelveCompanion.Variables.isPTR then
+    table.insert(Config.DELVE_MAPS[LE_EXPANSION_MIDNIGHT], 1,
+        2512 -- The Coiled Isle
+    )
+end
 
 ---@class (exact) DelveConfigAchievements
 ---@field story number?
@@ -610,12 +618,70 @@ Config.DELVES_CONFIG = {
                 nemesisSolo = 61799
             },
             nemesisInfo = {
-                isCurrentSeason = true,
+                isCurrentSeason = DelveCompanion.Variables.isPTR and false or true,
                 delveTooltipLine = DelveCompanion.Lockit.UI_DELVE_INSTANCE_BUTTON_TOOLTIP_NEMESIS_MIDNIGHT_S1
             }
         },
     }
 }
+
+if DelveCompanion.Variables.isPTR then
+    local delves = Config.DELVES_CONFIG[LE_EXPANSION_MIDNIGHT]
+
+    table.insert(delves,
+        -- Gnarldor Isle
+        {
+            uiMapID = 2635,
+            poiIDs = {
+                regular = 8761,
+                bountiful = 8760
+            },
+            gildedStashUiWidgetID = 7591,
+            atlasBgID = "delve-entrance-background-ulatek02",
+            achievements = {
+                chest = 63170,
+                story = 63437
+            }
+        }
+    )
+    table.insert(delves,
+        -- The Ring of Glory
+        {
+            uiMapID = 2633,
+            poiIDs = {
+                regular = 8764,
+                bountiful = 8763
+            },
+            gildedStashUiWidgetID = 7591,
+            atlasBgID = "delve-entrance-background-ulatek01",
+            achievements = {
+                chest = 63171,
+                story = 63436
+            }
+        }
+    )
+    table.insert(delves,
+        -- Venomfall Deeps
+        {
+            uiMapID = 2634,
+            poiIDs = {
+                regular = 8779
+            },
+            coordinates = {
+                x = 51.23,
+                y = 31.04
+            },
+            atlasBgID = "delve-entrance-background-nemesis",
+            achievements = {
+                nemesisSolo = 63333
+            },
+            nemesisInfo = {
+                isCurrentSeason = true,
+                delveTooltipLine = DelveCompanion.Lockit.UI_DELVE_INSTANCE_BUTTON_TOOLTIP_NEMESIS_MIDNIGHT_S2
+            }
+        }
+    )
+end
 
 --- Table to assign a color depending on ilvl.
 ---@class (exact) LootRarity

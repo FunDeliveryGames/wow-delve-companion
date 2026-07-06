@@ -17,6 +17,6 @@ local Variables = {
     maxLevelReached = false,
     tomTomAvailable = false,
     mpeAvailable = false,
-    isPTR = (select(4, GetBuildInfo())) >= 120007
+    isPTR = (select(4, GetBuildInfo())) >= 120100
 }
 DelveCompanion.Variables = Variables

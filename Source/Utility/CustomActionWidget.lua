@@ -77,6 +77,12 @@ function DelveCompanion_CustomActionWidgetMixin:DisableInteraction()
 end
 
 ---@param self CustomActionWidget
+---@param desaturated boolean
+function DelveCompanion_CustomActionWidgetMixin:SetDesaturated(desaturated)
+    self.Icon:SetDesaturated(desaturated)
+end
+
+---@param self CustomActionWidget
 ---@param text string|integer|number
 function DelveCompanion_CustomActionWidgetMixin:SetLabelText(text)
     if text then
