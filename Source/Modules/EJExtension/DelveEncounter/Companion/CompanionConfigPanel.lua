@@ -40,20 +40,20 @@ function DelveCompanion_CompanionConfigPanelMixin:OnLoad()
     self:SetSlot(self.RoleSlot)
     self:SetSlot(self.CombatSlot)
     self:SetSlot(self.UtilitySlot)
-    self.fixedWidth = self.RoleSlot:GetWidth() * SLOT_SCALE * 3
 
+    -- Don't forget to fix XML after 12.1 release
     if DelveCompanion.Variables.isPTR then
         self:SetSlot(self.FlavorSlot)
-        self.FlavorSlot:Show() -- Don't forget to fix XML after 12.1 release
-        self.fixedWidth = self.RoleSlot:GetWidth() * SLOT_SCALE * 4
     end
-
-    self:Layout()
 end
 
 ---@param self CompanionConfigPanel
 function DelveCompanion_CompanionConfigPanelMixin:OnShow()
     -- Logger:Log("[CompanionConfigPanel] OnShow start")
+
+    -- Number of visible slots varies depending on the expansion and game version
+    self.fixedWidth = self.RoleSlot:GetWidth() * SLOT_SCALE * #self:GetLayoutChildren()
+    self:Layout()
 end
 
 --#region XML Annotations

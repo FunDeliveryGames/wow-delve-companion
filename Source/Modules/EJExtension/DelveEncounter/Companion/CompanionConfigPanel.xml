@@ -39,4 +39,37 @@
             <OnShow method="OnShow" />
         </Scripts>
     </Frame>
+
+    <Frame name="DelveCompanionCompanionConfigPanelTemplateOld"
+        mixin="DelveCompanion_CompanionConfigPanelMixin"
+        inherits="HorizontalLayoutFrame" hidden="true" virtual="true">
+        <KeyValues>
+            <KeyValue key="align" value="center" type="string" />
+            <KeyValue key="spacing" value="-5" type="number" />
+        </KeyValues>
+        <Frames>
+            <Button parentKey="RoleSlot" inherits="CompanionConfigSlotTemplate">
+                <KeyValues>
+                    <KeyValue key="layoutIndex" value="1" type="number" />
+                    <KeyValue type="string" key="type" value="Role" />
+                </KeyValues>
+            </Button>
+            <Button parentKey="CombatSlot" inherits="CompanionConfigSlotTemplate">
+                <KeyValues>
+                    <KeyValue key="layoutIndex" value="2" type="number" />
+                    <KeyValue type="string" key="type" value="Combat" />
+                </KeyValues>
+            </Button>
+            <Button parentKey="UtilitySlot" inherits="CompanionConfigSlotTemplate">
+                <KeyValues>
+                    <KeyValue key="layoutIndex" value="3" type="number" />
+                    <KeyValue type="string" key="type" value="Utility" />
+                </KeyValues>
+            </Button>
+        </Frames>
+        <Scripts>
+            <OnLoad method="OnLoad" />
+            <OnShow method="OnShow" />
+        </Scripts>
+    </Frame>
 </Ui>

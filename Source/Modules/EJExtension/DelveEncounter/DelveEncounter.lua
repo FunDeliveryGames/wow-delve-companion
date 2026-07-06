@@ -64,6 +64,9 @@ function DelveEncounter:Refresh()
         return
     end
 
+    ---@type number
+    local expansion = self:GetExpansionForFaction(factionID)
+
     -- Check whether the opened encounter is Delves, not something else (e.g. Prey).
     if not C_MajorFactions.ShouldUseJourneyRewardTrack(factionID) then
         return
@@ -78,12 +81,13 @@ function DelveEncounter:Refresh()
         local traitTreeID = C_DelvesUI.GetTraitTreeForCompanion(companionID)
         if C_Traits.GetConfigIDByTreeID(traitTreeID) then
             DelvesCompanionConfigurationFrame.playerCompanionID = companionID
+            if DelveCompanion.Variables.isPTR then
+                self.ConfigPanel.FlavorSlot:SetShown(expansion == LE_EXPANSION_MIDNIGHT)
+            end
             self.ConfigPanel:Show()
         end
     end
 
-    ---@type number
-    local expansion = self:GetExpansionForFaction(factionID)
     do
         self.BountifulFrame:Show()
         self.ConsumablesFrame:Show()
@@ -220,9 +224,10 @@ function DelveEncounter:Init(JourneysFrame)
         bar:SetPoint("TOP", compName, "BOTTOM", 0, 2)
         self.ExpBar = bar
 
+        local template = DelveCompanion.Variables.isPTR and "DelveCompanionCompanionConfigPanelTemplate"
+            or "DelveCompanionCompanionConfigPanelTemplateOld"
         ---@type CompanionConfigPanel
-        local configPanel = CreateFrame("Frame", "$parent.ConfigPanel", encRewardTrack,
-            "DelveCompanionCompanionConfigPanelTemplate")
+        local configPanel = CreateFrame("Frame", "$parent.ConfigPanel", encRewardTrack, template)
         configPanel:SetPoint("TOP", bar, "BOTTOM", 0, 3)
         self.ConfigPanel = configPanel
     end
