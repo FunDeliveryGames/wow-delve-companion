@@ -9,7 +9,7 @@ local Logger = DelveCompanion.Logger
 --- Companion experience bar to display the current level progress.
 ---@class (exact) JourneyEncounterExpBar : JourneyEncounterExpBarXml
 ---@field factionID number Faction ID of a Companion to show Exp for.
----@field rankInfo FriendshipReputationRankInfo
+---@field rankInfo FriendshipReputationRankInfo Current/Max level info of the companion.
 ---@field repInfo FriendshipReputationInfo
 DelveCompanion_JourneyEncounterExpBarMixin = {}
 

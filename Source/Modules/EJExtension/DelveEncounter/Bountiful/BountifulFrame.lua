@@ -39,8 +39,7 @@ function DelveCompanion_DelveEncounterBountifulFrameMixin:OnShow()
     DelveCompanion:UpdateDelvesData()
 
     ---@type number
-    local expansion = DelveCompanion.EJExtension.DelveEncounter:GetExpansionForFaction(
-        DelveCompanion.EJExtension.DelveEncounter:GetFactionIDs())
+    local expansion = DelveCompanion.EJExtension.DelveEncounter:GetFactionData().expansionID
 
     for index, delveData in ipairs(DelveCompanion.Variables.delvesData[expansion]) do
         if delveData.isBountiful then

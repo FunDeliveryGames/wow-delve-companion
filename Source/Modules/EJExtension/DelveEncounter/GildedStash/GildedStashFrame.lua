@@ -14,45 +14,6 @@ local Lockit = DelveCompanion.Lockit
 ---@field tooltipDesc string Cached toltip text of `Gilded Stash`.
 DelveCompanion_DelveEncounterGildedStashFrameMixin = {}
 
---- Show tooltip hovering over `Gilded Stash` container.
----@param self DelveEncounterGildedStashFrame
-function DelveCompanion_DelveEncounterGildedStashFrameMixin:PrepareContainerTooltip()
-    self.Widget:HookScript("OnEnter", function()
-        local tooltip = GameTooltip
-        tooltip:SetOwner(self.Widget, "ANCHOR_TOP")
-
-        GameTooltip_AddNormalLine(tooltip, self.tooltipDesc, true)
-        GameTooltip_AddBlankLineToTooltip(tooltip)
-        GameTooltip_AddHighlightLine(tooltip, Lockit.UI_GILDED_STASH_BOUNTIFUL_NOTE, true)
-        tooltip:Show()
-    end)
-    self.Widget:HookScript("OnLeave", function()
-        securecall(GameTooltip.Hide, GameTooltip)
-    end)
-end
-
---- Attempt to get information about `Gilded Stash` using Delves' `UiWidgetID`.
----@param self DelveEncounterGildedStashFrame
----@param expansion number Current expansion opened in EJ
----@return SpellDisplayVisualizationInfo|nil # Returns the 1st found widget info. Or `nil` if any found.
-function DelveCompanion_DelveEncounterGildedStashFrameMixin:TryGetStashInfo(expansion)
-    if not DelveCompanion:CanRetrieveDelveWidgetIDInfo(expansion) then
-        return nil
-    end
-
-    for _, delveData in ipairs(DelveCompanion.Variables.delvesData[expansion]) do
-        local uiWidgetID = delveData.config.gildedStashUiWidgetID
-        if uiWidgetID then
-            local result = C_UIWidgetManager.GetSpellDisplayVisualizationInfo(uiWidgetID)
-            if result then
-                return result
-            end
-        end
-    end
-
-    return nil
-end
-
 ---@param self DelveEncounterGildedStashFrame
 function DelveCompanion_DelveEncounterGildedStashFrameMixin:OnLoad()
     -- Logger:Log("[DelveEncounterGildedStashFrame] OnLoad start")
@@ -71,15 +32,15 @@ end
 function DelveCompanion_DelveEncounterGildedStashFrameMixin:OnShow()
     -- Logger:Log("[DelveEncounterGildedStashFrame] OnShow start")
 
-    ---@type number
-    local expansion = DelveCompanion.EJExtension.DelveEncounter:GetExpansionForFaction(
-        DelveCompanion.EJExtension.DelveEncounter:GetFactionIDs())
+    local data = DelveCompanion.EJExtension.DelveEncounter:GetFactionData()
 
-    local stashDisplayInfo = self:TryGetStashInfo(expansion)
+    if not data then
+        return
+    end
+
+    local stashDisplayInfo = self:GetStashInfo(data.expansionID)
     if not stashDisplayInfo then
-        if expansion == LE_EXPANSION_MIDNIGHT then
-            self.ErrorLabel:SetText(Lockit.UI_GILDED_STASH_CANNOT_RETRIEVE_DATA_MIDNIGHT)
-        end
+        self.ErrorLabel:SetText(Lockit.UI_GILDED_STASH_CANNOT_RETRIEVE_DATA_MIDNIGHT)
         self.ErrorLabel:Show()
         self.Widget:Hide()
 
@@ -116,6 +77,45 @@ function DelveCompanion_DelveEncounterGildedStashFrameMixin:OnHide()
 
     self.Widget:Hide()
     self.ErrorLabel:Hide()
+end
+
+--- Show tooltip hovering over `Gilded Stash` container.
+---@param self DelveEncounterGildedStashFrame
+function DelveCompanion_DelveEncounterGildedStashFrameMixin:PrepareContainerTooltip()
+    self.Widget:HookScript("OnEnter", function()
+        local tooltip = GameTooltip
+        tooltip:SetOwner(self.Widget, "ANCHOR_TOP")
+
+        GameTooltip_AddNormalLine(tooltip, self.tooltipDesc, true)
+        GameTooltip_AddBlankLineToTooltip(tooltip)
+        GameTooltip_AddHighlightLine(tooltip, Lockit.UI_GILDED_STASH_BOUNTIFUL_NOTE, true)
+        tooltip:Show()
+    end)
+    self.Widget:HookScript("OnLeave", function()
+        securecall(GameTooltip.Hide, GameTooltip)
+    end)
+end
+
+--- Attempt to get information about `Gilded Stash` using Delves' `UiWidgetID`.
+---@param self DelveEncounterGildedStashFrame
+---@param expansion number Current expansion opened in EJ
+---@return SpellDisplayVisualizationInfo|nil # Returns the 1st found widget info. Or `nil` if any found.
+function DelveCompanion_DelveEncounterGildedStashFrameMixin:GetStashInfo(expansion)
+    if not DelveCompanion:CanRetrieveDelveWidgetIDInfo(expansion) then
+        return nil
+    end
+
+    for _, delveData in ipairs(DelveCompanion.Variables.delvesData[expansion]) do
+        local uiWidgetID = delveData.config.gildedStashUiWidgetID
+        if uiWidgetID then
+            local result = C_UIWidgetManager.GetSpellDisplayVisualizationInfo(uiWidgetID)
+            if result then
+                return result
+            end
+        end
+    end
+
+    return nil
 end
 
 --#region XML Annotations

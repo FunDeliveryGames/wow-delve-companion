@@ -108,6 +108,9 @@ Config.BOUNTY_MAP_QUEST = 86371
 
 ---@type number Spell ID of [Gilded Stash](https://www.wowhead.com/spell=1216211/gilded-stash).
 Config.GILDED_STASH_SPELL_CODE = 1216211
+
+---@type number Level required to unlock Gilded Stash reward.
+Config.GILDED_STASH_MYTH_JOURNEY_LEVEL_REQUIRED = 4
 --#endregion
 
 --#region Seasonal modifiers
@@ -130,12 +133,9 @@ Config.COMPANION_UNLOCK_QUEST = {
     [LE_EXPANSION_MIDNIGHT] = 86636
 }
 
----@type table<number, number> [Faction IDs](https://wago.tools/db2/Faction) of the Delves seasons. Used on the Journeys tab.
-Config.DELVE_FACTION_ID = {
-    [LE_EXPANSION_WAR_WITHIN] = 2722,                                         -- TWW Season 3
-    [LE_EXPANSION_MIDNIGHT] = DelveCompanion.Variables.isPTR and 2796 or 2742 -- Midnight Season 2 or 1
-    -- 2839 -- From Wago, seems to be for Season 3
-}
+---@type number [Faction ID](https://wago.tools/db2/Faction) of the current Delve season. Used for the Journeys tab.
+Config.DELVE_SEASON_FACTION_ID = DelveCompanion.Variables.isPTR and 2796 or 2742 -- Midnight
+-- 2839 -- From Wago, seems to be for Season 3
 
 --#region Delves data
 
