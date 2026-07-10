@@ -117,19 +117,14 @@ end
 function DelveEncounter:EncRewTrack_OnShowHook()
     -- Logger:Log("[DelveEncounter] EncRewTrack_OnShowHook...")
 
-    -- Journeys frame is very unoptimised at the moment.
+    -- Journeys frame is very unoptimised.
     -- This hook is triggered switching a table with the opened Delves encounter and returning back. But in fact, the Journeys list is shown, not the actual encounter.
-    -- The delayed refresh is a dirty workaround to avoid errors.
-    -- TODO: remove the timer if Blizzard fix the Journeys tab behaviour.
-    C_Timer.After(0.1, function()
-        self:Refresh()
-    end)
+    self:Refresh()
 end
 
 ---@param self DelveEncounter
 function DelveEncounter:EncRewTrack_OnHideHook()
     -- Logger:Log("[DelveEncounter] EncRewTrack_OnHideHook...")
-
     self:HideAll()
 end
 
@@ -189,7 +184,7 @@ function DelveEncounter:CreateLootInfoButton(parent)
 end
 
 ---@param self DelveEncounter
----@return MajorFactionData data Currently displayed faction data.
+---@return MajorFactionData data Currently displayed faction data. May return an empty table.
 function DelveEncounter:GetFactionData()
     return self.EncounterRewardTrack:GetParent().majorFactionData
 end
@@ -204,7 +199,7 @@ function DelveEncounter:Refresh()
     local expansion = data.expansionID
 
     -- Check whether the opened encounter is Delves, not something else (e.g. Prey).
-    if not C_MajorFactions.ShouldUseJourneyRewardTrack(data.factionID) then
+    if not data.factionID or not C_MajorFactions.ShouldUseJourneyRewardTrack(data.factionID) then
         return
     end
 

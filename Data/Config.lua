@@ -111,6 +111,9 @@ Config.GILDED_STASH_SPELL_CODE = 1216211
 
 ---@type number Level required to unlock Gilded Stash reward.
 Config.GILDED_STASH_MYTH_JOURNEY_LEVEL_REQUIRED = 4
+
+---@type number Level required to unlock Gilded Stash reward.
+Config.GILDED_STASH_MYHT_CRESTS = 5
 --#endregion
 
 --#region Seasonal modifiers
@@ -618,7 +621,7 @@ Config.DELVES_CONFIG = {
                 nemesisSolo = 61799
             },
             nemesisInfo = {
-                isCurrentSeason = DelveCompanion.Variables.isPTR and false or true,
+                isCurrentSeason = true,
                 delveTooltipLine = DelveCompanion.Lockit.UI_DELVE_INSTANCE_BUTTON_TOOLTIP_NEMESIS_MIDNIGHT_S1
             }
         },
@@ -627,6 +630,8 @@ Config.DELVES_CONFIG = {
 
 if DelveCompanion.Variables.isPTR then
     local delves = Config.DELVES_CONFIG[LE_EXPANSION_MIDNIGHT]
+
+    delves[#Config.DELVES_CONFIG[LE_EXPANSION_MIDNIGHT]].nemesisInfo.isCurrentSeason = false -- Don't forget to disable S1 after 12.1 release
 
     table.insert(delves,
         -- Gnarldor Isle
