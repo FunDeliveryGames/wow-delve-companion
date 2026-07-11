@@ -30,7 +30,7 @@
     </Frame>
 
     <Frame name="DelveCompanionLootInfoColumnHeadersTemplate" virtual="true">
-        <Size x="435" y="25" />
+        <Size x="540" y="25" />
         <Layers>
             <Layer level="OVERLAY">
                 <FontString parentKey="Tier" inherits="GameFontNormalMed2"
@@ -59,16 +59,22 @@
                             <KeyValue key="layoutIndex" value="1" type="number" />
                         </KeyValues>
                     </Frame>
-                    <Frame parentKey="Map"
+                    <Frame parentKey="Nemesis"
                         inherits="DelveCompanionLootInfoHeaderTemplate">
                         <KeyValues>
                             <KeyValue key="layoutIndex" value="2" type="number" />
                         </KeyValues>
                     </Frame>
-                    <Frame parentKey="Vault"
+                    <Frame parentKey="Map"
                         inherits="DelveCompanionLootInfoHeaderTemplate">
                         <KeyValues>
                             <KeyValue key="layoutIndex" value="3" type="number" />
+                        </KeyValues>
+                    </Frame>
+                    <Frame parentKey="Vault"
+                        inherits="DelveCompanionLootInfoHeaderTemplate">
+                        <KeyValues>
+                            <KeyValue key="layoutIndex" value="4" type="number" />
                         </KeyValues>
                     </Frame>
                 </Frames>
@@ -87,17 +93,29 @@
                     </Anchors>
                 </Texture>
                 <FontString parentKey="Text" inherits="GameFontHighlightMed2"
-                    justifyH="CENTER" justifyV="MIDDLE" spacing="5">
-                    <Anchors>
-                        <Anchor point="CENTER" x="5" />
-                    </Anchors>
+                    justifyH="CENTER" justifyV="MIDDLE" hidden="true">
                 </FontString>
             </Layer>
         </Layers>
+        <Frames>
+            <Frame parentKey="CrestWidget" inherits="DelveCompanionCustomActionWidgetTemplate"
+                hidden="true">
+                <Size x="20" y="20" />
+                <KeyValues>
+                    <KeyValue key="iconSizeX" value="18" type="number" />
+                    <KeyValue key="iconSizeY" value="18" type="number" />
+                    <KeyValue key="displayLabel" value="false" type="boolean" />
+                    <KeyValue key="useAutoScaling" value="false" type="boolean" />
+                    <KeyValue key="labelRelPoint" value="LEFT" type="string" />
+                    <KeyValue key="labelOffsetX" value="-5" type="number" />
+                    <KeyValue key="fontOverride" value="GameFontHighlight" type="string" />
+                </KeyValues>
+            </Frame>
+        </Frames>
     </Frame>
 
     <Frame name="DelveCompanionLootInfoRowTemplate" virtual="true">
-        <Size x="435" y="25" />
+        <Size x="540" y="25" />
         <Layers>
             <Layer level="OVERLAY">
                 <FontString parentKey="Tier" inherits="GameFontNormalMed2"
@@ -110,7 +128,7 @@
                 </FontString>
                 <Texture atlas="delves-companion-divider"
                     useAtlasSize="false">
-                    <Size x="400" y="5" />
+                    <Size x="505" y="5" />
                     <Anchors>
                         <Anchor point="TOP" />
                     </Anchors>
@@ -133,16 +151,22 @@
                             <KeyValue key="layoutIndex" value="1" type="number" />
                         </KeyValues>
                     </Frame>
-                    <Frame parentKey="Map"
+                    <Frame parentKey="Nemesis"
                         inherits="DelveCompanionLootInfoElementTemplate">
                         <KeyValues>
                             <KeyValue key="layoutIndex" value="2" type="number" />
                         </KeyValues>
                     </Frame>
-                    <Frame parentKey="Vault"
+                    <Frame parentKey="Map"
                         inherits="DelveCompanionLootInfoElementTemplate">
                         <KeyValues>
                             <KeyValue key="layoutIndex" value="3" type="number" />
+                        </KeyValues>
+                    </Frame>
+                    <Frame parentKey="Vault"
+                        inherits="DelveCompanionLootInfoElementTemplate">
+                        <KeyValues>
+                            <KeyValue key="layoutIndex" value="4" type="number" />
                         </KeyValues>
                     </Frame>
                 </Frames>
@@ -152,8 +176,8 @@
 
     <Frame name="DelveCompanionLootInfoFrameTemplate" inherits="DefaultPanelTemplate"
         mixin="DelveCompanion_LootInfoFrameMixin" enableMouse="true" hidden="true"
-        clampedToScreen="true" virtual="true">
-        <Size x="415" y="345" />
+        clampedToScreen="true" frameStrata="HIGH" virtual="true">
+        <Size x="540" y="345" />
         <Frames>
             <Button parentKey="CloseButton" inherits="UIPanelCloseButtonDefaultAnchors" />
             <Frame parentKey="ColumnHeaders" inherits="DelveCompanionLootInfoColumnHeadersTemplate">

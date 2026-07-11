@@ -687,6 +687,28 @@ if DelveCompanion.Variables.isPTR then
         }
     )
 end
+--#endregion
+
+---@type table<UpgradeTrackType, number>
+Config.UPGRADE_CRESTS = {
+    [DelveCompanion.Definitions.UpgradeTrackType.adventurer] = 3437,
+    [DelveCompanion.Definitions.UpgradeTrackType.veteran] = 3443,
+    [DelveCompanion.Definitions.UpgradeTrackType.champion] = 3444,
+    [DelveCompanion.Definitions.UpgradeTrackType.hero] = 3445,
+    [DelveCompanion.Definitions.UpgradeTrackType.myth] = 3441
+}
+
+if not DelveCompanion.Variables.isPTR then
+    Config.UPGRADE_CRESTS = {
+        [DelveCompanion.Definitions.UpgradeTrackType.adventurer] = 3383,
+        [DelveCompanion.Definitions.UpgradeTrackType.veteran] = 3341,
+        [DelveCompanion.Definitions.UpgradeTrackType.champion] = 3343,
+        [DelveCompanion.Definitions.UpgradeTrackType.hero] = 3345,
+        [DelveCompanion.Definitions.UpgradeTrackType.myth] = 3347
+    }
+end
+
+--#region Delves Loot
 
 --- Table to assign a color depending on ilvl.
 ---@class (exact) LootRarity
@@ -718,66 +740,223 @@ Config.LOOT_RARITY = {
     }
 }
 
+---@class (exact) DelveLootCrestsData
+---@field track UpgradeTrackType
+---@field count number
+
+---@class (exact) DelveLootData
+---@field itemLevel number?
+---@field crests DelveLootCrestsData?
+
 --- Table with Delve Loot information
 ---@class (exact) DelveLootInfo
----@field bountifulLvl number Item Level player gets opening [Bountiful Coffer](https://www.wowhead.com/item=228942/bountiful-coffer).
----@field vaultLvl number Item Level player gets from the Great Vault completing the corresponding Delve Tier.
----@field mapLvl number? Item Level player gets from the Bounty Map chest completing the corresponding Delve Tier. Can be nil because Bounty Map reward is unavailable for some tiers.
+---@field bountiful DelveLootData Loot player gets opening [Bountiful Coffer](https://www.wowhead.com/item=228942/bountiful-coffer).
+---@field nemesis DelveLootData? Loot player gets from the [Nemesis Strongbox](https://www.wowhead.com/spell=1270179/nemesis-strongbox) completing the corresponding Delve Tier. Can be nil because provides only crests info at the moment. And they are not granted on some tiers.
+---@field map DelveLootData? Loot player gets from the Bounty Map chest completing the corresponding Delve Tier. Can be nil because Bounty Map reward is unavailable for some tiers.
+---@field vault DelveLootData? Loot player gets from the Great Vault completing the corresponding Delve Tier.
 
 --- Indexed table of Delves Loot information (index = Tier).
 ---@type DelveLootInfo[]
 Config.DELVES_LOOT_INFO_DATA = {
     [1] = {
-        bountifulLvl = 220,
-        vaultLvl = 233
+        bountiful = {
+            itemLevel = 220
+        },
+        vault = {
+            itemLevel = 233
+        }
     },
     [2] = {
-        bountifulLvl = 224,
-        vaultLvl = 237
+        bountiful = {
+            itemLevel = 224
+        },
+        vault = {
+            itemLevel = 237
+        }
     },
     [3] = {
-        bountifulLvl = 227,
-        vaultLvl = 240
+        bountiful = {
+            itemLevel = 227
+        },
+        vault = {
+            itemLevel = 240
+        }
     },
     [4] = {
-        bountifulLvl = 230,
-        vaultLvl = 243,
-        mapLvl = 237
+        bountiful = {
+            itemLevel = 230,
+            crests = {
+                track = DelveCompanion.Definitions.UpgradeTrackType.adventurer,
+                count = 5
+            }
+        },
+        map = {
+            itemLevel = 237,
+            crests = {
+                track = DelveCompanion.Definitions.UpgradeTrackType.veteran,
+                count = 8
+            }
+        },
+        vault = {
+            itemLevel = 243
+        }
     },
     [5] = {
-        bountifulLvl = 233,
-        vaultLvl = 246,
-        mapLvl = 243
+        bountiful = {
+            itemLevel = 233,
+            crests = {
+                track = DelveCompanion.Definitions.UpgradeTrackType.veteran,
+                count = 5
+            }
+        },
+        map = {
+            itemLevel = 243,
+            crests = {
+                track = DelveCompanion.Definitions.UpgradeTrackType.veteran,
+                count = 16
+            }
+        },
+        vault = {
+            itemLevel = 246
+        }
     },
     [6] = {
-        bountifulLvl = 237,
-        vaultLvl = 253,
-        mapLvl = 246
+        bountiful = {
+            itemLevel = 237,
+            crests = {
+                track = DelveCompanion.Definitions.UpgradeTrackType.veteran,
+                count = 10
+            }
+        },
+        map = {
+            itemLevel = 246,
+            crests = {
+                track = DelveCompanion.Definitions.UpgradeTrackType.champion,
+                count = 8
+            }
+        },
+        vault = {
+            itemLevel = 253
+        }
     },
     [7] = {
-        bountifulLvl = 246,
-        vaultLvl = 256,
-        mapLvl = 250
+        bountiful = {
+            itemLevel = 246,
+            crests = {
+                track = DelveCompanion.Definitions.UpgradeTrackType.champion,
+                count = 4
+            }
+        },
+        map = {
+            itemLevel = 250,
+            crests = {
+                track = DelveCompanion.Definitions.UpgradeTrackType.champion,
+                count = 16
+            }
+        },
+        vault = {
+            itemLevel = 256
+        }
     },
     [8] = {
-        bountifulLvl = 250,
-        vaultLvl = 259,
-        mapLvl = 259
+        bountiful = {
+            itemLevel = 250,
+            crests = {
+                track = DelveCompanion.Definitions.UpgradeTrackType.champion,
+                count = 6
+            }
+        },
+        nemesis = {
+            crests = {
+                track = DelveCompanion.Definitions.UpgradeTrackType.champion,
+                count = 5
+            }
+        },
+        map = {
+            itemLevel = 259,
+            crests = {
+                track = DelveCompanion.Definitions.UpgradeTrackType.hero,
+                count = 14
+            }
+        },
+        vault = {
+            itemLevel = 259
+        }
     },
     [9] = {
-        bountifulLvl = 250,
-        vaultLvl = 259,
-        mapLvl = 259
+        bountiful = {
+            itemLevel = 250,
+            crests = {
+                track = DelveCompanion.Definitions.UpgradeTrackType.champion,
+                count = 8
+            }
+        },
+        nemesis = {
+            crests = {
+                track = DelveCompanion.Definitions.UpgradeTrackType.champion,
+                count = 5
+            }
+        },
+        map = {
+            itemLevel = 259,
+            crests = {
+                track = DelveCompanion.Definitions.UpgradeTrackType.hero,
+                count = 16
+            }
+        },
+        vault = {
+            itemLevel = 259
+        }
     },
     [10] = {
-        bountifulLvl = 250,
-        vaultLvl = 259,
-        mapLvl = 259
+        bountiful = {
+            itemLevel = 250,
+            crests = {
+                track = DelveCompanion.Definitions.UpgradeTrackType.champion,
+                count = 10
+            }
+        },
+        nemesis = {
+            crests = {
+                track = DelveCompanion.Definitions.UpgradeTrackType.hero,
+                count = 5
+            }
+        },
+        map = {
+            itemLevel = 259,
+            crests = {
+                track = DelveCompanion.Definitions.UpgradeTrackType.hero,
+                count = 18
+            }
+        },
+        vault = {
+            itemLevel = 259
+        }
     },
     [11] = {
-        bountifulLvl = 250,
-        vaultLvl = 259,
-        mapLvl = 259
+        bountiful = {
+            itemLevel = 250,
+            crests = {
+                track = DelveCompanion.Definitions.UpgradeTrackType.hero,
+                count = 5
+            }
+        },
+        nemesis = {
+            crests = {
+                track = DelveCompanion.Definitions.UpgradeTrackType.hero,
+                count = 5
+            }
+        },
+        map = {
+            itemLevel = 259,
+            crests = {
+                track = DelveCompanion.Definitions.UpgradeTrackType.hero,
+                count = 20
+            }
+        },
+        vault = {
+            itemLevel = 259
+        }
     }
 }
 --#endregion

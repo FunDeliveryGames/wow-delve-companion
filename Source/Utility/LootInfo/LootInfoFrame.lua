@@ -29,6 +29,48 @@ local function GetLootRarity(ilvl)
     return tostring(ilvl)
 end
 
+---@param frame LootInfoElementXml
+---@param lootData DelveLootData?
+local function SetTierLoot(frame, lootData)
+    if not lootData then
+        frame.Text:SetText("-")
+        frame.Text:Show()
+        frame.Text:SetPoint("CENTER")
+
+        return
+    end
+
+    if lootData.itemLevel and lootData.crests then
+        frame.Text:SetText(GetLootRarity(lootData.itemLevel) .. " + " .. lootData.crests.count)
+
+        local currency = Config.UPGRADE_CRESTS[lootData.crests.track]
+        frame.CrestWidget:SetFrameInfo(DelveCompanion.Definitions.CodeType.Currency, currency)
+        local color = ColorManager.GetColorDataForItemQuality(C_CurrencyInfo.GetCurrencyInfo(currency).quality)
+        frame.CrestWidget:DisplayBorderForQuality(color)
+
+        frame.Text:SetPoint("CENTER", -5, -1)
+        frame.CrestWidget:SetPoint("LEFT", frame.Text, "RIGHT", 3, 0)
+
+        frame.Text:Show()
+        frame.CrestWidget:Show()
+    elseif lootData.itemLevel then
+        frame.Text:SetText(GetLootRarity(lootData.itemLevel))
+        frame.Text:SetPoint("CENTER", 0, -1)
+        frame.Text:Show()
+    else
+        local currency = Config.UPGRADE_CRESTS[lootData.crests.track]
+        frame.CrestWidget:SetFrameInfo(DelveCompanion.Definitions.CodeType.Currency, currency)
+        local color = ColorManager.GetColorDataForItemQuality(C_CurrencyInfo.GetCurrencyInfo(currency).quality)
+        frame.CrestWidget:DisplayBorderForQuality(color)
+
+        frame.CrestWidget.displayLabel = true
+        frame.CrestWidget:SetLabelText(lootData.crests.count)
+
+        frame.CrestWidget:SetPoint("CENTER", 7, -1)
+        frame.CrestWidget:Show()
+    end
+end
+
 ---@param self LootInfoFrame
 function DelveCompanion_LootInfoFrameMixin:OnLoad()
     -- Logger:Log("LootInfo OnLoad start")
@@ -48,19 +90,23 @@ function DelveCompanion_LootInfoFrameMixin:OnLoad()
             container.Bountiful.Icon:SetAtlas("delves-bountiful")
         end)
 
-        container.Vault.Text:SetText(_G["DELVES_GREAT_VAULT_LABEL"])
-        container.Vault.Icon:SetAtlas("GreatVault-32x32")
-
         local map = Item:CreateFromItemID(Config.BOUNTY_MAPS[LE_EXPANSION_MIDNIGHT])
         map:ContinueOnItemLoad(function()
             container.Map.Text:SetText(map:GetItemName())
             container.Map.Icon:SetTexture("interface/icons/icon_treasuremap")
         end)
 
+        local nemesisSpell = Config.AFFIXES.Nemesis[LE_EXPANSION_MIDNIGHT]
+        container.Nemesis.Text:SetText(C_Spell.GetSpellName(nemesisSpell))
+        container.Nemesis.Icon:SetAtlas("delves-treasure-upgrade")
+
+        container.Vault.Text:SetText(_G["DELVES_GREAT_VAULT_LABEL"])
+        container.Vault.Icon:SetAtlas("GreatVault-32x32")
+
         container:Layout()
     end
 
-    for tier, lootInfo in ipairs(Config.DELVES_LOOT_INFO_DATA) do
+    for tier = 1, #Config.DELVES_LOOT_INFO_DATA, 1 do
         ---@type LootInfoRowXml
         local rowFrame = CreateFrame("Frame", nil, self.Rows,
             "DelveCompanionLootInfoRowTemplate")
@@ -88,9 +134,10 @@ function DelveCompanion_LootInfoFrameMixin:OnShow()
         local lootInfo = Config.DELVES_LOOT_INFO_DATA[i]
 
         local container = rowFrame.Container
-        container.Bountiful.Text:SetText(GetLootRarity(lootInfo.bountifulLvl))
-        container.Vault.Text:SetText(GetLootRarity(lootInfo.vaultLvl))
-        container.Map.Text:SetText(lootInfo.mapLvl and GetLootRarity(lootInfo.mapLvl) or "-")
+        SetTierLoot(container.Bountiful, lootInfo.bountiful)
+        SetTierLoot(container.Nemesis, lootInfo.nemesis or nil)
+        SetTierLoot(container.Map, lootInfo.map or nil)
+        SetTierLoot(container.Vault, lootInfo.vault)
     end
 end
 
@@ -103,6 +150,7 @@ end
 
 ---@class (exact) LootInfoHeaderContainer : HorizontalLayoutFrame
 ---@field Bountiful LootInfoHeaderXml
+---@field Nemesis LootInfoHeaderXml
 ---@field Map LootInfoHeaderXml
 ---@field Vault LootInfoHeaderXml
 
@@ -114,9 +162,11 @@ end
 --- `DelveCompanionLootInfoElementTemplate`
 ---@class (exact) LootInfoElementXml : Frame, LayoutChild
 ---@field Text FontString
+---@field CrestWidget CustomActionWidget
 
 ---@class (exact) LootInfoRowContainer : HorizontalLayoutFrame
 ---@field Bountiful LootInfoElementXml
+---@field Nemesis LootInfoElementXml
 ---@field Map LootInfoElementXml
 ---@field Vault LootInfoElementXml
 
