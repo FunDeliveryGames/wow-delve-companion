@@ -1,5 +1,11 @@
 # Change Log
 
+## [2026.07.1] - 12 July 2026
+- **QoL**: Improve Delves Loot Info window. It now includes Crests and extra tips on related mechanics.
+- **QoL**: Gilded Stash widget will display a visual indication if the required Journey level has not been reached.
+- Fixed a few errors that may happen switching tabs in the Adventure Guide.
+- 12.1 preparations.
+
 ## [2026.06.1] - 10 June 2026
 - Attemp to fix secret values error caused by the addon.
 - Locale tweak for zhCN.

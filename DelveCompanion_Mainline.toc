@@ -1,5 +1,5 @@
-## Interface: 120007,120005
-## Version: v2026.06.1
+## Interface: 120100, 120007
+## Version: v2026.07.1
 
 ## Title: Delve Companion
 ## Author: FunDeliveryGames
