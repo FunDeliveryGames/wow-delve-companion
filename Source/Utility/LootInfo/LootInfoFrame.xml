@@ -30,15 +30,15 @@
     </Frame>
 
     <Frame name="DelveCompanionLootInfoColumnHeadersTemplate" virtual="true">
-        <Size x="540" y="25" />
+        <Size x="525" y="25" />
         <Layers>
             <Layer level="OVERLAY">
                 <FontString parentKey="Tier" inherits="GameFontNormalMed2"
                     mixin="AutoScalingFontStringMixin" wordwrap="true" maxLines="2"
                     justifyV="MIDDLE" justifyH="CENTER">
-                    <Size x="60" y="25" />
+                    <Size x="45" y="25" />
                     <Anchors>
-                        <Anchor point="LEFT" x="10" />
+                        <Anchor point="LEFT" x="3" />
                     </Anchors>
                 </FontString>
             </Layer>
@@ -115,20 +115,20 @@
     </Frame>
 
     <Frame name="DelveCompanionLootInfoRowTemplate" virtual="true">
-        <Size x="540" y="25" />
+        <Size x="525" y="25" />
         <Layers>
             <Layer level="OVERLAY">
                 <FontString parentKey="Tier" inherits="GameFontNormalMed2"
                     mixin="AutoScalingFontStringMixin" wordwrap="true" maxLines="2"
                     justifyV="MIDDLE" justifyH="CENTER">
-                    <Size x="60" y="20" />
+                    <Size x="45" y="20" />
                     <Anchors>
-                        <Anchor point="LEFT" x="10" />
+                        <Anchor point="LEFT" x="3" />
                     </Anchors>
                 </FontString>
                 <Texture atlas="delves-companion-divider"
                     useAtlasSize="false">
-                    <Size x="505" y="5" />
+                    <Size x="490" y="5" />
                     <Anchors>
                         <Anchor point="TOP" />
                     </Anchors>
@@ -177,23 +177,40 @@
     <Frame name="DelveCompanionLootInfoFrameTemplate" inherits="DefaultPanelTemplate"
         mixin="DelveCompanion_LootInfoFrameMixin" enableMouse="true" hidden="true"
         clampedToScreen="true" frameStrata="HIGH" virtual="true">
-        <Size x="540" y="345" />
+        <Size x="450" y="345" />
         <Frames>
             <Button parentKey="CloseButton" inherits="UIPanelCloseButtonDefaultAnchors" />
-            <Frame parentKey="ColumnHeaders" inherits="DelveCompanionLootInfoColumnHeadersTemplate">
+
+            <ScrollFrame parentKey="RowsScroll" inherits="ScrollFrameTemplate">
                 <Anchors>
-                    <Anchor point="TOP" x="5" y="-35" />
+                    <Anchor point="TOPLEFT" x="7" />
+                    <Anchor point="BOTTOMRIGHT" x="-5" />
                 </Anchors>
-            </Frame>
-            <Frame parentKey="Rows" inherits="VerticalLayoutFrame">
-                <KeyValues>
-                    <KeyValue key="expand" value="false" type="boolean" />
-                </KeyValues>
-                <Anchors>
-                    <Anchor point="TOP" relativeKey="$parent.ColumnHeaders" relativePoint="BOTTOM"
-                        y="-5" />
-                </Anchors>
-            </Frame>
+                <ScrollChild>
+                    <Frame parentKey="Content">
+                        <Size x="525" y="345" />
+                        <Frames>
+                            <Frame parentKey="ColumnHeaders"
+                                inherits="DelveCompanionLootInfoColumnHeadersTemplate">
+                                <Anchors>
+                                    <Anchor point="TOPLEFT" y="-35" />
+                                </Anchors>
+                            </Frame>
+
+                            <Frame parentKey="Rows" inherits="VerticalLayoutFrame">
+                                <KeyValues>
+                                    <KeyValue key="expand" value="false" type="boolean" />
+                                </KeyValues>
+                                <Anchors>
+                                    <Anchor point="TOPLEFT" relativeKey="$parent.ColumnHeaders"
+                                        relativePoint="BOTTOMLEFT"
+                                        y="-5" />
+                                </Anchors>
+                            </Frame>
+                        </Frames>
+                    </Frame>
+                </ScrollChild>
+            </ScrollFrame>
         </Frames>
         <Scripts>
             <OnLoad method="OnLoad" />

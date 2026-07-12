@@ -403,15 +403,18 @@ end
 --- Add a button to open Delves' Loot info.
 ---@param self GossipExtension
 function GossipExtension:CreateLootInfoButton()
+    ---@type Frame
+    local pickerFrame = DelvesDifficultyPickerFrame
+
     local button = CreateFrame("Button",
         "$DelveCompanion." .. LOOT_INFO_BUTTON_PARENT_KEY,
-        DelvesDifficultyPickerFrame,
+        pickerFrame,
         "DelveCompanionLootInfoButtonTemplate")
     button:Hide()
     self.LootInfoButton = button
 
     button:SetParentKey(LOOT_INFO_BUTTON_PARENT_KEY)
-    button:SetPoint("BOTTOMRIGHT", DelvesDifficultyPickerFrame, "BOTTOMRIGHT", -2, 3)
+    button:SetPoint("BOTTOMRIGHT", pickerFrame, "BOTTOMRIGHT", -2, 3)
     button:SetTextToFit(_G["LOOT"])
 
     button:HookScript("OnClick", function()
@@ -422,7 +425,15 @@ function GossipExtension:CreateLootInfoButton()
         securecall(GameTooltip.Hide, GameTooltip)
         local lootFrame = DelveCompanion:GetLootInfoFrame()
         lootFrame:ClearAllPoints()
-        lootFrame:SetPoint("BOTTOMLEFT", DelvesDifficultyPickerFrame, "BOTTOMRIGHT", 0, 0)
+        lootFrame:SetPoint("BOTTOMLEFT", pickerFrame, "BOTTOMRIGHT", 0, 0)
+
+        local pickerRight, lootLeft = pickerFrame:GetRight(), lootFrame:GetLeft()
+        if pickerRight > lootLeft then
+            local diff = pickerRight - lootLeft
+            lootFrame.availableWidth = lootFrame.baseWidth - diff
+        else
+            lootFrame.availableWidth = lootFrame.baseWidth
+        end
 
         ToggleFrame(lootFrame)
     end)

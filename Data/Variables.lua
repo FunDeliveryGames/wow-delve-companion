@@ -6,7 +6,7 @@ local DelveCompanion = AddonTbl.DelveCompanion
 --- Table containing all addon runtime variables.
 ---@class (exact) Variables
 ---@field delvesData table<number, DelveData[]> Table containing all Delves' runtime data (refer to [DelveData](lua://DelveData)).
----@field LootInfoFrame LootInfoFrameXml Loot Info frame. Can be shown from different places.
+---@field LootInfoFrame LootInfoFrame Loot Info frame. Can be shown from different places.
 ---@field maxLevelReached boolean Whether player has reached max level of the current expansion.
 ---@field tomTomAvailable boolean Whether TomTom addon is loaded.
 ---@field mpeAvailable boolean Whether MapPinEnhanced addon is loaded.

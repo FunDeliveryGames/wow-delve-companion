@@ -15,6 +15,8 @@ local Lockit = DelveCompanion.Lockit
 --#endregion
 
 ---@class (exact) LootInfoFrame : LootInfoFrameXml
+---@field baseWidth number Cached value of the frame base initial width at the OnLoad.
+---@field availableWidth number Space available between an anchor frame and screen edge. Required to change the frame width depending on screen width.
 DelveCompanion_LootInfoFrameMixin = {}
 
 local function GetLootRarity(ilvl)
@@ -75,14 +77,38 @@ end
 function DelveCompanion_LootInfoFrameMixin:OnLoad()
     -- Logger:Log("LootInfo OnLoad start")
 
+    self.baseWidth = self:GetWidth()
+
     ---@see DefaultPanelBaseTemplate Blizzard's template
     ---@diagnostic disable-next-line undefined-field
     self.TitleContainer.TitleText:SetText(_G["LOOT"])
 
     do
-        self.ColumnHeaders.Tier:SetText(strtrim(format(_G["GARRISON_TIER"], "")))
+        self.RowsScroll.ScrollBar:Hide() -- ScrollFrame scroll bar doesn't work with the horizontal scrolling.
+        self.RowsScroll:EnableMouseWheel(true)
+        self.RowsScroll:SetScript("OnMouseWheel",
+            ---@param scrollFrame LootInfoScroll
+            ---@param delta number
+            function(scrollFrame, delta)
+                local offset = scrollFrame:GetHorizontalScroll()
 
-        local container = self.ColumnHeaders.Container
+                local scrollStep = 10
+                if delta > 0 then
+                    offset = offset - scrollStep
+                else
+                    offset = offset + scrollStep
+                end
+
+                offset = math.max(0, math.min(offset, scrollFrame:GetHorizontalScrollRange()))
+                scrollFrame:SetHorizontalScroll(offset)
+            end)
+    end
+
+    do
+        local headers = self.RowsScroll.Content.ColumnHeaders
+        headers.Tier:SetText(strtrim(format(_G["GARRISON_TIER"], "")))
+
+        local container = headers.Container
 
         local bountiful = Item:CreateFromItemID(Config.BOUNTIFUL_COFFER_ITEM_CODE)
         bountiful:ContinueOnItemLoad(function()
@@ -106,24 +132,28 @@ function DelveCompanion_LootInfoFrameMixin:OnLoad()
         container:Layout()
     end
 
+    local rows = self.RowsScroll.Content.Rows
     for tier = 1, #Config.DELVES_LOOT_INFO_DATA, 1 do
         ---@type LootInfoRowXml
-        local rowFrame = CreateFrame("Frame", nil, self.Rows,
+        local rowFrame = CreateFrame("Frame", nil, rows,
             "DelveCompanionLootInfoRowTemplate")
         rowFrame.layoutIndex = tier
 
         rowFrame.Tier:SetText(tostring(tier))
     end
 
-    self.Rows:Layout()
+    rows:Layout()
 end
 
 ---@param self LootInfoFrame
 function DelveCompanion_LootInfoFrameMixin:OnShow()
     --Logger:Log("LootInfo OnShow start")
 
+    self:SetWidth(math.min(self.baseWidth, self.availableWidth))
+    self.RowsScroll:SetHorizontalScroll(0)
+
     ---@type LootInfoRowXml[]
-    local rows = self.Rows:GetLayoutChildren()
+    local rows = self.RowsScroll.Content.Rows:GetLayoutChildren()
 
     if not rows or #rows < 1 then
         self:Hide()
@@ -175,9 +205,16 @@ end
 ---@field Tier FontString
 ---@field Container LootInfoRowContainer
 
+---@class (exact) LootInfoScrollContent : Frame
+---@field ColumnHeaders LootInfoColumnHeadersXml
+---@field Rows VerticalLayoutFrame
+
+---@class (exact) LootInfoScroll : ScrollFrame
+---@field ScrollBar EventFrame
+---@field Content LootInfoScrollContent
+
 --- `DelveCompanionLootInfoFrameTemplate`
 ---@class (exact) LootInfoFrameXml : Frame
 ---@field CloseButton Button
----@field ColumnHeaders LootInfoColumnHeadersXml
----@field Rows VerticalLayoutFrame
+---@field RowsScroll LootInfoScroll
 --#endregion

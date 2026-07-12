@@ -166,7 +166,7 @@ function DelveCompanion:GetContinentMapIDForMap(mapID)
 end
 
 ---@param self DelveCompanion
----@return Frame
+---@return LootInfoFrame
 function DelveCompanion:GetLootInfoFrame()
     if not DelveCompanion.Variables.LootInfoFrame then
         ---@type LootInfoFrame
