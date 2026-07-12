@@ -162,7 +162,6 @@ function DelveEncounter:CreateLootInfoButton(parent)
         local lootFrame = DelveCompanion:GetLootInfoFrame()
         lootFrame:ClearAllPoints()
         lootFrame:SetPoint("BOTTOMLEFT", EncounterJournal, "BOTTOMRIGHT", -5, 0)
-        lootFrame.availableWidth = lootFrame.baseWidth
 
         ToggleFrame(lootFrame)
     end)

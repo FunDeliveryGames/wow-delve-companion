@@ -425,15 +425,10 @@ function GossipExtension:CreateLootInfoButton()
         securecall(GameTooltip.Hide, GameTooltip)
         local lootFrame = DelveCompanion:GetLootInfoFrame()
         lootFrame:ClearAllPoints()
-        lootFrame:SetPoint("BOTTOMLEFT", pickerFrame, "BOTTOMRIGHT", 0, 0)
+        lootFrame:SetPoint("TOPLEFT", pickerFrame, "TOPRIGHT", 3, 5)
 
         local pickerRight, lootLeft = pickerFrame:GetRight(), lootFrame:GetLeft()
-        if pickerRight > lootLeft then
-            local diff = pickerRight - lootLeft
-            lootFrame.availableWidth = lootFrame.baseWidth - diff
-        else
-            lootFrame.availableWidth = lootFrame.baseWidth
-        end
+        lootFrame.frameOverlap = pickerRight - lootLeft
 
         ToggleFrame(lootFrame)
     end)
