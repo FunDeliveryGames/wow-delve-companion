@@ -49,7 +49,7 @@ function DelveCompanion_DelvesListFrameMixin:Refresh()
     self:ListDelves(tierData.expansionLevel)
 
     self:UpdateKeysWidget()
-    self.DelveOBotWidget:SetShown(tierData.expansionLevel == LE_EXPANSION_WAR_WITHIN) -- Delve-O-Bot 7001 works for TWW Delves only.
+    self.DelveOBotWidget:SetShown(DelveCompanion.Variables.isPTR or tierData.expansionLevel == LE_EXPANSION_WAR_WITHIN)
 
     do
         self.ModifiersContainer.Nemesis:SetFrameInfo(

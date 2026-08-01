@@ -99,7 +99,7 @@ end
 
 local function GetLootRarity(ilvl)
     for _, rarityInfo in ipairs(Config.LOOT_RARITY) do
-        if ilvl >= rarityInfo.from and ilvl <= rarityInfo.to then
+        if ilvl >= rarityInfo.from and ilvl < rarityInfo.to then
             ---@type ItemQualityColorData
             local data = ColorManager.GetColorDataForItemQuality(rarityInfo.quality)
             return data.color:WrapTextInColorCode(ilvl)
