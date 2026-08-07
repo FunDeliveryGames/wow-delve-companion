@@ -1,5 +1,10 @@
 # Change Log
 
+## [2026.08.1] - 07 August 2026
+- Display Delve-O-Bot widget in the Delves list and Delves Encounter window for Midnight expansion.
+    - Note: Delves Journey **Level 7** is required to get an upgrade for the toy.
+- More 12.1 tweaks and fixes.
+
 ## [2026.07.1] - 12 July 2026
 - **QoL**: Improve Delves Loot Info window. It now includes Crests and extra tips on related mechanics.
 - **QoL**: Gilded Stash widget will display a visual indication if the required Journey level has not been reached.
