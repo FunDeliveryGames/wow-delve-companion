@@ -28,7 +28,7 @@ Lockit.UI_DELVE_INSTANCE_BUTTON_TOOLTIP_NEMESIS_TWW_S1 = "Немезида: |cnH
 Lockit.UI_DELVE_INSTANCE_BUTTON_TOOLTIP_NEMESIS_TWW_S2 = "Немезида: |cnHIGHLIGHT_FONT_COLOR:Бур-босс|r~Война Внутри, 2-й сезон"
 Lockit.UI_DELVE_INSTANCE_BUTTON_TOOLTIP_NEMESIS_TWW_S3 = "Немезида: |cnHIGHLIGHT_FONT_COLOR:Ки'веза|r~Война Внутри, 3-й сезон"
 Lockit.UI_DELVE_INSTANCE_BUTTON_TOOLTIP_NEMESIS_MIDNIGHT_S1 = "Немезида: |cnHIGHLIGHT_FONT_COLOR:Нуллэй|r~Полночь, 1-й сезон"
-Lockit.UI_DELVE_INSTANCE_BUTTON_TOOLTIP_NEMESIS_MIDNIGHT_S2 = "Nemesis: |cnHIGHLIGHT_FONT_COLOR:Azta'rec|r~Midnight Season 2"
+Lockit.UI_DELVE_INSTANCE_BUTTON_TOOLTIP_NEMESIS_MIDNIGHT_S2 = "Немезида: |cnHIGHLIGHT_FONT_COLOR:Азта'рек|r~Полночь, 2-й сезон"
 -----
 
 -- Интерфейс вылазок
@@ -38,15 +38,15 @@ Lockit.UI_DELVES_LIST_MODIFIERS_TEXT = _G["MODIFIERS_COLON"]
 Lockit.UI_GILDED_STASH_CANNOT_RETRIEVE_DATA_TWW = "Посетите Каз Алгар, чтобы увидеть прогресс"
 Lockit.UI_GILDED_STASH_CANNOT_RETRIEVE_DATA_MIDNIGHT = "Посетите Кель'Талас, чтобы увидеть прогресс"
 Lockit.UI_GILDED_STASH_BOUNTIFUL_NOTE = "Появляется только на |cnNORMAL_FONT_COLOR:11-м Уровне|r Многообещающих Вылазок|A:delves-bountiful:16:16|a."
-Lockit.UI_GILDED_STASH_CRESTS_NOTE = "Each stash contains %d |cnIQ4:Myth Crests|r (|cnNORMAL_FONT_COLOR:%d per week|r in total)."
-Lockit.UI_JOURNEY_LEVEL_REQUIRED = "Requires Journey Level %d"
+Lockit.UI_GILDED_STASH_CRESTS_NOTE = "Каждый тайник содержит %d |cnIQ4:Позолоченных гербовых печатей|r (|cnNORMAL_FONT_COLOR:%d в неделю|r всего)."
+Lockit.UI_JOURNEY_LEVEL_REQUIRED = "Требуется уровень известности %d"
 Lockit.UI_NO_ACTIVE_BOUNTIFUL = "Нет активных Вылазок"
 Lockit.UI_LOOT_INFO_BUTTON_TOOLTIP_INSTRUCTION = "<Нажмите, чтобы отобразить информацию о добыче Вылазок>"
 
 -- Информация о добыче
 
 Lockit.UI_LOOT_INFO_DESCRIPTION = "Завершите Вылазку, чтобы получить:"
-Lockit.UI_LOOT_INFO_TIPS = "|A:delves-treasure-upgrade:16:16|a |cnNORMAL_FONT_COLOR:%s|r: Enemy groups should be killed before the final boss. Killing them later doesn't add more rewards to the chest. Crests are added killing 3+ groups on the specified Tiers.\n\n|T%s:16|t |cnNORMAL_FONT_COLOR:%s|r: Unlocks at Delves Journey Level 4. The stash is lootable 4 times per week."
+Lockit.UI_LOOT_INFO_TIPS = "|A:delves-treasure-upgrade:16:16|a |cnNORMAL_FONT_COLOR:%s|r: Группы противников должны быть убиты до финального босса. Убийство их позже не добавляет награды в сундук. Гербовые печати добавляются за убийство 3+ групп на указанных уровнях сложности.\n\n|T%s:16|t |cnNORMAL_FONT_COLOR:%s|r: Открывается на 4-м уровне известности в Вылазках. Хранилище можно открыть 4 раза в неделю."
 
 -- Delves Gossip
 Lockit.UI_DELVE_AUTO_ENTER_SELECTED_TIER = "Автоматический вход (уровень %d)" -- %d - это уровень Вылазки (1-11).
