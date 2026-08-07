@@ -28,6 +28,7 @@ Lockit.UI_DELVE_INSTANCE_BUTTON_TOOLTIP_NEMESIS_TWW_S1 = "應得的懲罰: |cnHI
 Lockit.UI_DELVE_INSTANCE_BUTTON_TOOLTIP_NEMESIS_TWW_S2 = "應得的懲罰: |cnHIGHLIGHT_FONT_COLOR:The Underpin|r~地心之戰 賽季2"
 Lockit.UI_DELVE_INSTANCE_BUTTON_TOOLTIP_NEMESIS_TWW_S3 = "應得的懲罰: |cnHIGHLIGHT_FONT_COLOR:Ky'Veza|r~地心之戰 賽季3"
 Lockit.UI_DELVE_INSTANCE_BUTTON_TOOLTIP_NEMESIS_MIDNIGHT_S1 = "應得的懲罰: |cnHIGHLIGHT_FONT_COLOR:Nullaeus|r~至暗之夜 賽季1"
+Lockit.UI_DELVE_INSTANCE_BUTTON_TOOLTIP_NEMESIS_MIDNIGHT_S2 = "Nemesis: |cnHIGHLIGHT_FONT_COLOR:Azta'rec|r~Midnight Season 2"
 -----
 
 -- Delves UI
@@ -37,12 +38,15 @@ Lockit.UI_DELVES_LIST_MODIFIERS_TEXT = _G["MODIFIERS_COLON"]
 Lockit.UI_GILDED_STASH_CANNOT_RETRIEVE_DATA_TWW = "在卡茲阿爾加地區時可獲取鍍金儲物箱進度"
 Lockit.UI_GILDED_STASH_CANNOT_RETRIEVE_DATA_MIDNIGHT = "造訪奎爾薩拉斯區域來觀看進度"
 Lockit.UI_GILDED_STASH_BOUNTIFUL_NOTE = "僅出現在 |cnNORMAL_FONT_COLOR:難度 11|r 豐碩探究|A:delves-bountiful:16:16|a。"
+Lockit.UI_GILDED_STASH_CRESTS_NOTE = "Each stash contains %d |cnIQ4:Myth Crests|r (|cnNORMAL_FONT_COLOR:%d per week|r in total)."
+Lockit.UI_JOURNEY_LEVEL_REQUIRED = "Requires Journey Level %d"
 Lockit.UI_NO_ACTIVE_BOUNTIFUL = "任意難度11豐碩探究可啟動進度"
 Lockit.UI_LOOT_INFO_BUTTON_TOOLTIP_INSTRUCTION = "<點擊來顯示探究的拾取資訊>"
 
 -- Loot Info
 
 Lockit.UI_LOOT_INFO_DESCRIPTION = "完成探究可獲得戰利品："
+Lockit.UI_LOOT_INFO_TIPS = "|A:delves-treasure-upgrade:16:16|a |cnNORMAL_FONT_COLOR:%s|r: Enemy groups should be killed before the final boss. Killing them later doesn't add more rewards to the chest. Crests are added killing 3+ groups on the specified Tiers.\n\n|T%s:16|t |cnNORMAL_FONT_COLOR:%s|r: Unlocks at Delves Journey Level 4. The stash is lootable 4 times per week."
 
 -- Delves Gossip
 Lockit.UI_DELVE_AUTO_ENTER_SELECTED_TIER = "Auto Enter (Tier %d)" -- %d is a Tier number (1-11).

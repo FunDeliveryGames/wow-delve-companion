@@ -28,6 +28,7 @@ Lockit.UI_DELVE_INSTANCE_BUTTON_TOOLTIP_NEMESIS_TWW_S1 = "Nemesis: |cnHIGHLIGHT_
 Lockit.UI_DELVE_INSTANCE_BUTTON_TOOLTIP_NEMESIS_TWW_S2 = "Nemesis: |cnHIGHLIGHT_FONT_COLOR:The Underpin|r~The War Within Season 2"
 Lockit.UI_DELVE_INSTANCE_BUTTON_TOOLTIP_NEMESIS_TWW_S3 = "Nemesis: |cnHIGHLIGHT_FONT_COLOR:Ky'Veza|r~The War Within Season 3"
 Lockit.UI_DELVE_INSTANCE_BUTTON_TOOLTIP_NEMESIS_MIDNIGHT_S1 = "Nemesis: |cnHIGHLIGHT_FONT_COLOR:Nullaeus|r~Midnight Season 1"
+Lockit.UI_DELVE_INSTANCE_BUTTON_TOOLTIP_NEMESIS_MIDNIGHT_S2 = "Nemesis: |cnHIGHLIGHT_FONT_COLOR:Azta'rec|r~Midnight Season 2"
 -----
 
 -- Delves UI
@@ -37,12 +38,15 @@ Lockit.UI_DELVES_LIST_MODIFIERS_TEXT = _G["MODIFIERS_COLON"]
 Lockit.UI_GILDED_STASH_CANNOT_RETRIEVE_DATA_TWW = "Visita las zonas de Khaz Algar para ver"
 Lockit.UI_GILDED_STASH_CANNOT_RETRIEVE_DATA_MIDNIGHT = "Visit Quel'Thalas zones to see the progress"
 Lockit.UI_GILDED_STASH_BOUNTIFUL_NOTE = "Aparece sólo en el |cnNORMAL_FONT_COLOR:Nivel 11|r de las profundidades pródigas|A:delves-bountiful:16:16|a."
+Lockit.UI_GILDED_STASH_CRESTS_NOTE = "Each stash contains %d |cnIQ4:Myth Crests|r (|cnNORMAL_FONT_COLOR:%d per week|r in total)."
+Lockit.UI_JOURNEY_LEVEL_REQUIRED = "Requires Journey Level %d"
 Lockit.UI_NO_ACTIVE_BOUNTIFUL = "No hay profundidades pródigas activas"
 Lockit.UI_LOOT_INFO_BUTTON_TOOLTIP_INSTRUCTION = "<Click para mostrar información sobre el botín de las profundidades.>"
 
 -- Loot Info
 
 Lockit.UI_LOOT_INFO_DESCRIPTION = "Tabla de botín de las profundidades:"
+Lockit.UI_LOOT_INFO_TIPS = "|A:delves-treasure-upgrade:16:16|a |cnNORMAL_FONT_COLOR:%s|r: Enemy groups should be killed before the final boss. Killing them later doesn't add more rewards to the chest. Crests are added killing 3+ groups on the specified Tiers.\n\n|T%s:16|t |cnNORMAL_FONT_COLOR:%s|r: Unlocks at Delves Journey Level 4. The stash is lootable 4 times per week."
 
 -- Delves Gossip
 Lockit.UI_DELVE_AUTO_ENTER_SELECTED_TIER = "Auto Enter (Tier %d)" -- %d is a Tier number (1-11).
