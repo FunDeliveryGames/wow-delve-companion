@@ -361,6 +361,26 @@ function AddonSettings:RegisterAccountSettings(category, layout)
             layoutInitializer:Indent()
             layoutInitializer:SetParentInitializer(controlInitializer, ModifyPredicate)
         end
+
+        do
+            local scaleSavedVarKey = "inDelveWidgetScale"
+            local scaleSetting = self:RegisterSetting(category, scaleSavedVarKey, savedVarTbl,
+                Config.DEFAULT_ACCOUNT_DATA.inDelveWidgetScale,
+                Lockit.UI_SETTING_IN_DELVE_WIDGET_SCALE_NAME, OnSettingChanged)
+
+            local minScale, maxScale, step = 0.5, 1.5, 0.1
+            local scaleOptions = Settings.CreateSliderOptions(minScale, maxScale, step)
+
+            local function Formatter(value)
+                return string.format("%d%%", math.floor(value * 100 + 0.5))
+            end
+            scaleOptions:SetLabelFormatter(MinimalSliderWithSteppersMixin.Label.Right, Formatter)
+
+            local scaleInitializer = Settings.CreateSlider(category, scaleSetting, scaleOptions,
+                Lockit.UI_SETTING_IN_DELVE_WIDGET_SCALE_TOOLTIP)
+            scaleInitializer:Indent()
+            scaleInitializer:SetParentInitializer(controlInitializer, ModifyPredicate)
+        end
     end
 
     -- Story Variant status in Delves' Gossip
