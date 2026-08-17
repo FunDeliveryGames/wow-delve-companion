@@ -13,10 +13,12 @@ local Lockit = DelveCompanion.Lockit
 
 -- Common
 
-Lockit.UI_COMMON_BOUNTIFUL_DELVE_TITLE = "Profundidad pródiga:"
+Lockit.UI_COMMON_BOUNTIFUL_DELVE_TITLE = "Profundidades pródigas:"
 Lockit.UI_COMMON_MISSING_ADDON_TITLE = "Falta el complemento necesario: %s" -- `%s`: name of the missing AddOn, e.g. DelveCompanion
 
 -- Delves List
+
+Lockit.UI_DELVES_LIST_MODIFIERS_TEXT = _G["MODIFIERS_COLON"]
 
 Lockit.UI_DELVE_INSTANCE_BUTTON_TOOLTIP_CLICK_INSTRUCTION = "<Shift click para establecer puntos de referencia en la profundidad>"
 Lockit.UI_DELVE_INSTANCE_BUTTON_TOOLTIP_CURRENT_TEXT = "Punto de referencia establecido."
@@ -33,25 +35,23 @@ Lockit.UI_DELVE_INSTANCE_BUTTON_TOOLTIP_NEMESIS_MIDNIGHT_S2 = "Nemesis: |cnHIGHL
 
 -- Delves UI
 
-Lockit.UI_DELVES_LIST_MODIFIERS_TEXT = _G["MODIFIERS_COLON"]
-
-Lockit.UI_GILDED_STASH_CANNOT_RETRIEVE_DATA_TWW = "Visita las zonas de Khaz Algar para ver"
-Lockit.UI_GILDED_STASH_CANNOT_RETRIEVE_DATA_MIDNIGHT = "Visit Quel'Thalas zones to see the progress"
+Lockit.UI_GILDED_STASH_CANNOT_RETRIEVE_DATA_TWW = "Visita las zonas de The War Within para ver el progreso"
+Lockit.UI_GILDED_STASH_CANNOT_RETRIEVE_DATA_MIDNIGHT = "Visita las zonas de Midnight para ver el progreso"
 Lockit.UI_GILDED_STASH_BOUNTIFUL_NOTE = "Aparece sólo en el |cnNORMAL_FONT_COLOR:Nivel 11|r de las profundidades pródigas|A:delves-bountiful:16:16|a."
-Lockit.UI_GILDED_STASH_CRESTS_NOTE = "Each stash contains %d |cnIQ4:Myth Crests|r (|cnNORMAL_FONT_COLOR:%d per week|r in total)."
-Lockit.UI_JOURNEY_LEVEL_REQUIRED = "Requires Journey Level %d"
+Lockit.UI_GILDED_STASH_CRESTS_NOTE = "Cada alijo contiene %d |cnIQ4:Blasones mito|r (|cnNORMAL_FONT_COLOR:%d por semana|r en total)."
+Lockit.UI_JOURNEY_LEVEL_REQUIRED = "Requiere nivel %d del diario de viaje de explorador"
 Lockit.UI_NO_ACTIVE_BOUNTIFUL = "No hay profundidades pródigas activas"
 Lockit.UI_LOOT_INFO_BUTTON_TOOLTIP_INSTRUCTION = "<Click para mostrar información sobre el botín de las profundidades.>"
 
 -- Loot Info
 
 Lockit.UI_LOOT_INFO_DESCRIPTION = "Tabla de botín de las profundidades:"
-Lockit.UI_LOOT_INFO_TIPS = "|A:delves-treasure-upgrade:16:16|a |cnNORMAL_FONT_COLOR:%s|r: Enemy groups should be killed before the final boss. Killing them later doesn't add more rewards to the chest. Crests are added killing 3+ groups on the specified Tiers.\n\n|T%s:16|t |cnNORMAL_FONT_COLOR:%s|r: Unlocks at Delves Journey Level 4. The stash is lootable 4 times per week."
+Lockit.UI_LOOT_INFO_TIPS = "|A:delves-treasure-upgrade:16:16|a |cnNORMAL_FONT_COLOR:%s|r: Los grupos de enemigos deben ser eliminados antes del jefe final. Eliminarlos después no añade más recompensas al cofre. Se añaden blasones al matar a 3 o más grupos en los niveles especificados.\n\n|T%s:16|t |cnNORMAL_FONT_COLOR:%s|r: Se desbloquea en el nivel 4 del diario de explorador de profundidades. El alijo se puede saquear 4 veces por semana."
 
 -- Delves Gossip
-Lockit.UI_DELVE_AUTO_ENTER_SELECTED_TIER = "Auto Enter (Tier %d)" -- %d is a Tier number (1-11).
-Lockit.UI_DELVE_AUTO_ENTER_INFO = "The selected Tier can be changed in Addon Options."
-Lockit.UI_DELVE_AUTO_ENTER_CANCEL_TOOLTIP_INSTRUCTION = "<Click to cancel auto entering>"
+Lockit.UI_DELVE_AUTO_ENTER_SELECTED_TIER = "Entrada automática (Nivel %d)" -- %d is a Tier number (1-11).
+Lockit.UI_DELVE_AUTO_ENTER_INFO = "El nivel seleccionado se puede cambiar en las opciones del addon."
+Lockit.UI_DELVE_AUTO_ENTER_CANCEL_TOOLTIP_INSTRUCTION = "<Click para cancelar la entrada automática>"
 
 -- Tooltips Extension
 
@@ -59,7 +59,7 @@ Lockit.UI_BOUNTIFUL_KEYS_COUNT_CACHES_PREFIX = "Llaves de cofres"
 
 -- Compartment (these are shown hovering over the addon in the corresponding dropdown menu)
 
-Lockit.UI_COMPARTMENT_DESCRIPTION_LEFT_CLICK = "|cnGREEN_FONT_COLOR:Left Click|r to open the current season Delves info."
+Lockit.UI_COMPARTMENT_DESCRIPTION_LEFT_CLICK = "|cnGREEN_FONT_COLOR:Click|r para abrir el panel de temporada."
 Lockit.UI_COMPARTMENT_DESCRIPTION_RIGHT_CLICK = "|cnGREEN_FONT_COLOR:Click derecho|r para acceder a las opciones del complemento."
 
 -- Settings
@@ -69,9 +69,9 @@ Lockit.UI_SETTING_DELVE_PROGRESS_WIDGETS_NAME = "Información sobre el progreso 
 Lockit.UI_SETTING_DELVES_LIST_INFO_WIDGETS_TOOLTIP = "Lista de profundidades: Mostrar el progreso de los logros para cada profundidad (Historias y Cofres)."
 Lockit.UI_SETTING_WAYPOINT_TRACKING_TYPE_NAME = "Tipo de seguimiento de puntos de referencia"
 Lockit.UI_SETTING_WAYPOINT_TRACKING_TYPE_TOOLTIP_START = "Selecciona qué tipo de puntos de referencia se utilizan para la navegación.\n\nPosibles opciones:"
-Lockit.UI_SETTING_WAYPOINT_TRACKING_TYPE_TOOLTIP_BLIZZARD = "   • Marca de mapa de Blizzard (La navegación predeterminada dentro del juego)."
-Lockit.UI_SETTING_WAYPOINT_TRACKING_TYPE_TOOLTIP_TOMTOM = "   • TomTom Waypoints."
-Lockit.UI_SETTING_WAYPOINT_TRACKING_TYPE_TOOLTIP_MPE = "   • MapPinEnhanced Waypoints."
+Lockit.UI_SETTING_WAYPOINT_TRACKING_TYPE_TOOLTIP_BLIZZARD = "- Marca de mapa de Blizzard (La navegación predeterminada dentro del juego)."
+Lockit.UI_SETTING_WAYPOINT_TRACKING_TYPE_TOOLTIP_TOMTOM = "- TomTom Waypoints."
+Lockit.UI_SETTING_WAYPOINT_TRACKING_TYPE_TOOLTIP_MPE = "- MapPinEnhanced Waypoints."
 Lockit.UI_SETTING_WAYPOINT_TRACKING_TYPE_TOOLTIP_TOMTOM_UNAVAILABLE_FORMAT = "%s (%s)."
 Lockit.UI_SETTING_WAYPOINT_TRACKING_OPTION_BLIZZARD_NAME = "Blizzard"
 Lockit.UI_SETTING_WAYPOINT_TRACKING_OPTION_BLIZZARD_DESCRIPTION = "Utilizar marca de mapa de Blizzard."
@@ -79,35 +79,35 @@ Lockit.UI_SETTING_WAYPOINT_TRACKING_OPTION_TOMTOM_NAME = "TomTom"
 Lockit.UI_SETTING_WAYPOINT_TRACKING_OPTION_TOMTOM_DESCRIPTION = "Utilizar puntos de referencia de TomTom."
 Lockit.UI_SETTING_WAYPOINT_TRACKING_OPTION_MPE_NAME = "MapPinEnhanced"
 Lockit.UI_SETTING_WAYPOINT_TRACKING_OPTION_MPE_DESCRIPTION = "Utilizar puntos de referencia de MapPinEnhanced."
-Lockit.UI_SETTING_IN_DELVE_WIDGET_CONTROL_NAME = "Widget In Delves"
-Lockit.UI_SETTING_IN_DELVE_WIDGET_CONTROL_TOOLTIP = "Enable a widget that is displayed inside a Delve. It serves as a remainder and a quick-cast menu for the Bounty Map, Nemesis Lure, and more."
-Lockit.UI_SETTING_IN_DELVE_WIDGET_DISPLAY_RULE_NAME = "Display Location"
-Lockit.UI_SETTING_IN_DELVE_WIDGET_DISPLAY_RULE_TOOLTIP = "Where the widget is displayed."
-Lockit.UI_SETTING_IN_DELVE_WIDGET_DISPLAY_RULE_OPTION_LEFT_NAME = "Left Side"
-Lockit.UI_SETTING_IN_DELVE_WIDGET_DISPLAY_RULE_OPTION_LEFT_DESCRIPTION = "Widget is displayed on the left side of Objective Tracker."
-Lockit.UI_SETTING_IN_DELVE_WIDGET_DISPLAY_RULE_OPTION_RIGHT_NAME = "Right Side"
-Lockit.UI_SETTING_IN_DELVE_WIDGET_DISPLAY_RULE_OPTION_RIGHT_DESCRIPTION = "Widget is displayed on the right side of Objective Tracker."
-Lockit.UI_SETTING_IN_DELVE_WIDGET_DISPLAY_RULE_OPTION_CUSTOM_NAME = "Custom"
-Lockit.UI_SETTING_IN_DELVE_WIDGET_DISPLAY_RULE_OPTION_CUSTOM_DESCRIPTION = "Widget can be freely moved around the screen. |cnGREEN_FONT_COLOR:Right Click|r and drag the widget to move it."
-Lockit.UI_SETTING_IN_DELVE_WIDGET_LAYOUT_NAME = "Buttons Layout"
-Lockit.UI_SETTING_IN_DELVE_WIDGET_LAYOUT_TOOLTIP = "How the widget buttons are arranged."
-Lockit.UI_SETTING_IN_DELVE_WIDGET_LAYOUT_OPTION_VERTICAL_NAME = "Vertical Layout"
-Lockit.UI_SETTING_IN_DELVE_WIDGET_LAYOUT_OPTION_VERTICAL_DESCRIPTION = "The buttons are arranged vertically."
-Lockit.UI_SETTING_IN_DELVE_WIDGET_LAYOUT_OPTION_HORIZONTAL_NAME = "Horizontal Layout"
-Lockit.UI_SETTING_IN_DELVE_WIDGET_LAYOUT_OPTION_HORIZONTAL_DESCRIPTION = "The buttons are arranged horizontally."
-Lockit.UI_SETTING_STORY_STATUS_IN_GOSSIP_NAME = "Story Variant Status"
-Lockit.UI_SETTING_STORY_STATUS_IN_GOSSIP_TOOLTIP = "Highlight whether the active Story Variant has been completed or not (required for Delve Loremaster achievements) in the window displayed entering a Delve."
-Lockit.UI_SETTING_MINIMAP_ICON_NAME = "Show Minimap Icon"
-Lockit.UI_SETTING_MINIMAP_ICON_TOOLTIP = "Display a minimap icon. It can be clicked to quickly access the current season Delves info."
-Lockit.UI_SETTING_DELVE_AUTO_ENTER_CONTROL_NAME = "Auto Enter Delves"
-Lockit.UI_SETTING_DELVE_AUTO_ENTER_CONTROL_TOOLTIP = "Enter a Delve automatically reaching its entrance.\n\nThe Delve won't be entered if:\n   • The Tier has not been unlocked yet.\n   • It's a Nemesis Delve.\n   • It's a Bountiful Delve but you don't have a |cnIQ4:Restored Coffer Key|r nor enough |cnIQ3:Coffer Key Shards|r to assemble the key."
-Lockit.UI_SETTING_DELVE_AUTO_ENTER_TIER_TOOLTIP = "Delve Tier to enter."
-Lockit.UI_SETTING_DELVE_AUTO_ENTER_DELAY_NAME = "Enter Delay"
-Lockit.UI_SETTING_DELVE_AUTO_ENTER_DELAY_TOOLTIP = "A Delve will be entered with a delay (in seconds).\n\nThere is a button in the window displayed entering a Delve. It can be clicked to cancel the auto entering before the delay countdown elapsed."
+Lockit.UI_SETTING_IN_DELVE_WIDGET_CONTROL_NAME = "Miniaplicación en profundidades"
+Lockit.UI_SETTING_IN_DELVE_WIDGET_CONTROL_TOOLTIP = "Activa una miniaplicación que se muestra dentro de una profundidad. Sirve como recordatorio y menú de acceso rápido para el mapa de recompensas, el señuelo Némesis y mucho más."
+Lockit.UI_SETTING_IN_DELVE_WIDGET_DISPLAY_RULE_NAME = "Miniaplicación en profundidades"
+Lockit.UI_SETTING_IN_DELVE_WIDGET_DISPLAY_RULE_TOOLTIP = "Activa una miniaplicación que se muestra dentro de una profundidad. Sirve como recordatorio y menú de acceso rápido para el mapa de recompensas, el señuelo Némesis y mucho más."
+Lockit.UI_SETTING_IN_DELVE_WIDGET_DISPLAY_RULE_OPTION_LEFT_NAME = "Lado izquierdo"
+Lockit.UI_SETTING_IN_DELVE_WIDGET_DISPLAY_RULE_OPTION_LEFT_DESCRIPTION = "La miniaplicación se muestra en el lado izquierdo de Objective Tracker."
+Lockit.UI_SETTING_IN_DELVE_WIDGET_DISPLAY_RULE_OPTION_RIGHT_NAME = "Lado derecho"
+Lockit.UI_SETTING_IN_DELVE_WIDGET_DISPLAY_RULE_OPTION_RIGHT_DESCRIPTION = "La miniaplicación se muestra en el lado derecho de Objective Tracker."
+Lockit.UI_SETTING_IN_DELVE_WIDGET_DISPLAY_RULE_OPTION_CUSTOM_NAME = "Personalizado"
+Lockit.UI_SETTING_IN_DELVE_WIDGET_DISPLAY_RULE_OPTION_CUSTOM_DESCRIPTION = "La miniaplicación se puede mover libremente por la pantalla. |cnGREEN_FONT_COLOR:Click derecho|r y arrastra la miniaplicación para moverla."
+Lockit.UI_SETTING_IN_DELVE_WIDGET_LAYOUT_NAME = "Disposición de los botones"
+Lockit.UI_SETTING_IN_DELVE_WIDGET_LAYOUT_TOOLTIP = "Cómo están dispuestos los botones de la miniaplicación."
+Lockit.UI_SETTING_IN_DELVE_WIDGET_LAYOUT_OPTION_VERTICAL_NAME = "Vertical"
+Lockit.UI_SETTING_IN_DELVE_WIDGET_LAYOUT_OPTION_VERTICAL_DESCRIPTION = "Los botones están dispuestos verticalmente."
+Lockit.UI_SETTING_IN_DELVE_WIDGET_LAYOUT_OPTION_HORIZONTAL_NAME = "Horizontal"
+Lockit.UI_SETTING_IN_DELVE_WIDGET_LAYOUT_OPTION_HORIZONTAL_DESCRIPTION = "Los botones están dispuestos horizontalmente."
+Lockit.UI_SETTING_STORY_STATUS_IN_GOSSIP_NAME = "Estado de la variante de historia"
+Lockit.UI_SETTING_STORY_STATUS_IN_GOSSIP_TOOLTIP = "Resalta si la variante de historia activa se ha completado o no (necesario para los logros) en la ventana que se muestra al entrar en una profundidad."
+Lockit.UI_SETTING_MINIMAP_ICON_NAME = "Mostrar icono en el minimapa"
+Lockit.UI_SETTING_MINIMAP_ICON_TOOLTIP = "Muestra un icono en el minimapa. Se puede hacer click en él para abrir el panel de la temporada actual de profundidades."
+Lockit.UI_SETTING_DELVE_AUTO_ENTER_CONTROL_NAME = "Entrada automática a las profundidades"
+Lockit.UI_SETTING_DELVE_AUTO_ENTER_CONTROL_TOOLTIP = "Ingresas a una profundidad automáticamente al llegar a su entrada.\n\nNo se podrá ingresar en la profundidad si:\n   • El nivel aún no se ha desbloqueado.\n   • Es una profundidad de Némesis.\n   • Es una profundidad pródiga pero no tienes una |cnIQ4:Llave de arca restaurada|r o no tienes suficientes |cnIQ3: Fragmentos de llave de arca|r para formar una llave."
+Lockit.UI_SETTING_DELVE_AUTO_ENTER_TIER_TOOLTIP = "Nivel de profundidad para entrar."
+Lockit.UI_SETTING_DELVE_AUTO_ENTER_DELAY_NAME = "Introducir retraso"
+Lockit.UI_SETTING_DELVE_AUTO_ENTER_DELAY_TOOLTIP = "Ingresarás en una profundidad con un retraso (en segundos).\n\nEn la ventana que se muestra hay un botón para entrar en una profundidad. Se puede hacer click para cancelar la entrada automática antes de que finalice la cuenta regresiva."
 
 Lockit.UI_SETTINGS_SECTION_TITLE_CHARACTER = "A nivel de personaje"
 Lockit.UI_SETTING_TOOLTIP_EXTENSION_NAME = "Información adicional en las descripciones emergentes"
-Lockit.UI_SETTING_TOOLTIP_EXTENSION_TOOLTIP = "Display additional information in tooltips (e.g., whether |cnIQ4:Bounty Map|r has been looted this week)."
+Lockit.UI_SETTING_TOOLTIP_EXTENSION_TOOLTIP = "Muestra información adicional en las descripciones emergentes (ej:, el número de |cnITEM_EPIC_COLOR:Llaves de arcas restauradas|r recibidas esta semana)."
 Lockit.UI_SETTING_COMPANION_CONFIG_NAME = "Widget de configuración del compañero"
 Lockit.UI_SETTING_COMPANION_CONFIG_TOOLTIP = "Profundidades UI: Activa un widget que muestra la especialización y habilidades actuales del compañero.\nSe puede utilizar para modificar la configuración directamente desde Profundidades UI.\nNota: el tipo de diseño no afecta a la funcionalidad, solo a la disposición visual."
 Lockit.UI_SETTING_COMPANION_CONFIG_OPTION_HORIZONTAL_NAME = "Disposición horizontal"
@@ -119,14 +119,14 @@ Lockit.UI_SETTING_GV_DETAILS_TOOLTIP = "Profundidades UI: Muestra las recompensa
 Lockit.UI_SETTING_DASHBOARD_OVERVIEW_NAME = "Sección de descripción general de Profundidades"
 Lockit.UI_SETTING_DASHBOARD_OVERVIEW_TOOLTIP = "Profundidades UI: Muestra una sección de descripción general adicional. Contiene información sobre Alijo dorados, Profundidades pródigas disponibles y consumibles relacionados con las profundidades."
 
-Lockit.UI_SETTING_LOGS_NAME = "Enable Debug Logs"
-Lockit.UI_SETTING_LOGS_TOOLTIP = "Allows to print debug logs in the chat. Used for development and testing purposes."
+Lockit.UI_SETTING_LOGS_NAME = "Activar registros de depuración"
+Lockit.UI_SETTING_LOGS_TOOLTIP = "Permite imprimir registros de depuración en el chat. Se utiliza para fines de desarrollo y pruebas."
 
 Lockit.UI_SETTINGS_TRANSLATION_TITLE = "Agradecimiento especial por contribuir en la traducción para:"
 
 -- The following strings are joined into a list using "\n" (a new line) as a delimiter.
-Lockit.UI_SETTINGS_SLASH_CMD_TEXT = "Slash Commands:"
-Lockit.UI_SETTINGS_SLASH_CMD_SHOWDELVES = "   • |cnNORMAL_FONT_COLOR:/delvecompanion|r or |cnNORMAL_FONT_COLOR:/delvecomp|r or |cnNORMAL_FONT_COLOR:/delves|r: Opens the current season Delves encounter in the Adventure Guide (the same behaviour as clicking the minimap icon)." -- The commands themselves should NOT be translated.
+Lockit.UI_SETTINGS_SLASH_CMD_TEXT = "Comandos de barra:"
+Lockit.UI_SETTINGS_SLASH_CMD_SHOWDELVES = "   • |cnNORMAL_FONT_COLOR:/delvecompanion|r o |cnNORMAL_FONT_COLOR:/delvecomp|r o |cnNORMAL_FONT_COLOR:/delves|r: Abre el panel de la temporada actual de profundidades en la Guía de aventuras (el mismo comportamiento que al hacer click en el icono del minimapa)." -- The commands themselves should NOT be translated.
 -----
 
 Lockit.UI_SETTINGS_LINKS_TITLE = "Enlaces:"
