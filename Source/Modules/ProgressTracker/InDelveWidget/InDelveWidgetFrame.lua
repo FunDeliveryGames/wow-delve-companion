@@ -23,7 +23,8 @@ local RESPAWN_STATE = {
 ---@type string[]
 local SAVE_KEYS = {
     "inDelveWidgetDisplayRule",
-    "inDelveWidgetLayout"
+    "inDelveWidgetLayout",
+    "inDelveWidgetScale"
 }
 --#endregion
 
@@ -57,6 +58,9 @@ function DelveCompanion_InDelveWidgetFrameMixin:Refresh()
     if not self.isSet then
         return
     end
+
+    -- before the anchoring below, whose offsets are in the frame's own scaled space
+    self:SetScale(DelveCompanionAccountData.inDelveWidgetScale or 1)
 
     if DelveCompanionAccountData.inDelveWidgetDisplayRule == DelveCompanion.Definitions.InDelveWidgetDisplayRule.custom then
         self.DragCatcher:Show()
@@ -153,6 +157,14 @@ function DelveCompanion_InDelveWidgetFrameMixin:Refresh()
         end
     end
 
+    -- a preview must not arm a real /use on items the player still has
+    if self.previewOnly then
+        for _, item in ipairs({ self.Lure, self.Map, self.Radar }) do
+            item:RefreshInteraction(false)
+            item:StopAnimation()
+        end
+    end
+
     do
         local buttons = self.Buttons
 
@@ -182,6 +194,7 @@ end
 ---@param self InDelveWidgetFrame
 function DelveCompanion_InDelveWidgetFrameMixin:ResetWidget()
     self.isSet = false
+    self.previewOnly = nil
     self.respawnState = RESPAWN_STATE.Unknown
 end
 
