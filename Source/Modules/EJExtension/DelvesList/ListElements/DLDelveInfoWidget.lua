@@ -23,7 +23,7 @@ end
 ---@param achID number
 function DelveCompanion_DLDelveInfoWidgetMixin:PrepareWidgetElement(frame, achID)
     frame:SetFrameInfo(DelveCompanion.Definitions.CodeType.Achievement, achID)
-    frame:SetOnClick(function() OpenAchievementFrameToAchievement(achID) end)
+    frame:SetOnClick(function() ShowAchievementFrameForAchievement(achID) end)
     frame:Show()
 end
 
