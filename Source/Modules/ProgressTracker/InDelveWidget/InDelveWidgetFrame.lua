@@ -28,6 +28,22 @@ local SAVE_KEYS = {
 }
 --#endregion
 
+---@param self InDelveWidgetFrame
+local function EndDrag(self)
+    self:StopMovingOrSizing()
+    self.isMovingWidget = nil
+
+    -- dragging re-anchors the frame, so the anchor is saved with the offsets
+    local point, _, relativePoint, x, y = self:GetPoint()
+    DelveCompanionAccountData.inDelveWidgetPoint = {
+        point = point,
+        relativePoint = relativePoint,
+        x = x,
+        y = y,
+        scale = self:GetScale()
+    }
+end
+
 ---@class (exact) InDelveWidgetFrame : InDelveWidgetFrameXml
 ---@field isSet boolean
 ---@field delveExpansion number
@@ -48,6 +64,20 @@ function DelveCompanion_InDelveWidgetFrameMixin:Refresh()
 
     if DelveCompanionAccountData.inDelveWidgetDisplayRule == DelveCompanion.Definitions.InDelveWidgetDisplayRule.custom then
         self.DragCatcher:Show()
+
+        -- re-anchoring mid-drag would snap the widget back under the cursor
+        if not self.isMovingWidget then
+            local saved = DelveCompanionAccountData.inDelveWidgetPoint
+            self:ClearAllPoints()
+            if type(saved) == "table" then
+                -- offsets are in the frame's own scaled space, so divide out the saved scale
+                local factor = (saved.scale or 1) / self:GetScale()
+                self:SetPoint(saved.point, UIParent, saved.relativePoint,
+                    saved.x * factor, saved.y * factor)
+            else
+                self:SetPoint("TOPLEFT", ScenarioObjectiveTracker.Header, "BOTTOMRIGHT", 0, 0)
+            end
+        end
     else
         self.DragCatcher:Hide()
 
@@ -227,6 +257,7 @@ function DelveCompanion_InDelveWidgetFrameMixin:OnLoad()
                 return
             end
 
+            self.isMovingWidget = true
             self:StartMoving()
         end
 
@@ -235,7 +266,12 @@ function DelveCompanion_InDelveWidgetFrameMixin:OnLoad()
                 return
             end
 
-            self:StopMovingOrSizing()
+            -- a right-click that never started a drag here must not save an anchor
+            if not self.isMovingWidget then
+                return
+            end
+
+            EndDrag(self)
         end
 
         self.DragCatcher:SetScript("OnMouseDown", OnMouseDown)
@@ -264,6 +300,11 @@ end
 ---@param self InDelveWidgetFrame
 function DelveCompanion_InDelveWidgetFrameMixin:OnHide()
     -- Logger:Log("[InDelveWidgetFrame] OnHide start")
+
+    -- hiding ends the move without a mouse-up, so the drop is finished here
+    if self.isMovingWidget then
+        EndDrag(self)
+    end
 
     self:ResetWidget()
 

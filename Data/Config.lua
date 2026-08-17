@@ -21,6 +21,7 @@ Config.DELVES_MIN_EXPANSION = LE_EXPANSION_WAR_WITHIN
 ---@field inDelveWidgetEnabled boolean Whether [InDelveWidget](lua://InDelveWidget) is displayed.
 ---@field inDelveWidgetDisplayRule InDelveWidgetDisplayRule Where [InDelveWidget](lua://InDelveWidget) is displayed.
 ---@field inDelveWidgetLayout InDelveWidgetLayout How [InDelveWidget](lua://InDelveWidget) buttons are arranged.
+---@field inDelveWidgetPoint table|boolean Anchor of [InDelveWidget](lua://InDelveWidget) in custom mode, false until it is dragged.
 ---@field inDelveWidgetScale number Size of [InDelveWidget](lua://InDelveWidget), 1 being the default.
 ---@field minimapIconEnabled boolean Whether a minimap icon is enabled.
 ---@field displayStoryStatusInGossip boolean Whether to display Story Variant status in Delves' Gossip.
@@ -34,6 +35,7 @@ Config.DEFAULT_ACCOUNT_DATA = {
     inDelveWidgetEnabled = true,
     inDelveWidgetDisplayRule = DelveCompanion.Definitions.InDelveWidgetDisplayRule.left,
     inDelveWidgetLayout = DelveCompanion.Definitions.InDelveWidgetLayout.vertical,
+    inDelveWidgetPoint = false,
     inDelveWidgetScale = 1,
     minimapIconEnabled = false,
     displayStoryStatusInGossip = true,
