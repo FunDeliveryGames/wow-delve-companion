@@ -302,8 +302,16 @@ function AddonSettings:RegisterAccountSettings(category, layout)
             Config.DEFAULT_ACCOUNT_DATA.inDelveWidgetEnabled,
             Lockit.UI_SETTING_IN_DELVE_WIDGET_CONTROL_NAME, OnSettingChanged)
 
+        local function ResetInDelveWiget()
+            DelveCompanionAccountData.inDelveWidgetPoint = Config.DEFAULT_ACCOUNT_DATA.inDelveWidgetPoint
+
+            DelveCompanion.InDelveWidget:Refresh(true)
+        end
+
         local controlTooltip = Lockit.UI_SETTING_IN_DELVE_WIDGET_CONTROL_TOOLTIP
-        local controlInitializer = Settings.CreateCheckbox(category, controlSetting, controlTooltip)
+        local controlInitializer = CreateSettingsCheckboxWithButtonInitializer(controlSetting,
+            Lockit.UI_SETTING_IN_DELVE_WIDGET_RESET_BUTTON_TEXT, ResetInDelveWiget, nil, false, controlTooltip)
+        layout:AddInitializer(controlInitializer)
 
         local function ModifyPredicate()
             return DelveCompanionAccountData.inDelveWidgetEnabled

@@ -194,6 +194,8 @@ function DelveCompanion_InDelveWidgetFrameMixin:Refresh()
         return
     end
 
+    self:SetFrameStrata(self.previewMode and "HIGH" or "MEDIUM")
+
     -- Update the scale before the anchoring below, whose offsets are in the frame's own scaled space
     self:SetScale(DelveCompanionAccountData.inDelveWidgetScale or 1)
 
@@ -205,11 +207,11 @@ function DelveCompanion_InDelveWidgetFrameMixin:Refresh()
             self:ClearAllPoints()
 
             local saved = DelveCompanionAccountData.inDelveWidgetPoint
-            if type(saved) ~= "table" then
+            if type(saved) ~= "table" or not saved.point then
                 saved = {
-                    point = "TOPRIGHT",
+                    point = "CENTER",
                     relativeTo = "UIParent",
-                    relativePoint = "TOPLEFT",
+                    relativePoint = "CENTER",
                     x = 0,
                     y = 0,
                     scale = 1
@@ -217,9 +219,9 @@ function DelveCompanion_InDelveWidgetFrameMixin:Refresh()
             end
             -- Offsets are in the frame's own scaled space, so divide out the saved scale
             local factor = (saved.scale or 1) / self:GetScale()
-            self:SetPoint(saved.point or "TOPRIGHT",
+            self:SetPoint(saved.point or "CENTER",
                 UIParent,
-                saved.relativePoint or "TOPLEFT",
+                saved.relativePoint or "CENTER",
                 (saved.x or 0) * factor,
                 (saved.y or 0) * factor)
         end
@@ -328,12 +330,12 @@ function DelveCompanion_InDelveWidgetFrameMixin:SavePosition()
     local point, _, relativePoint, x, y = self:GetPoint()
 
     ---@class (exact) InDelveWidgetPoint
-    ---@field point FramePoint
-    ---@field relativeTo string
-    ---@field relativePoint FramePoint
-    ---@field x uiUnit
-    ---@field y uiUnit
-    ---@field scale number
+    ---@field point FramePoint|nil
+    ---@field relativeTo string|nil
+    ---@field relativePoint FramePoint|nil
+    ---@field x uiUnit|nil
+    ---@field y uiUnit|nil
+    ---@field scale number|nil
     local pointData = {
         point = point,
         relativeTo = "UIParent",
