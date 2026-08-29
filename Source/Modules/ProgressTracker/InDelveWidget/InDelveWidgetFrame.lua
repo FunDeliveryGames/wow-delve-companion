@@ -26,10 +26,29 @@ local SAVE_KEYS = {
     "inDelveWidgetLayout",
     "inDelveWidgetScale"
 }
+
+---@type string
+local EDIT_MODE_ATLAS_PREFIX = "editmode-actionbar-highlight"
+
+---@type table<string, table>
+local EDIT_MODE_LAYOUT =
+{
+    ["TopRightCorner"] = { atlas = "%s-NineSlice-Corner", mirrorLayout = true, x = 8, y = 8 },
+    ["TopLeftCorner"] = { atlas = "%s-NineSlice-Corner", mirrorLayout = true, x = -8, y = 8 },
+    ["BottomLeftCorner"] = { atlas = "%s-NineSlice-Corner", mirrorLayout = true, x = -8, y = -8 },
+    ["BottomRightCorner"] = { atlas = "%s-NineSlice-Corner", mirrorLayout = true, x = 8, y = -8 },
+    ["TopEdge"] = { atlas = "_%s-NineSlice-EdgeTop" },
+    ["BottomEdge"] = { atlas = "_%s-NineSlice-EdgeBottom" },
+    ["LeftEdge"] = { atlas = "!%s-NineSlice-EdgeLeft" },
+    ["RightEdge"] = { atlas = "!%s-NineSlice-EdgeRight" },
+    ["Center"] = { atlas = "%s-NineSlice-Center", x = -8, y = 8, x1 = 8, y1 = -8, },
+}
 --#endregion
 
 ---@class (exact) InDelveWidgetFrame : InDelveWidgetFrameXml
 ---@field isSet boolean
+---@field previewMode boolean
+---@field isMovingWidget boolean
 ---@field delveExpansion number
 ---@field respawnState DelveRespawnState
 ---@field Lure InDelveWidgetItem
@@ -38,19 +57,174 @@ local SAVE_KEYS = {
 DelveCompanion_InDelveWidgetFrameMixin = {}
 
 ---@param self InDelveWidgetFrame
+function DelveCompanion_InDelveWidgetFrameMixin:OnLoad()
+    -- Logger:Log("[InDelveWidgetFrame] OnLoad start")
+
+    self:ResetWidget()
+
+    -- Prepare widget buttons
+    do
+        local function CreateItem(name, parent, index)
+            ---@type InDelveWidgetItem
+            local widgetItem = CreateFrame("Frame", "$parent." .. name,
+                parent,
+                "DelvelCompanionInDelveWidgetItemTemplate")
+
+            widgetItem.layoutIndex = index
+
+            return widgetItem
+        end
+
+        local lure = CreateItem("Lure", self.Buttons, 1)
+        self.Lure = lure
+        local map = CreateItem("Map", self.Buttons, 2)
+        self.Map = map
+        local radar = CreateItem("Radar", self.Buttons, 3)
+        self.Radar = radar
+    end
+
+    -- Handle Delve Respawn activation
+    do
+        local function OnDelveRespawnActivated()
+            self.respawnState = RESPAWN_STATE.Activated
+            self:Refresh()
+        end
+
+        EventRegistry:RegisterCallback(DelveCompanion.Definitions.Events.PROGRESS_TRACKER.DELVE_RESPAWN_ACTIVATED,
+            OnDelveRespawnActivated, self)
+    end
+
+    -- Settings change
+    do
+        local function OnSettingChanged(_, changedVarKey, newValue)
+            if not tContains(SAVE_KEYS, changedVarKey) then
+                return
+            end
+            -- Logger:Log("[InDelveWidgetFrame] OnSettingChanged. Enabled: %s...", tostring(newValue))
+
+            self:Refresh()
+        end
+
+        EventRegistry:RegisterCallback(DelveCompanion.Definitions.Events.SETTING_CHANGE, OnSettingChanged, self)
+    end
+
+    -- Set up a click catcher to move the widget
+    do
+        local catcher = self.DragCatcher
+        NineSliceUtil.ApplyLayout(catcher, EDIT_MODE_LAYOUT, EDIT_MODE_ATLAS_PREFIX)
+
+        local function OnMouseDown(owner, buttonName)
+            if buttonName ~= DelveCompanion.Definitions.ButtonAlias.rightClick then
+                return
+            end
+
+            self.isMovingWidget = true
+            self:StartMoving()
+        end
+
+        local function OnMouseUp(owner, buttonName)
+            if buttonName ~= DelveCompanion.Definitions.ButtonAlias.rightClick then
+                return
+            end
+
+            if self.isMovingWidget then
+                self:EndDrag()
+            end
+        end
+
+        catcher:SetScript("OnMouseDown", OnMouseDown)
+        catcher:SetScript("OnMouseUp", OnMouseUp)
+    end
+end
+
+---@param self InDelveWidgetFrame
+function DelveCompanion_InDelveWidgetFrameMixin:OnShow()
+    -- Logger:Log("[InDelveWidgetFrame] OnShow start")
+
+    self:Refresh()
+
+    self:RegisterEvent("BAG_UPDATE")
+end
+
+---@param self InDelveWidgetFrame
+function DelveCompanion_InDelveWidgetFrameMixin:OnEvent(event, ...)
+    -- Logger:Log("[InDelveWidgetFrame] OnEvent start")
+
+    C_Timer.After(0.5, function()
+        self:Refresh()
+    end)
+end
+
+---@param self InDelveWidgetFrame
+function DelveCompanion_InDelveWidgetFrameMixin:OnHide()
+    -- Logger:Log("[InDelveWidgetFrame] OnHide start")
+
+    -- Hiding ends the move without a mouse-up, so the drop is finished here
+    if self.isMovingWidget then
+        self:EndDrag()
+    end
+
+    self:ResetWidget()
+
+    self:UnregisterEvent("BAG_UPDATE")
+end
+
+---@param self InDelveWidgetFrame
+---@param isForced boolean
+function DelveCompanion_InDelveWidgetFrameMixin:PrepareWidget(isForced)
+    local expansion = self.previewMode and LE_EXPANSION_MIDNIGHT or self.delveExpansion
+    self.Lure:Set(Config.NEMESIS_LURE[expansion])
+    self.Map:Set(Config.BOUNTY_MAPS[expansion])
+    self.Radar:Set(Config.LOOT_RADAR_ITEM_CODE)
+
+    self.respawnState = isForced and RESPAWN_STATE.Unknown or RESPAWN_STATE.NotActivated
+    self.isSet = true
+end
+
+---@param self InDelveWidgetFrame
+function DelveCompanion_InDelveWidgetFrameMixin:ResetWidget()
+    self.isSet = false
+    self.previewMode = false
+    self.respawnState = RESPAWN_STATE.Unknown
+end
+
+---@param self InDelveWidgetFrame
 function DelveCompanion_InDelveWidgetFrameMixin:Refresh()
     if not self.isSet then
         return
     end
 
-    -- before the anchoring below, whose offsets are in the frame's own scaled space
+    -- Update the scale before the anchoring below, whose offsets are in the frame's own scaled space
     self:SetScale(DelveCompanionAccountData.inDelveWidgetScale or 1)
 
     if DelveCompanionAccountData.inDelveWidgetDisplayRule == DelveCompanion.Definitions.InDelveWidgetDisplayRule.custom then
-        self.DragCatcher:Show()
+        self.DragCatcher:SetShown(self.previewMode)
+
+        -- Re-anchoring mid-drag would snap the widget back under the cursor
+        if not self.isMovingWidget then
+            self:ClearAllPoints()
+
+            local saved = DelveCompanionAccountData.inDelveWidgetPoint
+            if type(saved) ~= "table" then
+                saved = {
+                    point = "TOPRIGHT",
+                    relativeTo = "UIParent",
+                    relativePoint = "TOPLEFT",
+                    x = 0,
+                    y = 0,
+                    scale = 1
+                }
+            end
+            -- Offsets are in the frame's own scaled space, so divide out the saved scale
+            local factor = (saved.scale or 1) / self:GetScale()
+            self:SetPoint(saved.point or "TOPRIGHT",
+                UIParent,
+                saved.relativePoint or "TOPLEFT",
+                (saved.x or 0) * factor,
+                (saved.y or 0) * factor)
+        end
     else
         self.DragCatcher:Hide()
-
         self:ClearAllPoints()
 
         ---@type string
@@ -127,8 +301,8 @@ function DelveCompanion_InDelveWidgetFrameMixin:Refresh()
         end
     end
 
-    -- a preview must not arm a real /use on items the player still has
-    if self.previewOnly then
+    -- A preview must not arm a real /use on items the player still has
+    if self.previewMode then
         for _, item in ipairs({ self.Lure, self.Map, self.Radar }) do
             item:RefreshInteraction(false)
             item:StopAnimation()
@@ -150,124 +324,33 @@ function DelveCompanion_InDelveWidgetFrameMixin:Refresh()
 end
 
 ---@param self InDelveWidgetFrame
----@param isForced boolean
-function DelveCompanion_InDelveWidgetFrameMixin:PrepareWidget(isForced)
-    local expansion = self.delveExpansion
-    self.Lure:Set(Config.NEMESIS_LURE[expansion])
-    self.Map:Set(Config.BOUNTY_MAPS[expansion])
-    self.Radar:Set(Config.LOOT_RADAR_ITEM_CODE)
+function DelveCompanion_InDelveWidgetFrameMixin:SavePosition()
+    local point, _, relativePoint, x, y = self:GetPoint()
 
-    self.respawnState = isForced and RESPAWN_STATE.Unknown or RESPAWN_STATE.NotActivated
-    self.isSet = true
+    ---@class (exact) InDelveWidgetPoint
+    ---@field point FramePoint
+    ---@field relativeTo string
+    ---@field relativePoint FramePoint
+    ---@field x uiUnit
+    ---@field y uiUnit
+    ---@field scale number
+    local pointData = {
+        point = point,
+        relativeTo = "UIParent",
+        relativePoint = relativePoint,
+        x = x,
+        y = y,
+        scale = self:GetScale()
+    }
+    DelveCompanionAccountData.inDelveWidgetPoint = pointData
 end
 
 ---@param self InDelveWidgetFrame
-function DelveCompanion_InDelveWidgetFrameMixin:ResetWidget()
-    self.isSet = false
-    self.previewOnly = nil
-    self.respawnState = RESPAWN_STATE.Unknown
-end
+function DelveCompanion_InDelveWidgetFrameMixin:EndDrag()
+    self:StopMovingOrSizing()
+    self.isMovingWidget = false
 
----@param self InDelveWidgetFrame
-function DelveCompanion_InDelveWidgetFrameMixin:OnLoad()
-    -- Logger:Log("[InDelveWidgetFrame] OnLoad start")
-
-    self:ResetWidget()
-
-    -- Prepare widget buttons
-    do
-        local function CreateItem(name, parent, index)
-            ---@type InDelveWidgetItem
-            local widgetItem = CreateFrame("Frame", "$parent." .. name,
-                parent,
-                "DelvelCompanionInDelveWidgetItemTemplate")
-
-            widgetItem.layoutIndex = index
-
-            return widgetItem
-        end
-
-        local lure = CreateItem("Lure", self.Buttons, 1)
-        self.Lure = lure
-        local map = CreateItem("Map", self.Buttons, 2)
-        self.Map = map
-        local radar = CreateItem("Radar", self.Buttons, 3)
-        self.Radar = radar
-    end
-
-    -- Handle Delve Respawn activation
-    do
-        local function OnDelveRespawnActivated()
-            self.respawnState = RESPAWN_STATE.Activated
-            self:Refresh()
-        end
-
-        EventRegistry:RegisterCallback(DelveCompanion.Definitions.Events.PROGRESS_TRACKER.DELVE_RESPAWN_ACTIVATED,
-            OnDelveRespawnActivated, self)
-    end
-
-    -- Settings change
-    do
-        local function OnSettingChanged(_, changedVarKey, newValue)
-            if not tContains(SAVE_KEYS, changedVarKey) then
-                return
-            end
-            -- Logger:Log("[InDelveWidgetFrame] OnSettingChanged. Enabled: %s...", tostring(newValue))
-
-            self:Refresh()
-        end
-
-        EventRegistry:RegisterCallback(DelveCompanion.Definitions.Events.SETTING_CHANGE, OnSettingChanged, self)
-    end
-
-    -- Set up a click catcher to move the widget
-    do
-        local function OnMouseDown(owner, buttonName)
-            if buttonName ~= DelveCompanion.Definitions.ButtonAlias.rightClick then
-                return
-            end
-
-            self:StartMoving()
-        end
-
-        local function OnMouseUp(owner, buttonName)
-            if buttonName ~= DelveCompanion.Definitions.ButtonAlias.rightClick then
-                return
-            end
-
-            self:StopMovingOrSizing()
-        end
-
-        self.DragCatcher:SetScript("OnMouseDown", OnMouseDown)
-        self.DragCatcher:SetScript("OnMouseUp", OnMouseUp)
-    end
-end
-
----@param self InDelveWidgetFrame
-function DelveCompanion_InDelveWidgetFrameMixin:OnShow()
-    -- Logger:Log("[InDelveWidgetFrame] OnShow start")
-
-    self:Refresh()
-
-    self:RegisterEvent("BAG_UPDATE")
-end
-
----@param self InDelveWidgetFrame
-function DelveCompanion_InDelveWidgetFrameMixin:OnEvent(event, ...)
-    -- Logger:Log("[InDelveWidgetFrame] OnEvent start")
-
-    C_Timer.After(0.5, function()
-        self:Refresh()
-    end)
-end
-
----@param self InDelveWidgetFrame
-function DelveCompanion_InDelveWidgetFrameMixin:OnHide()
-    -- Logger:Log("[InDelveWidgetFrame] OnHide start")
-
-    self:ResetWidget()
-
-    self:UnregisterEvent("BAG_UPDATE")
+    self:SavePosition()
 end
 
 --#region Xml annotations
