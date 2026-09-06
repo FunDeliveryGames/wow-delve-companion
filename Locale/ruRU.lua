@@ -52,7 +52,7 @@ Lockit.UI_LOOT_INFO_TIPS = "|A:delves-treasure-upgrade:16:16|a |cnNORMAL_FONT_CO
 Lockit.UI_DELVE_AUTO_ENTER_SELECTED_TIER = "Автоматический вход (уровень %d)" -- %d - это уровень Вылазки (1-11).
 Lockit.UI_DELVE_AUTO_ENTER_INFO = "Выбранный уровень можно изменить в настройках аддона."
 Lockit.UI_DELVE_AUTO_ENTER_CANCEL_TOOLTIP_INSTRUCTION = "<Нажмите, чтобы отменить автоматический ввод>"
-Lockit.UI_DELVE_AUTO_EXIT_CONTROL_NAME = "Auto Exit"
+Lockit.UI_DELVE_AUTO_EXIT_CONTROL_NAME = "Автоматический выход"
 
 -- Информация о ключах
 
@@ -82,7 +82,7 @@ Lockit.UI_SETTING_WAYPOINT_TRACKING_OPTION_MPE_NAME = "MapPinEnhanced"
 Lockit.UI_SETTING_WAYPOINT_TRACKING_OPTION_MPE_DESCRIPTION = "Использовать точки маршрута MapPinEnhanced."
 Lockit.UI_SETTING_IN_DELVE_WIDGET_CONTROL_NAME = "Виджет в Вылазках"
 Lockit.UI_SETTING_IN_DELVE_WIDGET_CONTROL_TOOLTIP = "Включить виджет, отображаемый внутри Вылазок. Он служит напоминанием и быстрым меню для использования Карты наград, Приманки Немезиды и других предметов."
-Lockit.UI_SETTING_IN_DELVE_WIDGET_RESET_BUTTON_TEXT = "Reset Custom Position"
+Lockit.UI_SETTING_IN_DELVE_WIDGET_RESET_BUTTON_TEXT = "Сбросить пользовательское положение"
 Lockit.UI_SETTING_IN_DELVE_WIDGET_DISPLAY_RULE_NAME = "Отображение местоположения"
 Lockit.UI_SETTING_IN_DELVE_WIDGET_DISPLAY_RULE_TOOLTIP = "Место отображения виджета."
 Lockit.UI_SETTING_IN_DELVE_WIDGET_DISPLAY_RULE_OPTION_LEFT_NAME = "Левая сторона"
@@ -106,8 +106,8 @@ Lockit.UI_SETTING_DELVE_AUTO_ENTER_CONTROL_TOOLTIP = "Автоматически
 Lockit.UI_SETTING_DELVE_AUTO_ENTER_TIER_TOOLTIP = "Уровень Вылазки для входа."
 Lockit.UI_SETTING_DELVE_AUTO_ENTER_DELAY_NAME = "Задержка перед входом"
 Lockit.UI_SETTING_DELVE_AUTO_ENTER_DELAY_TOOLTIP = "Вход в Вылазку будет осуществлен с задержкой (в секундах).\n\nВ окне, отображаемом при входе в Вылазку, есть кнопка. Нажав на неё, можно отменить автоматический вход до истечения обратного отсчета задержки."
-Lockit.UI_SETTING_DELVE_AUTO_EXIT_CONTROL_NAME = "Auto Exit Delves"
-Lockit.UI_SETTING_DELVE_AUTO_EXIT_CONTROL_TOOLTIP = "Confirm Delve Exit prompt automatically (e.g. approaching the leave area)."
+Lockit.UI_SETTING_DELVE_AUTO_EXIT_CONTROL_NAME = "Автоматический выход из Вылазок"
+Lockit.UI_SETTING_DELVE_AUTO_EXIT_CONTROL_TOOLTIP = "Автоматически подтверждать выход из Вылазки (например, при приближении к зоне выхода)."
 
 Lockit.UI_SETTINGS_SECTION_TITLE_CHARACTER = "Параметры персонажа"
 Lockit.UI_SETTING_TOOLTIP_EXTENSION_NAME = "Дополнительная информация в подсказках"
@@ -138,4 +138,4 @@ Lockit.UI_SETTINGS_ADDON_LINK_TOOLTIP_CURSEFORGE = "Нажмите, чтобы �
 Lockit.UI_SETTINGS_ADDON_LINK_TOOLTIP_WAGO = "Нажмите, чтобы скопировать ссылку на страницу аддона |cnNORMAL_FONT_COLOR:Wago.io|r."
 Lockit.UI_SETTINGS_ADDON_LINK_TOOLTIP_WOWINT = "Нажмите, чтобы скопировать ссылку на страницу аддона |cnNORMAL_FONT_COLOR:WoW Interface|r."
 Lockit.UI_SETTINGS_ADDON_LINK_TOOLTIP_GITHUB = "Нажмите, чтобы скопировать ссылку на страницу аддона |cnNORMAL_FONT_COLOR:GitHub|r.\n\nПоделитесь отзывами, предложите новые функции или сообщите об ошибке. Это поможет сделать аддон еще лучше!"
-Lockit.UI_SETTINGS_ADDON_LINK_POPUP_TEXT = "|cnGREEN_FONT_COLOR:Ctrl + C|r, чтобы скопировать |cnNORMAL_FONT_COLOR:%s|r ссылку." -- `%s`: название веб-сайта, например CurseForge.
+Lockit.UI_SETTINGS_ADDON_LINK_POPUP_TEXT = "|cnGREEN_FONT_COLOR:Ctrl + C|r, чтобы скопировать |cnNORMAL_FONT_COLOR:%s|r ссылку." -- `%s`: название сайта, например CurseForge.
