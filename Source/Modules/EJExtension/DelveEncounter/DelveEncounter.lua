@@ -80,8 +80,7 @@ function DelveEncounter:Init(JourneysFrame)
         bar:SetPoint("TOP", compName, "BOTTOM", 0, 2)
         self.ExpBar = bar
 
-        local template = DelveCompanion.Variables.isPTR and "DelveCompanionCompanionConfigPanelTemplate"
-            or "DelveCompanionCompanionConfigPanelTemplateOld"
+        local template = "DelveCompanionCompanionConfigPanelTemplate"
         ---@type CompanionConfigPanel
         local configPanel = CreateFrame("Frame", "$parent.ConfigPanel", encRewardTrack, template)
         configPanel:SetPoint("TOP", bar, "BOTTOM", 0, 3)
@@ -212,9 +211,7 @@ function DelveEncounter:Refresh()
         local traitTreeID = C_DelvesUI.GetTraitTreeForCompanion(data.playerCompanionID)
         if C_Traits.GetConfigIDByTreeID(traitTreeID) then
             DelvesCompanionConfigurationFrame.playerCompanionID = data.playerCompanionID
-            if DelveCompanion.Variables.isPTR then
-                self.ConfigPanel.FlavorSlot:SetShown(expansion == LE_EXPANSION_MIDNIGHT)
-            end
+            self.ConfigPanel.FlavorSlot:SetShown(expansion == LE_EXPANSION_MIDNIGHT)
             self.ConfigPanel:Show()
         end
     end
@@ -222,7 +219,7 @@ function DelveEncounter:Refresh()
     do
         self.BountifulFrame:Show()
         self.ConsumablesFrame:Show()
-        self.GildedStashFrame:SetShown(expansion == LE_EXPANSION_MIDNIGHT)
-        self.LootInfoButton:SetShown(expansion == LE_EXPANSION_MIDNIGHT)
+        self.GildedStashFrame:SetShown(expansion == LE_EXPANSION_LEVEL_CURRENT)
+        self.LootInfoButton:SetShown(expansion == LE_EXPANSION_LEVEL_CURRENT)
     end
 end

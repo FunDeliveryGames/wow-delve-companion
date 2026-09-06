@@ -40,11 +40,7 @@ function DelveCompanion_CompanionConfigPanelMixin:OnLoad()
     self:SetSlot(self.RoleSlot)
     self:SetSlot(self.CombatSlot)
     self:SetSlot(self.UtilitySlot)
-
-    -- Don't forget to fix XML after 12.1 release
-    if DelveCompanion.Variables.isPTR then
-        self:SetSlot(self.FlavorSlot)
-    end
+    self:SetSlot(self.FlavorSlot)
 end
 
 ---@param self CompanionConfigPanel

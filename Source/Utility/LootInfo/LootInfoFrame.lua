@@ -46,7 +46,7 @@ function DelveCompanion_LootInfoFrameMixin:OnLoad()
     end
 
     local gildedStashSpell = Config.GILDED_STASH_SPELL_CODE
-    local nemesisSpell = Config.AFFIXES.Nemesis[LE_EXPANSION_MIDNIGHT]
+    local nemesisSpell = Config.AFFIXES.Nemesis[LE_EXPANSION_LEVEL_CURRENT]
     do
         local headers = self.RowsScroll.Content.ColumnHeaders
         headers.Tier:SetText(strtrim(format(_G["GARRISON_TIER"], "")))
@@ -62,7 +62,7 @@ function DelveCompanion_LootInfoFrameMixin:OnLoad()
         container.GildedStash.Text:SetText(C_Spell.GetSpellName(gildedStashSpell))
         container.GildedStash.Icon:SetTexture(C_Spell.GetSpellTexture(gildedStashSpell))
 
-        local map = Item:CreateFromItemID(Config.BOUNTY_MAPS[LE_EXPANSION_MIDNIGHT])
+        local map = Item:CreateFromItemID(Config.BOUNTY_MAPS[LE_EXPANSION_LEVEL_CURRENT])
         map:ContinueOnItemLoad(function()
             container.Map.Text:SetText(map:GetItemName())
             container.Map.Icon:SetTexture("interface/icons/icon_treasuremap")

@@ -56,9 +56,17 @@ Config.DEFAULT_CHARACTER_DATA = {
 }
 --#endregion
 
---#region TWW legacy
 ---@type number Item ID of [Delve-O-Bot 7001](https://www.wowhead.com/item=230850/delve-o-bot-7001).
 Config.DELVE_O_BOT_ITEM_CODE = 230850
+
+--- List of LE_EXPANSIONs Delve-O-Bot works with. Used to display the widget in the Delves tab.
+---@type number[]
+Config.DELVE_O_BOT_EXPANSIONS = {
+    LE_EXPANSION_MIDNIGHT,
+    LE_EXPANSION_WAR_WITHIN
+}
+
+--#region TWW legacy
 
 ---@type number Item ID of [Radiant Echo](https://www.wowhead.com/item=246771/radiant-echo).
 Config.ECHO_ITEM_CODE = 246771
@@ -87,19 +95,18 @@ Config.LOOT_RADAR_ITEM_CODE = 244193
 
 ---@type table<number, number> Item ID of a Nemesis lure.
 Config.NEMESIS_LURE = {
-    [LE_EXPANSION_MIDNIGHT] = DelveCompanion.Variables.isPTR and 275910 -- Scalebound Herald's Flute
-        or 253342                                                       -- Beacon of Hope
+    [LE_EXPANSION_LEVEL_CURRENT] = 275910 -- Scalebound Herald's Flute
 }
 
 --#region Bounty Map.
 
 ---@type table<number, number> Item ID of Bounty Map.
 Config.BOUNTY_MAPS = {
-    [LE_EXPANSION_MIDNIGHT] = DelveCompanion.Variables.isPTR and 274374 or 252415 -- Trovehunter's Bounty
+    [LE_EXPANSION_LEVEL_CURRENT] = 274374 -- Trovehunter's Bounty
 }
 ---@type table<number, number> Spell ID of the active Bounty Map.
 Config.BOUNTY_ACTIVATED_SPELL = {
-    [LE_EXPANSION_MIDNIGHT] = 1254631 -- Trovehunter's Bounty
+    [LE_EXPANSION_LEVEL_CURRENT] = 1254631 -- Trovehunter's Bounty
 }
 
 ---@type number Weekly cap of maps (per character).
@@ -129,7 +136,7 @@ Config.GILDED_STASH_MYHT_CRESTS = 5
 Config.AFFIXES = {
     -- [Nemesis Strongbox](https://www.wowhead.com/spell=1270179/nemesis-strongbox).
     Nemesis = {
-        [LE_EXPANSION_MIDNIGHT] = 1270179
+        [LE_EXPANSION_LEVEL_CURRENT] = 1270179
     }
 }
 --#endregion
@@ -141,7 +148,7 @@ Config.COMPANION_UNLOCK_QUEST = {
 }
 
 ---@type number [Faction ID](https://wago.tools/db2/Faction) of the current Delve season. Used for the Journeys tab.
-Config.DELVE_SEASON_FACTION_ID = DelveCompanion.Variables.isPTR and 2796 or 2742 -- Midnight
+Config.DELVE_SEASON_FACTION_ID = 2796 -- Midnight
 -- 2839 -- From Wago, seems to be for Season 3
 
 --#region Delves data
@@ -164,6 +171,7 @@ Config.DELVE_MAPS = {
         2255, -- Azj-Kahet
     },
     [LE_EXPANSION_MIDNIGHT] = {
+        2512, -- The Coiled Isle
         2405, -- Voidstorm
         2413, -- Harandar
         2437, -- Zul'Aman
@@ -172,12 +180,6 @@ Config.DELVE_MAPS = {
         2424, -- Isle of Quel'Danas
     }
 }
-
-if DelveCompanion.Variables.isPTR then
-    table.insert(Config.DELVE_MAPS[LE_EXPANSION_MIDNIGHT], 1,
-        2512 -- The Coiled Isle
-    )
-end
 
 ---@class (exact) DelveConfigAchievements
 ---@field story number?
@@ -625,19 +627,10 @@ Config.DELVES_CONFIG = {
                 nemesisSolo = 61799
             },
             nemesisInfo = {
-                isCurrentSeason = true,
+                isCurrentSeason = false,
                 delveTooltipLine = DelveCompanion.Lockit.UI_DELVE_INSTANCE_BUTTON_TOOLTIP_NEMESIS_MIDNIGHT_S1
             }
         },
-    }
-}
-
-if DelveCompanion.Variables.isPTR then
-    local delves = Config.DELVES_CONFIG[LE_EXPANSION_MIDNIGHT]
-
-    delves[#delves].nemesisInfo.isCurrentSeason = false -- Don't forget to disable S1 after 12.1 release
-
-    table.insert(delves,
         -- Gnarldor Isle
         {
             uiMapID = 2635,
@@ -651,9 +644,7 @@ if DelveCompanion.Variables.isPTR then
                 chest = 63170,
                 story = 63437
             }
-        }
-    )
-    table.insert(delves,
+        },
         -- The Ring of Glory
         {
             uiMapID = 2633,
@@ -667,9 +658,7 @@ if DelveCompanion.Variables.isPTR then
                 chest = 63171,
                 story = 63436
             }
-        }
-    )
-    table.insert(delves,
+        },
         -- Venomfall Deeps
         {
             uiMapID = 2634,
@@ -688,9 +677,10 @@ if DelveCompanion.Variables.isPTR then
                 isCurrentSeason = true,
                 delveTooltipLine = DelveCompanion.Lockit.UI_DELVE_INSTANCE_BUTTON_TOOLTIP_NEMESIS_MIDNIGHT_S2
             }
-        }
-    )
-end
+        },
+    }
+}
+
 --#endregion
 
 ---@type table<UpgradeTrackType, number>
@@ -719,11 +709,11 @@ Config.LOOT_RARITY = {
     },
     [2] = {
         from = 279,
-        to = 285,
+        to = 289,
         quality = Enum.ItemQuality.Epic
     },
     [3] = {
-        from = 285,
+        from = 289,
         to = 305,
         quality = Enum.ItemQuality.Legendary
     },
@@ -848,7 +838,7 @@ Config.DELVES_LOOT_INFO_DATA = {
     },
     [7] = {
         bountiful = {
-            itemLevel = 285,
+            itemLevel = 292,
             crests = {
                 {
                     track = DelveCompanion.Definitions.UpgradeTrackType.champion,
@@ -1008,292 +998,4 @@ Config.DELVES_LOOT_INFO_DATA = {
     }
 }
 
-if not DelveCompanion.Variables.isPTR then
-    Config.UPGRADE_CRESTS = {
-        [DelveCompanion.Definitions.UpgradeTrackType.adventurer] = 3383,
-        [DelveCompanion.Definitions.UpgradeTrackType.veteran] = 3341,
-        [DelveCompanion.Definitions.UpgradeTrackType.champion] = 3343,
-        [DelveCompanion.Definitions.UpgradeTrackType.hero] = 3345,
-        [DelveCompanion.Definitions.UpgradeTrackType.myth] = 3347
-    }
-
-    Config.LOOT_RARITY = {
-        [1] = {
-            from = 220,
-            to = 230,
-            quality = Enum.ItemQuality.Rare
-        },
-        [2] = {
-            from = 230,
-            to = 243,
-            quality = Enum.ItemQuality.Epic
-        },
-        [3] = {
-            from = 243,
-            to = 256,
-            quality = Enum.ItemQuality.Legendary
-        },
-        [4] = {
-            from = 256,
-            to = 999,
-            quality = Enum.ItemQuality.Artifact
-        }
-    }
-
-    Config.DELVES_LOOT_INFO_DATA = {
-        [1] = {
-            bountiful = {
-                itemLevel = 220
-            },
-            vault = {
-                itemLevel = 233
-            }
-        },
-        [2] = {
-            bountiful = {
-                itemLevel = 224
-            },
-            vault = {
-                itemLevel = 237
-            }
-        },
-        [3] = {
-            bountiful = {
-                itemLevel = 227
-            },
-            vault = {
-                itemLevel = 240
-            }
-        },
-        [4] = {
-            bountiful = {
-                itemLevel = 230,
-                crests = {
-                    {
-                        track = DelveCompanion.Definitions.UpgradeTrackType.adventurer,
-                        count = 5
-                    }
-                }
-            },
-            map = {
-                itemLevel = 237,
-                crests = {
-                    {
-                        track = DelveCompanion.Definitions.UpgradeTrackType.veteran,
-                        count = 8
-                    }
-                }
-            },
-            vault = {
-                itemLevel = 243
-            }
-        },
-        [5] = {
-            bountiful = {
-                itemLevel = 233,
-                crests = {
-                    {
-                        track = DelveCompanion.Definitions.UpgradeTrackType.veteran,
-                        count = 5
-                    }
-                }
-            },
-            map = {
-                itemLevel = 243,
-                crests = {
-                    {
-                        track = DelveCompanion.Definitions.UpgradeTrackType.veteran,
-                        count = 16
-                    }
-                }
-            },
-            vault = {
-                itemLevel = 246
-            }
-        },
-        [6] = {
-            bountiful = {
-                itemLevel = 237,
-                crests = {
-                    {
-                        track = DelveCompanion.Definitions.UpgradeTrackType.veteran,
-                        count = 10
-                    }
-                }
-            },
-            map = {
-                itemLevel = 246,
-                crests = {
-                    {
-                        track = DelveCompanion.Definitions.UpgradeTrackType.champion,
-                        count = 8
-                    }
-                }
-            },
-            vault = {
-                itemLevel = 253
-            }
-        },
-        [7] = {
-            bountiful = {
-                itemLevel = 246,
-                crests = {
-                    {
-                        track = DelveCompanion.Definitions.UpgradeTrackType.champion,
-                        count = 4
-                    }
-                }
-            },
-            map = {
-                itemLevel = 250,
-                crests = {
-                    {
-                        track = DelveCompanion.Definitions.UpgradeTrackType.champion,
-                        count = 16
-                    }
-                }
-            },
-            vault = {
-                itemLevel = 256
-            }
-        },
-        [8] = {
-            bountiful = {
-                itemLevel = 250,
-                crests = {
-                    {
-                        track = DelveCompanion.Definitions.UpgradeTrackType.champion,
-                        count = 6
-                    }
-                }
-            },
-            nemesis = {
-                crests = {
-                    {
-                        track = DelveCompanion.Definitions.UpgradeTrackType.champion,
-                        count = 5
-                    }
-                }
-            },
-            map = {
-                itemLevel = 259,
-                crests = {
-                    {
-                        track = DelveCompanion.Definitions.UpgradeTrackType.hero,
-                        count = 14
-                    }
-                }
-            },
-            vault = {
-                itemLevel = 259
-            }
-        },
-        [9] = {
-            bountiful = {
-                itemLevel = 250,
-                crests = {
-                    {
-                        track = DelveCompanion.Definitions.UpgradeTrackType.champion,
-                        count = 8
-                    }
-                }
-            },
-            nemesis = {
-                crests = {
-                    {
-                        track = DelveCompanion.Definitions.UpgradeTrackType.champion,
-                        count = 5
-                    }
-                }
-            },
-            map = {
-                itemLevel = 259,
-                crests = {
-                    {
-                        track = DelveCompanion.Definitions.UpgradeTrackType.hero,
-                        count = 16
-                    }
-                }
-            },
-            vault = {
-                itemLevel = 259
-            }
-        },
-        [10] = {
-            bountiful = {
-                itemLevel = 250,
-                crests = {
-                    {
-                        track = DelveCompanion.Definitions.UpgradeTrackType.champion,
-                        count = 10
-                    }
-                }
-            },
-            nemesis = {
-                crests = {
-                    {
-                        track = DelveCompanion.Definitions.UpgradeTrackType.hero,
-                        count = 5
-                    }
-                }
-            },
-            map = {
-                itemLevel = 259,
-                crests = {
-                    {
-                        track = DelveCompanion.Definitions.UpgradeTrackType.hero,
-                        count = 18
-                    }
-                }
-            },
-            vault = {
-                itemLevel = 259
-            }
-        },
-        [11] = {
-            bountiful = {
-                itemLevel = 250,
-                crests = {
-                    {
-                        track = DelveCompanion.Definitions.UpgradeTrackType.hero,
-                        count = 5
-                    }
-                }
-            },
-            nemesis = {
-                crests = {
-                    {
-                        track = DelveCompanion.Definitions.UpgradeTrackType.hero,
-                        count = 5
-                    }
-                }
-            },
-            gildedStash = {
-                crests = {
-                    {
-                        track = DelveCompanion.Definitions.UpgradeTrackType.hero,
-                        count = 10
-                    },
-
-                    {
-                        track = DelveCompanion.Definitions.UpgradeTrackType.myth,
-                        count = 5
-                    }
-                }
-            },
-            map = {
-                itemLevel = 259,
-                crests = {
-                    {
-                        track = DelveCompanion.Definitions.UpgradeTrackType.hero,
-                        count = 20
-                    }
-                }
-            },
-            vault = {
-                itemLevel = 259
-            }
-        }
-    }
-end
 --#endregion

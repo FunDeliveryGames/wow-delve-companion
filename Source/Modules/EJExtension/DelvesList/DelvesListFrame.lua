@@ -49,12 +49,12 @@ function DelveCompanion_DelvesListFrameMixin:Refresh()
     self:ListDelves(tierData.expansionLevel)
 
     self:UpdateKeysWidget()
-    self.DelveOBotWidget:SetShown(DelveCompanion.Variables.isPTR or tierData.expansionLevel == LE_EXPANSION_WAR_WITHIN)
+    self.DelveOBotWidget:SetShown(tContains(Config.DELVE_O_BOT_EXPANSIONS, tierData.expansionLevel))
 
     do
         self.ModifiersContainer.Nemesis:SetFrameInfo(
             DelveCompanion.Definitions.CodeType.Spell,
-            Config.AFFIXES.Nemesis[LE_EXPANSION_MIDNIGHT])
+            Config.AFFIXES.Nemesis[LE_EXPANSION_LEVEL_CURRENT])
         self.ModifiersContainer:SetShown(tierData.expansionLevel == LE_EXPANSION_LEVEL_CURRENT)
     end
 end

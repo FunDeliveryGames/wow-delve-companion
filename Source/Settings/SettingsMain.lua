@@ -376,7 +376,7 @@ function AddonSettings:RegisterAccountSettings(category, layout)
                 Config.DEFAULT_ACCOUNT_DATA.inDelveWidgetScale,
                 Lockit.UI_SETTING_IN_DELVE_WIDGET_SCALE_NAME, OnSettingChanged)
 
-            local minScale, maxScale, step = 0.5, 1.5, 0.1
+            local minScale, maxScale, step = 0.5, 3.0, 0.1
             local scaleOptions = Settings.CreateSliderOptions(minScale, maxScale, step)
 
             local function Formatter(value)

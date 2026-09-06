@@ -184,7 +184,7 @@ end
 ---@param self InDelveWidgetFrame
 ---@param isForced boolean
 function DelveCompanion_InDelveWidgetFrameMixin:PrepareWidget(isForced)
-    local expansion = self.previewMode and LE_EXPANSION_MIDNIGHT or self.delveExpansion
+    local expansion = self.previewMode and LE_EXPANSION_LEVEL_CURRENT or self.delveExpansion
     self.Lure:Set(Config.NEMESIS_LURE[expansion])
     self.Map:Set(Config.BOUNTY_MAPS[expansion])
     self.Radar:Set(Config.LOOT_RADAR_ITEM_CODE)
@@ -264,9 +264,7 @@ function DelveCompanion_InDelveWidgetFrameMixin:Refresh()
     do
         local frame = self.Lure
 
-        if expansion == LE_EXPANSION_WAR_WITHIN then
-            frame:Hide()
-        elseif expansion == LE_EXPANSION_MIDNIGHT then
+        if expansion == LE_EXPANSION_LEVEL_CURRENT then
             if (frame.itemCode) then
                 local hasItemNow = C_Item.GetItemCount(frame.itemCode) > 0
                 local isAvailable = hasItemNow                                            -- Has the lure
@@ -277,6 +275,8 @@ function DelveCompanion_InDelveWidgetFrameMixin:Refresh()
 
                 frame.hasItem = hasItemNow
             end
+        else
+            frame:Hide()
         end
     end
 
@@ -284,9 +284,7 @@ function DelveCompanion_InDelveWidgetFrameMixin:Refresh()
     do
         local frame = self.Map
 
-        if expansion == LE_EXPANSION_WAR_WITHIN then
-            frame:Hide()
-        elseif expansion == LE_EXPANSION_MIDNIGHT then
+        if expansion == LE_EXPANSION_LEVEL_CURRENT then
             if (frame.itemCode) then
                 local hasItemNow = C_Item.GetItemCount(frame.itemCode) > 0
                 local activeBountySpell = DelveCompanion.Config.BOUNTY_ACTIVATED_SPELL[expansion]
@@ -297,6 +295,8 @@ function DelveCompanion_InDelveWidgetFrameMixin:Refresh()
 
                 frame.hasItem = hasItemNow
             end
+        else
+            frame:Hide()
         end
     end
 

@@ -57,7 +57,7 @@ function DelveCompanion_DelveEncounterBountifulFrameMixin:OnShow()
     self.ActiveDelves.NoBountifulLabel:SetShown(#self.ActiveDelves.Container:GetLayoutChildren() == 0)
 
     self.Title:ClearAllPoints()
-    if DelveCompanion.Variables.isPTR or expansion == LE_EXPANSION_WAR_WITHIN then
+    if tContains(Config.DELVE_O_BOT_EXPANSIONS, expansion) then
         self.DelveOBotWidget:SetShown(true)
         self.Title:SetPoint("LEFT", self, "TOPLEFT", 5, -27)
         self.Title:SetJustifyH("LEFT")
