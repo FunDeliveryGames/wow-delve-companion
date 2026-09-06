@@ -51,6 +51,7 @@ local EDIT_MODE_LAYOUT =
 ---@field isMovingWidget boolean
 ---@field delveExpansion number
 ---@field respawnState DelveRespawnState
+---@field refreshToken number
 ---@field Lure InDelveWidgetItem
 ---@field Map InDelveWidgetItem
 ---@field Radar InDelveWidgetItem
@@ -150,7 +151,18 @@ end
 function DelveCompanion_InDelveWidgetFrameMixin:OnEvent(event, ...)
     -- Logger:Log("[InDelveWidgetFrame] OnEvent start")
 
+    if not self:IsShown() then
+        return
+    end
+
+    self.refreshToken = (self.refreshToken or 0) + 1
+    local token = self.refreshToken
+
     C_Timer.After(0.5, function()
+        if not self:IsShown() or self.refreshToken ~= token then
+            return
+        end
+
         self:Refresh()
     end)
 end
@@ -185,6 +197,7 @@ end
 function DelveCompanion_InDelveWidgetFrameMixin:ResetWidget()
     self.isSet = false
     self.previewMode = false
+    self.delveExpansion = nil
     self.respawnState = RESPAWN_STATE.Unknown
 end
 

@@ -19,6 +19,7 @@ local ENABLED_SAVE_KEY = "inDelveWidgetEnabled"
 ---@class (exact) InDelveWidget
 ---@field frame InDelveWidgetFrame
 ---@field setupInProgress boolean Used to prevent double call of the setup which may occur due to the timer delay.
+---@field setupToken number Used to invalidate stale delayed setup callbacks.
 local InDelveWidget = {}
 DelveCompanion.InDelveWidget = InDelveWidget
 
@@ -126,14 +127,23 @@ function InDelveWidget:Refresh(isForced)
     end
 
     self.setupInProgress = true
-    -- self.setupToken = (self.setupToken or 0) + 1
-    -- local token = self.setupToken
+    self.setupToken = (self.setupToken or 0) + 1
+    local token = self.setupToken
+
     -- Timer is required for a case when player switches between characters while one of them is in a Delve.
     -- For unknown reason, the continent cannot be retrieved immediately logging back to the character in a Delve. And the widget gets broken.
-    C_Timer.After(2,
+    C_Timer.After(1,
         function()
             -- a newer setup bumps the token, so a cancelled timer cannot finish this one
-            if not self.setupInProgress --[[or self.setupToken ~= token]] then
+            if not self.setupInProgress or self.setupToken ~= token then
+                return
+            end
+
+            local isStillEnabled = DelveCompanionAccountData.inDelveWidgetEnabled
+            local isStillVisible = DelveCompanion.ProgressTracker.isDelveInProgress or IsAddOnOptionsShown()
+            if not isStillEnabled or not isStillVisible then
+                self.setupInProgress = false
+                self:HideWidget()
                 return
             end
 
@@ -159,5 +169,6 @@ function InDelveWidget:HideWidget()
     -- Logger:Log("[InDelveWidget] Hide widget...")
 
     self.setupInProgress = false
+    self.setupToken = (self.setupToken or 0) + 1
     self.frame:Hide()
 end
