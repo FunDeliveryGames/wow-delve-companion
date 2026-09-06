@@ -18,8 +18,6 @@ Lockit.UI_COMMON_MISSING_ADDON_TITLE = "Falta el complemento necesario: %s" -- `
 
 -- Delves List
 
-Lockit.UI_DELVES_LIST_MODIFIERS_TEXT = _G["MODIFIERS_COLON"]
-
 Lockit.UI_DELVE_INSTANCE_BUTTON_TOOLTIP_CLICK_INSTRUCTION = "<Shift click para establecer puntos de referencia en la profundidad>"
 Lockit.UI_DELVE_INSTANCE_BUTTON_TOOLTIP_CURRENT_TEXT = "Punto de referencia establecido."
 Lockit.UI_DELVE_INSTANCE_BUTTON_TOOLTIP_CLEAR_INSTRUCTION = "<Shift click para borrar el punto de referencia>"
@@ -34,6 +32,8 @@ Lockit.UI_DELVE_INSTANCE_BUTTON_TOOLTIP_NEMESIS_MIDNIGHT_S2 = "Nemesis: |cnHIGHL
 -----
 
 -- Delves UI
+
+Lockit.UI_DELVES_LIST_MODIFIERS_TEXT = _G["MODIFIERS_COLON"]
 
 Lockit.UI_GILDED_STASH_CANNOT_RETRIEVE_DATA_TWW = "Visita las zonas de The War Within para ver el progreso"
 Lockit.UI_GILDED_STASH_CANNOT_RETRIEVE_DATA_MIDNIGHT = "Visita las zonas de Midnight para ver el progreso"
@@ -81,6 +81,7 @@ Lockit.UI_SETTING_WAYPOINT_TRACKING_OPTION_MPE_NAME = "MapPinEnhanced"
 Lockit.UI_SETTING_WAYPOINT_TRACKING_OPTION_MPE_DESCRIPTION = "Utilizar puntos de referencia de MapPinEnhanced."
 Lockit.UI_SETTING_IN_DELVE_WIDGET_CONTROL_NAME = "Miniaplicación en profundidades"
 Lockit.UI_SETTING_IN_DELVE_WIDGET_CONTROL_TOOLTIP = "Activa una miniaplicación que se muestra dentro de una profundidad. Sirve como recordatorio y menú de acceso rápido para el mapa de recompensas, el señuelo Némesis y mucho más."
+Lockit.UI_SETTING_IN_DELVE_WIDGET_RESET_BUTTON_TEXT = "Reset Custom Position"
 Lockit.UI_SETTING_IN_DELVE_WIDGET_DISPLAY_RULE_NAME = "Miniaplicación en profundidades"
 Lockit.UI_SETTING_IN_DELVE_WIDGET_DISPLAY_RULE_TOOLTIP = "Activa una miniaplicación que se muestra dentro de una profundidad. Sirve como recordatorio y menú de acceso rápido para el mapa de recompensas, el señuelo Némesis y mucho más."
 Lockit.UI_SETTING_IN_DELVE_WIDGET_DISPLAY_RULE_OPTION_LEFT_NAME = "Lado izquierdo"
