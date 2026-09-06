@@ -52,6 +52,7 @@ Lockit.UI_LOOT_INFO_TIPS = "|A:delves-treasure-upgrade:16:16|a |cnNORMAL_FONT_CO
 Lockit.UI_DELVE_AUTO_ENTER_SELECTED_TIER = "Auto Enter (Tier %d)" -- %d is a Tier number (1-11).
 Lockit.UI_DELVE_AUTO_ENTER_INFO = "The selected Tier can be changed in Addon Options."
 Lockit.UI_DELVE_AUTO_ENTER_CANCEL_TOOLTIP_INSTRUCTION = "<点击取消自动进入>"
+Lockit.UI_DELVE_AUTO_EXIT_CONTROL_NAME = "Auto Exit"
 
 -- Tooltips Extension
 
@@ -105,6 +106,8 @@ Lockit.UI_SETTING_DELVE_AUTO_ENTER_CONTROL_TOOLTIP = "抵达地下堡入口时�
 Lockit.UI_SETTING_DELVE_AUTO_ENTER_TIER_TOOLTIP = "自动进入的地下堡难度"
 Lockit.UI_SETTING_DELVE_AUTO_ENTER_DELAY_NAME = "延时"
 Lockit.UI_SETTING_DELVE_AUTO_ENTER_DELAY_TOOLTIP = "地下堡将在延迟时间后进入（单位：秒）。\n\n在进入地下堡时弹出的窗口中，会出现一个按钮。点击该按钮，可以在延迟倒计时结束前取消自动进入。"
+Lockit.UI_SETTING_DELVE_AUTO_EXIT_CONTROL_NAME = "Auto Exit Delves"
+Lockit.UI_SETTING_DELVE_AUTO_EXIT_CONTROL_TOOLTIP = "Confirm Delve Exit prompt automatically (e.g. approaching the leave area)."
 
 Lockit.UI_SETTINGS_SECTION_TITLE_CHARACTER = "角色设置"
 Lockit.UI_SETTING_TOOLTIP_EXTENSION_NAME = "额外提示信息"

@@ -52,6 +52,7 @@ Lockit.UI_LOOT_INFO_TIPS = "|A:delves-treasure-upgrade:16:16|a |cnNORMAL_FONT_CO
 Lockit.UI_DELVE_AUTO_ENTER_SELECTED_TIER = "Автоматический вход (уровень %d)" -- %d - это уровень Вылазки (1-11).
 Lockit.UI_DELVE_AUTO_ENTER_INFO = "Выбранный уровень можно изменить в настройках аддона."
 Lockit.UI_DELVE_AUTO_ENTER_CANCEL_TOOLTIP_INSTRUCTION = "<Нажмите, чтобы отменить автоматический ввод>"
+Lockit.UI_DELVE_AUTO_EXIT_CONTROL_NAME = "Auto Exit"
 
 -- Информация о ключах
 
@@ -105,6 +106,8 @@ Lockit.UI_SETTING_DELVE_AUTO_ENTER_CONTROL_TOOLTIP = "Автоматически
 Lockit.UI_SETTING_DELVE_AUTO_ENTER_TIER_TOOLTIP = "Уровень Вылазки для входа."
 Lockit.UI_SETTING_DELVE_AUTO_ENTER_DELAY_NAME = "Задержка перед входом"
 Lockit.UI_SETTING_DELVE_AUTO_ENTER_DELAY_TOOLTIP = "Вход в Вылазку будет осуществлен с задержкой (в секундах).\n\nВ окне, отображаемом при входе в Вылазку, есть кнопка. Нажав на неё, можно отменить автоматический вход до истечения обратного отсчета задержки."
+Lockit.UI_SETTING_DELVE_AUTO_EXIT_CONTROL_NAME = "Auto Exit Delves"
+Lockit.UI_SETTING_DELVE_AUTO_EXIT_CONTROL_TOOLTIP = "Confirm Delve Exit prompt automatically (e.g. approaching the leave area)."
 
 Lockit.UI_SETTINGS_SECTION_TITLE_CHARACTER = "Параметры персонажа"
 Lockit.UI_SETTING_TOOLTIP_EXTENSION_NAME = "Дополнительная информация в подсказках"

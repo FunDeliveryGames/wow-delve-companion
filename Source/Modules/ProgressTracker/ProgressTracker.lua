@@ -22,6 +22,9 @@ local EVENT_PROCESSING_DELAY = 1
 
 ---@type number
 local RESPAWN_SPELL = 433110
+
+---@type number
+local EXIT_DELVE_STATIC_POPUP_ID = 424700
 --#endregion
 
 ---@class (exact) ProgressTracker
@@ -64,6 +67,15 @@ function ProgressTracker:Init()
         -- If UI Reload or Login happens in the midst of the Delve, force register required events.
         FrameUtil.RegisterFrameForEvents(self.EventFrame, baseEvents)
     end
+
+    --- Auto exit Delves when the popup is shown.
+    ---@param which string The name of the StaticPopup being shown.
+    ---@param data number ID of the shown StaticPopup.
+    hooksecurefunc("StaticPopup_Show", function(which, text_arg1, text_arg2, data)
+        if data == EXIT_DELVE_STATIC_POPUP_ID and DelveCompanionAccountData.delveAutoExitEnabled then
+            C_PartyInfo.DelveTeleportOut()
+        end
+    end)
 end
 
 ---@param self ProgressTracker

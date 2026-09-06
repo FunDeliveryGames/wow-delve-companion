@@ -52,6 +52,7 @@ Lockit.UI_LOOT_INFO_TIPS = "|A:delves-treasure-upgrade:16:16|a |cnNORMAL_FONT_CO
 Lockit.UI_DELVE_AUTO_ENTER_SELECTED_TIER = "Auto Enter (Tier %d)" -- %d is a Tier number (1-11).
 Lockit.UI_DELVE_AUTO_ENTER_INFO = "The selected Tier can be changed in Addon Options."
 Lockit.UI_DELVE_AUTO_ENTER_CANCEL_TOOLTIP_INSTRUCTION = "<Click to cancel auto entering>"
+Lockit.UI_DELVE_AUTO_EXIT_CONTROL_NAME = "Auto Exit"
 
 -- Tooltips Extension
 
@@ -105,6 +106,8 @@ Lockit.UI_SETTING_DELVE_AUTO_ENTER_CONTROL_TOOLTIP = "Enter a Delve automaticall
 Lockit.UI_SETTING_DELVE_AUTO_ENTER_TIER_TOOLTIP = "Delve Tier to enter."
 Lockit.UI_SETTING_DELVE_AUTO_ENTER_DELAY_NAME = "Enter Delay"
 Lockit.UI_SETTING_DELVE_AUTO_ENTER_DELAY_TOOLTIP = "A Delve will be entered with a delay (in seconds).\n\nThere is a button in the window displayed entering a Delve. It can be clicked to cancel the auto entering before the delay countdown elapsed."
+Lockit.UI_SETTING_DELVE_AUTO_EXIT_CONTROL_NAME = "Auto Exit Delves"
+Lockit.UI_SETTING_DELVE_AUTO_EXIT_CONTROL_TOOLTIP = "Confirm Delve Exit prompt automatically (e.g. approaching the leave area)."
 
 Lockit.UI_SETTINGS_SECTION_TITLE_CHARACTER = "Charakter-spezifische Einstellungen"
 Lockit.UI_SETTING_TOOLTIP_EXTENSION_NAME = "Tooltip-Zusatzinfo"

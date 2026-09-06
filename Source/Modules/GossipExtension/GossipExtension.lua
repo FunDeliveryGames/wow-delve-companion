@@ -22,6 +22,8 @@ local LOOT_INFO_BUTTON_PARENT_KEY = "LootInfoButton"
 local CANCEL_AUTO_ENTER_BUTTON_PARENT_KEY = "CancelAutoEnterButton"
 ---@type string
 local AUTO_ENTER_CHECKBOX_PARENT_KEY = "AutoEnterCheckbox"
+---@type string
+local AUTO_EXIT_CHECKBOX_PARENT_KEY = "AutoExitCheckbox"
 
 ---@type number
 local AUTO_ENTER_COUNTDOWN_TICK_SEC = 1
@@ -35,6 +37,7 @@ local EXIT_TIMER_SEC = 10
 ---@field LootInfoButton MagicButton
 ---@field CancelAutoEnterButton Button
 ---@field AutoEnterCheckbox CheckButton
+---@field AutoExitCheckbox CheckButton
 ---@field autoEnterCancelled boolean
 ---@field exitTimer boolean
 local GossipExtension = {}
@@ -89,6 +92,9 @@ function GossipExtension:ProcessEvent(eventName, arg1, ...)
             self:DisplayStoryStatus(isCompleted)
         end
 
+        self.AutoExitCheckbox:Show()
+        self.AutoExitCheckbox:SetChecked(DelveCompanionAccountData.delveAutoExitEnabled)
+
         do
             local cbText = string.format(Lockit.UI_DELVE_AUTO_ENTER_SELECTED_TIER,
                 DelveCompanionAccountData.delveAutoEnterTier)
@@ -134,7 +140,10 @@ end
 function GossipExtension:SetupDiffPicker()
     self:CreateLootInfoButton()
     self:CreateAutoEnterCancelButton()
-    self:CreateAutoEnterCheckbox()
+
+    -- Order matters: Auto Exit checkbox must be created before Auto Enter checkbox, because the latter is positioned relative to the former.
+    self:CreateAutoExitCheckbox()  -- 1st
+    self:CreateAutoEnterCheckbox() -- 2nd
 
     DelvesDifficultyPickerFrame:HookScript("OnHide", function()
         self.exitTimer = false
@@ -144,6 +153,7 @@ function GossipExtension:SetupDiffPicker()
         DelveCompanion:GetLootInfoFrame():Hide()
         self.CancelAutoEnterButton:Hide()
         self.AutoEnterCheckbox:Hide()
+        self.AutoExitCheckbox:Hide()
     end)
 
     self.isDiffPickerSetupDone = true
@@ -350,7 +360,7 @@ function GossipExtension:CreateAutoEnterCheckbox()
         "UICheckButtonTemplate"
     )
     self.AutoEnterCheckbox = cb
-    cb:SetPoint("BOTTOMLEFT", DelvesDifficultyPickerFrame, "BOTTOMLEFT", 0, 0)
+    cb:SetPoint("BOTTOMLEFT", self.AutoExitCheckbox, "TOPLEFT", 0, -3)
     cb.Text:SetWidth(75)
 
     cb:HookScript("OnShow", function()
@@ -371,6 +381,39 @@ function GossipExtension:CreateAutoEnterCheckbox()
     end)
     cb:HookScript("OnClick", function()
         DelveCompanionAccountData.delveAutoEnterEnabled = cb:GetChecked()
+    end)
+end
+
+---@param self GossipExtension
+function GossipExtension:CreateAutoExitCheckbox()
+    local cb = CreateFrame("CheckButton",
+        "$DelveCompanion." .. AUTO_EXIT_CHECKBOX_PARENT_KEY,
+        DelvesDifficultyPickerFrame,
+        "UICheckButtonTemplate"
+    )
+    self.AutoExitCheckbox = cb
+    cb:SetPoint("BOTTOMLEFT", DelvesDifficultyPickerFrame, "BOTTOMLEFT", 0, -2)
+    cb.Text:SetWidth(75)
+    cb.Text:SetText(Lockit.UI_DELVE_AUTO_EXIT_CONTROL_NAME)
+
+    cb:HookScript("OnShow", function()
+        cb:SetChecked(DelveCompanionAccountData.delveAutoExitEnabled)
+    end)
+    cb:HookScript("OnEnter", function()
+        local tooltip = GameTooltip
+        tooltip:SetOwner(cb, "ANCHOR_TOP")
+        GameTooltip_SetTitle(tooltip,
+            Lockit.UI_DELVE_AUTO_EXIT_CONTROL_NAME,
+            HIGHLIGHT_FONT_COLOR)
+        GameTooltip_AddNormalLine(tooltip, Lockit.UI_SETTING_DELVE_AUTO_EXIT_CONTROL_TOOLTIP, true)
+
+        tooltip:Show()
+    end)
+    cb:HookScript("OnLeave", function()
+        securecall(GameTooltip.Hide, GameTooltip)
+    end)
+    cb:HookScript("OnClick", function()
+        DelveCompanionAccountData.delveAutoExitEnabled = cb:GetChecked()
     end)
 end
 

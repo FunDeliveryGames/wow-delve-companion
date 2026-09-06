@@ -460,6 +460,18 @@ function AddonSettings:RegisterAccountSettings(category, layout)
             delayInitializer:SetParentInitializer(controlInitializer, IsModifiable)
         end
     end
+
+    -- Delve Auto Exit
+    do
+        local controlSavedVarKey = "delveAutoExitEnabled"
+
+        local controlSetting = self:RegisterSetting(category, controlSavedVarKey, savedVarTbl,
+            Config.DEFAULT_ACCOUNT_DATA.delveAutoExitEnabled,
+            Lockit.UI_SETTING_DELVE_AUTO_EXIT_CONTROL_NAME, OnSettingChanged)
+
+        local controlTooltip = Lockit.UI_SETTING_DELVE_AUTO_EXIT_CONTROL_TOOLTIP
+        Settings.CreateCheckbox(category, controlSetting, controlTooltip)
+    end
 end
 
 --- Character-wide settings.
