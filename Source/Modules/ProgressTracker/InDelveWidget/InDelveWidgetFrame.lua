@@ -267,11 +267,12 @@ function DelveCompanion_InDelveWidgetFrameMixin:Refresh()
         if expansion == LE_EXPANSION_LEVEL_CURRENT then
             if (frame.itemCode) then
                 local hasItemNow = C_Item.GetItemCount(frame.itemCode) > 0
-                local isAvailable = hasItemNow                                            -- Has the lure
+                local shouldRemind = hasItemNow                                          -- Has the lure
                     and (not C_QuestLog.IsQuestFlaggedCompleted(Config.BOUNTY_MAP_QUEST)) -- Can get the bounty map this week
                     and (self.respawnState ~= RESPAWN_STATE.NotActivated)                 -- Respawn is activated
-                frame:RefreshInteraction(isAvailable)
-                frame:RefreshAnim(isAvailable and not frame.hasItem)
+                -- WoW validates item use; weekly rewards and checkpoint tracking only gate reminders.
+                frame:RefreshInteraction(hasItemNow)
+                frame:RefreshAnim(shouldRemind and not frame.hasItem)
 
                 frame.hasItem = hasItemNow
             end
