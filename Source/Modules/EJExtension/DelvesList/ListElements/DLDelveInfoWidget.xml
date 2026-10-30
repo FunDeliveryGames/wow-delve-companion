@@ -36,7 +36,7 @@
                         y="0" />
                 </Anchors>
             </Frame>
-            <Frame parentKey="NemesisSolo" hidden="true"
+            <Frame parentKey="BossSolo" hidden="true"
                 inherits="DelveCompanionCustomActionWidgetTemplate">
                 <Size x="40" y="26" />
                 <KeyValues>

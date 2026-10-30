@@ -27,21 +27,21 @@ function DelveCompanion_DelveListElementMixin:Init(data)
     self.InstanceButton:Refresh()
 
     if data.config.achievements and DelveCompanionAccountData[INFO_WIDGET_SAVE_KEY] then
-        local canShowNemesis = false
-        if data.config.nemesisInfo ~= nil then
-            ---@type number,_,_,_,_,number
-            local completed, _, _, _, _, flags = select(4, GetAchievementInfo(data.config.achievements.nemesisSolo))
+        local showBoss = false
+        if data.config.achievements.bossSolo ~= nil then
+            ---@type boolean,_,_,_,_,number
+            local completed, _, _, _, _, flags = select(4, GetAchievementInfo(data.config.achievements.bossSolo))
             local isHidden = bit.band(flags, ACHIEVEMENT_HIDE_INCOMPLETE_BIT) > 0
-            canShowNemesis = data.config.nemesisInfo.isCurrentSeason or completed or not isHidden
+            showBoss = (data.config.nemesisInfo and data.config.nemesisInfo.isCurrentSeason) or (data.config.labyrinthInfo and data.config.labyrinthInfo.isAvailable) or completed or not isHidden
         end
-        self.InfoWidget:Init(data.config.achievements, canShowNemesis)
+        self.InfoWidget:Init(data.config.achievements, showBoss)
         self.InfoWidget:Refresh()
         self.InfoWidget:Show()
     else
         self.InfoWidget:Hide()
     end
 end
-
+    
 ---@param self DelveListElement
 function DelveCompanion_DelveListElementMixin:OnShow()
 end

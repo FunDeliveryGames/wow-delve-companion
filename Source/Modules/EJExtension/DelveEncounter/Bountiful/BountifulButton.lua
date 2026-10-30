@@ -36,9 +36,11 @@ function DelveCompanion_DelveEncounterBountifulButtonMixin:Update()
     self.waypointTracker.Update(self.data)
     self.WaypointIcon:SetShown(self.waypointTracker.isActive)
 
-    ---@type number
-    local achIcon = select(10, GetAchievementInfo(self.data.config.achievements.story))
-    self.ArtBg:SetTexture(achIcon)
+    if self.data.config.achievements.story ~= nil then
+        ---@type number
+        local achIcon = select(10, GetAchievementInfo(self.data.config.achievements.story))
+        self.ArtBg:SetTexture(achIcon)
+    end
 end
 
 ---@param self DelveEncounterBountifulButton

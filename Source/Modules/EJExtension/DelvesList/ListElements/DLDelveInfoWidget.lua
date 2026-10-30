@@ -29,7 +29,8 @@ end
 
 ---@param self DLDelveInfoWidget
 ---@param delveAchievements DelveConfigAchievements
-function DelveCompanion_DLDelveInfoWidgetMixin:Init(delveAchievements, canShowNemesis)
+---@param showBoss boolean
+function DelveCompanion_DLDelveInfoWidgetMixin:Init(delveAchievements, showBoss)
     -- Story progress
     if delveAchievements.story ~= nil then
         self:PrepareWidgetElement(self.Story, delveAchievements.story)
@@ -44,11 +45,11 @@ function DelveCompanion_DLDelveInfoWidgetMixin:Init(delveAchievements, canShowNe
         self.Chest:Hide()
     end
 
-    -- Nemesis progress
-    if canShowNemesis then
-        self:PrepareWidgetElement(self.NemesisSolo, delveAchievements.nemesisSolo)
+    -- Boss progress
+    if showBoss then
+        self:PrepareWidgetElement(self.BossSolo, delveAchievements.bossSolo)
     else
-        self.NemesisSolo:Hide()
+        self.BossSolo:Hide()
     end
 end
 
@@ -88,8 +89,8 @@ function DelveCompanion_DLDelveInfoWidgetMixin:Refresh()
     end
 
     -- Nemesis progress
-    if self.NemesisSolo.frameCode ~= nil then
-        local achID = self.NemesisSolo.frameCode
+    if self.BossSolo.frameCode ~= nil then
+        local achID = self.BossSolo.frameCode
 
         ---@type boolean
         local completed = select(4, GetAchievementInfo(achID))
@@ -100,7 +101,7 @@ function DelveCompanion_DLDelveInfoWidgetMixin:Refresh()
         if completed then
             text = _G["DIM_GREEN_FONT_COLOR"]:WrapTextInColorCode(text)
         end
-        self.NemesisSolo:SetLabelText(text)
+        self.BossSolo:SetLabelText(text)
     end
 end
 
@@ -110,5 +111,5 @@ end
 ---@class (exact) DLDelveInfoWidgetXml : Frame
 ---@field Story CustomActionWidget
 ---@field Chest CustomActionWidget
----@field NemesisSolo CustomActionWidget
+---@field BossSolo CustomActionWidget
 --#endregion

@@ -87,8 +87,8 @@ function GossipExtension:ProcessEvent(eventName, arg1, ...)
             self:SetupDiffPicker()
         end
 
-        local isCompleted, isNemesis, isBountiful = self:GetDelveInfo()
-        if DelveCompanionAccountData.displayStoryStatusInGossip and not isNemesis then
+        local isCompleted, isNemesis, isBountiful, isLabyrinth = self:GetDelveInfo()
+        if DelveCompanionAccountData.displayStoryStatusInGossip and not isNemesis and not isLabyrinth then
             self:DisplayStoryStatus(isCompleted)
         end
 
@@ -164,15 +164,18 @@ end
 ---@return boolean isStoryCompleted Whether the active Story Variant is completed.
 ---@return boolean isNemesis Whether it's a Nemesis Delve.
 ---@return boolean isBountiful Whether the Delve is Bountiful now.
+---@return boolean isLabyrinth Whether the Delve is a Labyrinth.
 function GossipExtension:GetDelveInfo()
     local delveName = C_DelvesUI.GetDelveEntranceHeaderString()
-    local isCompleted, isNemesis, isBountiful = false, false, false
+    local isCompleted, isNemesis, isBountiful, isLabyrinth = false, false, false, false
 
     for _, expansionDelves in pairs(DelveCompanion.Variables.delvesData) do
         for _, data in pairs(expansionDelves) do
             if strmatch(delveName, data.delveName) then
                 if data.config.nemesisInfo then
                     isNemesis = true
+                elseif data.config.labyrinthInfo then
+                    isLabyrinth = true
                 else
                     isCompleted = data.isStoryCompleted
                     isBountiful = data.isBountiful
@@ -182,7 +185,7 @@ function GossipExtension:GetDelveInfo()
         end
     end
 
-    return isCompleted, isNemesis, isBountiful
+    return isCompleted, isNemesis, isBountiful, isLabyrinth
 end
 
 -- Get Tier of the in progress Delve.

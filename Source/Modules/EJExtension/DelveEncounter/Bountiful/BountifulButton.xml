@@ -22,7 +22,7 @@
                 </Texture>
             </Layer>
             <Layer level="ARTWORK" textureSubLevel="-1">
-                <Texture parentKey="ArtBg">
+                <Texture parentKey="ArtBg" atlas="overworld-active-64x64">
                     <Anchors>
                         <Anchor point="TOPLEFT" x="0" y="0" />
                         <Anchor point="BOTTOMRIGHT" x="0" y="0" />

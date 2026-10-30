@@ -14,8 +14,8 @@ local Lockit = DelveCompanion.Lockit
 
 ---@type string
 local EVENT_FRAME_NAME = "DelveCompanionProgressTrackingFrame"
----@type string
-local SCENARIO_DELVE_NAME = _G["DELVES_LABEL"]
+---@type number
+local SCENARIO_DELVE_TYPE = 8
 
 ---@type number
 local EVENT_PROCESSING_DELAY = 1
@@ -80,14 +80,20 @@ end
 
 ---@param self ProgressTracker
 function ProgressTracker:UpdateSeenScenario()
-    self.lastSeenScenario = select(1, C_Scenario.GetInfo())
+    local info = C_ScenarioInfo.GetScenarioInfo()
+
+    -- Ritual Sites have the same scenario type as Delves/Labyrinth, but they use a UI Texture Kit. So we check for that to differentiate between the two.
+    self.lastSeenScenario = (info and info.uiTextureKit == nil) and info.type or 0
 
     -- Logger:Log("[ProgressTracker] Scenario: %s", tostring(self.lastSeenScenario))
 end
 
 ---@param self ProgressTracker
 function ProgressTracker:UpdateDelveStatus()
-    self.isDelveInProgress = select(1, C_Scenario.GetInfo()) == SCENARIO_DELVE_NAME
+    local info = C_ScenarioInfo.GetScenarioInfo()
+
+    -- Ritual Sites have the same scenario type as Delves/Labyrinth, but they use a UI Texture Kit. So we check for that to differentiate between the two.
+    self.isDelveInProgress = (info and info.uiTextureKit == nil) and info.type == SCENARIO_DELVE_TYPE or false
 
     -- Logger:Log("[ProgressTracker] DelveStatus: %s", tostring(self.isDelveInProgress))
 end
@@ -121,7 +127,7 @@ function ProgressTracker:ProcessEvent(eventName, arg1, ...)
             self.EventFrame:UnregisterEvent("DISPLAY_EVENT_TOAST_LINK")
         end
     elseif eventName == "ZONE_CHANGED_NEW_AREA" then
-        if self.lastSeenScenario == SCENARIO_DELVE_NAME and not self.isDelveInProgress then
+        if self.lastSeenScenario == SCENARIO_DELVE_TYPE and not self.isDelveInProgress then
             FrameUtil.UnregisterFrameForEvents(self.EventFrame, baseEvents)
             self.isSubscribed = false
 

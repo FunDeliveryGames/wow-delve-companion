@@ -174,10 +174,10 @@ Config.DELVE_MAPS = {
     },
     [LE_EXPANSION_MIDNIGHT] = {
         2512, -- The Coiled Isle
+        2395, -- Eversong Woods
         2405, -- Voidstorm
         2413, -- Harandar
         2437, -- Zul'Aman
-        2395, -- Eversong Woods
         2393, -- Silvermoon City
         2424, -- Isle of Quel'Danas
     }
@@ -186,11 +186,14 @@ Config.DELVE_MAPS = {
 ---@class (exact) DelveConfigAchievements
 ---@field story number?
 ---@field chest number?
----@field nemesisSolo number?
+---@field bossSolo number?
 
 ---@class (exact) DelveConfigNemesisInfo
 ---@field isCurrentSeason boolean
 ---@field delveTooltipLine string
+
+---@class (exact) DelveConfigLabyrinthInfo
+---@field isAvailable boolean
 
 --- Table with Delve parameters.
 ---@class (exact) DelveConfig
@@ -201,6 +204,7 @@ Config.DELVE_MAPS = {
 ---@field achievements DelveConfigAchievements Achievement IDs related to the Delve.
 ---@field coordinates MapCoord? Delve entrance coordinates. Used primarly for Boss Delves and non-Blizzard waypoints (e.g. TomTom).
 ---@field nemesisInfo DelveConfigNemesisInfo?
+---@field labyrinthInfo DelveConfigLabyrinthInfo?
 
 ---@type table<number, DelveConfig[]> Table of all Delves in the game and their parameters. Indexed by LE_EXPANSION enum.
 Config.DELVES_CONFIG = {
@@ -427,7 +431,7 @@ Config.DELVES_CONFIG = {
             },
             atlasBgID = "delve-entrance-background-zekvirs-lair",
             achievements = {
-                nemesisSolo = 40433
+                bossSolo = 40433
             },
             nemesisInfo = {
                 isCurrentSeason = false,
@@ -446,7 +450,7 @@ Config.DELVES_CONFIG = {
             },
             atlasBgID = "delve-entrance-background-goblin-boss",
             achievements = {
-                nemesisSolo = 41210
+                bossSolo = 41210
             },
             nemesisInfo = {
                 isCurrentSeason = false,
@@ -465,7 +469,7 @@ Config.DELVES_CONFIG = {
             },
             atlasBgID = "delve-entrance-background-Voidrazor-Sanctuary",
             achievements = {
-                nemesisSolo = 42190
+                bossSolo = 42190
             },
             nemesisInfo = {
                 isCurrentSeason = false,
@@ -626,7 +630,7 @@ Config.DELVES_CONFIG = {
             },
             atlasBgID = "delve-entrance-background-torments-rise",
             achievements = {
-                nemesisSolo = 61799
+                bossSolo = 61799
             },
             nemesisInfo = {
                 isCurrentSeason = false,
@@ -673,11 +677,31 @@ Config.DELVES_CONFIG = {
             },
             atlasBgID = "delve-entrance-background-nemesis",
             achievements = {
-                nemesisSolo = 63333
+                bossSolo = 63333
             },
             nemesisInfo = {
                 isCurrentSeason = true,
                 delveTooltipLine = DelveCompanion.Lockit.UI_DELVE_INSTANCE_BUTTON_TOOLTIP_NEMESIS_MIDNIGHT_S2
+            }
+        },
+        -- The Labyrinth of Kindo'jan
+        {
+            uiMapID = 2647,
+            poiIDs = {
+                regular = 9036,
+                bountiful = 9035
+            },
+            -- coordinates = {
+            --     x = 51.23,
+            --     y = 31.04
+            -- },
+            atlasBgID = "delve-entrance-background-labyrinth",
+            achievements = {
+                chest = 63717,
+                bossSolo = 63715
+            },
+            labyrinthInfo = {
+                isAvailable = true
             }
         },
     }
@@ -736,7 +760,7 @@ Config.LOOT_RARITY = {
 
 --- Table with Delve Loot information
 ---@class (exact) DelveLootInfo
----@field bountiful DelveLootData Loot player gets opening [Bountiful Coffer](https://www.wowhead.com/item=228942/bountiful-coffer) completing the corresponding Delve Tier.
+---@field bountiful DelveLootData? Loot player gets opening [Bountiful Coffer](https://www.wowhead.com/item=228942/bountiful-coffer) completing the corresponding Delve Tier.
 ---@field gildedStash DelveLootData? Loot player gets opening Gilded Stash. Can be nil because appears on Tier 11 only.
 ---@field nemesis DelveLootData? Loot player gets from the [Nemesis Strongbox](https://www.wowhead.com/spell=1270179/nemesis-strongbox). Can be nil because provides only crests info at the moment. And they are not granted on some tiers.
 ---@field map DelveLootData? Loot player gets from the Bounty Map chest completing the corresponding Delve Tier. Can be nil because Bounty Map reward is unavailable for some tiers.
@@ -746,25 +770,16 @@ Config.LOOT_RARITY = {
 ---@type DelveLootInfo[]
 Config.DELVES_LOOT_INFO_DATA = {
     [1] = {
-        bountiful = {
-            itemLevel = 266
-        },
         vault = {
             itemLevel = 269
         }
     },
     [2] = {
-        bountiful = {
-            itemLevel = 269
-        },
         vault = {
             itemLevel = 272
         }
     },
     [3] = {
-        bountiful = {
-            itemLevel = 272
-        },
         vault = {
             itemLevel = 276
         }

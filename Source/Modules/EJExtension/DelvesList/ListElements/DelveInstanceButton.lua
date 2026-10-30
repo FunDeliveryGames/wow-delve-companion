@@ -11,6 +11,7 @@ local Logger = DelveCompanion.Logger
 ---@type string
 local NEMESIS_ACTIVE_ATLAS = "GM-icon-difficulty-mythicSelected-hover"
 local NEMESIS_INACTIVE_ATLAS = "GM-icon-difficulty-mythic-pressed"
+local LABYRINTH_ACTIVE_ATLAS = "overworld-active-64x64"
 --#endregion
 
 --- A button representing a Delve in the Delves list.
@@ -38,7 +39,8 @@ end
 
 ---@param self DelveInstanceButton
 function DelveCompanion_DelveInstanceButtonMixin:Refresh()
-    self.BountifulIcon:SetShown(self.data.isBountiful)
+    self.BountifulIcon:SetShown(self.data.isBountiful and self.data.config.labyrinthInfo == nil)
+    self.LabyrinthIcon:SetShown(self.data.config.labyrinthInfo and self.data.config.labyrinthInfo.isAvailable)
 
     if self.data.config.nemesisInfo ~= nil then
         self.NemesisIcon:Show()
@@ -127,6 +129,7 @@ end
 ---@field DelveName FontString
 ---@field BountifulIcon Texture
 ---@field NemesisIcon Texture
+---@field LabyrinthIcon Texture
 ---@field LockIcon Texture
 ---@field RightIconsContainer RightIconsContainer
 --#endregion

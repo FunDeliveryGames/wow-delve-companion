@@ -49,6 +49,14 @@
                             relativePoint="BOTTOMLEFT" x="3" y="2" />
                     </Anchors>
                 </Texture>
+                <Texture parentKey="LabyrinthIcon"
+                    atlas="overworld-active-64x64" hidden="true">
+                    <Size x="32" y="32" />
+                    <Anchors>
+                        <Anchor point="BOTTOMLEFT" relativeKey="$parentBackground"
+                            relativePoint="BOTTOMLEFT" x="5" y="4" />
+                    </Anchors>
+                </Texture>
             </Layer>
             <Layer level="OVERLAY" textureSubLevel="1">
                 <Texture parentKey="LockIcon" hidden="true"
