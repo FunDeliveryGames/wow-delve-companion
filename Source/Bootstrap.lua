@@ -50,6 +50,12 @@ function Bootstrap:OnPlayerLogin()
     DelveCompanion:UpdateDelvesData()
     DelveCompanion_TooltipExtension_Init()
 
+    EventUtil.ContinueOnAddOnLoaded(DelveCompanion.Definitions.DependencyAddonName.encounterJournal,
+        function()
+            DelveCompanion.EJExtension:Init()
+        end
+    )
+
     -- Logger:Log("[DelveCompanion Bootstrap] OnPlayerLogin finish")
 end
 

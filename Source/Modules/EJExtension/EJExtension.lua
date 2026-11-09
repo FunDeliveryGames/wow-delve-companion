@@ -149,9 +149,3 @@ function EJExtension:OnContentTabSet(id)
     self.DelvesList.Frame:Show()
     PanelTemplates_SelectTab(self.DelvesList.TabButton)
 end
-
-EventUtil.ContinueOnAddOnLoaded(DelveCompanion.Definitions.DependencyAddonName.encounterJournal,
-    function()
-        EJExtension:Init()
-    end
-)
