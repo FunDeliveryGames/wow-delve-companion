@@ -49,7 +49,9 @@ function DelveCompanion_CompartmentOpenDelvesInfo()
         C_AddOns.LoadAddOn(name)
     end
 
-    EncounterJournal_OpenToJourney(Config.DELVE_SEASON_FACTION_ID)
+    local delveSeasonNumber = C_DelvesUI.GetCurrentDelvesSeasonNumber()
+    local id = Config.DELVE_SEASON_FACTION_IDS[LE_EXPANSION_LEVEL_CURRENT][delveSeasonNumber]
+    EncounterJournal_OpenToJourney(id)
 end
 
 --- Used in `TOC` file for [AddonCompartmentFuncOnEnter](https://warcraft.wiki.gg/wiki/TOC_format#AddonCompartmentFuncOnEnter).

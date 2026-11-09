@@ -183,7 +183,7 @@ function DelveEncounter:CreateLootInfoButton(parent)
 end
 
 ---@param self DelveEncounter
----@return MajorFactionData data Currently displayed faction data. May return an empty table.
+---@return MajorFactionData|{} data Currently displayed faction data. May return an empty table.
 function DelveEncounter:GetFactionData()
     return self.EncounterRewardTrack:GetParent().majorFactionData
 end
@@ -194,13 +194,13 @@ function DelveEncounter:Refresh()
 
     local data = self:GetFactionData()
 
-    ---@type number
-    local expansion = data.expansionID
-
     -- Check whether the opened encounter is Delves, not something else (e.g. Prey).
-    if not data.factionID or not C_MajorFactions.ShouldUseJourneyRewardTrack(data.factionID) then
+    if data.factionID == nil or not data.factionID or not C_MajorFactions.ShouldUseJourneyRewardTrack(data.factionID) then
         return
     end
+
+    ---@type number
+    local expansion = data.expansionID
 
     do
         self.ExpBar.factionID = C_DelvesUI.GetFactionForCompanion(data.playerCompanionID)
@@ -219,7 +219,8 @@ function DelveEncounter:Refresh()
     do
         self.BountifulFrame:Show()
         self.ConsumablesFrame:Show()
-        self.GildedStashFrame:SetShown(expansion == LE_EXPANSION_LEVEL_CURRENT)
+        self.GildedStashFrame:SetShown(expansion == LE_EXPANSION_LEVEL_CURRENT and
+            tContains(Config.DELVE_SEASON_FACTION_IDS[LE_EXPANSION_LEVEL_CURRENT], data.factionID))
         self.LootInfoButton:SetShown(expansion == LE_EXPANSION_LEVEL_CURRENT)
     end
 end

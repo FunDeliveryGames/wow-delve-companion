@@ -149,9 +149,22 @@ Config.COMPANION_UNLOCK_QUEST = {
     [LE_EXPANSION_MIDNIGHT] = 86636
 }
 
----@type number [Faction ID](https://wago.tools/db2/Faction) of the current Delve season. Used for the Journeys tab.
-Config.DELVE_SEASON_FACTION_ID = 2796 -- Midnight
--- 2839 -- From Wago, seems to be for Season 3
+---@type table<number, number[]> List of [Faction IDs](https://wago.tools/db2/Faction) of the Delve seasons. Grouped by LE_EXPANSION enum.
+Config.DELVE_SEASON_FACTION_IDS = {
+    [LE_EXPANSION_WAR_WITHIN] = {
+        2644, -- Season 1
+        2683, -- Season 2
+        2722, -- Season 3
+    },
+    [LE_EXPANSION_MIDNIGHT] = {
+        2742, -- Season 1
+        2796, -- Season 2
+        2839, -- Season 3
+    }
+}
+
+--- TBD whether it's needed.
+-- factionID = 2836, -- The Labyrinth of Kindo'jan
 
 --#region Delves data
 

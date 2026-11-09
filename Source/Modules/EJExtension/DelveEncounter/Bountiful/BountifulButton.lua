@@ -12,6 +12,9 @@ local Logger = DelveCompanion.Logger
 local SIZE_DEFAULT = 30
 ---@type number
 local SIZE_SHRINK = 25
+
+---@type string
+local DEFAULT_ICON_ATLAS = "overworld-active-64x64"
 --#endregion
 
 ---@class (exact) DelveEncounterBountifulButton : DelveEncounterBountifulButtonXml
@@ -54,6 +57,8 @@ function DelveCompanion_DelveEncounterBountifulButtonMixin:Update()
         ---@type number
         local achIcon = select(10, GetAchievementInfo(self.data.config.achievements.story))
         self.ArtBg:SetTexture(achIcon)
+    else
+        self.ArtBg:SetAtlas(DEFAULT_ICON_ATLAS)
     end
 end
 
