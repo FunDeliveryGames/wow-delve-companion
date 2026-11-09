@@ -26,11 +26,11 @@
 
 --#region FrameXML annotations
 
---- `VerticalLayoutFrame` ([Blizzard template](https://www.townlong-yak.com/framexml/live/Blizzard_SharedXML/LayoutFrame.xml#9)).
+--- `VerticalLayoutFrame` ([Blizzard template](https://www.townlong-yak.com/framexml/live/Blizzard_SharedXML/LayoutFrame.xml)).
 ---@class VerticalLayoutFrame : Frame, LayoutMixin, VerticalLayoutMixin
 ---@field spacing number Spacing is the number of pixels between child elements
 
---- `HorizontalLayoutFrame` ([Blizzard template](https://www.townlong-yak.com/framexml/live/Blizzard_SharedXML/LayoutFrame.xml#85)).
+--- `HorizontalLayoutFrame` ([Blizzard template](https://www.townlong-yak.com/framexml/live/Blizzard_SharedXML/LayoutFrame.xml)).
 ---@class HorizontalLayoutFrame : Frame, LayoutMixin, HorizontalLayoutMixin
 ---@field fixedHeight number
 ---@field spacing number Spacing is the number of pixels between child elements

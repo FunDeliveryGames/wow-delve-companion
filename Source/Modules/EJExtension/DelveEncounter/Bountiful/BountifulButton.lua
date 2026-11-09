@@ -6,6 +6,14 @@ local DelveCompanion = AddonTbl.DelveCompanion
 ---@type Logger
 local Logger = DelveCompanion.Logger
 
+--#region Constants
+
+---@type number
+local SIZE_DEFAULT = 30
+---@type number
+local SIZE_SHRINK = 25
+--#endregion
+
 ---@class (exact) DelveEncounterBountifulButton : DelveEncounterBountifulButtonXml
 ---@field data DelveData
 ---@field waypointTracker WaypointTracker
@@ -21,10 +29,14 @@ end
 ---@param self DelveEncounterBountifulButton
 ---@param data DelveData
 ---@param index number
-function DelveCompanion_DelveEncounterBountifulButtonMixin:Init(data, index)
+---@param useSmallSize boolean
+function DelveCompanion_DelveEncounterBountifulButtonMixin:Init(data, index, useSmallSize)
     ---@diagnostic disable-next-line: inject-field
     self.layoutIndex = index
-    self.data = data
+    self.data        = data
+
+    local size       = useSmallSize and SIZE_SHRINK or SIZE_DEFAULT
+    self:SetSize(size, size)
 
     local waypointTracker = CreateFromMixins(DelveCompanion_WaypointTrackerMixin)
     waypointTracker:Prepare()
@@ -33,6 +45,8 @@ end
 
 ---@param self DelveEncounterBountifulButton
 function DelveCompanion_DelveEncounterBountifulButtonMixin:Update()
+    -- Logger:Log("[DelveEncounterBountifulButton] Update")
+
     self.waypointTracker.Update(self.data)
     self.WaypointIcon:SetShown(self.waypointTracker.isActive)
 
@@ -50,7 +64,7 @@ end
 
 ---@param self DelveEncounterBountifulButton
 function DelveCompanion_DelveEncounterBountifulButtonMixin:OnShow()
-    -- Logger:Log("DelveEncounterBountifulButton OnShow start")
+    -- Logger:Log("[DelveEncounterBountifulButton] OnShow start")
 
     self:RegisterEvent("SUPER_TRACKING_CHANGED")
     self:Update()

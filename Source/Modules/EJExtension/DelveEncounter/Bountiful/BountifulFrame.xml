@@ -62,6 +62,7 @@
                             <KeyValue key="spacing" value="5" type="number" />
                             <KeyValue key="fixedHeight" value="40" type="number" />
                             <KeyValue key="maximumWidth" value="140" type="number" />
+                            <KeyValue key="skipLayoutOnShow" value="true" type="boolean"/>
                         </KeyValues>
                         <Anchors>
                             <Anchor point="CENTER" />

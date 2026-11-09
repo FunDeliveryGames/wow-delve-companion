@@ -43,7 +43,6 @@ function DelveCompanion_CompartmentSetTooltipContent(tooltip)
     end
 end
 
----@param expansion number LE_EXPANSION enum number of the expansion
 function DelveCompanion_CompartmentOpenDelvesInfo()
     local name = DelveCompanion.Definitions.DependencyAddonName.encounterJournal
     if not C_AddOns.IsAddOnLoaded(name) then

@@ -125,7 +125,7 @@ Config.GILDED_STASH_SPELL_CODE = 1216211
 ---@type number Level required to unlock Gilded Stash reward.
 Config.GILDED_STASH_MYTH_JOURNEY_LEVEL_REQUIRED = 4
 
----@type number Level required to unlock Gilded Stash reward.
+---@type number Number of Crests acquired from Gilded Stash.
 Config.GILDED_STASH_MYHT_CRESTS = 5
 --#endregion
 

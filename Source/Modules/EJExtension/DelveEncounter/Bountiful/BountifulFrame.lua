@@ -44,17 +44,26 @@ function DelveCompanion_DelveEncounterBountifulFrameMixin:OnShow()
         return
     end
 
+    ---@type DelveData[]
+    local activeData = {}
+
     for index, delveData in ipairs(DelveCompanion.Variables.delvesData[expansion]) do
         if delveData.isBountiful then
-            ---@type DelveEncounterBountifulButton
-            local button = self.bountifulButtonsPool:Acquire()
-            button:Init(delveData, index)
-            button:Show()
+            table.insert(activeData, delveData)
         end
     end
 
+    ---@type boolean
+    local useSmallSize = #activeData >= 5
+    for index, delveData in ipairs(activeData) do
+        ---@type DelveEncounterBountifulButton
+        local button = self.bountifulButtonsPool:Acquire()
+        button:Init(delveData, index, useSmallSize)
+        button:Show()
+    end
+
     self.ActiveDelves.Container:Layout()
-    self.ActiveDelves.NoBountifulLabel:SetShown(#self.ActiveDelves.Container:GetLayoutChildren() == 0)
+    self.ActiveDelves.NoBountifulLabel:SetShown(#activeData == 0)
 
     self.Title:ClearAllPoints()
     if tContains(Config.DELVE_O_BOT_EXPANSIONS, expansion) then
