@@ -1,5 +1,10 @@
 # Change Log
 
+## [2026.11.1] - 10 November 2026
+- Add The Labyrinth of Kindo'jan to the Delves list.
+- Display the Widget in The Labyrinth.
+- Fixed minor issues.
+
 ## [2026.09.1] - 06 September 2026
 - Introduce an option to confirm the Delve Exit prompt automatically.
     - It's **__disabled__** by default. It can be toggled in the addon options.
