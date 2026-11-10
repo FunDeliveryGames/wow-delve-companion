@@ -43,7 +43,7 @@ end
 
 --- Callback to handle a click on a delve in the list.
 ---@param _ any
----@param delveData DelveData
+---@param delveData DelveRecord
 local function OnDelveButtonClicked(_, delveData)
     if delveData == nil then
         return

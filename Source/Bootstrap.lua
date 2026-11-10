@@ -46,8 +46,7 @@ function Bootstrap:OnPlayerLogin()
     DelveCompanion.InDelveWidget:Init()
     DelveCompanion.GossipExtension:Init()
 
-    DelveCompanion:InitDelvesData()
-    DelveCompanion:UpdateDelvesData()
+    DelveCompanion.DelvesData:Init()
     DelveCompanion_TooltipExtension_Init()
 
     EventUtil.ContinueOnAddOnLoaded(DelveCompanion.Definitions.DependencyAddonName.encounterJournal,

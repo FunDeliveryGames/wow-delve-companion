@@ -122,7 +122,35 @@ Definitions.Events = {
         DELVE_RESPAWN_ACTIVATED = "DelveCompanion.DelveRespawnActivated", -- Respawn has been activated in the Delve.
         DELVE_COMPLETED = "DelveCompanion.DelveCompleted",                -- Delve has been completed.
         DELVE_EXITED = "DelveCompanion.DelveExited",                      -- Delve has been left.
+    },
+    DELVES_DATA = {
+        -- Any DelveRecord field has changed. Payload: DelvesDataChanges.
+        UPDATED = "DelveCompanion.DelvesData.Updated",
     }
+}
+
+--- Kind of a Delve. Derived from [DelveConfig](lua://DelveConfig) once at startup.
+---@class (exact) DelveKind
+---@field Regular number
+---@field Nemesis number Level-gated boss Delve (`DelveConfig.nemesisInfo`).
+---@field Labyrinth number `DelveConfig.labyrinthInfo`.
+Definitions.DelveKind = {
+    Regular = 1,
+    Nemesis = 2,
+    Labyrinth = 3
+}
+
+--- Completion state of the active Story Variant of a Delve.
+---@class (exact) DelveStoryStatus
+---@field Unknown number The Story Variant could not be read (e.g. its data is not loaded yet).
+---@field NotCompleted number The variant is part of the story achievement and not completed.
+---@field Completed number The variant is part of the story achievement and completed.
+---@field NotTracked number The variant is not part of the story achievement (added mid-expansion), or the Delve has no story achievement. Displayed as completed.
+Definitions.DelveStoryStatus = {
+    Unknown = 0,
+    NotCompleted = 1,
+    Completed = 2,
+    NotTracked = 3
 }
 
 ---@class (exact) UpgradeTrackType

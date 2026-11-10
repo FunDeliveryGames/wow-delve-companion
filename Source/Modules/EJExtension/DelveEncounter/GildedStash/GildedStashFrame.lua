@@ -111,8 +111,8 @@ function DelveCompanion_DelveEncounterGildedStashFrameMixin:GetStashInfo(expansi
         return nil
     end
 
-    for _, delveData in ipairs(DelveCompanion.Variables.delvesData[expansion]) do
-        local uiWidgetID = delveData.config.gildedStashUiWidgetID
+    for _, record in ipairs(DelveCompanion.DelvesData:GetDelves(expansion)) do
+        local uiWidgetID = record.config.gildedStashUiWidgetID
         if uiWidgetID then
             local result = C_UIWidgetManager.GetSpellDisplayVisualizationInfo(uiWidgetID)
             if result then

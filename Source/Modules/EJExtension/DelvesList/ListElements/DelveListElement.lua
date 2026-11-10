@@ -19,7 +19,7 @@ local INFO_WIDGET_SAVE_KEY = "delvesListInfoWidgetsEnabled"
 DelveCompanion_DelveListElementMixin = {}
 
 ---@param self DelveListElement
----@param data DelveData
+---@param data DelveRecord
 function DelveCompanion_DelveListElementMixin:Init(data)
     -- Logger:Log("[DelveListElement] Init: %s", data.delveName)
 
@@ -32,7 +32,11 @@ function DelveCompanion_DelveListElementMixin:Init(data)
             ---@type boolean,_,_,_,_,number
             local completed, _, _, _, _, flags = select(4, GetAchievementInfo(data.config.achievements.bossSolo))
             local isHidden = bit.band(flags, ACHIEVEMENT_HIDE_INCOMPLETE_BIT) > 0
-            showBoss = (data.config.nemesisInfo and data.config.nemesisInfo.isCurrentSeason) or (data.config.labyrinthInfo and data.config.labyrinthInfo.isAvailable) or completed or not isHidden
+
+            local kinds = DelveCompanion.Definitions.DelveKind
+            local isActiveBoss = (data.kind == kinds.Nemesis and data.config.nemesisInfo.isCurrentSeason)
+                or (data.kind == kinds.Labyrinth and data.config.labyrinthInfo.isAvailable)
+            showBoss = isActiveBoss or completed or not isHidden
         end
         self.InfoWidget:Init(data.config.achievements, showBoss)
         self.InfoWidget:Refresh()

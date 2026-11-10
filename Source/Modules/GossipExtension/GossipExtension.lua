@@ -87,9 +87,19 @@ function GossipExtension:ProcessEvent(eventName, arg1, ...)
             self:SetupDiffPicker()
         end
 
-        local isCompleted, isNemesis, isBountiful, isLabyrinth = self:GetDelveInfo()
-        if DelveCompanionAccountData.displayStoryStatusInGossip and not isNemesis and not isLabyrinth then
-            self:DisplayStoryStatus(isCompleted)
+        local delve = self:GetEntranceDelve()
+        local kinds = DelveCompanion.Definitions.DelveKind
+        local isNemesis = delve ~= nil and delve.kind == kinds.Nemesis
+        local isBountiful = false
+
+        -- Story status applies to regular Delves only.
+        -- The Bountiful key check ignores Labyrinth.
+        if delve and delve.kind == kinds.Regular then
+            isBountiful = delve.isBountiful
+
+            if DelveCompanionAccountData.displayStoryStatusInGossip then
+                self:DisplayStoryStatus(delve.storyStatus)
+            end
         end
 
         self.AutoExitCheckbox:Show()
@@ -159,33 +169,18 @@ function GossipExtension:SetupDiffPicker()
     self.isDiffPickerSetupDone = true
 end
 
--- Determine which Delve player is going to enter and retrieve its params from DelveData.
+-- Determine which Delve player is going to enter, and refresh its data (it may be stale, e.g. after a daily reset).
 ---@param self GossipExtension
----@return boolean isStoryCompleted Whether the active Story Variant is completed.
----@return boolean isNemesis Whether it's a Nemesis Delve.
----@return boolean isBountiful Whether the Delve is Bountiful now.
----@return boolean isLabyrinth Whether the Delve is a Labyrinth.
-function GossipExtension:GetDelveInfo()
-    local delveName = C_DelvesUI.GetDelveEntranceHeaderString()
-    local isCompleted, isNemesis, isBountiful, isLabyrinth = false, false, false, false
+---@return DelveRecord? delve `nil` if the entrance doesn't match any known Delve.
+function GossipExtension:GetEntranceDelve()
+    local DelvesData = DelveCompanion.DelvesData
 
-    for _, expansionDelves in pairs(DelveCompanion.Variables.delvesData) do
-        for _, data in pairs(expansionDelves) do
-            if strmatch(delveName, data.delveName) then
-                if data.config.nemesisInfo then
-                    isNemesis = true
-                elseif data.config.labyrinthInfo then
-                    isLabyrinth = true
-                else
-                    isCompleted = data.isStoryCompleted
-                    isBountiful = data.isBountiful
-                end
-                break
-            end
-        end
+    local delve = DelvesData:FindByEntranceName(C_DelvesUI.GetDelveEntranceHeaderString())
+    if delve then
+        DelvesData:RefreshNow("gossip", { records = { delve } })
     end
 
-    return isCompleted, isNemesis, isBountiful, isLabyrinth
+    return delve
 end
 
 -- Get Tier of the in progress Delve.
@@ -425,12 +420,19 @@ end
 --#region Story Variant status
 
 ---@param self GossipExtension
----@param isCompleted boolean Whether the active Story is completed.
-function GossipExtension:DisplayStoryStatus(isCompleted)
+---@param storyStatus number A value of DelveStoryStatus. Nothing is displayed for `Unknown`.
+function GossipExtension:DisplayStoryStatus(storyStatus)
     if not DelvesDifficultyPickerFrame:IsShown() then
         return
     end
 
+    local statuses = DelveCompanion.Definitions.DelveStoryStatus
+    if storyStatus == statuses.Unknown then
+        return
+    end
+
+    -- NotTracked variants are displayed as completed (see DelveStoryStatus).
+    local isCompleted = storyStatus ~= statuses.NotCompleted
     local sequence = isCompleted
         and string.format("|cnDIM_GREEN_FONT_COLOR:%s|r", Lockit.UI_DELVE_STORY_VARIANT_COMPLETED_SEQUENCE)
         or string.format("|cnWARNING_FONT_COLOR:%s|r", Lockit.UI_DELVE_STORY_VARIANT_NOT_COMPLETED_SEQUENCE)

@@ -10,6 +10,12 @@ local Config = DelveCompanion.Config
 ---@type Lockit
 local Lockit = DelveCompanion.Lockit
 
+--#region Constants
+
+---@type number Showing the panel refreshes Delves data if the last full refresh is older than this.
+local DATA_MAX_AGE_SEC = 30
+--#endregion
+
 ---@class (exact) DelveEncounterBountifulFrame : DelveEncounterBountifulFrameXml
 ---@field bountifulButtonsPool table
 DelveCompanion_DelveEncounterBountifulFrameMixin = {}
@@ -32,11 +38,10 @@ function DelveCompanion_DelveEncounterBountifulFrameMixin:OnEvent(event, ...)
     -- Logger:Log("[DelveEncounterBountifulFrame] OnEvent start")
 end
 
+--- Rebuild the buttons of the Bountiful Delves of the displayed expansion.
 ---@param self DelveEncounterBountifulFrame
-function DelveCompanion_DelveEncounterBountifulFrameMixin:OnShow()
-    -- Logger:Log("[DelveEncounterBountifulFrame] OnShow start")
-
-    DelveCompanion:UpdateDelvesData()
+function DelveCompanion_DelveEncounterBountifulFrameMixin:RefreshDelves()
+    self.bountifulButtonsPool:ReleaseAll()
 
     ---@type number
     local expansion = DelveCompanion.EJExtension.DelveEncounter:GetFactionData().expansionID
@@ -44,26 +49,19 @@ function DelveCompanion_DelveEncounterBountifulFrameMixin:OnShow()
         return
     end
 
-    ---@type DelveData[]
-    local activeData = {}
-
-    for index, delveData in ipairs(DelveCompanion.Variables.delvesData[expansion]) do
-        if delveData.isBountiful then
-            table.insert(activeData, delveData)
-        end
-    end
+    local activeDelves = DelveCompanion.DelvesData:GetBountiful(expansion)
 
     ---@type boolean
-    local useSmallSize = #activeData >= 5
-    for index, delveData in ipairs(activeData) do
+    local useSmallSize = #activeDelves >= 5
+    for index, record in ipairs(activeDelves) do
         ---@type DelveEncounterBountifulButton
         local button = self.bountifulButtonsPool:Acquire()
-        button:Init(delveData, index, useSmallSize)
+        button:Init(record, index, useSmallSize)
         button:Show()
     end
 
     self.ActiveDelves.Container:Layout()
-    self.ActiveDelves.NoBountifulLabel:SetShown(#activeData == 0)
+    self.ActiveDelves.NoBountifulLabel:SetShown(#activeDelves == 0)
 
     self.Title:ClearAllPoints()
     if tContains(Config.DELVE_O_BOT_EXPANSIONS, expansion) then
@@ -78,9 +76,21 @@ function DelveCompanion_DelveEncounterBountifulFrameMixin:OnShow()
 end
 
 ---@param self DelveEncounterBountifulFrame
+function DelveCompanion_DelveEncounterBountifulFrameMixin:OnShow()
+    -- Logger:Log("[DelveEncounterBountifulFrame] OnShow start")
+
+    DelveCompanion.DelvesData:EnsureFresh(DATA_MAX_AGE_SEC)
+    self:RefreshDelves()
+
+    EventRegistry:RegisterCallback(DelveCompanion.Definitions.Events.DELVES_DATA.UPDATED,
+        self.RefreshDelves, self)
+end
+
+---@param self DelveEncounterBountifulFrame
 function DelveCompanion_DelveEncounterBountifulFrameMixin:OnHide()
     -- Logger:Log("[DelveEncounterBountifulFrame] OnHide start")
 
+    EventRegistry:UnregisterCallback(DelveCompanion.Definitions.Events.DELVES_DATA.UPDATED, self)
     self.bountifulButtonsPool:ReleaseAll()
 end
 
