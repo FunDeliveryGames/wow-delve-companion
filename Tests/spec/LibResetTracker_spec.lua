@@ -83,6 +83,46 @@ Case("on a weekly reset fires daily first, then weekly", function()
     T.Equals(log[2].info.periodStart, weekly)
 end)
 
+Case("exposes the event names as constants", function()
+    local _, LRT = StartAt(R0 + 6 * 3600)
+
+    T.Equals(LRT.Event.Reset, "OnReset")
+    T.Equals(LRT.Event.DailyReset, "OnDailyReset")
+    T.Equals(LRT.Event.WeeklyReset, "OnWeeklyReset")
+end)
+
+Case("OnReset fires for every period, right after the period's own event", function()
+    local weekly = R0 + 3 * DAY -- Matches the harness weekly anchor.
+    local h, LRT = StartAt(weekly - 100)
+    local log, owner = Spy(LRT)
+    LRT.RegisterCallback(owner, LRT.Event.Reset, function(event, info)
+        log[#log + 1] = { event = event, info = info }
+    end)
+
+    h:Advance(200)
+
+    T.Equals(#log, 4)
+    T.Equals(log[1].event, "OnDailyReset")
+    T.Equals(log[2].event, "OnReset")
+    T.Equals(log[2].info.period, "Daily")
+    T.Equals(log[2].info, log[1].info, "same info table as OnDailyReset")
+    T.Equals(log[3].event, "OnWeeklyReset")
+    T.Equals(log[4].event, "OnReset")
+    T.Equals(log[4].info.period, "Weekly")
+    T.Equals(log[4].info, log[3].info, "same info table as OnWeeklyReset")
+end)
+
+Case("an OnReset callback alone keeps the tracker running", function()
+    local h, LRT = StartAt(R0 + 6 * 3600)
+    local owner = {}
+
+    LRT.RegisterCallback(owner, LRT.Event.Reset, function() end)
+    T.Equals(h:ActiveTimers(), 1, "running")
+
+    LRT.UnregisterCallback(owner, LRT.Event.Reset)
+    T.Equals(h:ActiveTimers(), 0, "stopped")
+end)
+
 Case("a check before the reset does nothing", function()
     local h, LRT = StartAt(R1 - 100)
     local log = Spy(LRT)

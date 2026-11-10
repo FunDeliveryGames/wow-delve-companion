@@ -23,19 +23,29 @@ Several addons can embed it. LibStub keeps a single instance (the highest `MINOR
 ```lua
 local LRT = LibStub("LibResetTracker-1.0")
 
-LRT.RegisterCallback(myAddon, "OnDailyReset", function(event, info)
+LRT.RegisterCallback(myAddon, LRT.Event.DailyReset, function(event, info)
     -- refresh daily state
 end)
-LRT.RegisterCallback(myAddon, "OnWeeklyReset", "OnWeeklyReset") -- calls myAddon:OnWeeklyReset(event, info)
+LRT.RegisterCallback(myAddon, LRT.Event.WeeklyReset, "OnWeeklyReset") -- calls myAddon:OnWeeklyReset(event, info)
 
-LRT.UnregisterCallback(myAddon, "OnDailyReset")
+-- One handler for every period, e.g. when your code is keyed by period name.
+LRT.RegisterCallback(myAddon, LRT.Event.Reset, function(event, info)
+    if info.period == LRT.Period.Daily then
+        -- ...
+    end
+end)
+
+LRT.UnregisterCallback(myAddon, LRT.Event.DailyReset)
 LRT.UnregisterAllCallbacks(myAddon)
 ```
 
-| Event | Fired when |
-|---|---|
-| `OnDailyReset` | The daily period changed. |
-| `OnWeeklyReset` | The weekly period changed. |
+Event names are available as constants in `LRT.Event`:
+
+| Constant | Event | Fired when |
+|---|---|---|
+| `LRT.Event.DailyReset` | `OnDailyReset` | The daily period changed. |
+| `LRT.Event.WeeklyReset` | `OnWeeklyReset` | The weekly period changed. |
+| `LRT.Event.Reset` | `OnReset` | Any period changed, right after that period's own event. Check `info.period`. |
 
 `info` is shared between handlers. Don't modify it.
 
@@ -46,7 +56,8 @@ LRT.UnregisterAllCallbacks(myAddon)
 | `previousPeriodStart` | Server epoch at which the previously observed period started. |
 
 Notes:
-- The weekly reset always coincides with a daily reset. `OnDailyReset` fires first, then `OnWeeklyReset`, in the same frame. If you'd do the same work for both, subscribe to only one.
+- The weekly reset always coincides with a daily reset. The order is `OnDailyReset`, `OnReset` (Daily), `OnWeeklyReset`, `OnReset` (Weekly), all in the same frame. If you'd do the same work for both, subscribe to only one.
+- Subscribe to either `OnReset` or the per-period events for the same work. Subscribing to both runs your handler twice per reset.
 - If several resets were missed (client asleep, long loading screen), the callback fires **once**. Compare `periodStart` with `previousPeriodStart` if you need to know how many periods passed.
 - Game data (quests, POIs, vault) can update a few seconds after the reset. Delay your refresh a little, or listen to the related game events as well.
 - Resets that happened before your callback was registered, including while logged out, are not reported. Use `HasResetSince` for those.

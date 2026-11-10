@@ -396,6 +396,34 @@ Case("a daily reset triggers refreshes after 5 and 60 seconds", function()
     T.Equals(runs(), afterLogin + 2, "second refresh")
 end)
 
+Case("a reset refreshes only the providers subscribed to its period", function()
+    local dailyReset = Harness.BASE_EPOCH + 15 * 3600 + DAY
+    local weeklyReset = Harness.BASE_EPOCH + 15 * 3600 + 3 * DAY -- Matches the harness weekly anchor.
+    local h, _, DelvesData = Start({ serverTime = dailyReset - 10 })
+
+    local weeklyRuns = 0
+    DelvesData:RegisterProvider({
+        name = "WeeklyOnly",
+        fields = {},
+        resets = { "Weekly" },
+        Refresh = function()
+            weeklyRuns = weeklyRuns + 1
+        end
+    })
+    h:Advance(1)
+    T.Equals(weeklyRuns, 1, "refreshed on registration")
+
+    h:Advance(dailyReset + 2 + 60 + 1 - h:ServerTime())
+    T.Equals(weeklyRuns, 1, "a daily-only reset doesn't refresh it")
+
+    h:Advance(weeklyReset + 2 + 5 + 1 - h:ServerTime())
+    T.Equals(weeklyRuns, 2, "first refresh after the weekly reset")
+
+    h:Advance(60)
+    T.Equals(weeklyRuns, 3, "second refresh after the weekly reset")
+    T.Equals(#h.errors, 0)
+end)
+
 Case("EnsureFresh respects the maximum age of the last full refresh", function()
     local h, _, DelvesData = Start()
     local before = h.calls.GetDelvesForMap

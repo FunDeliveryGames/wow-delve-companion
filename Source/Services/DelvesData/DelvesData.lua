@@ -22,12 +22,6 @@ local RESET_REFRESH_DELAYS_SEC = { 5, 60 }
 
 ---@type string
 local COMBAT_END_EVENT = "PLAYER_REGEN_ENABLED"
-
----@type table<string, string> LibResetTracker callback event per period.
-local RESET_EVENTS = {
-    [LRT.Period.Daily] = "OnDailyReset",
-    [LRT.Period.Weekly] = "OnWeeklyReset"
-}
 --#endregion
 
 --#region Annotations
@@ -55,7 +49,7 @@ local RESET_EVENTS = {
 ---@field name string Unique provider name.
 ---@field fields string[] Record fields this provider writes. Each field has exactly one owner.
 ---@field events string[]? Game events that trigger a refresh of this provider.
----@field resets string[]? LibResetTracker periods (`Daily`, `Weekly`) that trigger a refresh.
+---@field resets string[]? Values of `LibResetTracker.Period` (`Daily`, `Weekly`) that trigger a refresh.
 ---@field InitRecord fun(self: DelvesDataProvider, record: DelveRecord)? Sets initial field values. Runs once per record, without change tracking.
 ---@field FilterEvent (fun(self: DelvesDataProvider, svc: DelvesData, event: string, ...: any): boolean|DelveRecord[]|nil)? `true` refreshes all records, a list refreshes only those, falsy skips the event. All records if omitted.
 ---@field Refresh fun(self: DelvesDataProvider, svc: DelvesData, ctx: DelvesDataContext, records: DelveRecord[]) Reads game data and writes fields via `ctx:Set`.
@@ -431,14 +425,17 @@ local function RegisterProviderTriggers(provider)
     end
 
     for _, period in ipairs(provider.resets or EMPTY) do
+        -- One callback for all periods, registered only once a provider needs resets (keeps the tracker idle otherwise).
+        if next(resetProviders) == nil then
+            LRT.RegisterCallback(DelvesData, LRT.Event.Reset, function(_, info)
+                DelvesData:HandleReset(info.period)
+            end)
+        end
+
         local names = resetProviders[period]
         if not names then
             names = {}
             resetProviders[period] = names
-
-            LRT.RegisterCallback(DelvesData, RESET_EVENTS[period], function()
-                DelvesData:HandleReset(period)
-            end)
         end
         names[#names + 1] = provider.name
     end
@@ -497,7 +494,7 @@ function DelvesData:RegisterProvider(provider)
     end
 
     for _, period in ipairs(provider.resets or EMPTY) do
-        if not RESET_EVENTS[period] then
+        if LRT.Period[period] ~= period then
             error(("[DelvesData] unknown reset period %q."):format(tostring(period)), 2)
         end
     end

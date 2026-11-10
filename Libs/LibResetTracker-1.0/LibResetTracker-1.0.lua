@@ -8,15 +8,22 @@ Fires callbacks when the game's daily and weekly resets happen.
 
 Usage:
     local LRT = LibStub("LibResetTracker-1.0")
-    LRT.RegisterCallback(myAddon, "OnDailyReset", function(event, info) ... end)
-    LRT.RegisterCallback(myAddon, "OnWeeklyReset", "MyMethodName")
+    LRT.RegisterCallback(myAddon, LRT.Event.DailyReset, function(event, info) ... end)
+    LRT.RegisterCallback(myAddon, LRT.Event.WeeklyReset, "MyMethodName")
+    LRT.RegisterCallback(myAddon, LRT.Event.Reset, function(event, info) ... info.period ... end)
+
+Events (`LRT.Event`):
+    OnDailyReset  The daily period changed.
+    OnWeeklyReset The weekly period changed.
+    OnReset       Any period changed. Fired right after the period's own event; check `info.period`.
 
 `info` (shared between handlers, do not modify):
     period              "Daily" | "Weekly"
     periodStart         Server epoch (seconds) at which the new period started.
     previousPeriodStart Server epoch at which the previously observed period started.
 
-The weekly reset always coincides with a daily reset. In that case `OnDailyReset` fires first, then `OnWeeklyReset`.
+The weekly reset always coincides with a daily reset. In that case the order is:
+`OnDailyReset`, `OnReset` (Daily), `OnWeeklyReset`, `OnReset` (Weekly).
 See README.md for the full API.
 ]]
 
@@ -24,6 +31,7 @@ local MAJOR, MINOR = "LibResetTracker-1.0", 1
 
 ---@class LibResetTracker
 ---@field Period { Daily: string, Weekly: string }
+---@field Event { Reset: string, DailyReset: string, WeeklyReset: string }
 ---@field callbacks table CallbackHandler registry.
 ---@field frame Frame
 ---@field timer table? Pending C_Timer handle.
@@ -63,12 +71,20 @@ lib.Period = {
     Weekly = "Weekly"
 }
 
+--- Callback event names.
+lib.Event = {
+    --- Fired for every period, right after the period's own event. `info.period` tells which one.
+    Reset = "OnReset",
+    DailyReset = "OnDailyReset",
+    WeeklyReset = "OnWeeklyReset"
+}
+
 --- Periods in the order their callbacks are fired.
 local PERIODS = {
     {
         name = lib.Period.Daily,
         length = DAY_SEC,
-        event = "OnDailyReset",
+        event = lib.Event.DailyReset,
         GetSecondsUntil = function()
             return C_DateAndTime.GetSecondsUntilDailyReset()
         end
@@ -76,7 +92,7 @@ local PERIODS = {
     {
         name = lib.Period.Weekly,
         length = WEEK_SEC,
-        event = "OnWeeklyReset",
+        event = lib.Event.WeeklyReset,
         GetSecondsUntil = function()
             return C_DateAndTime.GetSecondsUntilWeeklyReset()
         end
@@ -178,6 +194,7 @@ Check = function()
     -- Fire after the state is consistent, so handlers can query the library.
     for _, entry in ipairs(toFire) do
         lib.callbacks:Fire(entry.event, entry.info)
+        lib.callbacks:Fire(lib.Event.Reset, entry.info)
     end
 end
 
