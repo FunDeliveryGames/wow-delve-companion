@@ -108,6 +108,10 @@ Lockit.UI_SETTING_DELVE_AUTO_ENTER_DELAY_NAME = "進入延遲"
 Lockit.UI_SETTING_DELVE_AUTO_ENTER_DELAY_TOOLTIP = "將延遲進入探究 (以秒計)。\n\n顯示的視窗中有一個進入探究的按鈕。在延遲時間倒數結束前，可以點選取消自動進入。"
 Lockit.UI_SETTING_DELVE_AUTO_EXIT_CONTROL_NAME = "Auto Exit Delves"
 Lockit.UI_SETTING_DELVE_AUTO_EXIT_CONTROL_TOOLTIP = "Confirm Delve Exit prompt automatically (e.g. approaching the leave area)."
+Lockit.UI_SETTING_UI_SKIN_NAME = "Match UI AddOn Style"
+Lockit.UI_SETTING_UI_SKIN_TOOLTIP_START = "Restyle the addon's windows and buttons to match a supported UI AddOn:"
+Lockit.UI_SETTING_UI_SKIN_TOOLTIP_SUITE_FORMAT = "   • %s" -- `%s`: name of the UI AddOn, e.g. ElvUI. Keep the leading spaces and the bullet.
+Lockit.UI_SETTING_UI_SKIN_TOOLTIP_RELOAD = "|cnHIGHLIGHT_FONT_COLOR:Important:|r Turning this setting on/off takes effect only after reloading the UI!"
 
 Lockit.UI_SETTINGS_SECTION_TITLE_CHARACTER = "角色設置"
 Lockit.UI_SETTING_TOOLTIP_EXTENSION_NAME = "提示的額外資訊"
