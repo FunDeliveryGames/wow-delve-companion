@@ -113,7 +113,6 @@ Lockit.UI_SETTING_UI_SKIN_TOOLTIP_START = "Изменить оформление
 Lockit.UI_SETTING_UI_SKIN_TOOLTIP_SUITE_FORMAT = " • %s" -- %s: название UI-аддона, например ElvUI.
 Lockit.UI_SETTING_UI_SKIN_TOOLTIP_RELOAD = "|cnHIGHLIGHT_FONT_COLOR:Важно:|r Вкл./выкл. этой настройки вступает в силу только после перезагрузки интерфейса!"
 
-
 Lockit.UI_SETTINGS_SECTION_TITLE_CHARACTER = "Параметры персонажа"
 Lockit.UI_SETTING_TOOLTIP_EXTENSION_NAME = "Дополнительная информация в подсказках"
 Lockit.UI_SETTING_TOOLTIP_EXTENSION_TOOLTIP = "Отображение дополнительной информации во всплывающих подсказках (например, был ли на этой неделе получен предмет |cnIQ4:Клад участника вылазки|r)."
