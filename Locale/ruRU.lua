@@ -108,10 +108,11 @@ Lockit.UI_SETTING_DELVE_AUTO_ENTER_DELAY_NAME = "Задержка перед в�
 Lockit.UI_SETTING_DELVE_AUTO_ENTER_DELAY_TOOLTIP = "Вход в Вылазку будет осуществлен с задержкой (в секундах).\n\nВ окне, отображаемом при входе в Вылазку, есть кнопка. Нажав на неё, можно отменить автоматический вход до истечения обратного отсчета задержки."
 Lockit.UI_SETTING_DELVE_AUTO_EXIT_CONTROL_NAME = "Автоматический выход из Вылазок"
 Lockit.UI_SETTING_DELVE_AUTO_EXIT_CONTROL_TOOLTIP = "Автоматически подтверждать выход из Вылазки (например, при приближении к зоне выхода)."
-Lockit.UI_SETTING_UI_SKIN_NAME = "Match UI AddOn Style"
-Lockit.UI_SETTING_UI_SKIN_TOOLTIP_START = "Restyle the addon's windows and buttons to match a supported UI AddOn:"
-Lockit.UI_SETTING_UI_SKIN_TOOLTIP_SUITE_FORMAT = "   • %s" -- `%s`: name of the UI AddOn, e.g. ElvUI. Keep the leading spaces and the bullet.
-Lockit.UI_SETTING_UI_SKIN_TOOLTIP_RELOAD = "|cnHIGHLIGHT_FONT_COLOR:Important:|r Turning this setting on/off takes effect only after reloading the UI!"
+Lockit.UI_SETTING_UI_SKIN_NAME = "Стиль интерфейса как у аддона"
+Lockit.UI_SETTING_UI_SKIN_TOOLTIP_START = "Изменить оформление окон и кнопок аддона в стиле поддерживаемого UI-аддона:"
+Lockit.UI_SETTING_UI_SKIN_TOOLTIP_SUITE_FORMAT = " • %s" -- %s: название UI-аддона, например ElvUI.
+Lockit.UI_SETTING_UI_SKIN_TOOLTIP_RELOAD = "|cnHIGHLIGHT_FONT_COLOR:Важно:|r Вкл./выкл. этой настройки вступает в силу только после перезагрузки интерфейса!"
+
 
 Lockit.UI_SETTINGS_SECTION_TITLE_CHARACTER = "Параметры персонажа"
 Lockit.UI_SETTING_TOOLTIP_EXTENSION_NAME = "Дополнительная информация в подсказках"
