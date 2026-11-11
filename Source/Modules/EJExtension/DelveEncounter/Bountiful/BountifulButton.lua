@@ -18,7 +18,7 @@ local DEFAULT_ICON_ATLAS = "overworld-active-64x64"
 --#endregion
 
 ---@class (exact) DelveEncounterBountifulButton : DelveEncounterBountifulButtonXml
----@field data DelveData
+---@field data DelveRecord
 ---@field waypointTracker WaypointTracker
 DelveCompanion_DelveEncounterBountifulButtonMixin = {}
 
@@ -30,7 +30,7 @@ function DelveCompanion_DelveEncounterBountifulButtonMixin:OnLoad()
 end
 
 ---@param self DelveEncounterBountifulButton
----@param data DelveData
+---@param data DelveRecord
 ---@param index number
 ---@param useSmallSize boolean
 function DelveCompanion_DelveEncounterBountifulButtonMixin:Init(data, index, useSmallSize)

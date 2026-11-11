@@ -16,12 +16,12 @@ local LABYRINTH_ACTIVE_ATLAS = "overworld-active-64x64"
 
 --- A button representing a Delve in the Delves list.
 ---@class (exact) DelveInstanceButton : DelveInstanceButtonXml
----@field data DelveData?
+---@field data DelveRecord?
 ---@field waypointTracker WaypointTracker
 DelveCompanion_DelveInstanceButtonMixin = {}
 
 ---@param self DelveInstanceButton
----@param data DelveData
+---@param data DelveRecord
 function DelveCompanion_DelveInstanceButtonMixin:Init(data)
     self.data = data
 
@@ -39,16 +39,23 @@ end
 
 ---@param self DelveInstanceButton
 function DelveCompanion_DelveInstanceButtonMixin:Refresh()
-    self.BountifulIcon:SetShown(self.data.isBountiful and self.data.config.labyrinthInfo == nil)
-    self.LabyrinthIcon:SetShown(self.data.config.labyrinthInfo and self.data.config.labyrinthInfo.isAvailable)
+    local data = self.data
+    if not data then
+        return
+    end
 
-    if self.data.config.nemesisInfo ~= nil then
+    local kinds = DelveCompanion.Definitions.DelveKind
+
+    self.BountifulIcon:SetShown(data.isBountiful and data.kind ~= kinds.Labyrinth)
+    self.LabyrinthIcon:SetShown(data.kind == kinds.Labyrinth and data.config.labyrinthInfo.isAvailable)
+
+    if data.kind == kinds.Nemesis then
         self.NemesisIcon:Show()
-        self.NemesisIcon:SetAtlas(self.data.config.nemesisInfo.isCurrentSeason
+        self.NemesisIcon:SetAtlas(data.config.nemesisInfo.isCurrentSeason
             and NEMESIS_ACTIVE_ATLAS
             or NEMESIS_INACTIVE_ATLAS)
 
-        local isLocked = UnitLevel("player") < self.data.levelRequired
+        local isLocked = UnitLevel("player") < data.levelRequired
         self.LockIcon:SetShown(isLocked)
         self.DelveArtBg:SetDesaturated(isLocked)
     else
@@ -57,14 +64,8 @@ function DelveCompanion_DelveInstanceButtonMixin:Refresh()
         self.LockIcon:Hide()
     end
 
-    do
-        local achievements = self.data.config.achievements
-        self.RightIconsContainer.NotCompletedStoryIcon:SetShown(
-            achievements ~= nil
-            and achievements.story ~= nil
-            and not self.data.isStoryCompleted
-        )
-    end
+    self.RightIconsContainer.NotCompletedStoryIcon:SetShown(
+        data.storyStatus == DelveCompanion.Definitions.DelveStoryStatus.NotCompleted)
 
     self.waypointTracker.Update(self.data)
     self.RightIconsContainer.WaypointIcon:SetShown(self.waypointTracker.isActive)

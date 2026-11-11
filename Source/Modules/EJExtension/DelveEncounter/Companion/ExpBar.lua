@@ -112,6 +112,9 @@ end
 --- `DelveCompanionJourneyEncounterExpBarTemplate`
 ---@class (exact) JourneyEncounterExpBarXml : StatusBar
 ---@field Background Texture
+---@field LeftTexture Texture
+---@field MiddleTexture Texture
+---@field RightTexture Texture
 ---@field BarText FontString
 
 --#endregion

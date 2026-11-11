@@ -20,24 +20,28 @@ local NEMESIS_TOOLTIP_SPLIT_MARKER = "~"
 ---@class (exact) WaypointTracker
 ---@field isActive boolean Whether player has an active waypoint to a Delve.
 ---@field VerifyInput fun(self: WaypointTracker) : boolean
----@field Update fun(data: DelveData)
+---@field Update fun(data: DelveRecord)
 ---@field private SetState fun(self: WaypointTracker, state: boolean)
----@field private Activate fun(data: DelveData)
----@field private Clear fun(data: DelveData)
+---@field private Activate fun(data: DelveRecord)
+---@field private Clear fun(data: DelveRecord)
 DelveCompanion_WaypointTrackerMixin = {}
 
 --#region TomTom tracking
 
----@param tomtomWaypoint table
+--- TomTom waypoints set by the addon, keyed by Delve uiMapID ([DelveRecord](lua://DelveRecord) `id`).
+---@type table<number, table>
+local tomTomWaypoints = {}
+
+---@param tomtomWaypoint table?
 local function ClearTomTomWaypoint(tomtomWaypoint)
-    if not DelveCompanion.Variables.tomTomAvailable then
+    if not (DelveCompanion.Variables.tomTomAvailable and tomtomWaypoint) then
         return
     end
 
     TomTom:RemoveWaypoint(tomtomWaypoint)
 end
 
----@param delveData DelveData
+---@param delveData DelveRecord
 local function SetTomTomWaypoint(delveData)
     if not DelveCompanion.Variables.tomTomAvailable then
         return
@@ -59,7 +63,7 @@ local function SetTomTomWaypoint(delveData)
 
     local callbacks = TomTom:DefaultCallbacks({})
     callbacks.distance[TOM_TOM_WAYPOINT_DISTANCE_CLEAR] = function(...)
-        ClearTomTomWaypoint(delveData.tomtom)
+        ClearTomTomWaypoint(tomTomWaypoints[delveData.id])
     end
 
     local options = {
@@ -69,7 +73,7 @@ local function SetTomTomWaypoint(delveData)
         callbacks = callbacks
     }
 
-    delveData.tomtom = TomTom:AddWaypoint(
+    tomTomWaypoints[delveData.id] = TomTom:AddWaypoint(
         mapInfo.parentMapID,
         posX, posY,
         options)
@@ -117,7 +121,7 @@ local function GetMPEStoredPins()
     return MapPinEnhancedDB.storedPins
 end
 
----@param delveData DelveData
+---@param delveData DelveRecord
 local function CheckMPEWaypoint(delveData)
     local pins = GetMPEStoredPins()
 
@@ -137,7 +141,7 @@ local function CheckMPEWaypoint(delveData)
     return false
 end
 
----@param delveData DelveData
+---@param delveData DelveRecord
 local function AddMPEWaypoint(delveData)
     local parentMapID = C_Map.GetMapInfo(delveData.config.uiMapID).parentMapID
 
@@ -183,9 +187,9 @@ function DelveCompanion_WaypointTrackerMixin:Prepare()
         local state = false
 
         if DelveCompanionAccountData.trackingType == DelveCompanion.Definitions.WaypointTrackingType.tomtom then
-            state = CheckTomTomWaypoint(data.tomtom)
+            state = CheckTomTomWaypoint(tomTomWaypoints[data.id])
             if state == false then
-                data.tomtom = nil
+                tomTomWaypoints[data.id] = nil
             end
         elseif DelveCompanionAccountData.trackingType == DelveCompanion.Definitions.WaypointTrackingType.mpe then
             state = CheckMPEWaypoint(data)
@@ -210,7 +214,8 @@ function DelveCompanion_WaypointTrackerMixin:Prepare()
 
     self.Clear = function(data)
         if DelveCompanionAccountData.trackingType == DelveCompanion.Definitions.WaypointTrackingType.tomtom then
-            ClearTomTomWaypoint(data.tomtom)
+            ClearTomTomWaypoint(tomTomWaypoints[data.id])
+            tomTomWaypoints[data.id] = nil
         elseif DelveCompanionAccountData.trackingType == DelveCompanion.Definitions.WaypointTrackingType.mpe then
             -- TODO: Add a method when new MPE API arrives.
             return
@@ -234,7 +239,7 @@ function DelveCompanion_WaypointTrackerMixin:VerifyInput()
 end
 
 ---@param self WaypointTracker
----@param delveData DelveData
+---@param delveData DelveRecord
 function DelveCompanion_WaypointTrackerMixin:ToggleTracking(delveData)
     if not delveData then
         return
@@ -250,7 +255,7 @@ end
 ---@param self WaypointTracker
 ---@param owner Frame
 ---@param anchor TooltipAnchor
----@param delveData DelveData
+---@param delveData DelveRecord
 function DelveCompanion_WaypointTrackerMixin:DisplayDelveTooltip(owner, anchor, delveData)
     if not delveData then
         return
@@ -262,7 +267,7 @@ function DelveCompanion_WaypointTrackerMixin:DisplayDelveTooltip(owner, anchor, 
 
     local title = delveData.delveName
     local iconsSequence = ""
-    local isNemesisDelve = delveData.config.nemesisInfo ~= nil
+    local isNemesisDelve = delveData.kind == DelveCompanion.Definitions.DelveKind.Nemesis
 
     if delveData.isBountiful then
         iconsSequence = string.join("", iconsSequence, BOUNTIFUL_ICON_SEQUENCE)
@@ -277,10 +282,12 @@ function DelveCompanion_WaypointTrackerMixin:DisplayDelveTooltip(owner, anchor, 
     -- Active story + completion state
     do
         if delveData.storyVariant ~= nil then
-            local completionText = delveData.isStoryCompleted
+            -- NotTracked variants are displayed as completed (see DelveStoryStatus).
+            local isCompleted = delveData.storyStatus ~= DelveCompanion.Definitions.DelveStoryStatus.NotCompleted
+            local completionText = isCompleted
                 and Lockit.UI_DELVE_STORY_VARIANT_COMPLETED_SEQUENCE
                 or Lockit.UI_DELVE_STORY_VARIANT_NOT_COMPLETED_SEQUENCE
-            local completionColor = delveData.isStoryCompleted
+            local completionColor = isCompleted
                 and _G["DIM_GREEN_FONT_COLOR"]
                 or _G["WARNING_FONT_COLOR"]
             GameTooltip_AddColoredDoubleLine(tooltip, delveData.storyVariant, completionText,

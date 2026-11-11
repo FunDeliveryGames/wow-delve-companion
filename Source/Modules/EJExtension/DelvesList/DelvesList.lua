@@ -43,7 +43,7 @@ end
 
 --- Callback to handle a click on a delve in the list.
 ---@param _ any
----@param delveData DelveData
+---@param delveData DelveRecord
 local function OnDelveButtonClicked(_, delveData)
     if delveData == nil then
         return
@@ -65,6 +65,7 @@ function DelvesList:CreateDelvesTabButton(EncounterJournal)
     button:SetParentKey(DELVES_TAB_PARENT_KEY)
     button:SetText(_G["DELVES_LABEL"])
     button:SetID(EJ_DELVES_TAB_BUTTON_ID)
+    DelveCompanion.UISkin:Apply("DelvesTab", button)
 
     self.TabButton = button
 end

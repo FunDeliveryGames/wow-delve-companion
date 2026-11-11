@@ -311,7 +311,7 @@ function AddonSettings:RegisterAccountSettings(category, layout)
 
         local controlTooltip = Lockit.UI_SETTING_IN_DELVE_WIDGET_CONTROL_TOOLTIP
         local controlInitializer = CreateSettingsCheckboxWithButtonInitializer(controlSetting,
-            Lockit.UI_SETTING_IN_DELVE_WIDGET_RESET_BUTTON_TEXT, ResetInDelveWiget, nil, false, controlTooltip)
+            Lockit.UI_SETTING_IN_DELVE_WIDGET_RESET_BUTTON_TEXT, ResetInDelveWiget, nil, true, controlTooltip)
         layout:AddInitializer(controlInitializer)
 
         local function ModifyPredicate()
@@ -472,6 +472,49 @@ function AddonSettings:RegisterAccountSettings(category, layout)
 
         local controlTooltip = Lockit.UI_SETTING_DELVE_AUTO_EXIT_CONTROL_TOOLTIP
         Settings.CreateCheckbox(category, controlSetting, controlTooltip)
+    end
+
+    -- UI AddOns skin
+    do
+        local savedVarKey = "uiSkinEnabled"
+
+        local setting = self:RegisterSetting(category, savedVarKey, savedVarTbl,
+            Config.DEFAULT_ACCOUNT_DATA.uiSkinEnabled,
+            Lockit.UI_SETTING_UI_SKIN_NAME, OnSettingChanged)
+
+        ---@param name string
+        ---@param isAvailable boolean
+        local function SuiteLine(name, isAvailable)
+            local line = format(Lockit.UI_SETTING_UI_SKIN_TOOLTIP_SUITE_FORMAT, name)
+            if isAvailable then
+                return _G["NORMAL_FONT_COLOR"]:WrapTextInColorCode(line)
+            end
+
+            local unavailableLine = format(Lockit.UI_COMMON_MISSING_ADDON_TITLE, name)
+            return format(Lockit.UI_SETTING_WAYPOINT_TRACKING_TYPE_TOOLTIP_TOMTOM_UNAVAILABLE_FORMAT,
+                _G["DISABLED_FONT_COLOR"]:WrapTextInColorCode(line),
+                _G["WARNING_FONT_COLOR"]:WrapTextInColorCode(unavailableLine))
+        end
+
+        local function tooltip()
+            local variables = DelveCompanion.Variables
+
+            return string.join("\n",
+                Lockit.UI_SETTING_UI_SKIN_TOOLTIP_START,
+                SuiteLine(Definitions.DependencyAddonName.elvui, variables.elvUIAvailable),
+                SuiteLine(Definitions.DependencyAddonName.ellesmereui, variables.ellesmereUIAvailable),
+                "",
+                Lockit.UI_SETTING_UI_SKIN_TOOLTIP_RELOAD)
+        end
+
+        -- The setting applies on reload.
+        local function ReloadUI()
+            C_UI.Reload()
+        end
+
+        local initializer = CreateSettingsCheckboxWithButtonInitializer(setting,
+            _G["RELOADUI"], ReloadUI, nil, false, tooltip)
+        layout:AddInitializer(initializer)
     end
 end
 

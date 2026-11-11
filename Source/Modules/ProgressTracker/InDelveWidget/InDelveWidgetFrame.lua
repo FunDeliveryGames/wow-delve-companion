@@ -212,7 +212,10 @@ function DelveCompanion_InDelveWidgetFrameMixin:Refresh()
     -- Update the scale before the anchoring below, whose offsets are in the frame's own scaled space
     self:SetScale(DelveCompanionAccountData.inDelveWidgetScale or 1)
 
-    if DelveCompanionAccountData.inDelveWidgetDisplayRule == DelveCompanion.Definitions.InDelveWidgetDisplayRule.custom then
+    -- UI AddOns may replace the Objective Tracker. Without its header, the widget falls back to the custom position.
+    local trackerHeader = ScenarioObjectiveTracker and ScenarioObjectiveTracker.Header
+    if DelveCompanionAccountData.inDelveWidgetDisplayRule == DelveCompanion.Definitions.InDelveWidgetDisplayRule.custom
+        or not trackerHeader then
         self.DragCatcher:SetShown(self.previewMode)
 
         -- Re-anchoring mid-drag would snap the widget back under the cursor
@@ -256,7 +259,7 @@ function DelveCompanion_InDelveWidgetFrameMixin:Refresh()
             and "BOTTOMLEFT"
             or "BOTTOMRIGHT"
 
-        self:SetPoint(point, ScenarioObjectiveTracker.Header, relativePoint, 0, 0)
+        self:SetPoint(point, trackerHeader, relativePoint, 0, 0)
     end
 
     local expansion = self.delveExpansion

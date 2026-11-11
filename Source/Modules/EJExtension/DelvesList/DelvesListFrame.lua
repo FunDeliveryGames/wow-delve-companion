@@ -14,29 +14,39 @@ local Lockit = DelveCompanion.Lockit
 
 ---@type string
 local INFO_WIDGET_SAVE_KEY = "delvesListInfoWidgetsEnabled"
+
+---@type number Opening the list refreshes Delves data if the last full refresh is older than this.
+local DATA_MAX_AGE_SEC = 30
 --#endregion
 
 --- A list with all Delves displayed in the EncounterJournal.
 ---@class (exact) DelvesListFrame : DelvesListXml
+---@field expansionLevel number? LE_EXPANSION currently listed.
+---@field isRefreshing boolean? Set while `Refresh` runs, to skip the list rebuild requested by its own data refresh.
 DelveCompanion_DelvesListFrameMixin = {}
 
 ---@param self DelvesListFrame
 function DelveCompanion_DelvesListFrameMixin:UpdateKeysWidget()
+    local widget = self.KeysWidget
     local keyCurrInfo = C_CurrencyInfo.GetCurrencyInfo(Config.BOUNTIFUL_KEY_CURRENCY_CODE)
     if not keyCurrInfo then
-        self.KeysWidget:Hide()
+        widget:Hide()
         return
     end
 
-    self.KeysWidget:SetLabelText(keyCurrInfo.quantity)
-    self.KeysWidget:Show()
+    widget:SetLabelText(keyCurrInfo.quantity)
+    local color = ColorManager.GetColorDataForItemQuality(keyCurrInfo.quality)
+    widget:DisplayBorderForQuality(color)
+    widget:Show()
 
     self:RegisterEvent("CURRENCY_DISPLAY_UPDATE")
 end
 
 ---@param self DelvesListFrame
 function DelveCompanion_DelvesListFrameMixin:Refresh()
-    DelveCompanion:UpdateDelvesData()
+    self.isRefreshing = true
+    DelveCompanion.DelvesData:EnsureFresh(DATA_MAX_AGE_SEC)
+    self.isRefreshing = false
 
     ---@type EJTierData
     local tierData = GetEJTierData(EJ_GetCurrentTier())
@@ -61,25 +71,36 @@ end
 
 ---@param self DelvesListFrame
 ---@param expansionLevel number LE_EXPANSION number.
-function DelveCompanion_DelvesListFrameMixin:ListDelves(expansionLevel)
+---@param retainScrollPosition boolean? Keep the scroll position (used when only the data changed).
+function DelveCompanion_DelvesListFrameMixin:ListDelves(expansionLevel, retainScrollPosition)
+    self.expansionLevel = expansionLevel
+
     local dataProvider = CreateDataProvider()
 
-    for _, mapID in pairs(Config.DELVE_MAPS[expansionLevel]) do
-        local areaName = C_Map.GetMapInfo(mapID).name
-        dataProvider:Insert({ areaName = areaName })
+    for _, zone in ipairs(DelveCompanion.DelvesData:GetZones(expansionLevel)) do
+        dataProvider:Insert({ areaName = zone.name })
 
-        for _, delveData in pairs(DelveCompanion.Variables.delvesData[expansionLevel]) do
-            local delveConfig = delveData.config
-            local parentMapID = C_Map.GetMapInfo(delveConfig.uiMapID).parentMapID
-
-            if parentMapID == mapID then
-                dataProvider:Insert(delveData)
-            end
+        for _, record in ipairs(zone.delves) do
+            dataProvider:Insert(record)
         end
     end
 
     self.DelvesList:Show() -- Scrollbox children will not have resolvable rects unless the scrollbox is shown first
-    self.DelvesList:SetDataProvider(dataProvider)
+    if retainScrollPosition then
+        self.DelvesList:SetDataProvider(dataProvider, ScrollBoxConstants.RetainScrollPosition)
+    else
+        self.DelvesList:SetDataProvider(dataProvider)
+    end
+end
+
+--- Rebuild the list when Delves data changes while it's displayed.
+---@param self DelvesListFrame
+function DelveCompanion_DelvesListFrameMixin:OnDelvesDataUpdated()
+    if self.isRefreshing or not self.expansionLevel then
+        return
+    end
+
+    self:ListDelves(self.expansionLevel, true)
 end
 
 ---@param self DelvesListFrame
@@ -91,9 +112,11 @@ function DelveCompanion_DelvesListFrameMixin:OnLoad()
     self.KeysWidget:SetFrameInfo(DelveCompanion.Definitions.CodeType.Currency, Config.BOUNTIFUL_KEY_CURRENCY_CODE)
 
     do
-        self.ModifiersContainer.ModifiersLabel:SetText(Lockit.UI_DELVES_LIST_MODIFIERS_TEXT)
-        self.ModifiersContainer.Nemesis.Icon:SetPoint("CENTER", -1, 1)
-        self.ModifiersContainer:Layout()
+        local container = self.ModifiersContainer
+
+        container.ModifiersLabel:SetText(Lockit.UI_DELVES_LIST_MODIFIERS_TEXT)
+        container.Nemesis.Icon:SetPoint("CENTER", -1, 1)
+        container:Layout()
     end
 
     do
@@ -127,14 +150,16 @@ function DelveCompanion_DelvesListFrameMixin:OnLoad()
             --- Setup Map header.
             ---@param frame DelvesMapHeader
             local function DelveMapHeaderInitializer(frame, elementData)
+                DelveCompanion.UISkin:Apply("DelveMapHeader", frame)
                 frame:Init(elementData.areaName)
             end
 
             --- Setup Delve InstanceButton.
             ---@param frame DelveListElement
-            ---@param delveData DelveData
-            local function DelveListElementInitializer(frame, delveData)
-                frame:Init(delveData)
+            ---@param record DelveRecord
+            local function DelveListElementInitializer(frame, record)
+                DelveCompanion.UISkin:Apply("DelveInstanceButton", frame.InstanceButton)
+                frame:Init(record)
             end
 
             ---Select initializer depending on elementData content.
@@ -151,6 +176,8 @@ function DelveCompanion_DelvesListFrameMixin:OnLoad()
         end
         ScrollUtil.InitScrollBoxListWithScrollBar(self.DelvesList, self.ScrollBar, view)
     end
+
+    DelveCompanion.UISkin:Apply("DelvesListFrame", self)
 end
 
 ---@param self DelvesListFrame
@@ -165,6 +192,9 @@ function DelveCompanion_DelvesListFrameMixin:OnShow()
     -- Logger:Log("[DelvesListFrame] OnShow start")
 
     self:Refresh()
+
+    EventRegistry:RegisterCallback(DelveCompanion.Definitions.Events.DELVES_DATA.UPDATED,
+        self.OnDelvesDataUpdated, self)
 end
 
 ---@param self DelvesListFrame
@@ -172,6 +202,7 @@ function DelveCompanion_DelvesListFrameMixin:OnHide()
     --Logger:Log("[DelvesListFrame] OnHide start")
 
     self:UnregisterEvent("CURRENCY_DISPLAY_UPDATE")
+    EventRegistry:UnregisterCallback(DelveCompanion.Definitions.Events.DELVES_DATA.UPDATED, self)
 end
 
 --#region Xml annotations

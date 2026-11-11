@@ -8,6 +8,13 @@ local Logger = DelveCompanion.Logger
 ---@type Config
 local Config = DelveCompanion.Config
 
+--#region Constants
+
+--- Account setting turning UISkin on/off. Read by UISkin once, on init.
+---@type string
+local UI_SKIN_SAVE_KEY = "uiSkinEnabled"
+--#endregion
+
 ---@class (exact) Bootstrap
 local Bootstrap = {}
 
@@ -16,6 +23,8 @@ local Bootstrap = {}
 function Bootstrap:ProcessOptionalDependencies()
     DelveCompanion.Variables.tomTomAvailable = TomTom ~= nil
     DelveCompanion.Variables.mpeAvailable = MapPinEnhanced ~= nil
+    DelveCompanion.Variables.elvUIAvailable = ElvUI ~= nil
+    DelveCompanion.Variables.ellesmereUIAvailable = EllesmereUI ~= nil
 end
 
 ---@param self Bootstrap
@@ -26,6 +35,16 @@ function Bootstrap:OnAddonLoaded()
 
     DelveCompanion.AddonSettings:ProcessAccountSave()
     DelveCompanion.AddonSettings:ProcessCharacterSave()
+
+    -- Before any frame is created. Also waits for PLAYER_LOGIN to give up a suite that never reports ready.
+    DelveCompanion.UISkin:Init({
+        savedVariables = DelveCompanionAccountData,
+        saveKey = UI_SKIN_SAVE_KEY,
+        defaultEnabled = Config.DEFAULT_ACCOUNT_DATA[UI_SKIN_SAVE_KEY],
+        log = function(message)
+            Logger:Log("%s", message)
+        end
+    })
 
     DelveCompanion.InDelveWidget:PreloadFrame()
 
@@ -46,8 +65,7 @@ function Bootstrap:OnPlayerLogin()
     DelveCompanion.InDelveWidget:Init()
     DelveCompanion.GossipExtension:Init()
 
-    DelveCompanion:InitDelvesData()
-    DelveCompanion:UpdateDelvesData()
+    DelveCompanion.DelvesData:Init()
     DelveCompanion_TooltipExtension_Init()
 
     EventUtil.ContinueOnAddOnLoaded(DelveCompanion.Definitions.DependencyAddonName.encounterJournal,

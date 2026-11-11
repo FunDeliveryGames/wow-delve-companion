@@ -12,7 +12,7 @@
                 </Texture>
             </Layer>
             <Layer level="ARTWORK">
-                <Texture name="$parent.LeftTexture"
+                <Texture name="$parent.LeftTexture" parentKey="LeftTexture"
                     file="Interface\PaperDollInfoFrame\UI-Character-ReputationBar">
                     <Size x="60" y="15" />
                     <Anchors>
@@ -20,7 +20,7 @@
                     </Anchors>
                     <TexCoords left="0.765625" right="1" top="0.046875" bottom="0.28125" />
                 </Texture>
-                <Texture name="$parent.MiddleTexture"
+                <Texture name="$parent.MiddleTexture" parentKey="MiddleTexture"
                     file="Interface\PaperDollInfoFrame\UI-Character-ReputationBar">
                     <Size x="51" y="15" />
                     <Anchors>
@@ -28,7 +28,7 @@
                     </Anchors>
                     <TexCoords left="0.9" right="1" top="0.046875" bottom="0.28125" />
                 </Texture>
-                <Texture name="$parent.RightTexture"
+                <Texture name="$parent.RightTexture" parentKey="RightTexture"
                     file="Interface\PaperDollInfoFrame\UI-Character-ReputationBar">
                     <Size x="39" y="15" />
                     <Anchors>

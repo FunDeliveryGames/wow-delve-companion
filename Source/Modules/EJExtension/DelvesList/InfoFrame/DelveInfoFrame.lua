@@ -11,7 +11,7 @@ local Logger = DelveCompanion.Logger
 --#endregion
 
 ---@class DelvesInfoFrame : DelvesInfoFrameXml
----@field data DelveData
+---@field data DelveRecord
 ---@field abilitiesPool table
 DelveCompanion_DelveInfoFrameMixin = {}
 

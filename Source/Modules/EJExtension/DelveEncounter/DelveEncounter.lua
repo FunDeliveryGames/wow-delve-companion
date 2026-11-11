@@ -78,12 +78,14 @@ function DelveEncounter:Init(JourneysFrame)
         local bar = CreateFrame("StatusBar", "$parent.CompanionExpBar", encRewardTrack,
             "DelveCompanionJourneyEncounterExpBarTemplate")
         bar:SetPoint("TOP", compName, "BOTTOM", 0, 2)
+        DelveCompanion.UISkin:Apply("ExpBar", bar)
         self.ExpBar = bar
 
         local template = "DelveCompanionCompanionConfigPanelTemplate"
         ---@type CompanionConfigPanel
         local configPanel = CreateFrame("Frame", "$parent.ConfigPanel", encRewardTrack, template)
         configPanel:SetPoint("TOP", bar, "BOTTOM", 0, 3)
+        DelveCompanion.UISkin:Apply("CompanionConfigPanel", configPanel)
         self.ConfigPanel = configPanel
     end
 
@@ -105,6 +107,10 @@ function DelveEncounter:Init(JourneysFrame)
             "DelveCompanionDelveEncounterGildedStashFrameTemplate")
         gildedStashFrame:SetPoint("LEFT", consumablesFrame, "RIGHT", 0, 0)
         self.GildedStashFrame = gildedStashFrame
+
+        -- DelveCompanion.UISkin:Apply("RewardCard", bountifulFrame)
+        -- DelveCompanion.UISkin:Apply("RewardCard", consumablesFrame)
+        -- DelveCompanion.UISkin:Apply("RewardCard", gildedStashFrame)
     end
 
     do
@@ -151,6 +157,7 @@ function DelveEncounter:CreateLootInfoButton(parent)
     button:SetParentKey(LOOT_INFO_BUTTON_PARENT_KEY)
     button:SetPoint("TOPRIGHT", self.GildedStashFrame, "BOTTOMRIGHT", -3, 5)
     button:SetTextToFit(_G["LOOT"])
+    DelveCompanion.UISkin:Apply("JournalButton", button)
 
     button:HookScript("OnClick", function()
         if InCombatLockdown() then

@@ -31,6 +31,7 @@ function InDelveWidget:PreloadFrame()
     ---@type InDelveWidgetFrame
     local widgetFrame = CreateFrame("Frame", "DelveCompanion.InDelveWidgetFrame",
         UIParent, "DelvelCompanionInDelveWidgetFrameTemplate")
+    DelveCompanion.UISkin:Apply("InDelveWidget", widgetFrame)
     self.frame = widgetFrame
 end
 

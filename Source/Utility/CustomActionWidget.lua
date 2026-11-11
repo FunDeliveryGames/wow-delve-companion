@@ -92,6 +92,8 @@ function DelveCompanion_CustomActionWidgetMixin:OnLoad()
 
     self:DisableInteraction()
 
+    DelveCompanion.UISkin:Apply("ActionWidget", self)
+
     -- Logger:Log("CustomActionWidget OnLoad finish")
 end
 
