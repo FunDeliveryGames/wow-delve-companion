@@ -23,10 +23,11 @@ The addon is organized around a central master table, `AddonTbl.DelveCompanion`,
 - `InDelveWidget` – temporary frame shown during Delves.
 - `GossipExtension` – auto-enter and Delves gossip enhancements.
 - `MinimapIcon` – optional minimap access point.
+- `UISkin` – restyles addon frames to match a supported UI suite (ElvUI, EllesmereUI).
 
 Bootstrapping happens in two phases via `Source/Bootstrap.lua`:
 
-1. `ADDON_LOADED` – initialize saved variables, optional dependencies, and preload UI frames.
+1. `ADDON_LOADED` – initialize saved variables, optional dependencies, `UISkin`, and preload UI frames.
 2. `PLAYER_LOGIN` – initialize settings, minimap icon, progress tracker, in-delve widget, gossip extension, `DelvesData`, and tooltips. `EJExtension` initializes once `Blizzard_EncounterJournal` is loaded (deferred at the end of this phase).
 
 Layering rule: `Libs` → `Data` → `Services` → `Utility`/`Settings` → `Modules`. Services never reference modules or frames.
@@ -165,6 +166,26 @@ A small but important utility that sets waypoints to Delve entrances and POIs. I
 
 It uses `DelveRecord`s from `DelvesData` and the available POI information from the game API. TomTom waypoint handles are kept in the module, keyed by Delve uiMapID (never on the record).
 
+#### UISkin
+Location: [Source/Utility/UISkin](Source/Utility/UISkin)
+
+Makes addon frames match a supported UI suite. It does nothing when none is loaded, or when `uiSkinEnabled` is off (applied on reload).
+
+- `Core/` – the portable core, shared with other addons by copying the folder verbatim (see [Core/README.md](Source/Utility/UISkin/Core/README.md)). It never references Delve Companion: it exports itself as `AddonTbl.UISkin` and its state is file-private.
+  - `UISkin.lua` – the public interface. `Init(options)` is called on `ADDON_LOADED` with the injected settings (`savedVariables`, `saveKey`, `defaultEnabled`, `log`). It selects the first available adapter and waits for it to report ready, queueing requests meanwhile. It gives up 5 s after `PLAYER_LOGIN` (its own timer), e.g. when EllesmereUI skinning is off for this addon.
+  - `Ops.lua` – suite-agnostic helpers for recipes (`HideRegions`, `CreateHolder`, `FlatHighlight`).
+  - `Adapters/ElvUI.lua`, `Adapters/EllesmereUI.lua` – one per suite, identified by `UISkin.Suite`. They implement the same primitives (`Window`, `Panel`, `StripPanel`, `Inset`, `Button`, `Tab`, `CloseButton`, `Checkbox`, `ScrollBar`, `Icon`, `IconQualityBorder`, `StatusBar`, `Font`, `TextColor`, ...) on top of the suite's public skinning API. Each follows the suite's own toggle for the Blizzard window our frames live in (the recipe's `host`).
+- `Recipes.lua` – Delve Companion's recipes, one per kind of addon frame, written against the primitives only. It also exposes the core as `DelveCompanion.UISkin`. A recipe is one function for all suites. Where suites genuinely differ, register per-suite variants instead (`{ default = fn, [Suite.ElvUI] = fn }`, shared steps in a local helper). This is the only mechanism: adapters carry no style flags.
+
+`Bootstrap` calls `UISkin:Init` with the `uiSkinEnabled` account key. Modules call `DelveCompanion.UISkin:Apply("<Recipe>", frame)` where they create a frame. Each recipe runs once per frame, so it is safe for pooled frames. Recipes run in `xpcall`: a failure is logged and never breaks a feature.
+
+The Encounter Journal tab chain uses `UISkin:GetTabLayout(Host.journal, tab)`. It returns `nil` unless the suite keeps its own chain (ElvUI), and `EJExtension` then uses the stock layout. EllesmereUI keeps none: Blizzard re-anchors the stock tabs on every show.
+
+Suite pitfalls:
+- EllesmereUI's `Panel` fades every texture of the frame it gets, so never pass it a frame whose own textures are content (a StatusBar's fill, icons): put the backdrop on `Ops.CreateHolder` instead.
+- EllesmereUI squares icons, so Blizzard's round `IconBorder` ring no longer fits: the adapter fades it and draws EllesmereUI's square quality border, which follows the ring's color and shown state.
+- ElvUI's `HandleIconBorder` copies a hidden ring's color too (white when never colored): the adapter resets it to the default border.
+
 #### TooltipExtension
 Location: [Source/Modules/TooltipExtension/TooltipExtension.lua](Source/Modules/TooltipExtension/TooltipExtension.lua)
 
@@ -198,10 +219,12 @@ All Delves runtime data is owned by the `DelvesData` service ([Source/Services/D
 - The central object is `DelveCompanion`, not a classic OOP hierarchy. Modules attach themselves to this table and use methods like `:Init()`, `:Refresh()`, and `:ProcessEvent()`.
 - A lot of behavior is tied to events from Blizzard’s Delves UI rather than to custom event buses. Expect hooks around `EncounterJournal`, `DelvesDifficultyPickerFrame`, `JourneysFrame`, and scenario events.
 - Settings are persisted via WoW SavedVariables and synced through `AddonSettings`.
-- Optional dependency support is explicit: TomTom and MapPinEnhanced are detected at startup and used conditionally.
+- Optional dependency support is explicit: TomTom, MapPinEnhanced, ElvUI and EllesmereUI are detected at startup and used conditionally.
+- New frames that use Blizzard art or templates should get a `UISkin` recipe. Add it to `Recipes.lua` and call `UISkin:Apply` where the frame is created.
 - Delves data comes from `DelvesData` only. Don't cache Delve state in modules or write fields on `DelveRecord`s; add a provider instead.
 - `Libs/LibResetTracker-1.0` must stay independent from the addon (no `DelveCompanion` references), so it can be reused in other addons.
-- Run `lua Tests/run.lua` after changing services or the library.
+- `Source/Utility/UISkin/Core` must stay independent from the addon too (a test enforces it). Inject addon-specific values through `UISkin:Init`; put addon frames' styling in `Recipes.lua`.
+- Run `lua Tests/run.lua` after changing services, the library or the UISkin core.
 
 ---
 

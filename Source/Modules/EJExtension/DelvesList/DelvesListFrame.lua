@@ -27,14 +27,17 @@ DelveCompanion_DelvesListFrameMixin = {}
 
 ---@param self DelvesListFrame
 function DelveCompanion_DelvesListFrameMixin:UpdateKeysWidget()
+    local widget = self.KeysWidget
     local keyCurrInfo = C_CurrencyInfo.GetCurrencyInfo(Config.BOUNTIFUL_KEY_CURRENCY_CODE)
     if not keyCurrInfo then
-        self.KeysWidget:Hide()
+        widget:Hide()
         return
     end
 
-    self.KeysWidget:SetLabelText(keyCurrInfo.quantity)
-    self.KeysWidget:Show()
+    widget:SetLabelText(keyCurrInfo.quantity)
+    local color = ColorManager.GetColorDataForItemQuality(keyCurrInfo.quality)
+    widget:DisplayBorderForQuality(color)
+    widget:Show()
 
     self:RegisterEvent("CURRENCY_DISPLAY_UPDATE")
 end
@@ -109,9 +112,11 @@ function DelveCompanion_DelvesListFrameMixin:OnLoad()
     self.KeysWidget:SetFrameInfo(DelveCompanion.Definitions.CodeType.Currency, Config.BOUNTIFUL_KEY_CURRENCY_CODE)
 
     do
-        self.ModifiersContainer.ModifiersLabel:SetText(Lockit.UI_DELVES_LIST_MODIFIERS_TEXT)
-        self.ModifiersContainer.Nemesis.Icon:SetPoint("CENTER", -1, 1)
-        self.ModifiersContainer:Layout()
+        local container = self.ModifiersContainer
+
+        container.ModifiersLabel:SetText(Lockit.UI_DELVES_LIST_MODIFIERS_TEXT)
+        container.Nemesis.Icon:SetPoint("CENTER", -1, 1)
+        container:Layout()
     end
 
     do
@@ -145,6 +150,7 @@ function DelveCompanion_DelvesListFrameMixin:OnLoad()
             --- Setup Map header.
             ---@param frame DelvesMapHeader
             local function DelveMapHeaderInitializer(frame, elementData)
+                DelveCompanion.UISkin:Apply("DelveMapHeader", frame)
                 frame:Init(elementData.areaName)
             end
 
@@ -152,6 +158,7 @@ function DelveCompanion_DelvesListFrameMixin:OnLoad()
             ---@param frame DelveListElement
             ---@param record DelveRecord
             local function DelveListElementInitializer(frame, record)
+                DelveCompanion.UISkin:Apply("DelveInstanceButton", frame.InstanceButton)
                 frame:Init(record)
             end
 
@@ -169,6 +176,8 @@ function DelveCompanion_DelvesListFrameMixin:OnLoad()
         end
         ScrollUtil.InitScrollBoxListWithScrollBar(self.DelvesList, self.ScrollBar, view)
     end
+
+    DelveCompanion.UISkin:Apply("DelvesListFrame", self)
 end
 
 ---@param self DelvesListFrame

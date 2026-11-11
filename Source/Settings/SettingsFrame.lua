@@ -68,6 +68,10 @@ function DelveCompanionSettingsFrameMixin:OnLoad()
     SetupLinkButton(links.WoWInt, defs.Links.WoWInt, Lockit.UI_SETTINGS_ADDON_LINK_TOOLTIP_WOWINT)
     SetupLinkButton(links.GitHub, defs.Links.GitHub, Lockit.UI_SETTINGS_ADDON_LINK_TOOLTIP_GITHUB)
     links:Layout()
+
+    for _, button in ipairs({ links.CurseForge, links.Wago, links.WoWInt, links.GitHub }) do
+        DelveCompanion.UISkin:Apply("SettingsButton", button)
+    end
 end
 
 ---@param self AddonSettingsFrame

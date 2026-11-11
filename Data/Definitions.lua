@@ -34,11 +34,15 @@ setmetatable(Definitions.CodeType, {
 ---@field rio string `RaiderIO`
 ---@field tomtom string `TomTom`
 ---@field mpe string `MapPinEnhanced`
+---@field elvui string `ElvUI`
+---@field ellesmereui string `EllesmereUI`
 Definitions.DependencyAddonName = {
     encounterJournal = "Blizzard_EncounterJournal",
     rio = "RaiderIO",
     tomtom = "TomTom",
-    mpe = "MapPinEnhanced"
+    mpe = "MapPinEnhanced",
+    elvui = "ElvUI",
+    ellesmereui = "EllesmereUI"
 }
 
 ---@class (exact) Link

@@ -334,6 +334,7 @@ function GossipExtension:CreateAutoEnterCancelButton()
     button:SetSize(buttonSize, buttonSize)
     button:SetParentKey(CANCEL_AUTO_ENTER_BUTTON_PARENT_KEY)
     button:SetPoint("LEFT", DelvesDifficultyPickerFrame.EnterDelveButton, "RIGHT", 10, -1)
+    DelveCompanion.UISkin:Apply("PickerCloseButton", button)
 
     button:HookScript("OnClick", function()
         self:CancelAutoEnter()
@@ -360,6 +361,7 @@ function GossipExtension:CreateAutoEnterCheckbox()
     self.AutoEnterCheckbox = cb
     cb:SetPoint("BOTTOMLEFT", self.AutoExitCheckbox, "TOPLEFT", 0, -3)
     cb.Text:SetWidth(75)
+    DelveCompanion.UISkin:Apply("PickerCheckbox", cb)
 
     cb:HookScript("OnShow", function()
         cb:SetChecked(DelveCompanionAccountData.delveAutoEnterEnabled)
@@ -393,6 +395,7 @@ function GossipExtension:CreateAutoExitCheckbox()
     cb:SetPoint("BOTTOMLEFT", DelvesDifficultyPickerFrame, "BOTTOMLEFT", 0, -2)
     cb.Text:SetWidth(75)
     cb.Text:SetText(Lockit.UI_DELVE_AUTO_EXIT_CONTROL_NAME)
+    DelveCompanion.UISkin:Apply("PickerCheckbox", cb)
 
     cb:HookScript("OnShow", function()
         cb:SetChecked(DelveCompanionAccountData.delveAutoExitEnabled)
@@ -464,6 +467,7 @@ function GossipExtension:CreateLootInfoButton()
     button:SetParentKey(LOOT_INFO_BUTTON_PARENT_KEY)
     button:SetPoint("BOTTOMRIGHT", pickerFrame, "BOTTOMRIGHT", -2, 3)
     button:SetTextToFit(_G["LOOT"])
+    DelveCompanion.UISkin:Apply("PickerButton", button)
 
     button:HookScript("OnClick", function()
         if InCombatLockdown() then

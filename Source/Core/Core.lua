@@ -14,6 +14,7 @@ local addonName, AddonTbl = ...
 ---@field InDelveWidget InDelveWidget
 ---@field MinimapIcon DelveCompanionMinimapIcon
 ---@field GossipExtension GossipExtension
+---@field UISkin UISkin
 local DelveCompanion = {}
 AddonTbl.DelveCompanion = DelveCompanion
 
@@ -59,6 +60,7 @@ function DelveCompanion:GetLootInfoFrame()
         local lootInfoFrame = CreateFrame("Frame",
             "$parent.LootInfoFrame", UIParent,
             "DelveCompanionLootInfoFrameTemplate")
+        DelveCompanion.UISkin:Apply("LootInfoFrame", lootInfoFrame)
 
         DelveCompanion.Variables.LootInfoFrame = lootInfoFrame
     end

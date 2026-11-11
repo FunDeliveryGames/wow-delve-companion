@@ -19,8 +19,10 @@ function DelveCompanion_DelveEncounterConsumablesFrameMixin:UpdateConsumables()
     -- Restored Coffer Keys
     do
         local keysCount = C_CurrencyInfo.GetCurrencyInfo(Config.BOUNTIFUL_KEY_CURRENCY_CODE).quantity
-        self.Keys:SetLabelText(keysCount)
-        self.Keys.Icon:SetDesaturated(keysCount == 0)
+        local widget = self.Keys
+
+        widget:SetLabelText(keysCount)
+        widget.Icon:SetDesaturated(keysCount == 0)
     end
 
     ---@type number
@@ -29,10 +31,14 @@ function DelveCompanion_DelveEncounterConsumablesFrameMixin:UpdateConsumables()
     if expansion == LE_EXPANSION_WAR_WITHIN then
         self.Keys:Hide()
 
-        local echoCount = C_Item.GetItemCount(self.Echo.frameCode)
-        self.Echo:SetLabelText(echoCount)
-        self.Echo.Icon:SetDesaturated(echoCount == 0)
-        self.Echo:Show()
+        do
+            local echoCount = C_Item.GetItemCount(self.Echo.frameCode)
+            local widget = self.Echo
+
+            widget:SetLabelText(echoCount)
+            widget.Icon:SetDesaturated(echoCount == 0)
+            widget:Show()
+        end
 
         self.Shards:Hide()
         self.BountyMap:Hide()
@@ -41,38 +47,42 @@ function DelveCompanion_DelveEncounterConsumablesFrameMixin:UpdateConsumables()
         self.Keys:Show()
         self.Echo:Hide()
 
-        ---@type string, number, CurrencyInfo
-        local shardsLine, shardsCount, shardsInfo
-
         -- Coffer Key Shards
         do
-            self.Shards:SetFrameInfo(DelveCompanion.Definitions.CodeType.Currency, Config.KEY_SHARDS_CURRENCY_CODE)
+            ---@type CurrencyInfo
+            local shardsInfo = C_CurrencyInfo.GetCurrencyInfo(Config.KEY_SHARDS_CURRENCY_CODE)
+            ---@type number
+            local shardsCount = shardsInfo.quantity
+            ---@type string
+            local shardsLine = tostring(shardsCount)
 
-            shardsInfo = C_CurrencyInfo.GetCurrencyInfo(Config.KEY_SHARDS_CURRENCY_CODE)
-            shardsCount = shardsInfo.quantity
+            local widget = self.Shards
 
-            shardsLine = tostring(shardsCount)
             if shardsCount >= Config.SHARDS_FOR_KEY then
                 shardsLine = _G["GREEN_FONT_COLOR"]:WrapTextInColorCode(shardsLine)
-                self.Shards.Icon:SetDesaturated(false)
+                widget.Icon:SetDesaturated(false)
             else
                 shardsLine = _G["HIGHLIGHT_FONT_COLOR"]:WrapTextInColorCode(shardsLine)
-                self.Shards.Icon:SetDesaturated(self.Shards.frameType == DelveCompanion.Definitions.CodeType.Item and
+                widget.Icon:SetDesaturated(widget.frameType == DelveCompanion.Definitions.CodeType.Item and
                     true
                     or shardsInfo.quantityEarnedThisWeek >= shardsInfo.maxWeeklyQuantity
                 )
             end
-            self.Shards:SetLabelText(shardsLine)
-            self.Shards:Show()
+            widget:SetLabelText(shardsLine)
+            widget:Show()
         end
 
         -- Bounty Map
         do
             local mapCode = Config.BOUNTY_MAPS[expansion]
+            local widget = self.BountyMap
 
-            self.BountyMap:SetFrameInfo(DelveCompanion.Definitions.CodeType.Item, mapCode)
+            widget:SetFrameInfo(DelveCompanion.Definitions.CodeType.Item, mapCode)
+            local color = ColorManager.GetColorDataForItemQuality(C_Item.GetItemQualityByID(mapCode))
+            widget:DisplayBorderForQuality(color)
+
             local macroText = string.format("/use item:%s", mapCode)
-            self.BountyMap:SetInsecureAction({ type1 = "macro", macrotext = macroText })
+            widget:SetInsecureAction({ type1 = "macro", macrotext = macroText })
 
             local mapsCount = C_Item.GetItemCount(mapCode)
             -- local mapsLine = tostring(mapsCount) -- TODO: re-enable if Tooltips stop being tainted...
@@ -82,31 +92,33 @@ function DelveCompanion_DelveEncounterConsumablesFrameMixin:UpdateConsumables()
                 -- Has the Map in Inventory
                 -- mapsLine = _G["GREEN_FONT_COLOR"]:WrapTextInColorCode(mapsLine) -- TODO: re-enable if Tooltips stop being tainted...
                 mapsLine = string.format("%s", "|A:bag-main:20:20|a")
-                self.BountyMap.Icon:SetDesaturated(false)
+                widget.Icon:SetDesaturated(false)
             elseif C_QuestLog.IsQuestFlaggedCompleted(Config.BOUNTY_MAP_QUEST) then
                 -- Looted and used already
                 -- mapsLine = _G["DISABLED_FONT_COLOR"]:WrapTextInColorCode(mapsLine) -- TODO: re-enable if Tooltips stop being tainted...
                 mapsLine = string.format("%s", "|A:common-icon-checkmark:20:20|a")
-                self.BountyMap.Icon:SetDesaturated(true)
+                widget.Icon:SetDesaturated(true)
             else
                 -- Map to be looted
                 -- mapsLine = _G["HIGHLIGHT_FONT_COLOR"]:WrapTextInColorCode(mapsLine) -- TODO: re-enable if Tooltips stop being tainted...
                 mapsLine = string.format("%s", "|A:common-icon-redx:20:20|a")
-                self.BountyMap.Icon:SetDesaturated(false)
+                widget.Icon:SetDesaturated(false)
             end
 
-            self.BountyMap:SetLabelText(mapsLine)
-            self.BountyMap:Show()
+            widget:SetLabelText(mapsLine)
+            widget:Show()
         end
 
         -- Untainted Mana-Crystals
         do
             local crystalsInfo = C_CurrencyInfo.GetCurrencyInfo(Config.MANA_CRYSTALS_CURRENCY_CODE)
             local crystalsCount = crystalsInfo.discovered and crystalsInfo.quantity or 0
-            self.ManaCrystals:SetLabelText(crystalsCount)
-            self.ManaCrystals.Icon:SetDesaturated(crystalsCount == 0
+            local widget = self.ManaCrystals
+
+            widget:SetLabelText(crystalsCount)
+            widget.Icon:SetDesaturated(crystalsCount == 0
                 and crystalsInfo.quantityEarnedThisWeek >= crystalsInfo.maxWeeklyQuantity)
-            self.ManaCrystals:Show()
+            widget:Show()
         end
     end
 end
@@ -116,9 +128,41 @@ function DelveCompanion_DelveEncounterConsumablesFrameMixin:OnLoad()
     -- Logger:Log("[DelveEncounterConsumablesFrame] OnLoad start")
 
     local defs = DelveCompanion.Definitions
-    self.Keys:SetFrameInfo(defs.CodeType.Currency, Config.BOUNTIFUL_KEY_CURRENCY_CODE)
-    self.ManaCrystals:SetFrameInfo(defs.CodeType.Currency, Config.MANA_CRYSTALS_CURRENCY_CODE)
-    self.Echo:SetFrameInfo(defs.CodeType.Item, Config.ECHO_ITEM_CODE)
+    do
+        local widget = self.Keys
+        local code = Config.BOUNTIFUL_KEY_CURRENCY_CODE
+
+        widget:SetFrameInfo(defs.CodeType.Currency, code)
+        local color = ColorManager.GetColorDataForItemQuality(C_CurrencyInfo.GetCurrencyInfo(code).quality)
+        widget:DisplayBorderForQuality(color)
+    end
+
+    do
+        local widget = self.Shards
+        local code = Config.KEY_SHARDS_CURRENCY_CODE
+
+        widget:SetFrameInfo(defs.CodeType.Currency, code)
+        local color = ColorManager.GetColorDataForItemQuality(C_CurrencyInfo.GetCurrencyInfo(code).quality)
+        widget:DisplayBorderForQuality(color)
+    end
+
+    do
+        local widget = self.Echo
+        local code = Config.ECHO_ITEM_CODE
+
+        widget:SetFrameInfo(defs.CodeType.Item, code)
+        local color = ColorManager.GetColorDataForItemQuality(C_Item.GetItemQualityByID(code))
+        widget:DisplayBorderForQuality(color)
+    end
+
+    do
+        local widget = self.ManaCrystals
+        local code = Config.MANA_CRYSTALS_CURRENCY_CODE
+
+        widget:SetFrameInfo(defs.CodeType.Currency, code)
+        local color = ColorManager.GetColorDataForItemQuality(C_CurrencyInfo.GetCurrencyInfo(code).quality)
+        widget:DisplayBorderForQuality(color)
+    end
 end
 
 ---@param self DelveEncounterConsumablesFrame

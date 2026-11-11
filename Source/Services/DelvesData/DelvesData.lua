@@ -334,8 +334,8 @@ local function Run(work)
     end
 
     if ctx.hasChanges then
-        Logger:Log("[DelvesData] Refresh (%s): %d Delve(s) changed.", ctx.changes.reason,
-            table.count(ctx.changes.delves))
+        -- Logger:Log("[DelvesData] Refresh (%s): %d Delve(s) changed.", ctx.changes.reason,
+        --     table.count(ctx.changes.delves))
 
         EventRegistry:TriggerEvent(Definitions.Events.DELVES_DATA.UPDATED, ctx.changes)
     end

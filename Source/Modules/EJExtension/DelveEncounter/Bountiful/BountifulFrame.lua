@@ -56,6 +56,7 @@ function DelveCompanion_DelveEncounterBountifulFrameMixin:RefreshDelves()
     for index, record in ipairs(activeDelves) do
         ---@type DelveEncounterBountifulButton
         local button = self.bountifulButtonsPool:Acquire()
+        -- DelveCompanion.UISkin:Apply("BountifulButton", button)
         button:Init(record, index, useSmallSize)
         button:Show()
     end

@@ -29,6 +29,7 @@ Config.DELVES_MIN_EXPANSION = LE_EXPANSION_WAR_WITHIN
 ---@field delveAutoEnterTier number Delve Tier to enter.
 ---@field delveAutoEnterDelaySec number A delay in seconds before entering the Delve.
 ---@field delveAutoExitEnabled boolean Whether to exit Delves automatically once prompt popup is shown.
+---@field uiSkinEnabled boolean Whether addon frames match a supported UI suite (ElvUI, EllesmereUI). Applied on reload.
 Config.DEFAULT_ACCOUNT_DATA = {
     logsEnabled = false,
     delvesListInfoWidgetsEnabled = true,
@@ -43,7 +44,8 @@ Config.DEFAULT_ACCOUNT_DATA = {
     delveAutoEnterEnabled = false,
     delveAutoEnterTier = 1,
     delveAutoEnterDelaySec = 3,
-    delveAutoExitEnabled = false
+    delveAutoExitEnabled = false,
+    uiSkinEnabled = false
 }
 
 --- Character Save Data

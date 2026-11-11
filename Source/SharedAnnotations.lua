@@ -57,7 +57,7 @@
 ---@field OptionsList CompanionConfigListXml
 --#endregion
 
---#region Mixin annotations
+--#region Blizzard Mixin annotations
 
 --- `BaseLayoutMixin` ([Blizzard object](https://www.townlong-yak.com/framexml/live/Blizzard_SharedXML/LayoutFrame.lua#10)).
 ---@class BaseLayoutMixin

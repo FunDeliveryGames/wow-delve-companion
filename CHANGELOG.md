@@ -1,5 +1,11 @@
 # Change Log
 
+## [Unreleased]
+- Support **ElvUI** and **EllesmereUI**: the addon's windows, tabs, buttons and icons match the UI AddOn's style.
+    - It follows the UI AddOn's own skin toggles (e.g. ElvUI's Encounter Journal skin, EllesmereUI's Third-Party Addons list).
+    - It can be turned off in the addon options (**Match UI AddOn Style**). Takes effect after reloading the UI.
+- Fix the Delves tab overlapping other Adventure Guide tabs with ElvUI or EllesmereUI.
+
 ## [2026.11.1] - 10 November 2026
 - Add The Labyrinth of Kindo'jan to the Delves list.
 - Display the Widget in The Labyrinth.

@@ -12,11 +12,22 @@ local Config = DelveCompanion.Config
 
 ---@type number
 local EJ_TABS_COUNT = 8
+
+--- Blizzard functions after which UI suites re-chain the stock tabs (ElvUI's `RepositionTabs` hooks them).
+---@type string[]
+local EJ_TAB_REFRESH_FUNCTIONS = {
+    "EncounterJournal_CheckAndDisplaySuggestedContentTab",
+    "EncounterJournal_CheckAndDisplayTradingPostTab"
+}
+
+--- The stock Encounter Journal tab chain. Used unless the active UI suite chains the tabs its own way (ElvUI).
+local DEFAULT_TAB_LAYOUT = { point = "LEFT", relativePoint = "RIGHT", x = 3, y = 0 }
 --#endregion
 
 ---@class (exact) EJExtension
 ---@field DelvesList DelvesList
 ---@field DelveEncounter DelveEncounter
+---@field tabRefreshHooked boolean? Whether `EJ_TAB_REFRESH_FUNCTIONS` are hooked.
 local EJExtension = {}
 DelveCompanion.EJExtension = EJExtension
 
@@ -58,6 +69,63 @@ function EJExtension:Init()
     )
 end
 
+--- Insert the Delves tab after the Suggested Content tab. The spacing follows the active UI suite, if any.
+---@param self EJExtension
+function EJExtension:LayoutTabs()
+    ---@type Frame
+    local EncounterJournal = EncounterJournal
+    local delvesTab = self.DelvesList.TabButton
+    if not (EncounterJournal and delvesTab) then
+        return
+    end
+
+    local UISkin = DelveCompanion.UISkin
+    local point, relativePoint, offsetX, offsetY = UISkin:GetTabLayout(UISkin.Host.journal, delvesTab)
+    if not point then
+        point, relativePoint = DEFAULT_TAB_LAYOUT.point, DEFAULT_TAB_LAYOUT.relativePoint
+        offsetX, offsetY = DEFAULT_TAB_LAYOUT.x, DEFAULT_TAB_LAYOUT.y
+    end
+
+    ---@param tab Button?
+    ---@param relativeTo Button?
+    local function SetTabAnchor(tab, relativeTo)
+        if not (tab and relativeTo) then
+            return
+        end
+
+        tab:ClearAllPoints()
+        tab:SetPoint(point, relativeTo, relativePoint, offsetX, offsetY)
+    end
+
+    SetTabAnchor(delvesTab, EncounterJournal.suggestTab)
+    SetTabAnchor(EncounterJournal.dungeonsTab, delvesTab)
+    SetTabAnchor(EncounterJournal.raidsTab, EncounterJournal.dungeonsTab)
+    SetTabAnchor(EncounterJournal.TutorialsTab, EncounterJournal.raidsTab)
+
+    -- Suites may resize the stock tabs (e.g. EllesmereUI trims their height).
+    if UISkin:IsActive() and EncounterJournal.dungeonsTab then
+        delvesTab:SetHeight(EncounterJournal.dungeonsTab:GetHeight())
+    end
+end
+
+--- With a UI suite, re-apply the tab layout after the suite re-chains the stock tabs.
+--- Installed on the first OnShow, after the suites' Encounter Journal skins, so these hooks run after theirs.
+---@param self EJExtension
+function EJExtension:HookTabRefresh()
+    if self.tabRefreshHooked or not DelveCompanion.UISkin:IsActive() then
+        return
+    end
+    self.tabRefreshHooked = true
+
+    for _, functionName in ipairs(EJ_TAB_REFRESH_FUNCTIONS) do
+        if type(_G[functionName]) == "function" then
+            hooksecurefunc(functionName, function()
+                EJExtension:LayoutTabs()
+            end)
+        end
+    end
+end
+
 ---@param self EJExtension
 function EJExtension:EJ_OnShowHook()
     -- Logger:Log("[EJExtension] OnShow hook")
@@ -65,22 +133,14 @@ function EJExtension:EJ_OnShowHook()
     ---@type Frame
     local EncounterJournal = EncounterJournal
 
-    do
-        --- Re-order tabs in EncounterJournal
-        ---@param tab Button
-        ---@param relativeTo Button
-        local function SetTabAnchor(tab, relativeTo)
-            ---@type number,number
-            local offsetX, offsetY = 3, 0
+    self:LayoutTabs()
+    if DelveCompanion.UISkin:IsActive() then
+        self:HookTabRefresh()
 
-            tab:ClearAllPoints()
-            tab:SetPoint("LEFT", relativeTo, "RIGHT", offsetX, offsetY)
-        end
-
-        SetTabAnchor(self.DelvesList.TabButton, EncounterJournal.suggestTab)
-        SetTabAnchor(EncounterJournal.dungeonsTab, self.DelvesList.TabButton)
-        SetTabAnchor(EncounterJournal.raidsTab, EncounterJournal.dungeonsTab)
-        SetTabAnchor(EncounterJournal.TutorialsTab, EncounterJournal.raidsTab)
+        -- A suite may re-chain the tabs later in the same OnShow.
+        RunNextFrame(function()
+            self:LayoutTabs()
+        end)
     end
 
     -- Being closed, EncounterJournal remembers the last opened tab.
@@ -131,6 +191,7 @@ function EJExtension:OnContentTabSet(id)
     if id ~= self.DelvesList.TabButton:GetID() then
         self.DelvesList.Frame:Hide()
         PanelTemplates_DeselectTab(self.DelvesList.TabButton)
+        DelveCompanion.UISkin:SetTabSelected(DelveCompanion.UISkin.Host.journal, self.DelvesList.TabButton, false)
 
         return
     end
@@ -145,7 +206,9 @@ function EJExtension:OnContentTabSet(id)
     self.DelvesList:SetupExpansionDropdownForDelves(EncounterJournal, ExpansionDropdown_Select)
     EncounterJournal_EnableExpansionDropdown(-40, -30, EncounterJournal)
     EncounterJournal.instanceSelect.ExpansionDropdown:SetShown(true)
+    EncounterJournal.instanceSelect.Title:SetShown(false)
 
     self.DelvesList.Frame:Show()
     PanelTemplates_SelectTab(self.DelvesList.TabButton)
+    DelveCompanion.UISkin:SetTabSelected(DelveCompanion.UISkin.Host.journal, self.DelvesList.TabButton, true)
 end

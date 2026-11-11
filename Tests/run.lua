@@ -10,7 +10,8 @@ Harness.root = testsDir .. "/.."
 
 local SPECS = {
     "spec/LibResetTracker_spec.lua",
-    "spec/DelvesData_spec.lua"
+    "spec/DelvesData_spec.lua",
+    "spec/UISkin_spec.lua"
 }
 
 for _, spec in ipairs(SPECS) do
