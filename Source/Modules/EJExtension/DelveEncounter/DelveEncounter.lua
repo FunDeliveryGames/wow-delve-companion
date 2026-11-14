@@ -226,8 +226,7 @@ function DelveEncounter:Refresh()
     do
         self.BountifulFrame:Show()
         self.ConsumablesFrame:Show()
-        self.GildedStashFrame:SetShown(expansion == LE_EXPANSION_LEVEL_CURRENT and
-            tContains(Config.DELVE_SEASON_FACTION_IDS[LE_EXPANSION_LEVEL_CURRENT], data.factionID))
+        self.GildedStashFrame:SetShown(expansion == LE_EXPANSION_LEVEL_CURRENT)
         self.LootInfoButton:SetShown(expansion == LE_EXPANSION_LEVEL_CURRENT)
     end
 end
