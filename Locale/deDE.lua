@@ -54,6 +54,10 @@ Lockit.UI_DELVE_AUTO_ENTER_INFO = "The selected Tier can be changed in Addon Opt
 Lockit.UI_DELVE_AUTO_ENTER_CANCEL_TOOLTIP_INSTRUCTION = "<Click to cancel auto entering>"
 Lockit.UI_DELVE_AUTO_EXIT_CONTROL_NAME = "Auto Exit"
 
+-- In Delve Widget
+Lockit.UI_IN_DELVE_WIDGET_PING_DUNDUN_INSTRUCTION = "<Click to /target and /ping Dundun>"
+Lockit.UI_IN_DELVE_WIDGET_PING_DUNDUN_NOTE = "Will work only if Dundun is somewhere nearby."
+
 -- Tooltips Extension
 
 Lockit.UI_BOUNTIFUL_KEYS_COUNT_CACHES_PREFIX = "Schlüssel aus Truhen"
@@ -108,6 +112,8 @@ Lockit.UI_SETTING_DELVE_AUTO_ENTER_DELAY_NAME = "Enter Delay"
 Lockit.UI_SETTING_DELVE_AUTO_ENTER_DELAY_TOOLTIP = "A Delve will be entered with a delay (in seconds).\n\nThere is a button in the window displayed entering a Delve. It can be clicked to cancel the auto entering before the delay countdown elapsed."
 Lockit.UI_SETTING_DELVE_AUTO_EXIT_CONTROL_NAME = "Auto Exit Delves"
 Lockit.UI_SETTING_DELVE_AUTO_EXIT_CONTROL_TOOLTIP = "Confirm Delve Exit prompt automatically (e.g. approaching the leave area)."
+Lockit.UI_SETTING_LABYRINTH_AUTO_ENTER_CHAMBERS_NAME = "Labyrinth: Auto Enter Chambers"
+Lockit.UI_SETTING_LABYRINTH_AUTO_ENTER_CHAMBERS_TOOLTIP = "Enter chambers in The Labyrinth automatically once the prompt popup is shown."
 Lockit.UI_SETTING_UI_SKIN_NAME = "Match UI AddOn Style"
 Lockit.UI_SETTING_UI_SKIN_TOOLTIP_START = "Restyle the addon's windows and buttons to match a supported UI AddOn:"
 Lockit.UI_SETTING_UI_SKIN_TOOLTIP_SUITE_FORMAT = "   • %s" -- `%s`: name of the UI AddOn, e.g. ElvUI. Keep the leading spaces and the bullet.

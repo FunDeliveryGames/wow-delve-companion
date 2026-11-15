@@ -7,6 +7,8 @@ local DelveCompanion = AddonTbl.DelveCompanion
 local Logger = DelveCompanion.Logger
 ---@type Config
 local Config = DelveCompanion.Config
+---@type Lockit
+local Lockit = DelveCompanion.Lockit
 
 --#region Constants
 
@@ -49,12 +51,15 @@ local EDIT_MODE_LAYOUT =
 ---@field isSet boolean
 ---@field previewMode boolean
 ---@field isMovingWidget boolean
+---@field hasDundun boolean
 ---@field delveExpansion number
 ---@field respawnState DelveRespawnState
 ---@field refreshToken number
 ---@field Lure InDelveWidgetItem
 ---@field Map InDelveWidgetItem
 ---@field Radar InDelveWidgetItem
+---@field items InDelveWidgetItem[] All widget buttons.
+---@field Dundun CustomActionWidget
 DelveCompanion_InDelveWidgetFrameMixin = {}
 
 ---@param self InDelveWidgetFrame
@@ -82,6 +87,30 @@ function DelveCompanion_InDelveWidgetFrameMixin:OnLoad()
         self.Map = map
         local radar = CreateItem("Radar", self.Buttons, 3)
         self.Radar = radar
+        self.items = { lure, map, radar }
+
+        -- Ping Dundun button
+        do
+            ---@type CustomActionWidget
+            local dundun = CreateFrame("Frame", "$parent.Dundun",
+                self.Buttons,
+                "DelvelCompanionInDelveWidgetItemDundunTemplate")
+            ---@diagnostic disable-next-line: inject-field
+            dundun.layoutIndex = 4
+            dundun:SetFrameInfo(DelveCompanion.Definitions.CodeType.Spell, Config.AFFIX_DUNDUN_SPELL_CODE)
+
+            dundun:SetScript("OnEnter", function(owner)
+                DelveCompanion_CustomActionWidgetMixin.OnEnter(dundun)
+
+                local tooltip = GameTooltip
+                GameTooltip_AddBlankLineToTooltip(tooltip)
+                GameTooltip_AddInstructionLine(tooltip, Lockit.UI_IN_DELVE_WIDGET_PING_DUNDUN_INSTRUCTION, true)
+                GameTooltip_AddHighlightLine(tooltip, Lockit.UI_IN_DELVE_WIDGET_PING_DUNDUN_NOTE, true)
+                tooltip:Show()
+            end)
+            dundun:Hide()
+            self.Dundun = dundun
+        end
     end
 
     -- Handle Delve Respawn activation
@@ -256,8 +285,8 @@ function DelveCompanion_InDelveWidgetFrameMixin:Refresh()
         local relativePoint =
             DelveCompanionAccountData.inDelveWidgetDisplayRule ==
             DelveCompanion.Definitions.InDelveWidgetDisplayRule.left
-            and "BOTTOMLEFT"
-            or "BOTTOMRIGHT"
+            and "TOPLEFT"
+            or "TOPRIGHT"
 
         self:SetPoint(point, trackerHeader, relativePoint, 0, 0)
     end
@@ -319,12 +348,25 @@ function DelveCompanion_InDelveWidgetFrameMixin:Refresh()
         end
     end
 
-    -- A preview must not arm a real /use on items the player still has
+    -- Dundun
+    do
+        local frame = self.Dundun
+
+        local macroText = string.format("/tar %s\n/ping [@target]", C_Spell.GetSpellName(Config.AFFIX_DUNDUN_SPELL_CODE))
+        frame:SetInsecureAction({ type1 = "macro", macrotext = macroText })
+        frame.InteractionBlockedOverlay:Hide()
+        frame:SetShown(self.hasDundun or self.previewMode)
+    end
+
+    -- A preview must not arm a real action the player can still perform
     if self.previewMode then
-        for _, item in ipairs({ self.Lure, self.Map, self.Radar }) do
+        for _, item in ipairs(self.items) do
             item:RefreshInteraction(false)
             item:StopAnimation()
         end
+
+        self.Dundun.InteractionBlockedOverlay:Show()
+        self.Dundun:DisableInteraction()
     end
 
     do

@@ -29,4 +29,16 @@
             <OnHide method="OnHide" />
         </Scripts>
     </Frame>
+
+    <Frame name="DelvelCompanionInDelveWidgetItemDundunTemplate"
+        inherits="DelveCompanionCustomActionWidgetTemplate" virtual="true">
+        <Size x="40" y="40" />
+        <KeyValues>
+            <KeyValue key="align" value="center" type="string" />
+            <KeyValue key="iconSizeX" value="40" type="number" />
+            <KeyValue key="iconSizeY" value="40" type="number" />
+            <KeyValue key="displayLabel" value="false" type="boolean" />
+            <KeyValue key="useAutoScaling" value="false" type="boolean" />
+        </KeyValues>
+    </Frame>
 </Ui>

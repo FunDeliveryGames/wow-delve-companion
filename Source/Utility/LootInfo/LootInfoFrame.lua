@@ -46,7 +46,7 @@ function DelveCompanion_LootInfoFrameMixin:OnLoad()
     end
 
     local gildedStashSpell = Config.GILDED_STASH_SPELL_CODE
-    local nemesisSpell = Config.AFFIXES.Nemesis[LE_EXPANSION_LEVEL_CURRENT]
+    local nemesisSpell = Config.AFFIX_NEMESIS_SPELL_CODE
     do
         local headers = self.RowsScroll.Content.ColumnHeaders
         headers.Tier:SetText(strtrim(format(_G["GARRISON_TIER"], "")))

@@ -64,7 +64,7 @@ function DelveCompanion_DelvesListFrameMixin:Refresh()
     do
         self.ModifiersContainer.Nemesis:SetFrameInfo(
             DelveCompanion.Definitions.CodeType.Spell,
-            Config.AFFIXES.Nemesis[LE_EXPANSION_LEVEL_CURRENT])
+            Config.AFFIX_NEMESIS_SPELL_CODE)
         self.ModifiersContainer:SetShown(tierData.expansionLevel == LE_EXPANSION_LEVEL_CURRENT)
     end
 end

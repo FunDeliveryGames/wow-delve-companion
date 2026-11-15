@@ -54,6 +54,10 @@ Lockit.UI_DELVE_AUTO_ENTER_INFO = "Выбранный уровень можно 
 Lockit.UI_DELVE_AUTO_ENTER_CANCEL_TOOLTIP_INSTRUCTION = "<Нажмите, чтобы отменить автоматический ввод>"
 Lockit.UI_DELVE_AUTO_EXIT_CONTROL_NAME = "Автоматический выход"
 
+-- In Delve Widget
+Lockit.UI_IN_DELVE_WIDGET_PING_DUNDUN_INSTRUCTION = "<Click to /target and /ping Dundun>"
+Lockit.UI_IN_DELVE_WIDGET_PING_DUNDUN_NOTE = "Will work only if Dundun is somewhere nearby."
+
 -- Информация о ключах
 
 Lockit.UI_BOUNTIFUL_KEYS_COUNT_CACHES_PREFIX = "Ключей из тайников"
@@ -108,6 +112,8 @@ Lockit.UI_SETTING_DELVE_AUTO_ENTER_DELAY_NAME = "Задержка перед в�
 Lockit.UI_SETTING_DELVE_AUTO_ENTER_DELAY_TOOLTIP = "Вход в Вылазку будет осуществлен с задержкой (в секундах).\n\nВ окне, отображаемом при входе в Вылазку, есть кнопка. Нажав на неё, можно отменить автоматический вход до истечения обратного отсчета задержки."
 Lockit.UI_SETTING_DELVE_AUTO_EXIT_CONTROL_NAME = "Автоматический выход из Вылазок"
 Lockit.UI_SETTING_DELVE_AUTO_EXIT_CONTROL_TOOLTIP = "Автоматически подтверждать выход из Вылазки (например, при приближении к зоне выхода)."
+Lockit.UI_SETTING_LABYRINTH_AUTO_ENTER_CHAMBERS_NAME = "Labyrinth: Auto Enter Chambers"
+Lockit.UI_SETTING_LABYRINTH_AUTO_ENTER_CHAMBERS_TOOLTIP = "Enter chambers in The Labyrinth automatically once the prompt popup is shown."
 Lockit.UI_SETTING_UI_SKIN_NAME = "Стиль интерфейса как у аддона"
 Lockit.UI_SETTING_UI_SKIN_TOOLTIP_START = "Изменить оформление окон и кнопок аддона в стиле поддерживаемого UI-аддона:"
 Lockit.UI_SETTING_UI_SKIN_TOOLTIP_SUITE_FORMAT = " • %s" -- %s: название UI-аддона, например ElvUI.

@@ -135,16 +135,11 @@ Config.GILDED_STASH_MYHT_CRESTS = 5
 
 --#region Seasonal modifiers
 
----@class (exact) DelveConfigAffixes : table
----@field Nemesis table<number, number>
+---@type number Spell ID of [Nemesis Strongbox](https://www.wowhead.com/spell=1270179/nemesis-strongbox).
+Config.AFFIX_NEMESIS_SPELL_CODE = 1270179
+---@type number Spell ID of [Dundun](https://www.wowhead.com/spell=1299672/dundun).
+Config.AFFIX_DUNDUN_SPELL_CODE = 1299672
 
----@type DelveConfigAffixes Spell ID of Delve affixes.
-Config.AFFIXES = {
-    -- [Nemesis Strongbox](https://www.wowhead.com/spell=1270179/nemesis-strongbox).
-    Nemesis = {
-        [LE_EXPANSION_LEVEL_CURRENT] = 1270179
-    }
-}
 --#endregion
 
 ---@type table<number, number> Quest ID required to unlock a Companion.

@@ -135,7 +135,7 @@ function InDelveWidget:Refresh(isForced)
     -- For unknown reason, the continent cannot be retrieved immediately logging back to the character in a Delve. And the widget gets broken.
     C_Timer.After(1,
         function()
-            -- a newer setup bumps the token, so a cancelled timer cannot finish this one
+            -- A newer setup bumps the token, so a cancelled timer cannot finish this one
             if not self.setupInProgress or self.setupToken ~= token then
                 return
             end
@@ -148,14 +148,10 @@ function InDelveWidget:Refresh(isForced)
                 return
             end
 
-            local delveContinent = DelveCompanion:GetContinentMapIDForMap(C_Map.GetBestMapForUnit("player"))
-
-            self.frame.delveExpansion = FindInTableIf(
-                Config.DELVE_CONTINENTS,
-                function(continentMapID)
-                    return continentMapID == delveContinent
-                end
-            )
+            local record = DelveCompanion.DelvesData:Get(C_Map.GetBestMapForUnit("player"))
+            self.frame.delveExpansion = record and record.expansion or nil
+            self.frame.hasDundun = record and
+                (record.isBountiful and record.kind ~= DelveCompanion.Definitions.DelveKind.Labyrinth) or false
 
             self.frame:PrepareWidget(isForced)
             self.frame:Show()
