@@ -474,6 +474,18 @@ function AddonSettings:RegisterAccountSettings(category, layout)
         Settings.CreateCheckbox(category, controlSetting, controlTooltip)
     end
 
+    -- Labyrinth: Auto enter chambers
+    do
+        local controlSavedVarKey = "labyrinthAutoEnterChambers"
+
+        local controlSetting = self:RegisterSetting(category, controlSavedVarKey, savedVarTbl,
+            Config.DEFAULT_ACCOUNT_DATA.labyrinthAutoEnterChambers,
+            Lockit.UI_SETTING_LABYRINTH_AUTO_ENTER_CHAMBERS_NAME, OnSettingChanged)
+
+        local controlTooltip = Lockit.UI_SETTING_LABYRINTH_AUTO_ENTER_CHAMBERS_TOOLTIP
+        Settings.CreateCheckbox(category, controlSetting, controlTooltip)
+    end
+
     -- UI AddOns skin
     do
         local savedVarKey = "uiSkinEnabled"
