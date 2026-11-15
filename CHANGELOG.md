@@ -1,10 +1,18 @@
 # Change Log
 
-## [Unreleased]
-- Support **ElvUI** and **EllesmereUI**: the addon's windows, tabs, buttons and icons match the UI AddOn's style.
+## [2026.11.2] - 15 November 2026
+- **The Labyrinth**: Add a new option to auto enter chambers when the corresponding prompt is shown.
+    - It's **__disabled__** by default. It can be toggled in the addon options.
+- **Widget In Delves**: Add a new button to /target and /ping Dundun.
+    - It's shown only in Bountiful Delves.
+    - It relies on Dundun name. Presumably, should work fine with any language. Please let me know if you encounter any issues with it.
+- Support **ElvUI** and **EllesmereUI**: the addon's windows, tabs, buttons and icons now match the UI AddOn's style.
     - It follows the UI AddOn's own skin toggles (e.g. ElvUI's Encounter Journal skin, EllesmereUI's Third-Party Addons list).
     - It can be turned off in the addon options (**Match UI AddOn Style**). Takes effect after reloading the UI.
-- Fix the Delves tab overlapping other Adventure Guide tabs with ElvUI or EllesmereUI.
+    - Note: As there are myriads of possible custom UI skins, issues or inconsistency may appear. The current support is based on the default parameters of these UI AddOns. Any feedback is highly appreciated, so I can tweak and improve support.
+    - Also, if you use any other UI AddOn, please share its name, I'll explore whether it can also be supported.
+- Update localization.
+- Fixed Gilded Stash widget being missed in The Labyrinth encounter window.
 
 ## [2026.11.1] - 10 November 2026
 - Add The Labyrinth of Kindo'jan to the Delves list.
