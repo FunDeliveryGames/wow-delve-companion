@@ -28,7 +28,7 @@ Lockit.UI_DELVE_INSTANCE_BUTTON_TOOLTIP_NEMESIS_TWW_S1 = "應得的懲罰: |cnHI
 Lockit.UI_DELVE_INSTANCE_BUTTON_TOOLTIP_NEMESIS_TWW_S2 = "應得的懲罰: |cnHIGHLIGHT_FONT_COLOR:The Underpin|r~地心之戰 賽季2"
 Lockit.UI_DELVE_INSTANCE_BUTTON_TOOLTIP_NEMESIS_TWW_S3 = "應得的懲罰: |cnHIGHLIGHT_FONT_COLOR:Ky'Veza|r~地心之戰 賽季3"
 Lockit.UI_DELVE_INSTANCE_BUTTON_TOOLTIP_NEMESIS_MIDNIGHT_S1 = "應得的懲罰: |cnHIGHLIGHT_FONT_COLOR:Nullaeus|r~至暗之夜 賽季1"
-Lockit.UI_DELVE_INSTANCE_BUTTON_TOOLTIP_NEMESIS_MIDNIGHT_S2 = "Nemesis: |cnHIGHLIGHT_FONT_COLOR:Azta'rec|r~Midnight Season 2"
+Lockit.UI_DELVE_INSTANCE_BUTTON_TOOLTIP_NEMESIS_MIDNIGHT_S2 = "Nemesis: |cnHIGHLIGHT_FONT_COLOR:Azta'rec|r~至暗之夜 賽季2"
 -----
 
 -- Delves UI
@@ -38,25 +38,25 @@ Lockit.UI_DELVES_LIST_MODIFIERS_TEXT = _G["MODIFIERS_COLON"]
 Lockit.UI_GILDED_STASH_CANNOT_RETRIEVE_DATA_TWW = "在卡茲阿爾加地區時可獲取鍍金儲物箱進度"
 Lockit.UI_GILDED_STASH_CANNOT_RETRIEVE_DATA_MIDNIGHT = "造訪奎爾薩拉斯區域來觀看進度"
 Lockit.UI_GILDED_STASH_BOUNTIFUL_NOTE = "僅出現在 |cnNORMAL_FONT_COLOR:難度 11|r 豐碩探究|A:delves-bountiful:16:16|a。"
-Lockit.UI_GILDED_STASH_CRESTS_NOTE = "Each stash contains %d |cnIQ4:Myth Crests|r (|cnNORMAL_FONT_COLOR:%d per week|r in total)."
-Lockit.UI_JOURNEY_LEVEL_REQUIRED = "Requires Journey Level %d"
+Lockit.UI_GILDED_STASH_CRESTS_NOTE = "每個寶箱包含 %d |cnIQ4:神話紋章|r (|cnNORMAL_FONT_COLOR:%d 每週總計|r)。"
+Lockit.UI_JOURNEY_LEVEL_REQUIRED = "需要探究進度 %d"
 Lockit.UI_NO_ACTIVE_BOUNTIFUL = "任意難度11豐碩探究可啟動進度"
 Lockit.UI_LOOT_INFO_BUTTON_TOOLTIP_INSTRUCTION = "<點擊來顯示探究的拾取資訊>"
 
 -- Loot Info
 
 Lockit.UI_LOOT_INFO_DESCRIPTION = "完成探究可獲得戰利品："
-Lockit.UI_LOOT_INFO_TIPS = "|A:delves-treasure-upgrade:16:16|a |cnNORMAL_FONT_COLOR:%s|r: Enemy groups should be killed before the final boss. Killing them later doesn't add more rewards to the chest. Crests are added killing 3+ groups on the specified Tiers.\n\n|T%s:16|t |cnNORMAL_FONT_COLOR:%s|r: Unlocks at Delves Journey Level 4. The stash is lootable 4 times per week."
+Lockit.UI_LOOT_INFO_TIPS = "|A:delves-treasure-upgrade:16:16|a |cnNORMAL_FONT_COLOR:%s|r: 敵方團體應該在最終首領之前被殺死。稍後殺死它們不會為寶箱增加更多獎勵。加入紋章，殺死指定等級上的3個以上團體。\n\n|T%s:16|t |cnNORMAL_FONT_COLOR:%s|r: 在探究進度第4級解鎖。寶藏每周可拾取4次。"
 
 -- Delves Gossip
-Lockit.UI_DELVE_AUTO_ENTER_SELECTED_TIER = "Auto Enter (Tier %d)" -- %d is a Tier number (1-11).
-Lockit.UI_DELVE_AUTO_ENTER_INFO = "The selected Tier can be changed in Addon Options."
+Lockit.UI_DELVE_AUTO_ENTER_SELECTED_TIER = "自動進入 (層級 %d)" -- %d is a Tier number (1-11).
+Lockit.UI_DELVE_AUTO_ENTER_INFO = "選擇的層級可在插件選項中變更。"
 Lockit.UI_DELVE_AUTO_ENTER_CANCEL_TOOLTIP_INSTRUCTION = "<點擊來取消自動進入>"
-Lockit.UI_DELVE_AUTO_EXIT_CONTROL_NAME = "Auto Exit"
+Lockit.UI_DELVE_AUTO_EXIT_CONTROL_NAME = "自動離開"
 
 -- In Delve Widget
-Lockit.UI_IN_DELVE_WIDGET_PING_DUNDUN_INSTRUCTION = "<Click to /target and /ping Dundun>"
-Lockit.UI_IN_DELVE_WIDGET_PING_DUNDUN_NOTE = "Will work only if Dundun is somewhere nearby."
+Lockit.UI_IN_DELVE_WIDGET_PING_DUNDUN_INSTRUCTION = "<點擊來將敦敦設目標 /target 以及 /ping>"
+Lockit.UI_IN_DELVE_WIDGET_PING_DUNDUN_NOTE = "只有當敦敦在附近時才有效。"
 
 -- Tooltips Extension
 
@@ -86,7 +86,7 @@ Lockit.UI_SETTING_WAYPOINT_TRACKING_OPTION_MPE_NAME = "MapPinEnhanced"
 Lockit.UI_SETTING_WAYPOINT_TRACKING_OPTION_MPE_DESCRIPTION = "使用 MapPinEnhanced 路徑點。"
 Lockit.UI_SETTING_IN_DELVE_WIDGET_CONTROL_NAME = "探究中部件"
 Lockit.UI_SETTING_IN_DELVE_WIDGET_CONTROL_TOOLTIP = "啟用探究內顯示的小部件。它用作獎勵地圖、當季首領誘餌等的剩餘和快速施法選單。"
-Lockit.UI_SETTING_IN_DELVE_WIDGET_RESET_BUTTON_TEXT = "Reset Custom Position"
+Lockit.UI_SETTING_IN_DELVE_WIDGET_RESET_BUTTON_TEXT = "重置自訂位置"
 Lockit.UI_SETTING_IN_DELVE_WIDGET_DISPLAY_RULE_NAME = "顯示位置"
 Lockit.UI_SETTING_IN_DELVE_WIDGET_DISPLAY_RULE_TOOLTIP = "小部件要顯示在哪。"
 Lockit.UI_SETTING_IN_DELVE_WIDGET_DISPLAY_RULE_OPTION_LEFT_NAME = "左側"
@@ -110,14 +110,14 @@ Lockit.UI_SETTING_DELVE_AUTO_ENTER_CONTROL_TOOLTIP = "Enter a Delve automaticall
 Lockit.UI_SETTING_DELVE_AUTO_ENTER_TIER_TOOLTIP = "要進入的探究層級。"
 Lockit.UI_SETTING_DELVE_AUTO_ENTER_DELAY_NAME = "進入延遲"
 Lockit.UI_SETTING_DELVE_AUTO_ENTER_DELAY_TOOLTIP = "將延遲進入探究 (以秒計)。\n\n顯示的視窗中有一個進入探究的按鈕。在延遲時間倒數結束前，可以點選取消自動進入。"
-Lockit.UI_SETTING_DELVE_AUTO_EXIT_CONTROL_NAME = "Auto Exit Delves"
-Lockit.UI_SETTING_DELVE_AUTO_EXIT_CONTROL_TOOLTIP = "Confirm Delve Exit prompt automatically (e.g. approaching the leave area)."
-Lockit.UI_SETTING_LABYRINTH_AUTO_ENTER_CHAMBERS_NAME = "Labyrinth: Auto Enter Chambers"
-Lockit.UI_SETTING_LABYRINTH_AUTO_ENTER_CHAMBERS_TOOLTIP = "Enter chambers in The Labyrinth automatically once the prompt popup is shown."
-Lockit.UI_SETTING_UI_SKIN_NAME = "Match UI AddOn Style"
-Lockit.UI_SETTING_UI_SKIN_TOOLTIP_START = "Restyle the addon's windows and buttons to match a supported UI AddOn:"
+Lockit.UI_SETTING_DELVE_AUTO_EXIT_CONTROL_NAME = "自動離開探究"
+Lockit.UI_SETTING_DELVE_AUTO_EXIT_CONTROL_TOOLTIP = "自動確認離開探究的彈出提醒 (例如：接近出口的時候)。"
+Lockit.UI_SETTING_LABYRINTH_AUTO_ENTER_CHAMBERS_NAME = "迷宮：自動進入房間"
+Lockit.UI_SETTING_LABYRINTH_AUTO_ENTER_CHAMBERS_TOOLTIP = "當彈出提示視窗出現時，會自動進入迷宮的各個房間。"
+Lockit.UI_SETTING_UI_SKIN_NAME = "匹配UI插件樣式"
+Lockit.UI_SETTING_UI_SKIN_TOOLTIP_START = "重新設計插件的視窗和按鈕樣式，使其與支援的UI插件相符："
 Lockit.UI_SETTING_UI_SKIN_TOOLTIP_SUITE_FORMAT = "   • %s" -- `%s`: name of the UI AddOn, e.g. ElvUI. Keep the leading spaces and the bullet.
-Lockit.UI_SETTING_UI_SKIN_TOOLTIP_RELOAD = "|cnHIGHLIGHT_FONT_COLOR:Important:|r Turning this setting on/off takes effect only after reloading the UI!"
+Lockit.UI_SETTING_UI_SKIN_TOOLTIP_RELOAD = "|cnHIGHLIGHT_FONT_COLOR:重要:|r 啟用/停用此設定後，只有在重新載入使用者介面後才會生效！"
 
 Lockit.UI_SETTINGS_SECTION_TITLE_CHARACTER = "角色設置"
 Lockit.UI_SETTING_TOOLTIP_EXTENSION_NAME = "提示的額外資訊"
@@ -139,7 +139,7 @@ Lockit.UI_SETTING_LOGS_TOOLTIP = "允許在聊天中列印偵錯日誌。用於�
 Lockit.UI_SETTINGS_TRANSLATION_TITLE = "特別鳴謝翻譯者："
 
 -- The following strings are joined into a list using "\n" (a new line) as a delimiter.
-Lockit.UI_SETTINGS_SLASH_CMD_TEXT = "Slash Commands:"
+Lockit.UI_SETTINGS_SLASH_CMD_TEXT = "使用指令:"
 Lockit.UI_SETTINGS_SLASH_CMD_SHOWDELVES = "   • |cnNORMAL_FONT_COLOR:/delvecompanion|r or |cnNORMAL_FONT_COLOR:/delvecomp|r or |cnNORMAL_FONT_COLOR:/delves|r: Opens the current season Delves encounter in the Adventure Guide (the same behaviour as clicking the minimap icon)." -- The commands themselves should NOT be translated.
 -----
 
