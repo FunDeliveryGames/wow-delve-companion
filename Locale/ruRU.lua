@@ -17,7 +17,6 @@ Lockit.UI_COMMON_BOUNTIFUL_DELVE_TITLE = "Многообещающая Выла�
 Lockit.UI_COMMON_MISSING_ADDON_TITLE = "Отсутствует необходимый аддон: %s" -- `%s`: Имя аддона. Например, DelveCompanion
 
 -- Список вылазок
-
 Lockit.UI_DELVE_INSTANCE_BUTTON_TOOLTIP_CLICK_INSTRUCTION = "<[Shift + ЛКМ] - установить точку маршрута к Вылазке>"
 Lockit.UI_DELVE_INSTANCE_BUTTON_TOOLTIP_CURRENT_TEXT = "Точка маршрута установлена."
 Lockit.UI_DELVE_INSTANCE_BUTTON_TOOLTIP_CLEAR_INSTRUCTION = "<[Shift + ЛКМ] - сбросить точку маршрута>"
@@ -32,7 +31,6 @@ Lockit.UI_DELVE_INSTANCE_BUTTON_TOOLTIP_NEMESIS_MIDNIGHT_S2 = "Немезида:
 -----
 
 -- Интерфейс вылазок
-
 Lockit.UI_DELVES_LIST_MODIFIERS_TEXT = _G["MODIFIERS_COLON"]
 
 Lockit.UI_GILDED_STASH_CANNOT_RETRIEVE_DATA_TWW = "Посетите Каз Алгар, чтобы увидеть прогресс"
@@ -44,31 +42,27 @@ Lockit.UI_NO_ACTIVE_BOUNTIFUL = "Нет активных Вылазок"
 Lockit.UI_LOOT_INFO_BUTTON_TOOLTIP_INSTRUCTION = "<Нажмите, чтобы отобразить информацию о добыче Вылазок>"
 
 -- Информация о добыче
-
 Lockit.UI_LOOT_INFO_DESCRIPTION = "Завершите Вылазку, чтобы получить:"
 Lockit.UI_LOOT_INFO_TIPS = "|A:delves-treasure-upgrade:16:16|a |cnNORMAL_FONT_COLOR:%s|r: Группы противников должны быть убиты до финального босса. Убийство их позже не добавляет награды в сундук. Гербовые печати добавляются за убийство 3+ групп на указанных уровнях сложности.\n\n|T%s:16|t |cnNORMAL_FONT_COLOR:%s|r: Открывается на 4-м уровне известности в Вылазках. Хранилище можно открыть 4 раза в неделю."
 
--- Delves Gossip
+-- Сплетни в Вылазках
 Lockit.UI_DELVE_AUTO_ENTER_SELECTED_TIER = "Автоматический вход (уровень %d)" -- %d - это уровень Вылазки (1-11).
 Lockit.UI_DELVE_AUTO_ENTER_INFO = "Выбранный уровень можно изменить в настройках аддона."
 Lockit.UI_DELVE_AUTO_ENTER_CANCEL_TOOLTIP_INSTRUCTION = "<Нажмите, чтобы отменить автоматический ввод>"
 Lockit.UI_DELVE_AUTO_EXIT_CONTROL_NAME = "Автоматический выход"
 
--- In Delve Widget
-Lockit.UI_IN_DELVE_WIDGET_PING_DUNDUN_INSTRUCTION = "<Click to /target and /ping Dundun>"
-Lockit.UI_IN_DELVE_WIDGET_PING_DUNDUN_NOTE = "Will work only if Dundun is somewhere nearby."
+-- Виджет Вылазок
+Lockit.UI_IN_DELVE_WIDGET_PING_DUNDUN_INSTRUCTION = "<Нажмите на /target и /ping Дандан>"
+Lockit.UI_IN_DELVE_WIDGET_PING_DUNDUN_NOTE = "Будет работать только если Дандан находится где-то рядом."
 
 -- Информация о ключах
-
 Lockit.UI_BOUNTIFUL_KEYS_COUNT_CACHES_PREFIX = "Ключей из тайников"
 
 -- Отделение для аддонов
-
 Lockit.UI_COMPARTMENT_DESCRIPTION_LEFT_CLICK = "|cnGREEN_FONT_COLOR:ЛКМ|r - открыть информацию о текущем сезоне Вылазок."
 Lockit.UI_COMPARTMENT_DESCRIPTION_RIGHT_CLICK = "|cnGREEN_FONT_COLOR:ПКМ|r - изменить параметры."
 
 -- Настройки
-
 Lockit.UI_SETTINGS_SECTION_TITLE_ACCOUNT = "Параметры аккаунта"
 Lockit.UI_SETTING_DELVE_PROGRESS_WIDGETS_NAME = "Информация о прогрессе Вылазок"
 Lockit.UI_SETTING_DELVES_LIST_INFO_WIDGETS_TOOLTIP = "Список вылазок: Отображать прогресс достижений (истории и сундуки)."
@@ -112,8 +106,8 @@ Lockit.UI_SETTING_DELVE_AUTO_ENTER_DELAY_NAME = "Задержка перед в�
 Lockit.UI_SETTING_DELVE_AUTO_ENTER_DELAY_TOOLTIP = "Вход в Вылазку будет осуществлен с задержкой (в секундах).\n\nВ окне, отображаемом при входе в Вылазку, есть кнопка. Нажав на неё, можно отменить автоматический вход до истечения обратного отсчета задержки."
 Lockit.UI_SETTING_DELVE_AUTO_EXIT_CONTROL_NAME = "Автоматический выход из Вылазок"
 Lockit.UI_SETTING_DELVE_AUTO_EXIT_CONTROL_TOOLTIP = "Автоматически подтверждать выход из Вылазки (например, при приближении к зоне выхода)."
-Lockit.UI_SETTING_LABYRINTH_AUTO_ENTER_CHAMBERS_NAME = "Labyrinth: Auto Enter Chambers"
-Lockit.UI_SETTING_LABYRINTH_AUTO_ENTER_CHAMBERS_TOOLTIP = "Enter chambers in The Labyrinth automatically once the prompt popup is shown."
+Lockit.UI_SETTING_LABYRINTH_AUTO_ENTER_CHAMBERS_NAME = "Лабиринт: автоматический вход в залы"
+Lockit.UI_SETTING_LABYRINTH_AUTO_ENTER_CHAMBERS_TOOLTIP = "Автоматически входить в залы Лабиринта при появлении всплывающего окна."
 Lockit.UI_SETTING_UI_SKIN_NAME = "Стиль интерфейса как у аддона"
 Lockit.UI_SETTING_UI_SKIN_TOOLTIP_START = "Изменить оформление окон и кнопок аддона в стиле поддерживаемого UI-аддона:"
 Lockit.UI_SETTING_UI_SKIN_TOOLTIP_SUITE_FORMAT = " • %s" -- %s: название UI-аддона, например ElvUI.
