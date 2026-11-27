@@ -15,6 +15,7 @@ local addonName, AddonTbl = ...
 ---@field MinimapIcon DelveCompanionMinimapIcon
 ---@field GossipExtension GossipExtension
 ---@field UISkin UISkin
+---@field PlayerChoiceExtension PlayerChoiceExtension
 local DelveCompanion = {}
 AddonTbl.DelveCompanion = DelveCompanion
 

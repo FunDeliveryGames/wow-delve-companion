@@ -2,7 +2,6 @@ local addonName, AddonTbl = ...
 
 ---@type DelveCompanion
 local DelveCompanion = AddonTbl.DelveCompanion
-
 ---@type Logger
 local Logger = DelveCompanion.Logger
 ---@type Config
@@ -15,23 +14,18 @@ local Config = DelveCompanion.Config
 local UI_SKIN_SAVE_KEY = "uiSkinEnabled"
 --#endregion
 
----@class (exact) Bootstrap
-local Bootstrap = {}
-
--- Check whether any optional dependencies are loaded.
----@param self Bootstrap
-function Bootstrap:ProcessOptionalDependencies()
+-- Check whether optional dependencies are loaded.
+local function CheckOptionalDependencies()
     DelveCompanion.Variables.tomTomAvailable = TomTom ~= nil
     DelveCompanion.Variables.mpeAvailable = MapPinEnhanced ~= nil
     DelveCompanion.Variables.elvUIAvailable = ElvUI ~= nil
     DelveCompanion.Variables.ellesmereUIAvailable = EllesmereUI ~= nil
 end
 
----@param self Bootstrap
-function Bootstrap:OnAddonLoaded()
+local function OnAddonLoaded()
     -- Logger:Log("[DelveCompanion Bootstrap] OnAddonLoaded start...")
 
-    self:ProcessOptionalDependencies() -- Should be before any other initializations!
+    CheckOptionalDependencies() -- Should be before any other initializations!
 
     DelveCompanion.AddonSettings:ProcessAccountSave()
     DelveCompanion.AddonSettings:ProcessCharacterSave()
@@ -51,8 +45,7 @@ function Bootstrap:OnAddonLoaded()
     -- Logger:Log("[DelveCompanion Bootstrap] OnAddonLoaded finish")
 end
 
----@param self Bootstrap
-function Bootstrap:OnPlayerLogin()
+local function OnPlayerLogin()
     -- Logger:Log("[DelveCompanion Bootstrap] OnPlayerLogin start...")
 
     DelveCompanion.AddonSettings:Init()
@@ -64,6 +57,7 @@ function Bootstrap:OnPlayerLogin()
     DelveCompanion.ProgressTracker:Init()
     DelveCompanion.InDelveWidget:Init()
     DelveCompanion.GossipExtension:Init()
+    DelveCompanion.PlayerChoiceExtension:Init()
 
     DelveCompanion.DelvesData:Init()
     DelveCompanion_TooltipExtension_Init()
@@ -89,10 +83,10 @@ end
 -- 1st
 EventUtil.ContinueOnAddOnLoaded(addonName, function()
     Logger:Init()
-    Bootstrap:OnAddonLoaded()
+    OnAddonLoaded()
 end)
 
 -- 2nd
 EventRegistry:RegisterFrameEventAndCallback("PLAYER_LOGIN", function()
-    Bootstrap:OnPlayerLogin()
+    OnPlayerLogin()
 end)

@@ -2,6 +2,10 @@ local addonName, AddonTbl = ...
 
 ---@type DelveCompanion
 local DelveCompanion = AddonTbl.DelveCompanion
+---@type Config
+local Config = DelveCompanion.Config
+---@type DelveCompanionAccountData
+local AccSaveData = DelveCompanionAccountData
 
 --#region Constants
 
@@ -9,10 +13,12 @@ local CONTROL_SAVE_KEY = "logsEnabled"
 --#endregion
 
 --- Utility class for printing debug information.
----@class (exact) Logger
----@field logsEnabled boolean Top-level toggle to control logging
+---@class Logger
 local Logger = {}
 DelveCompanion.Logger = Logger
+
+-- Top-level toggle to control logging.
+local logsEnabled = false
 
 --- Log a formatted string to the console if logging is enabled.
 --- Acts as a wrapper around `print(string.format(...))`.
@@ -20,7 +26,7 @@ DelveCompanion.Logger = Logger
 ---@param stringText string The format string. Supports placeholders like %s, %d, etc.
 ---@param ... any Arguments to be substituted into the format string.
 function Logger:Log(stringText, ...)
-    if not self.logsEnabled then
+    if not logsEnabled then
         return
     end
 
@@ -53,13 +59,13 @@ end
 
 ---@param self Logger
 function Logger:Init()
-    self.logsEnabled = DelveCompanionAccountData ~= nil and DelveCompanionAccountData.logsEnabled
-        or DelveCompanion.Config.DEFAULT_ACCOUNT_DATA.logsEnabled
+    logsEnabled = AccSaveData ~= nil and AccSaveData.logsEnabled
+        or Config.DEFAULT_ACCOUNT_DATA.logsEnabled
 
     do
         local function OnSettingChanged(_, changedVarKey, newValue)
             if changedVarKey == CONTROL_SAVE_KEY then
-                self.logsEnabled = newValue
+                logsEnabled = newValue
             end
         end
 

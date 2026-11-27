@@ -31,7 +31,6 @@ local EXIT_DELVE_STATIC_POPUP_ID = 424700
 ---@field EventFrame Frame
 ---@field isSubscribed boolean
 ---@field isDelveInProgress boolean
----@field isHookedPlayerChoice boolean
 ---@field lastSeenScenario string
 local ProgressTracker = {}
 DelveCompanion.ProgressTracker = ProgressTracker
@@ -67,7 +66,6 @@ function ProgressTracker:Init()
     if self.isDelveInProgress then
         -- If UI Reload or Login happens in the midst of the Delve, force register required events.
         FrameUtil.RegisterFrameForEvents(self.EventFrame, baseEvents)
-        self:HookPlayerChoice()
     end
 
     --- Auto exit Delves when the popup is shown.
@@ -78,36 +76,6 @@ function ProgressTracker:Init()
             C_PartyInfo.DelveTeleportOut()
         end
     end)
-end
-
----@param self ProgressTracker
-function ProgressTracker:HookPlayerChoice()
-    if (C_AddOns.IsAddOnLoaded("Blizzard_PlayerChoice") or PlayerChoice_LoadUI()) and not self.isHookedPlayerChoice then
-        ---@type Frame
-        local pcFrame = PlayerChoiceFrame
-        pcFrame:HookScript("OnShow", function()
-            -- Logger:Log("[ProgressTracker] PlayerChoiceFrame OnShow hook...")
-            if not self.isDelveInProgress or not DelveCompanionAccountData.labyrinthAutoEnterChambers then
-                return
-            end
-
-            local choiceInfo = C_PlayerChoice.GetCurrentPlayerChoiceInfo()
-            if choiceInfo then
-                local options = choiceInfo.options
-                if options and #options > 0 then
-                    local buttons = options[1].buttons
-                    if buttons and #buttons > 0 then
-                        C_PlayerChoice.SendPlayerChoiceResponse(buttons[1].id)
-                        if not choiceInfo.keepOpenAfterChoice then
-                            HideUIPanel(PlayerChoiceFrame)
-                        end
-                    end
-                end
-            end
-        end)
-
-        self.isHookedPlayerChoice = true
-    end
 end
 
 ---@param self ProgressTracker
@@ -141,7 +109,6 @@ function ProgressTracker:ProcessEvent(eventName, arg1, ...)
             self:UpdateSeenScenario()
 
             FrameUtil.RegisterFrameForEvents(self.EventFrame, baseEvents)
-            self:HookPlayerChoice()
             self.isSubscribed = true
 
             EventRegistry:TriggerEvent(DelveCompanion.Definitions.Events.PROGRESS_TRACKER.DELVE_IN_PROGRESS)

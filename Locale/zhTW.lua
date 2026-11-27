@@ -54,6 +54,9 @@ Lockit.UI_DELVE_AUTO_ENTER_INFO = "選擇的層級可在插件選項中變更。
 Lockit.UI_DELVE_AUTO_ENTER_CANCEL_TOOLTIP_INSTRUCTION = "<點擊來取消自動進入>"
 Lockit.UI_DELVE_AUTO_EXIT_CONTROL_NAME = "自動離開"
 
+-- PlayerChoiceFrame
+Lockit.UI_LABYRINTH_AUTO_ENTER_CHAMBERS_NAME = "Auto Enter"
+
 -- In Delve Widget
 Lockit.UI_IN_DELVE_WIDGET_PING_DUNDUN_INSTRUCTION = "<點擊來將敦敦設目標 /target 以及 /ping>"
 Lockit.UI_IN_DELVE_WIDGET_PING_DUNDUN_NOTE = "只有當敦敦在附近時才有效。"

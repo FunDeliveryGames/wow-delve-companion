@@ -51,6 +51,9 @@ Lockit.UI_DELVE_AUTO_ENTER_INFO = "Выбранный уровень можно 
 Lockit.UI_DELVE_AUTO_ENTER_CANCEL_TOOLTIP_INSTRUCTION = "<Нажмите, чтобы отменить автоматический ввод>"
 Lockit.UI_DELVE_AUTO_EXIT_CONTROL_NAME = "Автоматический выход"
 
+-- PlayerChoiceFrame
+Lockit.UI_LABYRINTH_AUTO_ENTER_CHAMBERS_NAME = "Auto Enter"
+
 -- Виджет Вылазок
 Lockit.UI_IN_DELVE_WIDGET_PING_DUNDUN_INSTRUCTION = "<Нажмите на /target и /ping Дандан>"
 Lockit.UI_IN_DELVE_WIDGET_PING_DUNDUN_NOTE = "Будет работать только если Дандан находится где-то рядом."

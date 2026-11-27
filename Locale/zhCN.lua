@@ -54,6 +54,9 @@ Lockit.UI_DELVE_AUTO_ENTER_INFO = "The selected Tier can be changed in Addon Opt
 Lockit.UI_DELVE_AUTO_ENTER_CANCEL_TOOLTIP_INSTRUCTION = "<点击取消自动进入>"
 Lockit.UI_DELVE_AUTO_EXIT_CONTROL_NAME = "Auto Exit"
 
+-- PlayerChoiceFrame
+Lockit.UI_LABYRINTH_AUTO_ENTER_CHAMBERS_NAME = "Auto Enter"
+
 -- In Delve Widget
 Lockit.UI_IN_DELVE_WIDGET_PING_DUNDUN_INSTRUCTION = "<Click to /target and /ping Dundun>"
 Lockit.UI_IN_DELVE_WIDGET_PING_DUNDUN_NOTE = "Will work only if Dundun is somewhere nearby."

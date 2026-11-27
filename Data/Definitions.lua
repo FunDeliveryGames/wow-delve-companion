@@ -28,9 +28,10 @@ setmetatable(Definitions.CodeType, {
     end
 })
 
---- Table of Blizzard AddOns which are loaded on demand. Used to initialize addon modules.
+--- Table of AddOns different modules depend on. Blizzard AddOns can be loaded on demand.
 ---@class (exact) DependencyAddonName
 ---@field encounterJournal string `Blizzard_EncounterJournal`
+---@field playerChoice string `Blizzard_PlayerChoice`
 ---@field rio string `RaiderIO`
 ---@field tomtom string `TomTom`
 ---@field mpe string `MapPinEnhanced`
@@ -38,6 +39,7 @@ setmetatable(Definitions.CodeType, {
 ---@field ellesmereui string `EllesmereUI`
 Definitions.DependencyAddonName = {
     encounterJournal = "Blizzard_EncounterJournal",
+    playerChoice = "Blizzard_PlayerChoice",
     rio = "RaiderIO",
     tomtom = "TomTom",
     mpe = "MapPinEnhanced",
